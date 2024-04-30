@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class RegisterMenu implements Menu {
 
     @Override
-    public void run(Scanner scanner) {
+	public void run(Scanner scanner) {
 
-    }
+	}
 
 }

@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class LobbyMenu implements Menu {
 
-    @Override
-    public void run(Scanner scanner) {
+	@Override
+	public void run(Scanner scanner) {
 
-    }
+	}
 
 }
