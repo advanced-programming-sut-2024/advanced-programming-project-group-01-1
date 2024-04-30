@@ -1,14 +1,13 @@
-package view.sign;
+package view.sign.register;
 
 import view.Menu;
 
 import java.util.Scanner;
 
-public class LoginMenu implements Menu {
+public class PickQuestionMenu implements Menu {
 
-    @Override
+	@Override
 	public void run(Scanner scanner) {
 
 	}
-
 }
