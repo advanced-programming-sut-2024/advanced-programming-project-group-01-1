@@ -1,10 +1,10 @@
 package view.user;
 
-import view.Menu;
+import view.Menuable;
 
 import java.util.Scanner;
 
-public class InfoMenu implements Menu {
+public class InfoMenu implements Menuable {
 
     @Override
 	public void run(Scanner scanner) {

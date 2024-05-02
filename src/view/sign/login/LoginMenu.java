@@ -1,12 +1,12 @@
 package view.sign.login;
 
 import model.Result;
-import view.Menu;
+import view.Menuable;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class LoginMenu implements Menu {
+public class LoginMenu implements Menuable {
 
 	@Override
 	public void run(Scanner scanner) {
@@ -18,7 +18,7 @@ public class LoginMenu implements Menu {
 		return null;
 	}
 
-	private Result forgetPassword(Matcher matcher) {
+	private Result forgotPassword(Matcher matcher) {
 		// TODO:
 		return null;
 	}

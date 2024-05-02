@@ -1,10 +1,10 @@
 package view.game.prematch;
 
-import view.Menu;
+import view.Menuable;
 
 import java.util.Scanner;
 
-public class LobbyMenu implements Menu {
+public class LobbyMenu implements Menuable {
 
 	@Override
 	public void run(Scanner scanner) {

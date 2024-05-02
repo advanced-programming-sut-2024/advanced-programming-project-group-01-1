@@ -2,14 +2,14 @@ package controller.sign;
 
 import model.Result;
 
-public class LoginController {
+public class LoginMenuController {
 
 	public static Result login(String username, String password, boolean stayLoggedIn) {
 		//TODO:
 		return null;
 	}
 
-	public static Result forgetPassword(String username) {
+	public static Result forgotPassword(String username) {
 		//TODO:
 		return null;
 	}
