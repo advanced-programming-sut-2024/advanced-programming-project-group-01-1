@@ -8,7 +8,7 @@ public class RegisterController {
 		return null;
 	}
 
-	public static Result pickQuestion(String question, String answer) { //TODO
+	public static Result pickQuestion(int questionNumber, String answer, String answerConfirm) { //TODO
 		return null;
 	}
 }

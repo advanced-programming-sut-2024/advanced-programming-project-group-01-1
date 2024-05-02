@@ -3,6 +3,7 @@ package controller.enums;
 import java.util.regex.Pattern;
 
 public enum Validation {
+
 	USERNAME("[a-zA-Z\\d-]+"),
 	CORRECT_PASSWORD("[a-zA-Z\\d!@#$%^&*]+"),
 	STRONG_PASSWORD("(?=[a-z])(?=[A-Z])(?=\\d)(?=[!@#$%^&*]).{8,}"),
