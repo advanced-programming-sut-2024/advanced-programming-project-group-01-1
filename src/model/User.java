@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+	private static User loggedInUser = null;
+
 	private final int id;
 	private String username;
 	private String nickname;
@@ -92,5 +94,10 @@ public class User implements Serializable {
 	public static int getNumberOfUsers() {
 		// TODO:
 		return 0;
+	}
+
+	public static User getLoggedInUser() {
+		// TODO:
+		return loggedInUser;
 	}
 }

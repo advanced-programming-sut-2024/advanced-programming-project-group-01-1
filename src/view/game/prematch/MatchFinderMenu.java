@@ -1,8 +1,10 @@
 package view.game.prematch;
 
+import model.Result;
 import view.Menuable;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
 
 public class MatchFinderMenu implements Menuable {
 
@@ -11,4 +13,8 @@ public class MatchFinderMenu implements Menuable {
 
 	}
 
+	private Result createGame(Matcher matcher) {
+		// TODO:
+		return null;
+	}
 }
