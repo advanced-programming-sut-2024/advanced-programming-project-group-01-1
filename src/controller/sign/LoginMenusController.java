@@ -2,7 +2,7 @@ package controller.sign;
 
 import model.Result;
 
-public class LoginMenuController {
+public class LoginMenusController {
 
 	public static Result login(String username, String password, boolean stayLoggedIn) {
 		//TODO:

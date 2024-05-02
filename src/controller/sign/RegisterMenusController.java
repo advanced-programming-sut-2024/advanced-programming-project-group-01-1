@@ -2,7 +2,7 @@ package controller.sign;
 
 import model.Result;
 
-public class RegisterMenuController {
+public class RegisterMenusController {
 
 	public static Result register(String username, String password, String passwordConfirm, String nickname, String email) { //TODO
 		return null;
