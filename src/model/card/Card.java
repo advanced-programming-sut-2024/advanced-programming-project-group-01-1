@@ -2,7 +2,7 @@ package model.card;
 
 public abstract class Card {
 
-	String name;
+	final String name;
 
 	public Card(String name) {
 		this.name = name;

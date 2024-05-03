@@ -23,6 +23,26 @@ public class User implements Serializable {
 		this.updateData();
 	}
 
+	public static User getCurrentUser() {
+		// TODO:
+		return null;
+	}
+
+	public static User getUserByUsername() {
+		// TODO:
+		return null;
+	}
+
+	public static int getNumberOfUsers() {
+		// TODO:
+		return 0;
+	}
+
+	public static User getLoggedInUser() {
+		// TODO:
+		return loggedInUser;
+	}
+
 	public int getId() {
 		return this.id;
 	}
@@ -79,25 +99,5 @@ public class User implements Serializable {
 
 	private void updateData() {
 		// TODO:
-	}
-
-	public static User getCurrentUser() {
-		// TODO:
-		return null;
-	}
-
-	public static User getUserByUsername() {
-		// TODO:
-		return null;
-	}
-
-	public static int getNumberOfUsers() {
-		// TODO:
-		return 0;
-	}
-
-	public static User getLoggedInUser() {
-		// TODO:
-		return loggedInUser;
 	}
 }

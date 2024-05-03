@@ -7,7 +7,7 @@ import java.util.Date;
 public class GameInfo implements Serializable {
 
 	private int opponentId;
- 	private Date date;
+	private Date date;
 	private ArrayList<Integer> opponentScores, myScores;
 	private int opponentFinalScore, myFinalScore;
 	private int winnerId;

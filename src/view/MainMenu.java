@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class MainMenu implements Menuable {
 
-    @Override
+	@Override
 	public void run(Scanner scanner) {
 
 	}

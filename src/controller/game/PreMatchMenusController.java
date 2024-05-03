@@ -74,13 +74,13 @@ public class PreMatchMenusController {
 		return null;
 	}
 
-	public static Result changeTurn()  {
+	public static Result changeTurn() {
 		// TODO:
 		return null;
 	}
 
 	public static Result startGame() {
-			// TODO:
-			return null;
+		// TODO:
+		return null;
 	}
 }

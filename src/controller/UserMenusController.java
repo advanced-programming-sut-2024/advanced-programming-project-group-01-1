@@ -4,7 +4,7 @@ import model.Result;
 
 public class UserMenusController {
 
-	public static Result changeUsername(String newUsername){
+	public static Result changeUsername(String newUsername) {
 		// TODO:
 		return null;
 	}
@@ -14,23 +14,23 @@ public class UserMenusController {
 		return null;
 	}
 
-	public static Result changePassword(String newPassword , String oldPassword) {
+	public static Result changePassword(String newPassword, String oldPassword) {
 		// TODO:
 		return null;
 	}
 
-	public static Result changeEmail(String email){
+	public static Result changeEmail(String email) {
 		// TODO:
 		return null;
 	}
 
 
-	public static Result goToInfoMenu(){
+	public static Result goToInfoMenu() {
 		// TODO:
 		return null;
 	}
 
-	public static Result showGameHistory(int number){
+	public static Result showGameHistory(int number) {
 		// TODO:
 		return null;
 	}

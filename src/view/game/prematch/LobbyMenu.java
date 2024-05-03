@@ -13,7 +13,7 @@ public class LobbyMenu implements Menuable {
 
 	}
 
-	private Result selectFaction(Matcher matcher){
+	private Result selectFaction(Matcher matcher) {
 		// TODO:
 		return null;
 	}
@@ -23,22 +23,22 @@ public class LobbyMenu implements Menuable {
 		return null;
 	}
 
-	private Result loadDeck(Matcher matcher){
+	private Result loadDeck(Matcher matcher) {
 		// TODO:
 		return null;
 	}
 
-	private Result selectLeader(Matcher matcher){
+	private Result selectLeader(Matcher matcher) {
 		// TODO:
 		return null;
 	}
 
-	private Result addToDeck(Matcher matcher){
+	private Result addToDeck(Matcher matcher) {
 		// TODO:
 		return null;
 	}
 
-	private Result deleteFromDeck(Matcher matcher){
+	private Result deleteFromDeck(Matcher matcher) {
 		// TODO:
 		return null;
 	}

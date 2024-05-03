@@ -8,12 +8,12 @@ import java.util.regex.Matcher;
 
 public class InfoMenu implements Menuable {
 
-    @Override
+	@Override
 	public void run(Scanner scanner) {
 
 	}
 
-	private Result showGameHistory(Matcher matcher){
+	private Result showGameHistory(Matcher matcher) {
 		// TODO:
 		return null;
 	}
