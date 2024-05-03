@@ -6,7 +6,7 @@ import view.Menuable;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
-public class GameMenu implements Menuable {
+public class MatchMenu implements Menuable {
 
 	@Override
 	public void run(Scanner scanner) {
