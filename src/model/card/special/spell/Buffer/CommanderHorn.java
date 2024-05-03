@@ -1,8 +1,6 @@
-package model.card.special;
+package model.card.special.spell.Buffer;
 
-import model.card.Card;
-
-public class CommanderHorn extends Card {
+public class CommanderHorn extends Buffer {
 
 	public CommanderHorn(String name) {
 		super(name);
