@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>D:/ap/GoPastTenseOfGo/src</OriginalElement>
+  <nodes>
+    <node x="4304.0" y="1148.0">model.card.unit.ranged.MoralBoosterRanged</node>
+    <node x="5238.25" y="622.0">model.card.unit.agile.Agile</node>
+    <node x="4848.0" y="1148.0">model.card.unit.siege.TightBondSiege</node>
+    <node x="5005.75" y="756.0">model.card.unit.melee.Melee</node>
+    <node x="126.5" y="756.0">model.card.special.spell.weather.Weather</node>
+    <node x="1022.0657894736851" y="781.5">model.card.ability.Berserker</node>
+    <node x="2579.0000000000005" y="1148.0">model.card.unit.melee.ScorchMelee</node>
+    <node x="2085.0000000000005" y="1148.0">model.card.unit.melee.BerserkerMelee</node>
+    <node x="4393.748449308297" y="2261.36443789474">controller.UserMenusController</node>
+    <node x="1788.0000000000005" y="1148.0">model.card.unit.ranged.HeroMardroemeRanged</node>
+    <node x="772.0" y="1295.0">model.User</node>
+    <node x="6256.747076023392" y="781.5">model.card.ability.MoralBooster</node>
+    <node x="7917.0" y="1473.0">model.leader.northernrealms.KingOfTemeria</node>
+    <node x="4572.866705225815" y="2054.36443789474">view.user.InfoMenu</node>
+    <node x="2238.28603263938" y="2054.36443789474">view.game.prematch.MatchFinderMenu</node>
+    <node x="3403.810262754627" y="2043.3644378947404">view.sign.login.LoginMenu</node>
+    <node x="3695.2680844058646" y="1637.5779658643419">model.Result</node>
+    <node x="6650.243421052632" y="178.0">model.card.unit.Unit</node>
+    <node x="3339.0000000000005" y="1148.0">model.card.unit.melee.MedicMelee</node>
+    <node x="7388.0" y="1148.0">model.card.unit.agile.HeroMoralBoosterAgile</node>
+    <node x="6413.747076023392" y="781.5">model.card.ability.Spy</node>
+    <node x="3809.0000000000005" y="1148.0">model.card.unit.ranged.HeroRanged</node>
+    <node x="7431.0" y="1473.0">model.leader.scoiataell.HopeOfAenSeidhe</node>
+    <node x="2845.8390271604458" y="1604.5779658643419">controller.enums.Validation</node>
+    <node x="3083.0000000000005" y="1148.0">model.card.unit.melee.TightBondMelee</node>
+    <node x="2662.8049255167657" y="2261.36443789474">controller.sign.RegisterMenusController</node>
+    <node x="3965.0625298999134" y="2065.36443789474">view.MainMenu</node>
+    <node x="6381.0" y="1148.0">model.card.unit.melee.HeroSpyMelee</node>
+    <node x="3678.7680844058646" y="2054.36443789474">view.sign.login.SetPasswordMenu</node>
+    <node x="3032.128654970761" y="622.0">model.card.special.Decoy</node>
+    <node x="5114.0" y="1473.0">model.leader.scoiataell.Beautiful</node>
+    <node x="6351.5" y="1295.0">model.leader.Leader</node>
+    <node x="3444.810262754627" y="1882.8644378947404">view.Menuable</node>
+    <node x="404.00000000000045" y="1172.0">model.card.special.spell.Buffer.Mardroeme</node>
+    <node x="1983.128654970761" y="756.0">model.card.unit.ranged.Ranged</node>
+    <node x="7778.0" y="1473.0">model.leader.skellige.KingBran</node>
+    <node x="8914.0" y="1148.0">model.card.unit.siege.HornSiege</node>
+    <node x="2563.062529899913" y="2054.36443789474">view.sign.register.PickQuestionMenu</node>
+    <node x="4257.4142208124385" y="2021.3644378947404">view.user.ProfileMenu</node>
+    <node x="1538.440789473685" y="781.5">model.card.ability.Scorch</node>
+    <node x="278.75" y="635.0">model.card.special.spell.Spell</node>
+    <node x="6108.747076023392" y="781.5">model.card.ability.Transformer</node>
+    <node x="6251.0" y="1473.0">model.leader.nilfgaardian.ImperialMajesty</node>
+    <node x="0.0" y="1295.0">model.game.Game</node>
+    <node x="1935.5095353788474" y="1999.3644378947404">view.game.prematch.LobbyMenu</node>
+    <node x="5849.0" y="1148.0">model.card.unit.melee.HeroMoralBoosterMelee</node>
+    <node x="7005.0" y="1473.0">model.leader.nilfgaardian.Relentless</node>
+    <node x="7682.0" y="1148.0">model.card.unit.siege.HeroSiege</node>
+    <node x="2912.940789473685" y="781.5">model.card.ability.Mardroeme</node>
+    <node x="1283.0000000000005" y="1148.0">model.card.unit.ranged.TightBondRanged</node>
+    <node x="6900.0" y="1148.0">model.card.unit.melee.SpyMelee</node>
+    <node x="986.8049255167657" y="2021.3644378947401">model.GameInfo</node>
+    <node x="2958.878654970761" y="347.0">model.card.special.Special</node>
+    <node x="1542.2812149556466" y="2021.36443789474">view.game.MatchMenu</node>
+    <node x="1547.0000000000005" y="1148.0">model.card.unit.ranged.MedicRanged</node>
+    <node x="3786.8062865497077" y="781.5">model.card.ability.Muster</node>
+    <node x="2334.0000000000005" y="1148.0">model.card.unit.ranged.MusterRanged</node>
+    <node x="6627.0" y="1148.0">model.card.unit.melee.MoralBoosterMelee</node>
+    <node x="7283.0" y="1473.0">model.leader.northernrealms.SteelForged</node>
+    <node x="782.0000000000005" y="1148.0">model.card.unit.ranged.BerserkerRanged</node>
+    <node x="7120.0" y="1148.0">model.card.unit.agile.MoralBoosterAgile</node>
+    <node x="3572.0000000000005" y="1148.0">model.card.unit.melee.MusterMelee</node>
+    <node x="1537.2812149556466" y="2261.36443789474">controller.game.MatchMenuController</node>
+    <node x="6148.0" y="1148.0">model.card.unit.siege.MusterSiege</node>
+    <node x="4044.0000000000005" y="1148.0">model.card.unit.melee.HeroMedicMelee</node>
+    <node x="5799.690789473685" y="781.5">model.card.ability.Hero</node>
+    <node x="5328.0" y="1148.0">model.card.unit.siege.MedicSiege</node>
+    <node x="7906.0" y="1148.0">model.card.unit.melee.HornMelee</node>
+    <node x="3117.352441103389" y="1648.5779658643419">model.Question</node>
+    <node x="5940.0" y="1473.0">model.leader.monsters.BringerOfDeath</node>
+    <node x="6866.0" y="1473.0">model.leader.nilfgaardian.Invader</node>
+    <node x="3677.8062865497077" y="781.5">model.card.ability.Medic</node>
+    <node x="6423.0" y="1473.0">model.leader.monsters.CommanderOfTheRedRiders</node>
+    <node x="4778.0" y="1473.0">model.leader.scoiataell.DaisyOfTheValley</node>
+    <node x="8429.0" y="1148.0">model.card.unit.siege.MoralBoosterSiege</node>
+    <node x="428.5" y="1295.0">model.game.space.Space</node>
+    <node x="4960.0" y="1473.0">model.leader.scoiataell.PurebloodElf</node>
+    <node x="3272.9970760233923" y="781.5">model.card.ability.TightBond</node>
+    <node x="2815.0000000000005" y="1148.0">model.card.unit.ranged.HeroMedicRanged</node>
+    <node x="2846.8390271604458" y="2054.36443789474">view.sign.register.RegisterMenu</node>
+    <node x="272.0" y="1172.0">model.card.special.spell.weather.Fog</node>
+    <node x="4585.0" y="1148.0">model.card.unit.melee.HeroMusterMelee</node>
+    <node x="5452.0" y="1473.0">model.leader.skellige.CrachAnCraite</node>
+    <node x="7144.0" y="1473.0">model.leader.nilfgaardian.Emperor</node>
+    <node x="419.00000000000045" y="756.0">model.card.special.spell.Buffer.Buffer</node>
+    <node x="6677.0" y="1473.0">model.leader.monsters.DestroyerOfWorld</node>
+    <node x="3394.810262754627" y="2261.36443789474">controller.sign.LoginMenusController</node>
+    <node x="7622.0" y="1473.0">model.leader.northernrealms.SonOfMedell</node>
+    <node x="5613.0" y="1473.0">model.leader.northernrealms.LordCommander</node>
+    <node x="8867.681286549709" y="781.5">model.card.ability.Horn</node>
+    <node x="541.0" y="1627.0">model.game.space.WeatherSystem</node>
+    <node x="3127.852441103389" y="2054.36443789474">view.sign.login.ForgotPasswordMenu</node>
+    <node x="137.0" y="1172.0">model.card.special.spell.weather.Rain</node>
+    <node x="5793.0" y="1473.0">model.leader.nilfgaardian.WhiteFlame</node>
+    <node x="8083.0" y="1473.0">model.leader.scoiataell.QueenOfDolBlathanna</node>
+    <node x="8698.0" y="1148.0">model.card.unit.siege.SpySiege</node>
+    <node x="5558.0" y="1148.0">model.card.unit.melee.HeroTransformerMelee</node>
+    <node x="5253.0" y="1473.0">model.leader.monsters.KingOfTheWildHunt</node>
+    <node x="4465.122076023392" y="0.0">model.card.Card</node>
+    <node x="578.0000000000005" y="1159.0">model.card.special.spell.Buffer.CommanderHorn</node>
+    <node x="0.0" y="1172.0">model.card.special.spell.weather.Frost</node>
+    <node x="6111.0" y="1473.0">model.leader.monsters.Treacheros</node>
+    <node x="1039.0000000000005" y="1148.0">model.card.unit.ranged.ScorchRanged</node>
+    <node x="7914.618421052632" y="756.0">model.card.unit.siege.Siege</node>
+    <node x="3925.562529899914" y="2261.36443789474">controller.MainMenuController</node>
+    <node x="8133.0" y="1148.0">model.card.unit.siege.HeroMoralBoosterSiege</node>
+    <node x="5101.0" y="1148.0">model.card.unit.melee.HeroMelee</node>
+    <node x="2080.0" y="2261.36443789474">controller.game.PreMatchMenusController</node>
+    <node x="3441.310262754627" y="1696.3644378947404">Main</node>
+    <node x="315.0" y="1495.0">model.game.space.Row</node>
+    <node x="4628.0" y="1473.0">model.leader.northernrealms.SiegeMaster</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="model.card.unit.ranged.ScorchRanged" target="model.card.ability.Scorch" relationship="REALIZATION">
+      <point x="-56.0" y="-51.0" />
+      <point x="1095.0000000000005" y="1117.0" />
+      <point x="1584.940789473685" y="1117.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.leader.northernrealms.KingOfTemeria" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="7990.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.MedicRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="-55.25" y="-51.0" />
+      <point x="1602.2500000000005" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="view.user.ProfileMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-84.0" />
+      <point x="4373.9142208124385" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.HeroMardroemeRanged" target="model.card.ability.Mardroeme" relationship="REALIZATION">
+      <point x="69.25" y="-51.0" />
+      <point x="1995.7500000000005" y="1107.0" />
+      <point x="3531.7470760233923" y="1107.0" />
+      <point x="3531.7470760233923" y="937.0" />
+      <point x="2975.440789473685" y="937.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.special.Decoy" target="model.card.special.Special" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="3094.628654970761" y="596.0" />
+      <point x="3023.878654970761" y="596.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.MusterRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="-56.25" y="-51.0" />
+      <point x="2390.2500000000005" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.TightBondRanged" target="model.card.ability.TightBond" relationship="REALIZATION">
+      <point x="61.0" y="-51.0" />
+      <point x="1466.0000000000005" y="1077.0" />
+      <point x="3330.9970760233923" y="1077.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.siege.TightBondSiege" target="model.card.ability.TightBond" relationship="REALIZATION">
+      <point x="-58.25" y="-51.0" />
+      <point x="4906.25" y="1077.0" />
+      <point x="3330.9970760233923" y="1077.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroSpyMelee" target="model.card.ability.Spy" relationship="REALIZATION">
+      <point x="56.5" y="-51.0" />
+      <point x="6550.5" y="1127.0" />
+      <point x="6249.247076023392" y="1127.0" />
+      <point x="6249.247076023392" y="977.0" />
+      <point x="6450.747076023392" y="977.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.siege.MoralBoosterSiege" target="model.card.ability.MoralBooster" relationship="REALIZATION">
+      <point x="-62.25" y="-51.0" />
+      <point x="8491.25" y="997.0" />
+      <point x="6324.747076023392" y="997.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.siege.MedicSiege" target="model.card.unit.siege.Siege" relationship="GENERALIZATION">
+      <point x="52.5" y="-51.0" />
+      <point x="5485.5" y="987.0" />
+      <point x="8003.118421052632" y="987.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.ScorchMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="54.0" y="-51.0" />
+      <point x="2741.0000000000005" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="view.MainMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="4036.5625298999134" y="2007.3644378947401" />
+      <point x="3516.310262754627" y="2007.3644378947401" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroTransformerMelee" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="67.75" y="-51.0" />
+      <point x="5761.25" y="1127.0" />
+      <point x="6084.997076023392" y="1127.0" />
+      <point x="6084.997076023392" y="927.0" />
+      <point x="5840.690789473685" y="927.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.special.spell.weather.Fog" target="model.card.special.spell.weather.Weather" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="328.0" y="1127.0" />
+      <point x="194.5" y="1127.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.HeroMardroemeRanged" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="69.25" y="-51.0" />
+      <point x="1995.7500000000005" y="1107.0" />
+      <point x="3531.7470760233923" y="1107.0" />
+      <point x="3531.7470760233923" y="947.0" />
+      <point x="5840.690789473685" y="947.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.MedicMelee" target="model.card.ability.Medic" relationship="REALIZATION">
+      <point x="-53.25" y="-51.0" />
+      <point x="3392.2500000000005" y="1057.0" />
+      <point x="3722.3062865497077" y="1057.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.leader.scoiataell.Beautiful" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="5173.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.leader.monsters.KingOfTheWildHunt" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="5342.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.melee.SpyMelee" target="model.card.ability.Spy" relationship="REALIZATION">
+      <point x="50.0" y="-51.0" />
+      <point x="7050.0" y="857.0" />
+      <point x="6450.747076023392" y="857.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.ranged.BerserkerRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="59.25" y="-51.0" />
+      <point x="959.7500000000005" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.agile.HeroMoralBoosterAgile" target="model.card.unit.agile.Agile" relationship="GENERALIZATION">
+      <point x="68.5" y="-51.0" />
+      <point x="7593.5" y="867.0" />
+      <point x="6403.247076023392" y="867.0" />
+      <point x="6403.247076023392" y="729.0" />
+      <point x="5326.25" y="729.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.MoralBoosterMelee" target="model.card.ability.MoralBooster" relationship="REALIZATION">
+      <point x="63.25" y="-51.0" />
+      <point x="6816.75" y="997.0" />
+      <point x="6324.747076023392" y="997.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.siege.HeroSiege" target="model.card.unit.siege.Siege" relationship="GENERALIZATION">
+      <point x="51.0" y="-51.0" />
+      <point x="7835.0" y="987.0" />
+      <point x="8003.118421052632" y="987.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.special.spell.weather.Frost" target="model.card.special.spell.weather.Weather" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="58.5" y="1127.0" />
+      <point x="194.5" y="1127.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.agile.Agile" target="model.card.unit.Unit" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="5326.25" y="596.0" />
+      <point x="6740.243421052632" y="596.0" />
+      <point x="0.0" y="196.0" />
+    </edge>
+    <edge source="model.card.unit.Unit" target="model.card.Card" relationship="GENERALIZATION">
+      <point x="0.0" y="-196.0" />
+      <point x="6740.243421052632" y="153.0" />
+      <point x="4523.122076023392" y="153.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.leader.northernrealms.LordCommander" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="5693.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.leader.monsters.Treacheros" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="6171.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.siege.SpySiege" target="model.card.unit.siege.Siege" relationship="GENERALIZATION">
+      <point x="49.0" y="-51.0" />
+      <point x="8845.0" y="987.0" />
+      <point x="8003.118421052632" y="987.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.BerserkerMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="57.25" y="-51.0" />
+      <point x="2256.7500000000005" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.special.spell.weather.Rain" target="model.card.special.spell.weather.Weather" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.leader.nilfgaardian.Emperor" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="7203.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.special.spell.weather.Weather" target="model.card.special.spell.Spell" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="194.5" y="729.0" />
+      <point x="337.75" y="729.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.siege.SpySiege" target="model.card.ability.Spy" relationship="REALIZATION">
+      <point x="-49.0" y="-51.0" />
+      <point x="8747.0" y="857.0" />
+      <point x="6450.747076023392" y="857.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMoralBoosterMelee" target="model.card.ability.MoralBooster" relationship="REALIZATION">
+      <point x="69.75" y="-51.0" />
+      <point x="6058.25" y="1117.0" />
+      <point x="6166.247076023392" y="1117.0" />
+      <point x="6166.247076023392" y="947.0" />
+      <point x="6324.747076023392" y="947.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.special.Special" target="model.card.Card" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="3023.878654970761" y="153.0" />
+      <point x="4523.122076023392" y="153.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.BerserkerRanged" target="model.card.ability.Berserker" relationship="REALIZATION">
+      <point x="-59.25" y="-51.0" />
+      <point x="841.2500000000005" y="1127.0" />
+      <point x="1076.065789473685" y="1127.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.leader.northernrealms.SiegeMaster" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="4693.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.leader.monsters.DestroyerOfWorld" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="6761.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="view.user.InfoMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-51.0" />
+      <point x="4691.866705225815" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMoralBoosterMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="-69.75" y="-51.0" />
+      <point x="5918.75" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.siege.TightBondSiege" target="model.card.unit.siege.Siege" relationship="GENERALIZATION">
+      <point x="58.25" y="-51.0" />
+      <point x="5022.75" y="987.0" />
+      <point x="8003.118421052632" y="987.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.siege.HeroMoralBoosterSiege" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="-69.0" y="-51.0" />
+      <point x="8202.0" y="1007.0" />
+      <point x="6196.247076023392" y="1007.0" />
+      <point x="6196.247076023392" y="897.0" />
+      <point x="5840.690789473685" y="897.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.siege.HornSiege" target="model.card.ability.Horn" relationship="REALIZATION">
+      <point x="51.0" y="-51.0" />
+      <point x="9067.0" y="977.0" />
+      <point x="8908.681286549709" y="977.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.leader.scoiataell.HopeOfAenSeidhe" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="7516.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.special.spell.Buffer.Mardroeme" target="model.card.special.spell.Buffer.Buffer" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.MusterMelee" target="model.card.ability.Muster" relationship="REALIZATION">
+      <point x="-54.25" y="-51.0" />
+      <point x="3626.2500000000005" y="1047.0" />
+      <point x="3833.8062865497077" y="1047.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.siege.HornSiege" target="model.card.unit.siege.Siege" relationship="GENERALIZATION">
+      <point x="-51.0" y="-51.0" />
+      <point x="8965.0" y="987.0" />
+      <point x="8003.118421052632" y="987.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMelee" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="51.75" y="-51.0" />
+      <point x="5256.25" y="1027.0" />
+      <point x="5840.690789473685" y="1027.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.game.space.Row" target="model.game.space.Space" relationship="GENERALIZATION">
+      <point x="0.0" y="-196.0" />
+      <point x="418.0" y="1470.0" />
+      <point x="526.0" y="1470.0" />
+      <point x="0.0" y="75.0" />
+    </edge>
+    <edge source="model.leader.monsters.CommanderOfTheRedRiders" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="6540.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.leader.scoiataell.QueenOfDolBlathanna" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="8180.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.melee.ScorchMelee" target="model.card.ability.Scorch" relationship="REALIZATION">
+      <point x="-54.0" y="-51.0" />
+      <point x="2633.0000000000005" y="1117.0" />
+      <point x="1584.940789473685" y="1117.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.leader.monsters.BringerOfDeath" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="6015.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.leader.skellige.CrachAnCraite" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="5522.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.special.spell.Buffer.Buffer" target="model.card.special.spell.Spell" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="481.00000000000045" y="729.0" />
+      <point x="337.75" y="729.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.siege.Siege" target="model.card.unit.Unit" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="8003.118421052632" y="596.0" />
+      <point x="6740.243421052632" y="596.0" />
+      <point x="0.0" y="196.0" />
+    </edge>
+    <edge source="model.leader.northernrealms.SonOfMedell" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="7690.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.HeroMardroemeRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="-69.25" y="-51.0" />
+      <point x="1857.2500000000005" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="view.sign.register.RegisterMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-51.0" />
+      <point x="2937.8390271604458" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.MusterRanged" target="model.card.ability.Muster" relationship="REALIZATION">
+      <point x="56.25" y="-51.0" />
+      <point x="2502.7500000000005" y="1047.0" />
+      <point x="3833.8062865497077" y="1047.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.HornMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="-51.75" y="-51.0" />
+      <point x="7957.75" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="-51.75" y="-51.0" />
+      <point x="5152.75" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMoralBoosterMelee" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="69.75" y="-51.0" />
+      <point x="6058.25" y="1117.0" />
+      <point x="6166.247076023392" y="1117.0" />
+      <point x="6166.247076023392" y="917.0" />
+      <point x="5840.690789473685" y="917.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.leader.nilfgaardian.Invader" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="6925.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="view.sign.login.LoginMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-62.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.leader.scoiataell.PurebloodElf" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="5027.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.Ranged" target="model.card.unit.agile.Agile" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="2077.128654970761" y="729.0" />
+      <point x="5326.25" y="729.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.MoralBoosterRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="-65.25" y="-51.0" />
+      <point x="4369.25" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.leader.northernrealms.SteelForged" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="7347.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMedicMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="60.0" y="-51.0" />
+      <point x="4224.0" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.HeroRanged" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="53.75" y="-51.0" />
+      <point x="3970.2500000000005" y="1027.0" />
+      <point x="5840.690789473685" y="1027.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.ranged.MoralBoosterRanged" target="model.card.ability.MoralBooster" relationship="REALIZATION">
+      <point x="65.25" y="-51.0" />
+      <point x="4499.75" y="997.0" />
+      <point x="6324.747076023392" y="997.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.ranged.HeroMedicRanged" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="62.0" y="-51.0" />
+      <point x="3001.0000000000005" y="1097.0" />
+      <point x="3849.1220760233923" y="1097.0" />
+      <point x="3849.1220760233923" y="957.0" />
+      <point x="5840.690789473685" y="957.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="view.sign.login.ForgotPasswordMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-51.0" />
+      <point x="3240.852441103389" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroSpyMelee" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="56.5" y="-51.0" />
+      <point x="6550.5" y="1127.0" />
+      <point x="6249.247076023392" y="1127.0" />
+      <point x="6249.247076023392" y="887.0" />
+      <point x="5840.690789473685" y="887.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.ranged.MedicRanged" target="model.card.ability.Medic" relationship="REALIZATION">
+      <point x="55.25" y="-51.0" />
+      <point x="1712.7500000000005" y="1057.0" />
+      <point x="3722.3062865497077" y="1057.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroSpyMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="-56.5" y="-51.0" />
+      <point x="6437.5" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.siege.HeroSiege" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="-51.0" y="-51.0" />
+      <point x="7733.0" y="1027.0" />
+      <point x="5840.690789473685" y="1027.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.agile.MoralBoosterAgile" target="model.card.unit.agile.Agile" relationship="GENERALIZATION">
+      <point x="-62.0" y="-51.0" />
+      <point x="7182.0" y="877.0" />
+      <point x="6246.247076023392" y="877.0" />
+      <point x="6246.247076023392" y="729.0" />
+      <point x="5326.25" y="729.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.TightBondMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="59.0" y="-51.0" />
+      <point x="3260.0000000000005" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMusterMelee" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="-60.75" y="-51.0" />
+      <point x="4645.75" y="1067.0" />
+      <point x="5151.622076023392" y="1067.0" />
+      <point x="5151.622076023392" y="977.0" />
+      <point x="5840.690789473685" y="977.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroTransformerMelee" target="model.card.ability.Transformer" relationship="REALIZATION">
+      <point x="67.75" y="-51.0" />
+      <point x="5761.25" y="1127.0" />
+      <point x="6084.997076023392" y="1127.0" />
+      <point x="6084.997076023392" y="937.0" />
+      <point x="6172.247076023392" y="937.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.game.space.WeatherSystem" target="model.game.space.Space" relationship="GENERALIZATION">
+      <point x="0.0" y="-64.0" />
+      <point x="634.0" y="1470.0" />
+      <point x="526.0" y="1470.0" />
+      <point x="0.0" y="75.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMusterMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="60.75" y="-51.0" />
+      <point x="4767.25" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.SpyMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="-50.0" y="-51.0" />
+      <point x="6950.0" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.agile.HeroMoralBoosterAgile" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="-68.5" y="-51.0" />
+      <point x="7456.5" y="1037.0" />
+      <point x="6186.247076023392" y="1037.0" />
+      <point x="6186.247076023392" y="907.0" />
+      <point x="5840.690789473685" y="907.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMedicMelee" target="model.card.ability.Medic" relationship="REALIZATION">
+      <point x="-60.0" y="-51.0" />
+      <point x="4104.0" y="1127.0" />
+      <point x="4204.181286549708" y="1127.0" />
+      <point x="4204.181286549708" y="927.0" />
+      <point x="3722.3062865497077" y="927.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.ranged.TightBondRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="-61.0" y="-51.0" />
+      <point x="1344.0000000000005" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.siege.MedicSiege" target="model.card.ability.Medic" relationship="REALIZATION">
+      <point x="-52.5" y="-51.0" />
+      <point x="5380.5" y="1057.0" />
+      <point x="3722.3062865497077" y="1057.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.leader.nilfgaardian.WhiteFlame" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="5856.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="view.game.prematch.MatchFinderMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-51.0" />
+      <point x="2341.28603263938" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.melee.MusterMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="54.25" y="-51.0" />
+      <point x="3734.7500000000005" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMedicMelee" target="model.card.ability.Hero" relationship="REALIZATION">
+      <point x="-60.0" y="-51.0" />
+      <point x="4104.0" y="1127.0" />
+      <point x="4204.181286549708" y="1127.0" />
+      <point x="4204.181286549708" y="967.0" />
+      <point x="5840.690789473685" y="967.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.agile.HeroMoralBoosterAgile" target="model.card.ability.MoralBooster" relationship="REALIZATION">
+      <point x="-68.5" y="-51.0" />
+      <point x="7456.5" y="1037.0" />
+      <point x="6186.247076023392" y="1037.0" />
+      <point x="6186.247076023392" y="957.0" />
+      <point x="6324.747076023392" y="957.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.MoralBoosterMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="-63.25" y="-51.0" />
+      <point x="6690.25" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.siege.MusterSiege" target="model.card.unit.siege.Siege" relationship="GENERALIZATION">
+      <point x="53.25" y="-51.0" />
+      <point x="6307.75" y="987.0" />
+      <point x="8003.118421052632" y="987.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.leader.nilfgaardian.Relentless" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="7064.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.siege.MusterSiege" target="model.card.ability.Muster" relationship="REALIZATION">
+      <point x="-53.25" y="-51.0" />
+      <point x="6201.25" y="1047.0" />
+      <point x="3833.8062865497077" y="1047.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroTransformerMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="-67.75" y="-51.0" />
+      <point x="5625.75" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.special.spell.Buffer.CommanderHorn" target="model.card.special.spell.Buffer.Buffer" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="670.0000000000005" y="1127.0" />
+      <point x="481.00000000000045" y="1127.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.HeroMedicRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="-62.0" y="-51.0" />
+      <point x="2877.0000000000005" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.special.spell.Spell" target="model.card.special.Special" relationship="GENERALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="337.75" y="596.0" />
+      <point x="3023.878654970761" y="596.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.siege.HeroMoralBoosterSiege" target="model.card.unit.siege.Siege" relationship="GENERALIZATION">
+      <point x="69.0" y="-51.0" />
+      <point x="8340.0" y="987.0" />
+      <point x="8003.118421052632" y="987.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.ScorchRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="56.0" y="-51.0" />
+      <point x="1207.0000000000005" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HornMelee" target="model.card.ability.Horn" relationship="REALIZATION">
+      <point x="51.75" y="-51.0" />
+      <point x="8061.25" y="977.0" />
+      <point x="8908.681286549709" y="977.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.TightBondMelee" target="model.card.ability.TightBond" relationship="REALIZATION">
+      <point x="-59.0" y="-51.0" />
+      <point x="3142.0000000000005" y="1077.0" />
+      <point x="3330.9970760233923" y="1077.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.melee.MedicMelee" target="model.card.unit.melee.Melee" relationship="GENERALIZATION">
+      <point x="53.25" y="-51.0" />
+      <point x="3498.7500000000005" y="1017.0" />
+      <point x="5095.75" y="1017.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.melee.BerserkerMelee" target="model.card.ability.Berserker" relationship="REALIZATION">
+      <point x="-57.25" y="-51.0" />
+      <point x="2142.2500000000005" y="1127.0" />
+      <point x="1076.065789473685" y="1127.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.ranged.HeroMedicRanged" target="model.card.ability.Medic" relationship="REALIZATION">
+      <point x="62.0" y="-51.0" />
+      <point x="3001.0000000000005" y="1097.0" />
+      <point x="3849.1220760233923" y="1097.0" />
+      <point x="3849.1220760233923" y="937.0" />
+      <point x="3722.3062865497077" y="937.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="view.game.MatchMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-84.0" />
+      <point x="1641.2812149556466" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.leader.nilfgaardian.ImperialMajesty" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="6327.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.leader.skellige.KingBran" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="7837.5" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.melee.HeroMusterMelee" target="model.card.ability.Muster" relationship="REALIZATION">
+      <point x="-60.75" y="-51.0" />
+      <point x="4645.75" y="1067.0" />
+      <point x="5151.622076023392" y="1067.0" />
+      <point x="5151.622076023392" y="917.0" />
+      <point x="3833.8062865497077" y="917.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="view.sign.login.SetPasswordMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-51.0" />
+      <point x="3781.7680844058646" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.card.unit.melee.Melee" target="model.card.unit.agile.Agile" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="5095.75" y="729.0" />
+      <point x="5326.25" y="729.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="view.sign.register.PickQuestionMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-51.0" />
+      <point x="2668.062529899913" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="model.leader.scoiataell.DaisyOfTheValley" target="model.leader.Leader" relationship="GENERALIZATION">
+      <point x="0.0" y="-40.0" />
+      <point x="4859.0" y="1448.0" />
+      <point x="6433.5" y="1448.0" />
+      <point x="0.0" y="64.0" />
+    </edge>
+    <edge source="model.card.unit.agile.MoralBoosterAgile" target="model.card.ability.MoralBooster" relationship="REALIZATION">
+      <point x="62.0" y="-51.0" />
+      <point x="7306.0" y="997.0" />
+      <point x="6324.747076023392" y="997.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.siege.HeroMoralBoosterSiege" target="model.card.ability.MoralBooster" relationship="REALIZATION">
+      <point x="-69.0" y="-51.0" />
+      <point x="8202.0" y="1007.0" />
+      <point x="6196.247076023392" y="1007.0" />
+      <point x="6196.247076023392" y="967.0" />
+      <point x="6324.747076023392" y="967.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="model.card.unit.siege.MoralBoosterSiege" target="model.card.unit.siege.Siege" relationship="GENERALIZATION">
+      <point x="62.25" y="-51.0" />
+      <point x="8615.75" y="987.0" />
+      <point x="8003.118421052632" y="987.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="model.card.unit.ranged.HeroRanged" target="model.card.unit.ranged.Ranged" relationship="GENERALIZATION">
+      <point x="-53.75" y="-51.0" />
+      <point x="3862.7500000000005" y="1087.0" />
+      <point x="2077.128654970761" y="1087.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="view.game.prematch.LobbyMenu" target="view.Menuable" relationship="REALIZATION">
+      <point x="0.0" y="-106.0" />
+      <point x="2050.0095353788474" y="1974.3644378947404" />
+      <point x="3516.310262754627" y="1974.3644378947404" />
+      <point x="0.0" y="27.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.25" showDependencies="false" x="4074.0" y="1954.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
