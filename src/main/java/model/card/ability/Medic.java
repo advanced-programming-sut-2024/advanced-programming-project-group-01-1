@@ -1,4 +1,17 @@
 package model.card.ability;
 
-public interface Medic {
+import model.card.Card;
+
+public enum Medic implements Ability {
+	MEDIC;
+
+	@Override
+	public void act(Card card) {
+
+	}
+
+	@Override
+	public void undo(Card card) {
+
+	}
 }

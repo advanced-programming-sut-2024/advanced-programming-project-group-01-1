@@ -1,4 +1,17 @@
 package model.card.ability;
 
-public interface Spy {
+import model.card.Card;
+
+public enum Spy implements Ability {
+	SPY;
+
+	@Override
+	public void act(Card card) {
+
+	}
+
+	@Override
+	public void undo(Card card) {
+
+	}
 }

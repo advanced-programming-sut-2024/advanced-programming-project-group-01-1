@@ -1,4 +1,17 @@
 package model.card.ability;
 
-public interface Transformer {
+import model.card.Card;
+
+public enum Transformer implements Ability {
+	TRANSFORMER;
+
+	@Override
+	public void act(Card card) {
+
+	}
+
+	@Override
+	public void undo(Card card) {
+
+	}
 }

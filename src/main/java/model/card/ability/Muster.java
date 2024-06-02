@@ -1,6 +1,18 @@
 package model.card.ability;
 
-public interface Muster {
-	interface Transformers {
+import model.card.Card;
+
+public enum Muster implements Ability {
+	MUSTER;
+
+	@Override
+	public void act(Card card) {
+
 	}
+
+	@Override
+	public void undo(Card card) {
+
+	}
+
 }

@@ -1,4 +1,17 @@
 package model.card.ability;
 
-public interface TightBond {
+import model.card.Card;
+
+public enum TightBond implements Ability {
+	TIGHT_BOND;
+
+	@Override
+	public void act(Card card) {
+
+	}
+
+	@Override
+	public void undo(Card card) {
+
+	}
 }

@@ -1,4 +1,17 @@
 package model.card.ability;
 
-public interface Mardroeme {
+import model.card.Card;
+
+public enum Mardroeme implements Ability {
+	MARDROEME;
+
+	@Override
+	public void act(Card card) {
+
+	}
+
+	@Override
+	public void undo(Card card) {
+
+	}
 }
