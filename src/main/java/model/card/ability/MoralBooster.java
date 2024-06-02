@@ -3,7 +3,7 @@ package model.card.ability;
 import model.card.Card;
 
 public enum MoralBooster implements Ability {
-	MORAL_BOOSTER;
+	INSTANCE;
 
 	@Override
 	public void act(Card card) {

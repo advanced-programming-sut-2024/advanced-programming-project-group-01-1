@@ -3,7 +3,7 @@ package model.card.ability;
 import model.card.Card;
 
 public enum Horn implements Ability {
-	HORN;
+	INSTANCE;
 
 	@Override
 	public void act(Card card) {

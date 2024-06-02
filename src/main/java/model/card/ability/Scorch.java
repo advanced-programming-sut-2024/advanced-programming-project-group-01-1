@@ -3,7 +3,7 @@ package model.card.ability;
 import model.card.Card;
 
 public enum Scorch implements Ability {
-	SCORCH;
+	INSTANCE;
 
 	@Override
 	public void act(Card card) {

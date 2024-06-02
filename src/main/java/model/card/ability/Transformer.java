@@ -3,7 +3,7 @@ package model.card.ability;
 import model.card.Card;
 
 public enum Transformer implements Ability {
-	TRANSFORMER;
+	INSTANCE;
 
 	@Override
 	public void act(Card card) {

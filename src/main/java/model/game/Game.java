@@ -88,7 +88,7 @@ public class Game {
 		return currentLeader;
 	}
 
-	public Row getRows(int index) {
+	public Row getRow(int index) {
 		return rows[index];
 	}
 
