@@ -4,6 +4,5 @@ import java.util.Scanner;
 
 public interface Menuable {
 
-	void run(Scanner scanner);
-
+	void run(String input);
 }

@@ -9,8 +9,8 @@ import java.util.regex.Matcher;
 public class ProfileMenu implements Menuable {
 
 	@Override
-	public void run(Scanner scanner) {
-
+	public void run(String input) {
+		//TODO: Implement the profile menu
 	}
 
 	private Result changeUsername(Matcher matcher) {

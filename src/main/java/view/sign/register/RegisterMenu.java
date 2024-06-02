@@ -9,8 +9,8 @@ import java.util.regex.Matcher;
 public class RegisterMenu implements Menuable {
 
 	@Override
-	public void run(Scanner scanner) {
-		//TODO:
+	public void run(String input) {
+		//TODO: Implement the register menu
 	}
 
 	private Result register(Matcher matcher) {

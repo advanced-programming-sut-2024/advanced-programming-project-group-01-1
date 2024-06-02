@@ -8,8 +8,8 @@ import java.util.regex.Matcher;
 
 public class SetPasswordMenu implements Menuable {
 
-	public void run(Scanner scanner) {
-		// TODO:
+	public void run(String input) {
+		// TODO: Implement the set password menu
 	}
 
 	private Result setPassword(Matcher matcher) {

@@ -9,8 +9,8 @@ import java.util.regex.Matcher;
 public class MatchFinderMenu implements Menuable {
 
 	@Override
-	public void run(Scanner scanner) {
-
+	public void run(String input) {
+		//TODO: Implement the match finder menu
 	}
 
 	private Result createGame(Matcher matcher) {
