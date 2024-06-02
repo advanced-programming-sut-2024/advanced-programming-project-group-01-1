@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Game {
 
+	private static Game currentGame;
 	User current, opponent;
 	Row[] rows;
 	WeatherSystem weatherSystem;
@@ -23,9 +24,17 @@ public class Game {
 	boolean hasOpponentPassed;
 	Leader currentLeader, opponentLeader;
 
-	public Game(User player1, User player2) {
+	private Game(User player1, User player2) {
 		this.current = player1;
 		this.opponent = player2;
+	}
+
+	public static Game createGame(User player1, User player2) {
+		return currentGame = new Game(player1, player2);
+	}
+
+	public static Game getCurrentGame() {
+		return currentGame;
 	}
 
 	public String getCurrentFaction() {
