@@ -1,9 +1,11 @@
 package model.card.special.spell.Buffer;
 
+import model.card.ability.Ability;
+
 public class CommanderHorn extends Buffer {
 
-	public CommanderHorn(String name) {
-		super(name);
+	public CommanderHorn(String name, Ability ability) {
+		super(name, ability);
 	}
 
 	@Override

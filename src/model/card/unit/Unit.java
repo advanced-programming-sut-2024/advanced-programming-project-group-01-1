@@ -1,6 +1,7 @@
 package model.card.unit;
 
 import model.card.Card;
+import model.card.ability.Ability;
 
 public abstract class Unit extends Card {
 
@@ -43,8 +44,8 @@ public abstract class Unit extends Card {
 		this.debuff = debuff;
 	}
 
-	public Unit(String name, String faction, int basePower) {
-		super(name);
+	public Unit(String name, Ability ability, String faction, int basePower) {
+		super(name, ability);
 		this.faction = faction;
 		this.basePower = basePower;
 	}

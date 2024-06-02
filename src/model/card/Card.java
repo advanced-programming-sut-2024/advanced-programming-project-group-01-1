@@ -1,11 +1,14 @@
 package model.card;
 
+import model.card.ability.Ability;
+
 public abstract class Card {
-
 	final String name;
+	final Ability ability;
 
-	public Card(String name) {
+	public Card(String name, Ability ability) {
 		this.name = name;
+		this.ability = ability;
 	}
 
 	public void put(int row) throws Exception {
