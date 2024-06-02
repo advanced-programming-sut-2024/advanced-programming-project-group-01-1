@@ -1,17 +1,18 @@
 package model.card.ability;
 
 import model.card.Card;
+import model.game.space.Space;
 
 public enum MoralBooster implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Card card) {
+	public void act(Card card, Space space) {
 
 	}
 
 	@Override
-	public void undo(Card card) {
+	public void undo(Card card, Space space) {
 
 	}
 }
