@@ -13,6 +13,10 @@ public abstract class Card {
 		this.ability = ability;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public Ability getAbility() {
 		return ability;
 	}
