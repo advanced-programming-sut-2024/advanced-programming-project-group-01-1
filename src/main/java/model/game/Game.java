@@ -13,7 +13,7 @@ public class Game {
 
 	private static Game currentGame;
 	User current, opponent;
-	Row[] rows;
+	Row[] rows = new Row[6];
 	WeatherSystem weatherSystem;
 	Space currentDiscordPile, opponentDiscordPile;
 	Space currentDeck, opponentDeck;
@@ -99,6 +99,13 @@ public class Game {
 
 	public Row getRow(int index) {
 		return rows[index];
+	}
+
+	public Row getEnemy(Row row) {
+		for (int i = 0; i < 6; i++) {
+			if (row == rows[i]) return rows[5 - i];
+		}
+		return null;
 	}
 
 
