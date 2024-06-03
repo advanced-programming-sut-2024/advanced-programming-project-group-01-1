@@ -11,10 +11,6 @@ public class Row extends Space {
 	boolean isDebuffed = false;
 	int sumOfPowers = 0;
 
-	public Row() {
-		this.buffer = null;
-	}
-
 	@Override
 	public void add(Card card) throws Exception {
 
@@ -29,8 +25,8 @@ public class Row extends Space {
 		return sumOfPowers;
 	}
 
-	public void buff(Buffer buffer) throws Exception {
-		// TODO:
+	public void setBuffer(Buffer buffer) throws Exception {
+		this.buffer = buffer;
 		return;
 	}
 

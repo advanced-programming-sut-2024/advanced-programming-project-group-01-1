@@ -11,6 +11,10 @@ public abstract class Card {
 		this.ability = ability;
 	}
 
+	public Ability getAbility() {
+		return ability;
+	}
+
 	public void put(int row) throws Exception {
 
 	}
