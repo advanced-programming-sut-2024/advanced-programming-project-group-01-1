@@ -1,6 +1,7 @@
 package controller.game;
 
 import model.Result;
+import model.card.unit.Unit;
 
 public class MatchMenuController {
 
@@ -84,4 +85,7 @@ public class MatchMenuController {
 		return null;
 	}
 
+	public static Unit medicAsk() {
+		return null;
+	}
 }

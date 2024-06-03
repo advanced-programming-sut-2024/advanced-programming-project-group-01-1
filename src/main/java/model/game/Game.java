@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 public class Game {
 
+	public static final int SIEGE_ROW_NUMBER = 0;
+	public static final int RANGED_ROW_NUMBER = 1;
+	public static final int MELEE_ROW_NUMBER = 2;
 	private static Game currentGame;
 	User current, opponent;
 	Row[] rows = new Row[6];
@@ -62,19 +65,19 @@ public class Game {
 	}
 
 	public ArrayList<Card> getCurrentDeck() {
-		return new ArrayList<>(currentDeck.getCards());
+		return currentDeck.getCards();
 	}
 
 	public ArrayList<Card> getCurrentHand() {
-		return new ArrayList<>(currentHand.getCards());
+		return currentHand.getCards();
 	}
 
 	public ArrayList<Card> getCurrentDiscordPile() {
-		return new ArrayList<>(currentDiscordPile.getCards());
+		return currentDiscordPile.getCards();
 	}
 
 	public ArrayList<Card> getWeatherSystem() {
-		return new ArrayList<>(weatherSystem.getCards());
+		return weatherSystem.getCards();
 	}
 
 	public String getCurrentUsername() {
@@ -100,6 +103,7 @@ public class Game {
 	public Row getRow(int index) {
 		return rows[index];
 	}
+
 
 	public Row getEnemy(Row row) {
 		for (int i = 0; i < 6; i++) {
