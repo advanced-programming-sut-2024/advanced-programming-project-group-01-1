@@ -1,7 +1,10 @@
 package view.sign.login;
 
+import controller.sign.LoginMenusController;
 import model.Result;
+import view.Appview;
 import view.Menuable;
+import view.sign.register.RegisterMenu;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -10,16 +13,46 @@ public class LoginMenu implements Menuable {
 
 	@Override
 	public void run(String input) {
-		// TODO: Implement the login menu
+		Matcher matcher;
+		Result result;
+		if ((matcher = LoginMenuCommands.LOGIN.getMatcher(input)) != null) {
+			result = login(matcher);
+		} else if ((matcher = LoginMenuCommands.FORGOT_PASSWORD.getMatcher(input)) != null) {
+			result = forgotPassword(matcher);
+		} else if ((matcher = LoginMenuCommands.ENTER_REGISTER_MENU.getMatcher(input)) != null) {
+			result = goToRegisterMenu(matcher);
+		} else if ((matcher = LoginMenuCommands.EXIT.getMatcher(input)) != null) {
+			result = exit(matcher);
+		} else{
+			result = new Result("Invalid command", false);
+		}
+		if (result != null) {
+			System.out.println(result);
+		}
 	}
 
 	private Result login(Matcher matcher) {
-		// TODO:
-		return null;
+		String username = matcher.group("username");
+		String password = matcher.group("password");
+		boolean stayLoggedIn = matcher.group("stayLoggedIn") != null;
+		Result result = LoginMenusController.login(username, password, stayLoggedIn);
+		return result;
 	}
 
 	private Result forgotPassword(Matcher matcher) {
-		// TODO:
+		String username = matcher.group("username");
+		Result result = LoginMenusController.forgotPassword(username);
+		Appview.setMenu(new ForgotPasswordMenu());
+		return result;
+	}
+
+	private Result goToRegisterMenu(Matcher matcher) {
+		Appview.setMenu(new RegisterMenu());
+		return null;
+	}
+
+	private Result exit(Matcher matcher) {
+		System.exit(0);
 		return null;
 	}
 
