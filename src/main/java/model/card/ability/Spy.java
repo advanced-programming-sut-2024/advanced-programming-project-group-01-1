@@ -5,6 +5,9 @@ import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Row;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public enum Spy implements Ability {
 	INSTANCE;
 
@@ -17,10 +20,20 @@ public enum Spy implements Ability {
 		unit.setHornCount(enemyRow.getHornCount());
 		unit.setBoostCount(enemyRow.getBoostCount());
 		unit.setDebuff(enemyRow.isDebuffed());
+		pullFromDeck();
+		pullFromDeck();
 	}
 
 	@Override
 	public void undo(Card card) {
 
+	}
+
+	private void pullFromDeck() {
+		ArrayList<Card> deckCards = Game.getCurrentGame().getCurrentDeck();
+		if (deckCards.isEmpty()) return;
+		Card unit = deckCards.get((new Random()).nextInt(deckCards.size()));
+		deckCards.remove(unit);
+		Game.getCurrentGame().getCurrentHand().add(unit);
 	}
 }
