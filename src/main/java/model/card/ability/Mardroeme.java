@@ -22,7 +22,9 @@ public enum Mardroeme implements Ability {
 	}
 
 	@Override
-	public void undo(Card card, Space space) {
-
+	public void undo(Card card, Space space) throws Exception {
+		Row row = (Row) space;
+		if(card instanceof Spell) row.setBuffer(null);
+		row.setMardroeme(false);
 	}
 }
