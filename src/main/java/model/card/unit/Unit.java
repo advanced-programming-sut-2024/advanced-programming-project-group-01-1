@@ -13,11 +13,20 @@ public abstract class Unit extends Card {
 	int boostCount = 0;
 	int multiplier = 1;
 	boolean debuff = false;
+	boolean isHero;
 
-	public Unit(String name, Ability ability, String faction, int basePower) {
+	public Unit(String name, Ability ability, String faction, int basePower, boolean isHero) {
 		super(name, ability);
 		this.faction = faction;
 		this.basePower = basePower;
+	}
+
+	public String getFaction() {
+		return faction;
+	}
+
+	public boolean isHero() {
+		return isHero;
 	}
 
 	public String getMusterName(){
