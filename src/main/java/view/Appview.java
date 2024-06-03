@@ -13,4 +13,8 @@ public class Appview {
 	public static void setMenu(Menuable menu) {
 		Appview.menu = menu;
 	}
+
+	public static String getMenuName() {
+		return menu.getClass().getSimpleName();
+	}
 }

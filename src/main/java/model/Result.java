@@ -21,6 +21,6 @@ public class Result {
 	@Override
 	public String toString() {
 		if (this.message == null || this.message.length() == 0) return "";
-		return this.message.substring(0, this.message.length() - (this.message.charAt(this.message.length() - 1) != '\n' ? 1 : 0));
+		return this.message.substring(0, this.message.length() - (this.message.charAt(this.message.length() - 1) == '\n' ? 1 : 0));
 	}
 }

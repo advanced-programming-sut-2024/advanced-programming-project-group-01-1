@@ -15,14 +15,20 @@ public class SetPasswordMenu implements Menuable {
 		Result result;
 		if ((matcher = LoginMenuCommands.SET_PASSWORD.getMatcher(input)) != null) {
 			result = setPassword(matcher);
+		} else if ((matcher = LoginMenuCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
+			result = showCurrentMenu();
 		} else if ((matcher = LoginMenuCommands.EXIT.getMatcher(input)) != null) {
 			result = exit(matcher);
-		} else{
+		} else {
 			result = new Result("Invalid command", false);
 		}
 		if (result != null) {
 			System.out.println(result);
 		}
+	}
+
+	private Result showCurrentMenu() {
+		return new Result("Set Password Menu", true);
 	}
 
 	private Result setPassword(Matcher matcher) {

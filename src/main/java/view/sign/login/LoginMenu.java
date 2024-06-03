@@ -21,14 +21,21 @@ public class LoginMenu implements Menuable {
 			result = forgotPassword(matcher);
 		} else if ((matcher = LoginMenuCommands.ENTER_REGISTER_MENU.getMatcher(input)) != null) {
 			result = goToRegisterMenu(matcher);
-		} else if ((matcher = LoginMenuCommands.EXIT.getMatcher(input)) != null) {
+		} else if ((matcher = LoginMenuCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
+			result = showCurrentMenu();
+		}
+		else if ((matcher = LoginMenuCommands.EXIT.getMatcher(input)) != null) {
 			result = exit(matcher);
-		} else{
+		} else {
 			result = new Result("Invalid command", false);
 		}
 		if (result != null) {
 			System.out.println(result);
 		}
+	}
+
+	private Result showCurrentMenu() {
+		return new Result("Login Menu", true);
 	}
 
 	private Result login(Matcher matcher) {

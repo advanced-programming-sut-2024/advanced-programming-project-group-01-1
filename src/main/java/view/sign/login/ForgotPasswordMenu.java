@@ -16,14 +16,21 @@ public class ForgotPasswordMenu implements Menuable {
 		Result result;
 		if ((matcher = LoginMenuCommands.ANSWER_QUESTION.getMatcher(input)) != null) {
 			result = answerQuestion(matcher);
-		} else if ((matcher = LoginMenuCommands.EXIT.getMatcher(input)) != null) {
+		} else if ((matcher = LoginMenuCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
+			result = showCurrentMenu();
+		}
+		else if ((matcher = LoginMenuCommands.EXIT.getMatcher(input)) != null) {
 			result = exit(matcher);
-		} else{
+		} else {
 			result = new Result("Invalid command", false);
 		}
 		if (result != null) {
 			System.out.println(result);
 		}
+	}
+
+	private Result showCurrentMenu() {
+		return new Result("Forgot Password Menu", true);
 	}
 
 	private Result answerQuestion(Matcher matcher) {

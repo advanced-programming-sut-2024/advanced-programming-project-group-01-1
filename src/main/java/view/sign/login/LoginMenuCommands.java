@@ -9,6 +9,7 @@ public enum LoginMenuCommands {
 	FORGOT_PASSWORD("forgot-password -u (?<username>\\w+)"),
 	ANSWER_QUESTION("answer -q (?<questionNumber>\\d+) -a (?<answer>\\w+)"),
 	SET_PASSWORD("set-password -p (?<password>\\w+)"),
+	SHOW_CURRENT_MENU("show current menu"),
 	EXIT("menu exit");
 
 	private final Pattern pattern;
