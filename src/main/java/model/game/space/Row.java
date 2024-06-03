@@ -49,14 +49,4 @@ public class Row extends Space {
 		isDebuffed = debuffed;
 	}
 
-	@Override
-	public void add(Card card) throws Exception {
-
-	}
-
-	@Override
-	public void remove(Card card) throws Exception {
-
-	}
-
 }

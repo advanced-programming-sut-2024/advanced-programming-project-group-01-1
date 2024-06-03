@@ -10,14 +10,4 @@ public class WeatherSystem extends Space {
 		isRowDebuffed = new boolean[6];
 	}
 
-	@Override
-	public void add(Card card) throws Exception {
-
-	}
-
-	@Override
-	public void remove(Card card) throws Exception {
-
-	}
-
 }
