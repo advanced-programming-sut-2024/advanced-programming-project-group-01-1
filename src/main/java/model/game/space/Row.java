@@ -45,14 +45,12 @@ public class Row extends Space {
 		return;
 	}
 
-	public void addHorn() throws Exception {
-		// TODO:
-		return;
+	public void setHornCount(int hornCount) {
+		this.hornCount = hornCount;
 	}
 
-	public void removeHorn() throws Exception {
-		// TODO:
-		return;
+	public int getHornCount() {
+		return hornCount;
 	}
 
 	public void setMardroeme(boolean mardroeme) {
