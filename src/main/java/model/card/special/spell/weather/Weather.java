@@ -11,7 +11,7 @@ public abstract class Weather extends Spell {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
-		super.put(row);
+		super.put(rowNumber);
 	}
 
 }
