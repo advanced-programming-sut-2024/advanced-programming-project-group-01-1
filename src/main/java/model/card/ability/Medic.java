@@ -21,9 +21,4 @@ public enum Medic implements Ability {
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void undo(Card card) {
-
-	}
 }

@@ -16,9 +16,8 @@ public class Row extends Space {
 		return sumOfPowers;
 	}
 
-	public void setBuffer(Buffer buffer) throws Exception {
+	public void setBuffer(Buffer buffer) {
 		this.buffer = buffer;
-		return;
 	}
 
 	public void setHornCount(int hornCount) {

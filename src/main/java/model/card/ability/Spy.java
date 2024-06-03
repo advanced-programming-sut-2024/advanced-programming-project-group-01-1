@@ -24,11 +24,6 @@ public enum Spy implements Ability {
 		pullFromDeck();
 	}
 
-	@Override
-	public void undo(Card card) {
-
-	}
-
 	private void pullFromDeck() {
 		ArrayList<Card> deckCards = Game.getCurrentGame().getCurrentDeck();
 		if (deckCards.isEmpty()) return;

@@ -9,7 +9,7 @@ public enum Mardroeme implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Card card) throws Exception {
+	public void act(Card card) {
 		Row row = (Row) card.getSpace();
 		if (card instanceof Spell) row.setBuffer((Buffer) card);
 		row.setMardroeme(true);
@@ -20,7 +20,7 @@ public enum Mardroeme implements Ability {
 	}
 
 	@Override
-	public void undo(Card card) throws Exception {
+	public void undo(Card card) {
 		Row row = (Row) card.getSpace();
 		if (card instanceof Spell) row.setBuffer(null);
 		row.setMardroeme(false);
