@@ -20,6 +20,11 @@ public abstract class Unit extends Card {
 		this.basePower = basePower;
 	}
 
+	public String getMusterName(){
+		int index = this.name.indexOf(":");
+		return (index == -1) ? this.name : this.name.substring(0, index + 1);
+	}
+
 	public int getHornCount() {
 		return this.hornCount;
 	}
@@ -79,6 +84,7 @@ public abstract class Unit extends Card {
 		this.boostCount = 0;
 		this.debuff = false;
 		this.getSpace().getCards().remove(this);
+		this.space = null;
 	}
 
 	@Override

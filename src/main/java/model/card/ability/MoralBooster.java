@@ -11,8 +11,8 @@ public enum MoralBooster implements Ability {
 	public void act(Card card) {
 		Row row = (Row) card.getSpace();
 		row.setBoostCount(row.getBoostCount() + 1);
-		for(Card cardInRow : row.getCards()) {
-			if(cardInRow == card) continue;
+		for (Card cardInRow : row.getCards()) {
+			if (cardInRow == card) continue;
 			Unit unit = (Unit) cardInRow;
 			unit.setBoostCount(unit.getBoostCount() + 1);
 		}
@@ -22,8 +22,8 @@ public enum MoralBooster implements Ability {
 	public void undo(Card card) {
 		Row row = (Row) card.getSpace();
 		row.setBoostCount(row.getBoostCount() - 1);
-		for(Card cardInRow : row.getCards()) {
-			if(cardInRow == card) continue;
+		for (Card cardInRow : row.getCards()) {
+			if (cardInRow == card) continue;
 			Unit unit = (Unit) cardInRow;
 			unit.setBoostCount(unit.getBoostCount() - 1);
 		}

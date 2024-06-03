@@ -13,16 +13,16 @@ public enum Mardroeme implements Ability {
 		Row row = (Row) card.getSpace();
 		if (card instanceof Spell) row.setBuffer((Buffer) card);
 		row.setMardroeme(true);
-		for(Card cardInRow : row.getCards()){
+		for (Card cardInRow : row.getCards()) {
 			Ability cardAbility = cardInRow.getAbility();
-			if(cardAbility instanceof Berserker) ((Berserker) cardAbility).act(cardInRow);
+			if (cardAbility instanceof Berserker) ((Berserker) cardAbility).act(cardInRow);
 		}
 	}
 
 	@Override
 	public void undo(Card card) throws Exception {
 		Row row = (Row) card.getSpace();
-		if(card instanceof Spell) row.setBuffer(null);
+		if (card instanceof Spell) row.setBuffer(null);
 		row.setMardroeme(false);
 	}
 }
