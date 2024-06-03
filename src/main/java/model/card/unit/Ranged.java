@@ -9,7 +9,7 @@ public class Ranged extends Agile {
 	}
 
 	@Override
-	public void put(int row) throws Exception {
+	public void put(int rowNumber) throws Exception {
 		// TODO:
 	}
 

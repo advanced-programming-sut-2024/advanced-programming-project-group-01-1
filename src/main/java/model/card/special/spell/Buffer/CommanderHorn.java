@@ -9,7 +9,7 @@ public class CommanderHorn extends Buffer {
 	}
 
 	@Override
-	public void put(int row) throws Exception {
+	public void put(int rowNumber) throws Exception {
 		// TODO:
 	}
 

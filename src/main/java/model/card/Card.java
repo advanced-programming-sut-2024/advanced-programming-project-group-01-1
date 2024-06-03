@@ -3,8 +3,8 @@ package model.card;
 import model.card.ability.Ability;
 
 public abstract class Card {
-	final String name;
-	final Ability ability;
+	protected final String name;
+	protected final Ability ability;
 
 	public Card(String name, Ability ability) {
 		this.name = name;
@@ -15,7 +15,7 @@ public abstract class Card {
 		return ability;
 	}
 
-	public void put(int row) throws Exception {
+	public void put(int rowNumber) throws Exception {
 
 	}
 

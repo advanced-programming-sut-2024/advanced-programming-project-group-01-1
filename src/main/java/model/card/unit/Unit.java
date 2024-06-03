@@ -2,6 +2,8 @@ package model.card.unit;
 
 import model.card.Card;
 import model.card.ability.Ability;
+import model.game.Game;
+import model.game.space.Row;
 
 public abstract class Unit extends Card {
 
@@ -60,8 +62,7 @@ public abstract class Unit extends Card {
 	}
 
 	@Override
-	public void put(int row) throws Exception {
-		// TODO:
+	public void put(int rowNumber) throws Exception {
 	}
 
 }

@@ -10,7 +10,7 @@ public class Decoy extends Special {
 	}
 
 	@Override
-	public void put(int row) throws Exception {
+	public void put(int rowNumber) throws Exception {
 
 	}
 
