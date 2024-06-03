@@ -12,6 +12,12 @@ public abstract class Unit extends Card {
 	int multiplier = 1;
 	boolean debuff = false;
 
+	public Unit(String name, Ability ability, String faction, int basePower) {
+		super(name, ability);
+		this.faction = faction;
+		this.basePower = basePower;
+	}
+
 	public int getHornCount() {
 		return this.hornCount;
 	}
@@ -44,10 +50,13 @@ public abstract class Unit extends Card {
 		this.debuff = debuff;
 	}
 
-	public Unit(String name, Ability ability, String faction, int basePower) {
-		super(name, ability);
-		this.faction = faction;
-		this.basePower = basePower;
+	public int getPower() {
+		int power = this.basePower;
+		if (this.debuff) power = 1;
+		power *= this.multiplier;
+		power += this.boostCount;
+		if (this.hornCount > 0) power *= 2;
+		return power;
 	}
 
 	@Override
