@@ -1,10 +1,12 @@
 package model.card;
 
 import model.card.ability.Ability;
+import model.game.space.Space;
 
 public abstract class Card {
 	protected final String name;
 	protected final Ability ability;
+	protected Space space;
 
 	public Card(String name, Ability ability) {
 		this.name = name;
@@ -23,4 +25,7 @@ public abstract class Card {
 
 	}
 
+	public Space getSpace() {
+		return space;
+	}
 }

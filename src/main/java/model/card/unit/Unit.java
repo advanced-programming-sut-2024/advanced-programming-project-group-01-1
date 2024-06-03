@@ -4,6 +4,7 @@ import model.card.Card;
 import model.card.ability.Ability;
 import model.game.Game;
 import model.game.space.Row;
+import model.game.space.Space;
 
 public abstract class Unit extends Card {
 
@@ -63,6 +64,26 @@ public abstract class Unit extends Card {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
+		Row row = Game.getCurrentGame().getRow(rowNumber);
+		this.space = row;
+		row.getCards().add(this);
+		this.hornCount = row.getHornCount();
+		this.boostCount = row.getBoostCount();
+		this.debuff = row.isDebuffed();
+		if (this.ability != null) this.ability.act(this, row);
 	}
 
+	@Override
+	public void pull() throws Exception {
+		if (this.ability != null) this.ability.undo(this, this.getSpace());
+		this.hornCount = 0;
+		this.boostCount = 0;
+		this.debuff = false;
+		this.getSpace().getCards().remove(this);
+	}
+
+	@Override
+	public Row getSpace() {
+		return (Row) super.getSpace();
+	}
 }

@@ -41,6 +41,14 @@ public class Row extends Space {
 		this.hasMardroeme = mardroeme;
 	}
 
+	public boolean isDebuffed() {
+		return isDebuffed;
+	}
+
+	public void setDebuffed(boolean debuffed) {
+		isDebuffed = debuffed;
+	}
+
 	@Override
 	public void add(Card card) throws Exception {
 
@@ -50,21 +58,5 @@ public class Row extends Space {
 	public void remove(Card card) throws Exception {
 
 	}
-
-	public void removeBuff() throws Exception {
-		// TODO:
-		return;
-	}
-
-	public void debuff() throws Exception {
-		// TODO:
-		return;
-	}
-
-	public void cleanse() throws Exception {
-		// TODO:
-		return;
-	}
-
 
 }
