@@ -1,18 +1,17 @@
 package model.card.ability;
 
 import model.card.Card;
-import model.game.space.Space;
 
 public enum Medic implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Card card, Space space) {
+	public void act(Card card) {
 
 	}
 
 	@Override
-	public void undo(Card card, Space space) {
+	public void undo(Card card) {
 
 	}
 }

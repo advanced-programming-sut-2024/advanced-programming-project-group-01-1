@@ -4,7 +4,6 @@ import model.card.Card;
 import model.card.ability.Ability;
 import model.game.Game;
 import model.game.space.Row;
-import model.game.space.Space;
 
 public abstract class Unit extends Card {
 
@@ -70,12 +69,12 @@ public abstract class Unit extends Card {
 		this.hornCount = row.getHornCount();
 		this.boostCount = row.getBoostCount();
 		this.debuff = row.isDebuffed();
-		if (this.ability != null) this.ability.act(this, row);
+		if (this.ability != null) this.ability.act(this);
 	}
 
 	@Override
 	public void pull() throws Exception {
-		if (this.ability != null) this.ability.undo(this, this.getSpace());
+		if (this.ability != null) this.ability.undo(this);
 		this.hornCount = 0;
 		this.boostCount = 0;
 		this.debuff = false;

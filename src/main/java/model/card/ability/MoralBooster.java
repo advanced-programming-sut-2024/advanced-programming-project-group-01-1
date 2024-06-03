@@ -3,14 +3,13 @@ package model.card.ability;
 import model.card.Card;
 import model.card.unit.Unit;
 import model.game.space.Row;
-import model.game.space.Space;
 
 public enum MoralBooster implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Card card, Space space) {
-		Row row = (Row) space;
+	public void act(Card card) {
+		Row row = (Row) card.getSpace();
 		row.setBoostCount(row.getBoostCount() + 1);
 		for(Card cardInRow : row.getCards()) {
 			if(cardInRow == card) continue;
@@ -20,8 +19,8 @@ public enum MoralBooster implements Ability {
 	}
 
 	@Override
-	public void undo(Card card, Space space) {
-		Row row = (Row) space;
+	public void undo(Card card) {
+		Row row = (Row) card.getSpace();
 		row.setBoostCount(row.getBoostCount() - 1);
 		for(Card cardInRow : row.getCards()) {
 			if(cardInRow == card) continue;
