@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public enum LoginMenuCommands {
 	LOGIN("login -u (?<username>\\w+) -p (?<password>\\w+)(?<stayLoggedIn> -stay-logged-in)?"),
-	ENTER_REGISTER_MENU("menu enter register"),
+	ENTER_REGISTER_MENU("menu enter register menu"),
 	FORGOT_PASSWORD("forgot-password -u (?<username>\\w+)"),
 	ANSWER_QUESTION("answer -q (?<questionNumber>\\d+) -a (?<answer>\\w+)"),
 	SET_PASSWORD("set-password -p (?<password>\\w+)"),

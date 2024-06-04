@@ -1,11 +1,12 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
 
 	private static User loggedInUser = null;
-
+	private static ArrayList<User> users = new ArrayList<User>();
 	private final int id;
 	private String username;
 	private String nickname;
@@ -41,6 +42,22 @@ public class User implements Serializable {
 	public static User getLoggedInUser() {
 		// TODO:
 		return loggedInUser;
+	}
+
+	public static ArrayList<User> getUsers() {
+		return users;
+	}
+
+	public static void setUsers(ArrayList<User> users) {
+		User.users = users;
+	}
+
+	public static void addUser(User user) {
+		users.add(user);
+	}
+
+	public static void removeUser(User user) {
+		users.remove(user);
 	}
 
 	public int getId() {

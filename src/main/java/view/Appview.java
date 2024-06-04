@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.*;
-
 public class Appview {
 	private static Menuable menu;
 
