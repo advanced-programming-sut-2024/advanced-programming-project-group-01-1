@@ -6,7 +6,8 @@ import java.util.ArrayList;
 public class User implements Serializable {
 
 	private static User loggedInUser = null;
-	private static ArrayList<User> users = new ArrayList<User>();
+	private static boolean stayLoggedIn = false;
+	private static ArrayList<User> users = new ArrayList<>();
 	private final int id;
 	private String username;
 	private String nickname;
@@ -24,23 +25,20 @@ public class User implements Serializable {
 		this.updateData();
 	}
 
-	public static User getCurrentUser() {
-		// TODO:
-		return null;
-	}
-
-	public static User getUserByUsername() {
-		// TODO:
+	public static User getUserByUsername(String username) {
+		for (User user : users) {
+			if (user.getUsername().equals(username)) {
+				return user;
+			}
+		}
 		return null;
 	}
 
 	public static int getNumberOfUsers() {
-		// TODO:
-		return 0;
+		return users.size();
 	}
 
 	public static User getLoggedInUser() {
-		// TODO:
 		return loggedInUser;
 	}
 
@@ -58,6 +56,14 @@ public class User implements Serializable {
 
 	public static void removeUser(User user) {
 		users.remove(user);
+	}
+
+	public static boolean isStayLoggedIn() {
+		return stayLoggedIn;
+	}
+
+	public static void setStayLoggedIn(boolean stayLoggedIn) {
+		User.stayLoggedIn = stayLoggedIn;
 	}
 
 	public int getId() {
