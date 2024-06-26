@@ -1,6 +1,6 @@
 package model.game;
 
-import model.User;
+import model.user.User;
 import model.card.Card;
 import model.game.space.Row;
 import model.game.space.Space;

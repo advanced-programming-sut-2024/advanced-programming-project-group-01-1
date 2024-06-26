@@ -3,7 +3,7 @@ package controller.sign;
 import controller.enums.RegisterMenusResponses;
 import controller.enums.Validation;
 import model.Result;
-import model.User;
+import model.user.User;
 
 public class RegisterMenusController {
 
