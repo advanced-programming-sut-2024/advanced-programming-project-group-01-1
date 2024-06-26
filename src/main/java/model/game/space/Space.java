@@ -8,6 +8,14 @@ public class Space {
 
 	ArrayList<Card> cards;
 
+	public Space() {
+		cards = new ArrayList<>();
+	}
+
+	public Space(ArrayList<Card> cards) {
+		this.cards = cards;
+	}
+
 	public ArrayList<Card> getCards() {
 		return cards;
 	}

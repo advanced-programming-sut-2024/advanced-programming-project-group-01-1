@@ -43,4 +43,10 @@ public class Deck {
 		}
 		return false;
 	}
+
+	public void reset() {
+		this.cards.clear();
+		specialCount = 0;
+		unitCount = 0;
+	}
 }

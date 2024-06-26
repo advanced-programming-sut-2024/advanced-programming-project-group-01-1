@@ -14,6 +14,7 @@ public class User implements Serializable {
 	private String password;
 	private String email;
 	private Question question;
+	private Deck deck;
 
 	public User(String username, String nickname, String password, String email, Question question) {
 		this.id = User.getNumberOfUsers() + 1;
@@ -22,6 +23,7 @@ public class User implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.question = question;
+		this.deck = new Deck();
 		this.updateData();
 	}
 
@@ -118,6 +120,10 @@ public class User implements Serializable {
 	public int getNumberOfLosses() {
 		// TODO:
 		return 0;
+	}
+
+	public Deck getDeck() {
+		return this.deck;
 	}
 
 	private void updateData() {
