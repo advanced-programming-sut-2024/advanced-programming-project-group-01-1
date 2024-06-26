@@ -23,8 +23,12 @@ public class User implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.question = question;
-		this.deck = new Deck();
+		this.deck = new Deck("Northern Realms");
 		this.updateData();
+	}
+
+	public static void setLoggedInUser(User loggedInUser) {
+		User.loggedInUser = loggedInUser;
 	}
 
 	public static User getUserByUsername(String username) {

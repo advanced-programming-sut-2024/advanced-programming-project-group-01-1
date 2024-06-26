@@ -29,7 +29,7 @@ public abstract class Unit extends Card {
 		return isHero;
 	}
 
-	public String getMusterName(){
+	public String getMusterName() {
 		int index = this.name.indexOf(":");
 		return (index == -1) ? this.name : this.name.substring(0, index + 1);
 	}
@@ -76,6 +76,11 @@ public abstract class Unit extends Card {
 	}
 
 	@Override
+	public Row getSpace() {
+		return (Row) super.getSpace();
+	}
+
+	@Override
 	public void put(int rowNumber) throws Exception {
 		Row row = Game.getCurrentGame().getRow(rowNumber);
 		this.space = row;
@@ -97,7 +102,14 @@ public abstract class Unit extends Card {
 	}
 
 	@Override
-	public Row getSpace() {
-		return (Row) super.getSpace();
+	public Card clone() {
+		try {
+			return this.getClass().getConstructor(String.class, Ability.class, String.class, int.class,
+					boolean.class).newInstance(this.name, this.ability, this.faction, this.basePower, this.isHero);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
+
 }
