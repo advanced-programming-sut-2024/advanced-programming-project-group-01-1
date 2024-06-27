@@ -6,6 +6,8 @@ import model.card.special.Decoy;
 import model.card.special.spell.Buffer;
 import model.card.special.spell.Weather;
 import model.card.unit.Melee;
+import model.card.unit.Ranged;
+import model.card.unit.Siege;
 import model.card.unit.Unit;
 
 import java.io.FileOutputStream;
@@ -58,6 +60,7 @@ public class CardCreator {
 	}
 
 	private static void createSkelligeCards() {
+		createBuffer(3, "Mardroeme", Mardroeme.INSTANCE);
 		createUnit(Melee.class, "Skellige", 1, "Berserker", Berserker.INSTANCE, 4, false);
 		createUnit(Melee.class, "Skellige", 0, "Vidkaarl", MoralBooster.INSTANCE, 14, false);
 		createUnit(Melee.class, "Skellige", 1, "Svanberg", null, 4, false);
@@ -71,7 +74,17 @@ public class CardCreator {
 		createUnit(Melee.class, "Skellige", 1, "Birna Bran", Medic.INSTANCE, 2, false);
 		createUnit(Melee.class, "Skellige", 3, "Clan Drummond Shieldmaiden", TightBond.INSTANCE, 4, false);
 		createUnit(Melee.class, "Skellige", 1, "Clan Tordarroch Armorsmith", null, 4, false);
-
+		createUnit(Ranged.class, "Skellige", 1, "Clan Dimun Pirate", Scorch.INSTANCE, 6, false);
+		createUnit(Ranged.class, "Skellige", 3, "Clan Brokvar Archer", null, 6, false);
+		createUnit(Ranged.class, "Skellige", 1, "Ermion", Mardroeme.INSTANCE, 8, true);
+		createUnit(Ranged.class, "Skellige", 1, "Hjamlar", null, 10, true);
+		createUnit(Ranged.class, "Skellige", 3, "Young Berserker", Berserker.INSTANCE, 2, false);
+		createUnit(Ranged.class, "Skellige", 0, "Young Vidkaarl", TightBond.INSTANCE, 8, false);
+		createUnit(Ranged.class, "Skellige", 3, "Light Longship", Muster.INSTANCE, 4, false);
+		createUnit(Siege.class, "Skellige", 1, "Holger Blackhand", null, 4, false);
+		createUnit(Siege.class, "Skellige", 3, "War Longship", TightBond.INSTANCE, 6, false);
+		createUnit(Siege.class, "Skellige", 1, "Draig Bon-Dhu", Horn.INSTANCE, 2, false);
+		createUnit(Siege.class, "Skellige", 1, "Olaf", MoralBooster.INSTANCE, 12, false);
 	}
 
 	public static void main(String[] args) {
