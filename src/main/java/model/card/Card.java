@@ -20,8 +20,10 @@ public abstract class Card implements Cloneable, Serializable {
 	}
 
 	public String getDisplayName() {
-		if (Character.isDigit(name.charAt(name.length() - 1))) return name.substring(0, name.length() - 1);
-		return name;
+		String displayName = name;
+		if (Character.isDigit(name.charAt(name.length() - 1))) displayName = name.substring(0, name.length() - 1);
+		displayName.replace(';', ':');
+		return displayName;
 	}
 
 	public Ability getAbility() {
