@@ -4,14 +4,19 @@ import model.card.Card;
 import model.card.unit.*;
 import model.game.Game;
 
+import java.util.ArrayList;
+
 public enum Muster implements Ability {
 	INSTANCE;
 
 	@Override
 	public void act(Card card) {
 		String musterName = ((Unit) card).getMusterName();
-		for (Card cardInHand : Game.getCurrentGame().getCurrentHand()) {
-			Unit unit = (Unit) cardInHand;
+		ArrayList<Card> aliveCards = new ArrayList<>();
+		for (Card cardInHand : Game.getCurrentGame().getCurrentHand()) aliveCards.add(cardInHand);
+		for (Card cardInDeck : Game.getCurrentGame().getCurrentDeck()) aliveCards.add(cardInDeck);
+		for (Card aliveCard : aliveCards) {
+			Unit unit = (Unit) aliveCard;
 			if (unit.getMusterName().startsWith(musterName)) {
 				try {
 					if (unit instanceof Melee) unit.put(2);
