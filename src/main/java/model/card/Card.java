@@ -17,8 +17,17 @@ public abstract class Card implements Cloneable {
 		return name;
 	}
 
+	public String getDisplayName() {
+		if (Character.isDigit(name.charAt(name.length() - 1))) return name.substring(0, name.length() - 1);
+		return name;
+	}
+
 	public Ability getAbility() {
 		return ability;
+	}
+
+	public Space getSpace() {
+		return space;
 	}
 
 	@Override
@@ -32,8 +41,5 @@ public abstract class Card implements Cloneable {
 
 	}
 
-	public Space getSpace() {
-		return space;
-	}
 
 }

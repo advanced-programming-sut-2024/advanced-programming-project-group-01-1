@@ -8,21 +8,15 @@ import model.game.space.Row;
 public abstract class Unit extends Card {
 
 	final int basePower;
-	final String faction;
 	int hornCount = 0;
 	int boostCount = 0;
 	int multiplier = 1;
 	boolean debuff = false;
 	boolean isHero;
 
-	public Unit(String name, Ability ability, String faction, int basePower, boolean isHero) {
+	public Unit(String name, Ability ability, int basePower, boolean isHero) {
 		super(name, ability);
-		this.faction = faction;
 		this.basePower = basePower;
-	}
-
-	public String getFaction() {
-		return faction;
 	}
 
 	public boolean isHero() {
@@ -104,8 +98,8 @@ public abstract class Unit extends Card {
 	@Override
 	public Card clone() {
 		try {
-			return this.getClass().getConstructor(String.class, Ability.class, String.class, int.class,
-					boolean.class).newInstance(this.name, this.ability, this.faction, this.basePower, this.isHero);
+			return this.getClass().getConstructor(String.class, Ability.class, int.class,
+					boolean.class).newInstance(this.name, this.ability, this.basePower, this.isHero);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
