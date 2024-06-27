@@ -15,7 +15,7 @@ public enum Scorch implements Ability {
 
 	@Override
 	public void act(Card card) {
-		if (card instanceof Spell || ((Unit) card).getFaction().equals("skellige")) killRow(-1);
+		if (card instanceof Spell || ((Unit) card).getName().equals("Clan Dimun Pirate")) killRow(-1);
 		else if (card instanceof Melee) killRow(2);
 		else if (card instanceof Ranged) killRow(1);
 		else if (card instanceof Siege) killRow(0);

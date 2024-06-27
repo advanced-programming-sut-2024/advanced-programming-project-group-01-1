@@ -1,7 +1,7 @@
 package model.card.ability;
 
 import model.card.Card;
-import model.card.special.spell.Buffer.Buffer;
+import model.card.special.spell.Buffer;
 import model.card.special.spell.Spell;
 import model.game.space.Row;
 

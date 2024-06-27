@@ -4,8 +4,8 @@ import model.card.ability.Ability;
 
 public class Ranged extends Agile {
 
-	public Ranged(String name, Ability ability, String faction, int basePower, boolean isHero) {
-		super(name, ability, faction, basePower, isHero);
+	public Ranged(String name, Ability ability, int basePower, boolean isHero) {
+		super(name, ability, basePower, isHero);
 	}
 
 	@Override

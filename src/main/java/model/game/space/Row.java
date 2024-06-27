@@ -1,7 +1,6 @@
 package model.game.space;
 
-import model.card.Card;
-import model.card.special.spell.Buffer.Buffer;
+import model.card.special.spell.Buffer;
 
 public class Row extends Space {
 

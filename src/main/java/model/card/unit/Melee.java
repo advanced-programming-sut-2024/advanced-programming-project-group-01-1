@@ -5,8 +5,8 @@ import model.card.unit.Agile;
 
 public class Melee extends Agile {
 
-	public Melee(String name, Ability ability, String faction, int basePower, boolean isHero) {
-		super(name, ability, faction, basePower, isHero);
+	public Melee(String name, Ability ability, int basePower, boolean isHero) {
+		super(name, ability, basePower, isHero);
 	}
 
 	@Override
