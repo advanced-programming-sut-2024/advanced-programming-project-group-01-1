@@ -3,7 +3,9 @@ package model.card;
 import model.card.ability.Ability;
 import model.game.space.Space;
 
-public abstract class Card implements Cloneable {
+import java.io.Serializable;
+
+public abstract class Card implements Cloneable, Serializable {
 	protected final String name;
 	protected final Ability ability;
 	protected Space space = null;

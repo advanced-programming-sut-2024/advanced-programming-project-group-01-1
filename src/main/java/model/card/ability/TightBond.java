@@ -12,9 +12,9 @@ public enum TightBond implements Ability {
 		Row row = (Row) card.getSpace();
 		int groupPopulation = 0;
 		for (Card cardInRow : row.getCards())
-			if (cardInRow.getName().equals(card.getName())) groupPopulation++;
+			if (cardInRow.getDisplayName().equals(card.getDisplayName())) groupPopulation++;
 		for (Card cardInRow : row.getCards())
-			if (cardInRow.getName().equals(card.getName())) {
+			if (cardInRow.getDisplayName().equals(card.getDisplayName())) {
 				Unit unit = (Unit) cardInRow;
 				unit.setMultiplier(groupPopulation);
 			}
@@ -25,9 +25,9 @@ public enum TightBond implements Ability {
 		Row row = (Row) card.getSpace();
 		int groupPopulation = 0;
 		for (Card cardInRow : row.getCards())
-			if (cardInRow.getName().equals(card.getName())) groupPopulation++;
+			if (cardInRow.getDisplayName().equals(card.getDisplayName())) groupPopulation++;
 		for (Card cardInRow : row.getCards())
-			if (cardInRow.getName().equals(card.getName())) {
+			if (cardInRow.getDisplayName().equals(card.getDisplayName())) {
 				Unit unit = (Unit) cardInRow;
 				unit.setMultiplier(groupPopulation - 1);
 			}

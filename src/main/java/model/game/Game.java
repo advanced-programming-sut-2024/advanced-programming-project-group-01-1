@@ -76,8 +76,8 @@ public class Game {
 		return currentDiscordPile.getCards();
 	}
 
-	public ArrayList<Card> getWeatherSystem() {
-		return weatherSystem.getCards();
+	public WeatherSystem getWeatherSystem() {
+		return weatherSystem;
 	}
 
 	public String getCurrentUsername() {

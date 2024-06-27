@@ -24,8 +24,9 @@ public abstract class Unit extends Card {
 	}
 
 	public String getMusterName() {
-		int index = this.name.indexOf(":");
-		return (index == -1) ? this.name : this.name.substring(0, index + 1);
+		String displayName = this.getDisplayName();
+		int index = displayName.indexOf(":");
+		return (index == -1) ? displayName : displayName.substring(0, index + 1);
 	}
 
 	public int getHornCount() {
