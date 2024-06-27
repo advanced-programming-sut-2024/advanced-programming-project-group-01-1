@@ -18,6 +18,7 @@ public class WeatherSystem extends Space {
 				e.printStackTrace();
 			}
 		}
+		for (int i = 0; i < 6; i++) isRowDebuffed[i] = false;
 	}
 
 }

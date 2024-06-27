@@ -65,13 +65,13 @@ public class CardCreator {
 	}
 
 	public static void main(String[] args) {
-//		createNeutralCards();
-//		createSkelligeCards();
-//		createMonstersCards();
-//		createNilfgaardCards();
-//		createNorthernRealmsCards();
-//		createScoiataelCards();
-		test();
+		createNeutralCards();
+		createSkelligeCards();
+		createMonstersCards();
+		createNilfgaardCards();
+		createNorthernRealmsCards();
+		createScoiataelCards();
+//		test();
 	}
 
 	public static void test(){
@@ -104,47 +104,51 @@ public class CardCreator {
 		createNonWeatherSpell(InstantSpell.class, 3, "Scorch", Scorch.INSTANCE);
 		createNonWeatherSpell(Buffer.class, 3, "Commander's Horn", Horn.INSTANCE);
 		createDecoy();
-		createUnit(Melee.class, "Neutral", 1, "Dandelion", Horn.INSTANCE, 2, false);
-		createUnit(Ranged.class, "Neutral", 1, "Cow", Transformer.INSTANCE, 0, false);
-		createUnit(Melee.class, "Neutral", 1, "Emiel Regis Rohellec Terzief", null, 5, false);
-		createUnit(Siege.class, "Neutral", 1, "Gaunter O'Dimm", Muster.INSTANCE, 2, false);
-		createUnit(Ranged.class, "Neutral", 3, "Gaunter O'Dimm: Darkness", Muster.INSTANCE, 4, false);
 		createUnit(Melee.class, "Neutral", 1, "Geralt of Rivia", null, 15, true);
-		createUnit(Melee.class, "Neutral", 1, "Mysterious Elf", Spy.INSTANCE, 0, true);
-		createUnit(Agile.class, "Neutral", 1, "Olgierd von Everec", MoralBooster.INSTANCE, 6, false);
+		createUnit(Melee.class, "Neutral", 0, "Bovine Defence Force", null, 8, false);
 		createUnit(Melee.class, "Neutral", 1, "Triss Merigold", null, 7, true);
-		createUnit(Melee.class, "Neutral", 1, "Vesemir", null, 6, false);
 		createUnit(Melee.class, "Neutral", 1, "Villentretenmerth", Scorch.INSTANCE, 7, false);
 		createUnit(Ranged.class, "Neutral", 1, "Yennefer of Vengerberg", Medic.INSTANCE, 7, true);
+		createUnit(Melee.class, "Neutral", 1, "Vesemir", null, 6, false);
+		createUnit(Agile.class, "Neutral", 1, "Olgierd von Everec", MoralBooster.INSTANCE, 6, false);
 		createUnit(Melee.class, "Neutral", 1, "Zoltan Chivay", null, 5, false);
+		createUnit(Melee.class, "Neutral", 1, "Emiel Regis Rohellec Terzief", null, 5, false);
+		createUnit(Ranged.class, "Neutral", 3, "Gaunter O'Dimm: Darkness", Muster.INSTANCE, 4, false);
+		createUnit(Siege.class, "Neutral", 1, "Gaunter O'Dimm", Muster.INSTANCE, 2, false);
+		createUnit(Melee.class, "Neutral", 1, "Dandelion", Horn.INSTANCE, 2, false);
+		createUnit(Melee.class, "Neutral", 1, "Mysterious Elf", Spy.INSTANCE, 0, true);
+		createUnit(Ranged.class, "Neutral", 1, "Cow", Transformer.INSTANCE, 0, false);
 	}
 
 	private static void createSkelligeCards() {
 		createNonWeatherSpell(Buffer.class, 3, "Mardroeme", Mardroeme.INSTANCE);
-		createUnit(Melee.class, "Skellige", 1, "Berserker", Berserker.INSTANCE, 4, false);
 		createUnit(Melee.class, "Skellige", 0, "Vidkaarl", MoralBooster.INSTANCE, 14, false);
-		createUnit(Melee.class, "Skellige", 1, "Svanberg", null, 4, false);
-		createUnit(Melee.class, "Skellige", 1, "Udalryk", null, 4, false);
-		createUnit(Melee.class, "Skellige", 1, "Donar an Hindar", null, 4, false);
+		createUnit(Siege.class, "Skellige", 1, "Olaf", MoralBooster.INSTANCE, 12, false);
+		createUnit(Melee.class, "Skellige", 0, "Hemdall", null, 11, true);
+		createUnit(Melee.class, "Skellige", 1, "Cerys", Muster.INSTANCE, 10, true);
+		createUnit(Ranged.class, "Skellige", 1, "Hjamlar", null, 10, true);
+		createUnit(Ranged.class, "Skellige", 1, "Ermion", Mardroeme.INSTANCE, 8, true);
+		createUnit(Ranged.class, "Skellige", 0, "Young Vidkaarl", TightBond.INSTANCE, 8, false);
 		createUnit(Melee.class, "Skellige", 3, "Clan an Craite", TightBond.INSTANCE, 6, false);
 		createUnit(Melee.class, "Skellige", 1, "Blueboy Lugos", null, 6, false);
 		createUnit(Melee.class, "Skellige", 1, "Madman Lugos", null, 6, false);
-		createUnit(Melee.class, "Skellige", 1, "Cerys", Muster.INSTANCE, 10, true);
-		createUnit(Melee.class, "Skellige", 1, "Kambi", Transformer.INSTANCE, 11, true);
-		createUnit(Melee.class, "Skellige", 1, "Birna Bran", Medic.INSTANCE, 2, false);
-		createUnit(Melee.class, "Skellige", 3, "Clan Drummond Shieldmaiden", TightBond.INSTANCE, 4, false);
-		createUnit(Melee.class, "Skellige", 1, "Clan Tordarroch Armorsmith", null, 4, false);
 		createUnit(Ranged.class, "Skellige", 1, "Clan Dimun Pirate", Scorch.INSTANCE, 6, false);
-		createUnit(Ranged.class, "Skellige", 3, "Clan Brokvar Archer", null, 6, false);
-		createUnit(Ranged.class, "Skellige", 1, "Ermion", Mardroeme.INSTANCE, 8, true);
-		createUnit(Ranged.class, "Skellige", 1, "Hjamlar", null, 10, true);
-		createUnit(Ranged.class, "Skellige", 3, "Young Berserker", Berserker.INSTANCE, 2, false);
-		createUnit(Ranged.class, "Skellige", 0, "Young Vidkaarl", TightBond.INSTANCE, 8, false);
+		createUnit(Ranged.class, "Skellige", 2, "Clan Brokvar Archer", null, 6, false);
+		createUnit(Siege.class, "Skellige", 2, "War Longship", TightBond.INSTANCE, 6, false);
+		createUnit(Melee.class, "Skellige", 1, "Berserker", Berserker.INSTANCE, 4, false);
+		createUnit(Melee.class, "Skellige", 1, "Svanberg", null, 4, false);
+		createUnit(Melee.class, "Skellige", 1, "Udalryk", null, 4, false);
+		createUnit(Melee.class, "Skellige", 1, "Donar an Hindar", null, 4, false);
+		createUnit(Melee.class, "Skellige", 1, "Cerys: Clan Drummond Shieldmaiden0", TightBond.INSTANCE, 4, false);
+		createUnit(Melee.class, "Skellige", 1, "Cerys: Clan Drummond Shieldmaiden1", TightBond.INSTANCE, 4, false);
+		createUnit(Melee.class, "Skellige", 1, "Cerys: Clan Drummond Shieldmaiden2", TightBond.INSTANCE, 4, false);
+		createUnit(Melee.class, "Skellige", 1, "Clan Tordarroch Armorsmith", null, 4, false);
 		createUnit(Ranged.class, "Skellige", 3, "Light Longship", Muster.INSTANCE, 4, false);
 		createUnit(Siege.class, "Skellige", 1, "Holger Blackhand", null, 4, false);
-		createUnit(Siege.class, "Skellige", 3, "War Longship", TightBond.INSTANCE, 6, false);
+		createUnit(Melee.class, "Skellige", 1, "Birna Bran", Medic.INSTANCE, 2, false);
+		createUnit(Ranged.class, "Skellige", 3, "Young Berserker", Berserker.INSTANCE, 2, false);
 		createUnit(Siege.class, "Skellige", 1, "Draig Bon-Dhu", Horn.INSTANCE, 2, false);
-		createUnit(Siege.class, "Skellige", 1, "Olaf", MoralBooster.INSTANCE, 12, false);
+		createUnit(Melee.class, "Skellige", 1, "Kambi", Transformer.INSTANCE, 0, false);
 	}
 
 	private static void createMonstersCards() {
@@ -154,9 +158,6 @@ public class CardCreator {
 		createUnit(Agile.class, "Monsters", 1, "Kayran", MoralBooster.INSTANCE, 8, true);
 		createUnit(Ranged.class, "Monsters", 1, "Toad", Scorch.INSTANCE, 7, false);
 		createUnit(Siege.class, "Monsters", 1, "Arachas", Muster.INSTANCE, 6, false);
-		createUnit(Melee.class, "Monsters", 1, "Arachas Behemoth0", Muster.INSTANCE, 4, false);
-		createUnit(Melee.class, "Monsters", 1, "Arachas Behemoth1", Muster.INSTANCE, 4, false);
-		createUnit(Melee.class, "Monsters", 1, "Arachas Behemoth2", Muster.INSTANCE, 4, false);
 		createUnit(Melee.class, "Monsters", 1, "Crone: Brewess", Muster.INSTANCE, 6, false);
 		createUnit(Melee.class, "Monsters", 1, "Crone: Weavess", Muster.INSTANCE, 6, false);
 		createUnit(Melee.class, "Monsters", 1, "Crone: Whispess", Muster.INSTANCE, 6, false);
@@ -170,11 +171,14 @@ public class CardCreator {
 		createUnit(Siege.class, "Monsters", 1, "Ice Giant", null, 5, false);
 		createUnit(Melee.class, "Monsters", 1, "Plague Maiden", null, 5, false);
 		createUnit(Melee.class, "Monsters", 1, "Vampire: Katakan", Muster.INSTANCE, 5, false);
+		createUnit(Melee.class, "Monsters", 1, "Werewolf", null, 5, false);
+		createUnit(Melee.class, "Monsters", 1, "Arachas Behemoth0", Muster.INSTANCE, 4, false);
+		createUnit(Melee.class, "Monsters", 1, "Arachas Behemoth1", Muster.INSTANCE, 4, false);
+		createUnit(Melee.class, "Monsters", 1, "Arachas Behemoth2", Muster.INSTANCE, 4, false);
 		createUnit(Melee.class, "Monsters", 1, "Vampire: Fleder", Muster.INSTANCE, 4, false);
 		createUnit(Melee.class, "Monsters", 1, "Vampire: Garkain", Muster.INSTANCE, 4, false);
 		createUnit(Melee.class, "Monsters", 1, "Vampire: Ekimmara", Muster.INSTANCE, 4, false);
 		createUnit(Melee.class, "Monsters", 1, "Vampire: Bruxa", Muster.INSTANCE, 4, false);
-		createUnit(Melee.class, "Monsters", 1, "Werewolf", null, 5, false);
 		createUnit(Melee.class, "Monsters", 1, "Botchling", null, 4, false);
 		createUnit(Agile.class, "Monsters", 1, "Celaeno Harpy", null, 2, false);
 		createUnit(Ranged.class, "Monsters", 1, "Cockatrice", null, 2, false);
@@ -297,6 +301,10 @@ public class CardCreator {
 		createUnit(Ranged.class, "Scoia'tael", 1, "Havekar Healer0", Medic.INSTANCE, 1, false);
 		createUnit(Ranged.class, "Scoia'tael", 1, "Havekar Healer1", Medic.INSTANCE, 1, false);
 		createUnit(Ranged.class, "Scoia'tael", 1, "Havekar Healer2", Medic.INSTANCE, 1, false);
+	}
+
+	public static Card getCard(String name) {
+		return null;
 	}
 
 }
