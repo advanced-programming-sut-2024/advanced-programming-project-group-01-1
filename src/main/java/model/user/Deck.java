@@ -30,6 +30,7 @@ public class Deck {
 				String cardFaction = (String) objectInputStream.readObject();
 				if (cardFaction.equals(faction) || cardFaction.equals("Neutral")) {
 					Integer count = (Integer) objectInputStream.readObject();
+					if (count == 0) continue;
 					Card card = (Card) objectInputStream.readObject();
 					availableCards.add(card);
 					for (int i = 1; i < count; i++) {
