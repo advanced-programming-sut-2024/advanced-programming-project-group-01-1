@@ -2,6 +2,8 @@ package main;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import controller.JsonController;
 import model.card.Card;
 import model.card.ability.*;
 import model.card.special.Decoy;
@@ -10,18 +12,18 @@ import model.card.special.spell.InstantSpell;
 import model.card.special.spell.Spell;
 import model.card.special.spell.Weather;
 import model.card.unit.*;
+import model.user.User;
 
 import java.io.*;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardCreator {
 
 	private static void writeCard(String faction, int count, Card card) throws IOException {
-//		String path = "src/main/resources/cards/" + card.getName() + ".json";
-//		FileWriter writer = new FileWriter(path);
-//		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//		String json = gson.toJson(faction) + "\n" + gson.toJson((Integer) count);// + "\n" + gson.toJson(card);
-//		writer.write(json);
-//		writer.close();
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/main/resources/cards/" + card.getName() + ".json"));
 		oos.writeObject(faction);
 		oos.writeObject(count);
@@ -29,7 +31,7 @@ public class CardCreator {
 		oos.close();
 	}
 
-	public static void createUnit(Class clazz, String faction, int count, String name, Ability ability, int basePower, boolean isHero) {
+	private static void createUnit(Class clazz, String faction, int count, String name, Ability ability, int basePower, boolean isHero) {
 		try {
 			Unit unit = (Unit) clazz.getConstructor(String.class, Ability.class, int.class, boolean.class).newInstance(name, ability, basePower, isHero);
 			writeCard(faction, count, unit);
@@ -38,7 +40,7 @@ public class CardCreator {
 		}
 	}
 
-	public static void createWeather(int count, String name, boolean effectsMelee, boolean effectsRanged, boolean effectsSiege) {
+	private static void createWeather(int count, String name, boolean effectsMelee, boolean effectsRanged, boolean effectsSiege) {
 		try {
 			Weather weather = new Weather(name, effectsMelee, effectsRanged, effectsSiege);
 			writeCard("Neutral", count, weather);
@@ -47,7 +49,7 @@ public class CardCreator {
 		}
 	}
 
-	public static void createNonWeatherSpell(Class clazz, int count, String name, Ability ability) {
+	private static void createNonWeatherSpell(Class clazz, int count, String name, Ability ability) {
 		try {
 			Spell spell = (Spell) clazz.getConstructor(String.class, Ability.class).newInstance(name, ability);
 			writeCard("Neutral", count, spell);
@@ -56,7 +58,7 @@ public class CardCreator {
 		}
 	}
 
-	public static void createDecoy() {
+	private static void createDecoy() {
 		try {
 			writeCard("Neutral", 3, new Decoy());
 		} catch (Exception e) {
@@ -71,28 +73,6 @@ public class CardCreator {
 		createNilfgaardCards();
 		createNorthernRealmsCards();
 		createScoiataelCards();
-//		test();
-	}
-
-	public static void test(){
-		File file = new File("src/main/resources/cards/Cow.json");
-		ObjectInputStream objectInputStream = null;
-		try {
-			objectInputStream = new ObjectInputStream(new FileInputStream(file));
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(2357);
-		}
-		try {
-			String cardFaction = (String) objectInputStream.readObject();
-			Integer count = (Integer) objectInputStream.readObject();
-			Card card = (Card) objectInputStream.readObject();
-			System.out.println(cardFaction + " " + count);
-			System.out.println(card.getName() + " " + card.getAbility().getClass().getSimpleName());
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(2357);
-		}
 	}
 
 	private static void createNeutralCards() {
@@ -304,7 +284,15 @@ public class CardCreator {
 	}
 
 	public static Card getCard(String name) {
-		return null;
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(Paths.get(CardCreator.class.getResource("/cards/" + name + ".json").toURI()).toString()));
+			ois.readObject();
+			ois.readObject();
+			Card card = (Card) ois.readObject();
+			ois.close();
+			return card;
+		} catch (Exception e) {
+			return null;
+		}
 	}
-
 }

@@ -19,5 +19,4 @@ public class InstantSpell extends Spell {
 		return new InstantSpell(this.name, this.ability);
 	}
 
-
 }
