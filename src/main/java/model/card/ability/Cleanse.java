@@ -9,7 +9,12 @@ public enum Cleanse implements Ability {
 
 	@Override
 	public void act(Card card) {
-		Game.getCurrentGame().getWeatherSystem().reset();
+		try {
+			Game.getCurrentGame().getCurrentWeatherSystem().clear(Game.getCurrentGame().getCurrentDiscardPile());
+			Game.getCurrentGame().getOpponentWeatherSystem().clear(Game.getCurrentGame().getOpponentDiscardPile());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

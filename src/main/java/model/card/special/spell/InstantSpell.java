@@ -11,6 +11,7 @@ public class InstantSpell extends Spell {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
+		if (rowNumber != -1) throw new Exception("Instant spell can only be put in the graveyard");
 		ability.act(this);
 	}
 

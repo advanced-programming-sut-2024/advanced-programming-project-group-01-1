@@ -19,4 +19,13 @@ public class Space {
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
+
+	public void clear(Space discardPile) throws Exception {
+		for (Card card : cards) {
+			card.pull();
+			discardPile.getCards().add(card);
+		}
+		cards.clear();
+	}
+
 }

@@ -2,6 +2,7 @@ package model.card.special.spell;
 
 import model.card.Card;
 import model.card.ability.Debuffer;
+import model.game.Game;
 
 public class Weather extends Spell {
 
@@ -20,7 +21,9 @@ public class Weather extends Spell {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
-		super.put(rowNumber);
+		if (rowNumber != -1) throw new Exception("Weather can only be put in weather system");
+		Game.getCurrentGame().getCurrentWeatherSystem().getCards().add(this);
+		this.ability.act(this);
 	}
 
 	@Override

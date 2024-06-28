@@ -22,6 +22,10 @@ public class Row extends Space {
 		return sumOfPowers;
 	}
 
+	public Buffer getBuffer() {
+		return buffer;
+	}
+
 	public void setBuffer(Buffer buffer) {
 		if (this.buffer != null && this.buffer.getAbility() == Horn.INSTANCE) this.hornCount--;
 		if (this.buffer != null && this.buffer.getAbility() == Mardroeme.INSTANCE) this.hasMardroeme = false;
@@ -60,6 +64,14 @@ public class Row extends Space {
 
 	public boolean isDebuffed() {
 		return isDebuffed;
+	}
+
+	public void clear(Space discardPile) throws Exception {
+		if (buffer != null) {
+			buffer.pull();
+			buffer = null;
+		}
+		super.clear(discardPile);
 	}
 
 }

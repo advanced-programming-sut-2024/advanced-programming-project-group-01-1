@@ -2,9 +2,9 @@ package model.game;
 
 import model.card.Card;
 import model.card.Leader;
+import model.card.special.spell.Weather;
 import model.game.space.Row;
 import model.game.space.Space;
-import model.game.space.WeatherSystem;
 import model.user.User;
 
 import java.util.ArrayList;
@@ -17,13 +17,12 @@ public class Game {
 	private static Game currentGame;
 	User current, opponent;
 	Row[] rows = new Row[6];
-	WeatherSystem weatherSystem = new WeatherSystem();
+	Space currentWeatherSystem = new Space(), opponentWeatherSystem = new Space();
 	Space currentDiscardPile = new Space(), opponentDiscardPile = new Space();
 	Space currentDeck, opponentDeck;
 	Space currentHand = new Space(), opponentHand = new Space();
-	int currentLife, opponentLife;
+	int currentLife = 2, opponentLife = 2;
 	String currentFaction, opponentFaction;
-	int currentPower, opponentPower;
 	boolean hasOpponentPassed;
 	Leader currentLeader, opponentLeader;
 
@@ -59,10 +58,14 @@ public class Game {
 	}
 
 	public int getCurrentPower() {
+		int currentPower = 0;
+		for (int i = 0; i < 3; i++) currentPower += rows[i].getSumOfPowers();
 		return currentPower;
 	}
 
 	public int getOpponentPower() {
+		int opponentPower = 0;
+		for (int i = 3; i < 6; i++) opponentPower += rows[i].getSumOfPowers();
 		return opponentPower;
 	}
 
@@ -78,12 +81,20 @@ public class Game {
 		return currentHand.getCards();
 	}
 
-	public ArrayList<Card> getCurrentDiscardPile() {
-		return currentDiscardPile.getCards();
+	public Space getCurrentDiscardPile() {
+		return currentDiscardPile;
 	}
 
-	public WeatherSystem getWeatherSystem() {
-		return weatherSystem;
+	public Space getOpponentDiscardPile() {
+		return opponentDiscardPile;
+	}
+
+	public Space getCurrentWeatherSystem() {
+		return currentWeatherSystem;
+	}
+
+	public Space getOpponentWeatherSystem() {
+		return opponentWeatherSystem;
 	}
 
 	public String getCurrentUsername() {
@@ -118,33 +129,12 @@ public class Game {
 		return null;
 	}
 
-
-	public void changeTurn() {
-		// TODO:
-		return;
-	}
-
-	public void selectFaction() {
-		// TODO:
-		return;
-	}
-
 	public void setCurrentLeader(Leader currentLeader) {
 		this.currentLeader = currentLeader;
 	}
 
 	public void setCurrentDeck(Space currentDeck) {
 		this.currentDeck = currentDeck;
-	}
-
-	public void addToDeck(Card card) {
-		// TODO:
-		return;
-	}
-
-	public void removeFromDeck(Card card) {
-		// TODO:
-		return;
 	}
 
 	public void startGame() {
@@ -158,8 +148,7 @@ public class Game {
 	}
 
 	public void placeCard(Card card, int spaceId) {
-		// TODO:
-		return;
+
 	}
 
 	public void useLeaderAbility() {
@@ -167,20 +156,76 @@ public class Game {
 		return;
 	}
 
-	public void passTurn() {
-		endTurn();
-		hasOpponentPassed = true;
-		return;
+
+	public void changeTurn() {
+		if (hasOpponentPassed) return;
+		for (int i = 0; i < 3; i++){
+			Row temp = rows[i];
+			rows[i] = rows[5 - i];
+			rows[5 - i] = temp;
+		}
+		Space temp = currentHand;
+		currentHand = opponentHand;
+		opponentHand = temp;
+		temp = currentDeck;
+		currentDeck = opponentDeck;
+		opponentDeck = temp;
+		temp = currentDiscardPile;
+		currentDiscardPile = opponentDiscardPile;
+		opponentDiscardPile = temp;
+		temp = currentWeatherSystem;
+		currentWeatherSystem = opponentWeatherSystem;
+		opponentWeatherSystem = temp;
+		int tempInt = currentLife;
+		currentLife = opponentLife;
+		opponentLife = tempInt;
+		String tempString = currentFaction;
+		currentFaction = opponentFaction;
+		opponentFaction = tempString;
+		Leader tempLeader = currentLeader;
+		currentLeader = opponentLeader;
+		opponentLeader = tempLeader;
+		User tempUser = current;
+		current = opponent;
+		opponent = tempUser;
 	}
 
-	public void endTurn() {
-		// TODO:
-		return;
+	public void passTurn() {
+		changeTurn();
+		hasOpponentPassed = true;
 	}
 
 	public void endRound() {
-		// TODO:
-		return;
+		if (getCurrentPower() <= getOpponentPower()) currentLife--;
+		if (getCurrentPower() >= getOpponentPower()) opponentLife--;
+		for (int i = 0 ; i < 6; i++) {
+			try {
+				rows[i].clear(i < 3 ? currentDiscardPile : opponentDiscardPile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			currentWeatherSystem.clear(currentDiscardPile);
+			opponentWeatherSystem.clear(opponentDiscardPile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (currentLife == 0 || opponentLife == 0) endGame();
+		else {
+			hasOpponentPassed = false;
+			changeTurn();
+		}
+	}
+
+	private void endGame() {
+		if (currentLife == 0 && opponentLife == 0) {
+			// Draw
+		} else if (currentLife == 0) {
+			// Lose
+		} else {
+			// Win
+		}
 	}
 
 }
