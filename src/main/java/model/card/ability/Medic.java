@@ -12,7 +12,7 @@ public enum Medic implements Ability {
 	public void act(Card card) {
 		Unit unit = MatchMenuController.medicAsk();
 		if (unit == null) return;
-		Game.getCurrentGame().getCurrentDiscordPile().remove(unit);
+		Game.getCurrentGame().getCurrentDiscardPile().remove(unit);
 		try {
 			if (unit instanceof Siege) unit.put(Game.SIEGE_ROW_NUMBER);
 			else if (unit instanceof Ranged) unit.put(Game.RANGED_ROW_NUMBER);

@@ -11,7 +11,7 @@ public class Deck {
 	private final ArrayList<Card> cards, availableCards;
 	private int specialCount;
 	private int unitCount;
-	private String faction;
+	private final String faction;
 
 	public Deck(String faction) {
 		this.cards = new ArrayList<>();
@@ -65,6 +65,12 @@ public class Deck {
 	}
 
 	public boolean add(Card card) {
+		if (availableCards.contains(card)) {
+			if (card instanceof Special) specialCount++;
+			else unitCount++;
+			availableCards.remove(card);
+			return cards.add(card);
+		}
 		return false;
 	}
 

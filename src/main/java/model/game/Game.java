@@ -17,10 +17,10 @@ public class Game {
 	private static Game currentGame;
 	User current, opponent;
 	Row[] rows = new Row[6];
-	WeatherSystem weatherSystem;
-	Space currentDiscordPile, opponentDiscordPile;
+	WeatherSystem weatherSystem = new WeatherSystem();
+	Space currentDiscardPile = new Space(), opponentDiscardPile = new Space();
 	Space currentDeck, opponentDeck;
-	Space currentHand, opponentHand;
+	Space currentHand = new Space(), opponentHand = new Space();
 	int currentLife, opponentLife;
 	String currentFaction, opponentFaction;
 	int currentPower, opponentPower;
@@ -30,6 +30,7 @@ public class Game {
 	private Game(User player1, User player2) {
 		this.current = player1;
 		this.opponent = player2;
+
 	}
 
 	public static Game createGame(User player1, User player2) {
@@ -72,8 +73,8 @@ public class Game {
 		return currentHand.getCards();
 	}
 
-	public ArrayList<Card> getCurrentDiscordPile() {
-		return currentDiscordPile.getCards();
+	public ArrayList<Card> getCurrentDiscardPile() {
+		return currentDiscardPile.getCards();
 	}
 
 	public WeatherSystem getWeatherSystem() {

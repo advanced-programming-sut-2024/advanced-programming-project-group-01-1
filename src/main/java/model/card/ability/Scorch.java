@@ -44,7 +44,7 @@ public enum Scorch implements Ability {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				Game.getCurrentGame().getCurrentDiscordPile().add(unit);
+				Game.getCurrentGame().getCurrentDiscardPile().add(unit);
 			}
 	}
 
