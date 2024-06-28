@@ -1,21 +1,27 @@
 package model.user;
 
 import model.card.Card;
+import model.card.Leader;
 import model.card.special.Special;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class Deck {
 
-	private final ArrayList<Card> cards, availableCards;
-	private int specialCount;
-	private int unitCount;
 	private final String faction;
+	private final ArrayList<Leader> availableLeaders;
+	private Leader leader;
+	private final ArrayList<Card> cards, availableCards;
+	private int specialCount = 0;
+	private int unitCount = 0;
 
 	public Deck(String faction) {
-		this.cards = new ArrayList<>();
 		this.faction = faction;
+		this.availableLeaders = new ArrayList<>();
+		this.cards = new ArrayList<>();
 		this.availableCards = new ArrayList<>();
 		File folder = new File("src/main/resources/cards/");
 		for (File file : folder.listFiles()) {
@@ -30,11 +36,14 @@ public class Deck {
 				String cardFaction = (String) objectInputStream.readObject();
 				if (cardFaction.equals(faction) || cardFaction.equals("Neutral")) {
 					Integer count = (Integer) objectInputStream.readObject();
-					if (count == 0) continue;
 					Card card = (Card) objectInputStream.readObject();
-					availableCards.add(card);
-					for (int i = 1; i < count; i++) {
-						availableCards.add(card.clone());
+					if (card instanceof Leader) availableLeaders.add((Leader) card);
+					else {
+						if (count == 0) continue;
+						availableCards.add(card);
+						for (int i = 1; i < count; i++) {
+							availableCards.add(card.clone());
+						}
 					}
 				}
 			} catch (Exception e) {
@@ -42,6 +51,24 @@ public class Deck {
 				System.exit(2357);
 			}
 		}
+		leader = availableLeaders.get(0);
+	}
+
+
+	public String getFaction() {
+		return faction;
+	}
+
+	public Leader getLeader() {
+		return leader;
+	}
+
+	public boolean setLeader(Leader leader) {
+		if (availableLeaders.contains(leader)) {
+			this.leader = leader;
+			return true;
+		}
+		return false;
 	}
 
 	public int getSpecialCount() {
@@ -58,10 +85,6 @@ public class Deck {
 
 	public ArrayList<Card> getCards() {
 		return new ArrayList<>(this.cards);
-	}
-
-	public String getFaction() {
-		return faction;
 	}
 
 	public boolean add(Card card) {

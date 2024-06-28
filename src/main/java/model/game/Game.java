@@ -1,11 +1,11 @@
 package model.game;
 
-import model.user.User;
 import model.card.Card;
+import model.card.Leader;
 import model.game.space.Row;
 import model.game.space.Space;
 import model.game.space.WeatherSystem;
-import model.leader.Leader;
+import model.user.User;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,12 @@ public class Game {
 	private Game(User player1, User player2) {
 		this.current = player1;
 		this.opponent = player2;
-
+		this.currentFaction = player1.getDeck().getFaction();
+		this.opponentFaction = player2.getDeck().getFaction();
+		this.currentLeader = player1.getDeck().getLeader();
+		this.opponentLeader = player2.getDeck().getLeader();
+		this.currentDeck = new Space(player1.getDeck().getCards());
+		this.opponentDeck = new Space(player2.getDeck().getCards());
 	}
 
 	public static Game createGame(User player1, User player2) {
