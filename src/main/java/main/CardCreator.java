@@ -1,7 +1,7 @@
 package main;
 
 import model.card.Card;
-import model.card.Leader;
+import model.leader.Leader;
 import model.card.ability.*;
 import model.card.special.Decoy;
 import model.card.special.spell.Buffer;
@@ -25,8 +25,8 @@ public class CardCreator {
 
 	private static void createLeader(String faction, String name, Ability ability) {
 		try {
-			Leader leader = new Leader(name, ability);
-			writeCard(faction, 1, leader);
+			//Leader leader = new Leader(name, ability);
+			//writeCard(faction, 1, leader);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

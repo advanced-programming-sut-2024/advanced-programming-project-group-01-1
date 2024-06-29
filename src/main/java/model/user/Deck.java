@@ -1,8 +1,8 @@
 package model.user;
 
 import model.card.Card;
-import model.card.Leader;
 import model.card.special.Special;
+import model.leader.Leader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,31 +21,36 @@ public class Deck {
 	public Deck(String faction) {
 		this.faction = faction;
 		this.availableLeaders = new ArrayList<>();
-		this.cards = new ArrayList<>();
-		this.availableCards = new ArrayList<>();
-		File folder = new File("src/main/resources/cards/");
+		File folder = new File("src/main/resources/leaders/");
 		for (File file : folder.listFiles()) {
-			ObjectInputStream objectInputStream = null;
 			try {
-				objectInputStream = new ObjectInputStream(new FileInputStream(file));
+				ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
+				String leaderFaction = (String) objectInputStream.readObject();
+				if (leaderFaction.equals(faction))
+					availableLeaders.add((Leader) objectInputStream.readObject());
+				objectInputStream.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.exit(2357);
 			}
+		}
+		this.cards = new ArrayList<>();
+		this.availableCards = new ArrayList<>();
+		folder = new File("src/main/resources/cards/");
+		for (File file : folder.listFiles()) {
 			try {
+				ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
 				String cardFaction = (String) objectInputStream.readObject();
 				if (cardFaction.equals(faction) || cardFaction.equals("Neutral")) {
 					Integer count = (Integer) objectInputStream.readObject();
 					Card card = (Card) objectInputStream.readObject();
-					if (card instanceof Leader) availableLeaders.add((Leader) card);
-					else {
-						if (count == 0) continue;
-						availableCards.add(card);
-						for (int i = 1; i < count; i++) {
-							availableCards.add(card.clone());
-						}
+					if (count == 0) continue;
+					availableCards.add(card);
+					for (int i = 1; i < count; i++) {
+						availableCards.add(card.clone());
 					}
 				}
+				objectInputStream.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.exit(2357);

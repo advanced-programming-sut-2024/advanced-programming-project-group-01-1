@@ -1,8 +1,7 @@
 package model.game;
 
 import model.card.Card;
-import model.card.Leader;
-import model.card.special.spell.Weather;
+import model.leader.Leader;
 import model.card.unit.Unit;
 import model.game.space.Row;
 import model.game.space.Space;
