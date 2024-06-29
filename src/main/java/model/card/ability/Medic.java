@@ -10,8 +10,8 @@ public enum Medic implements Ability {
 
 	@Override
 	public void act(Card card) {
-		Unit unit = MatchMenuController.medicAsk();
-		if (unit == null) return;
+		Unit unit = MatchMenuController.askSpace(Game.getCurrentGame().getCurrentDiscardPile());
+		if (unit == null || unit.isHero()) return;
 		Game.getCurrentGame().getCurrentDiscardPile().getCards().remove(unit);
 		try {
 			if (unit instanceof Siege) unit.put(Game.SIEGE_ROW_NUMBER);

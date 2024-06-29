@@ -3,11 +3,13 @@ package model.game;
 import model.card.Card;
 import model.card.Leader;
 import model.card.special.spell.Weather;
+import model.card.unit.Unit;
 import model.game.space.Row;
 import model.game.space.Space;
 import model.user.User;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
 
@@ -148,7 +150,11 @@ public class Game {
 	}
 
 	public void placeCard(Card card, int spaceId) {
-
+		try {
+			card.put(spaceId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void useLeaderAbility() {
@@ -159,7 +165,7 @@ public class Game {
 
 	public void changeTurn() {
 		if (hasOpponentPassed) return;
-		for (int i = 0; i < 3; i++){
+		for (int i = 0; i < 3; i++) {
 			Row temp = rows[i];
 			rows[i] = rows[5 - i];
 			rows[5 - i] = temp;
@@ -196,11 +202,23 @@ public class Game {
 	}
 
 	public void endRound() {
-		if (getCurrentPower() <= getOpponentPower()) currentLife--;
-		if (getCurrentPower() >= getOpponentPower()) opponentLife--;
-		for (int i = 0 ; i < 6; i++) {
+		int roundResult = getRoundResult();
+		if (roundResult <= 0) currentLife--;
+		if (roundResult >= 0) opponentLife--;
+		if (roundResult == 1 && currentFaction.equals("Northern Realms")) drawFromDeck(currentDeck, currentHand);
+		else if (roundResult == -1 && opponentFaction.equals("Northern Realms")) drawFromDeck(opponentDeck, opponentHand);
+		Unit currentUnit = currentFaction.equals("Monsters") ? keepUnit(true) : null;
+		Unit opponentUnit = opponentFaction.equals("Monsters") ? keepUnit(false) : null;
+		for (int i = 0; i < 6; i++) {
 			try {
 				rows[i].clear(i < 3 ? currentDiscardPile : opponentDiscardPile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (currentUnit != null) {
+			try {
+				currentUnit.put(0);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -216,6 +234,39 @@ public class Game {
 			hasOpponentPassed = false;
 			changeTurn();
 		}
+	}
+
+	private int getRoundResult() {
+		int currentPower = getCurrentPower(), opponentPower = getOpponentPower();
+		int roundResult; // -1 for lose, 0 for draw, 1 for win
+		if (currentPower < opponentPower) roundResult = -1;
+		else if (currentPower > opponentPower) roundResult = 1;
+		else {
+			if (currentFaction.equals("Nilfgaardian Empire") && !opponentFaction.equals("Nilfgaardian Empire")) roundResult = 1;
+			else if (!currentFaction.equals("Nilfgaardian Empire") && opponentFaction.equals("Nilfgaardian Empire")) roundResult = -1;
+			else roundResult = 0;
+		}
+		return roundResult;
+	}
+
+	private void drawFromDeck(Space deck, Space hand){
+		Random random = new Random();
+		int randomIndex = random.nextInt(deck.getCards().size());
+		hand.getCards().add(deck.getCards().get(randomIndex));
+		deck.getCards().remove(randomIndex);
+	}
+
+	private Unit keepUnit(boolean isCurrentPlayer) {
+		Random random = new Random();
+		int size = 0;
+		for (int i = 0; i < 3; i++) size += rows[isCurrentPlayer ? i : i + 3].getCards().size();
+		int randomIndex = random.nextInt(size);
+		for (int i = 0; i < 3; i++) {
+			if (randomIndex < rows[isCurrentPlayer ? i : i + 3].getCards().size())
+				return (Unit) rows[isCurrentPlayer ? i : i + 3].getCards().get(randomIndex);
+			randomIndex -= rows[isCurrentPlayer ? i : i + 3].getCards().size();
+		}
+		return null;
 	}
 
 	private void endGame() {

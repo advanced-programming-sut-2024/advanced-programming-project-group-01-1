@@ -2,6 +2,7 @@ package controller.game;
 
 import model.Result;
 import model.card.unit.Unit;
+import model.game.space.Space;
 
 public class MatchMenuController {
 
@@ -85,7 +86,8 @@ public class MatchMenuController {
 		return null;
 	}
 
-	public static Unit medicAsk() {
+	public static Unit askSpace(Space space) {
 		return null;
 	}
+
 }
