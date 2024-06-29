@@ -12,6 +12,10 @@ public class Appview {
 		Appview.menu = menu;
 	}
 
+	public static void runMenu() {
+		//TODO: run the graphical interface
+	}
+
 	public static String getMenuName() {
 		return menu.getClass().getSimpleName();
 	}

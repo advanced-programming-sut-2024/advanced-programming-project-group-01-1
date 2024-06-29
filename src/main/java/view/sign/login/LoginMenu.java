@@ -6,7 +6,6 @@ import view.Appview;
 import view.Menuable;
 import view.sign.register.RegisterMenu;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class LoginMenu implements Menuable {
@@ -15,16 +14,16 @@ public class LoginMenu implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = LoginMenuCommands.LOGIN.getMatcher(input)) != null) {
+		if ((matcher = LoginMenusCommands.LOGIN.getMatcher(input)) != null) {
 			result = login(matcher);
-		} else if ((matcher = LoginMenuCommands.FORGOT_PASSWORD.getMatcher(input)) != null) {
+		} else if ((matcher = LoginMenusCommands.FORGOT_PASSWORD.getMatcher(input)) != null) {
 			result = forgotPassword(matcher);
-		} else if ((matcher = LoginMenuCommands.ENTER_REGISTER_MENU.getMatcher(input)) != null) {
+		} else if ((matcher = LoginMenusCommands.ENTER_REGISTER_MENU.getMatcher(input)) != null) {
 			result = goToRegisterMenu(matcher);
-		} else if ((matcher = LoginMenuCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
+		} else if ((matcher = LoginMenusCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
 			result = showCurrentMenu();
 		}
-		else if ((matcher = LoginMenuCommands.EXIT.getMatcher(input)) != null) {
+		else if ((matcher = LoginMenusCommands.EXIT.getMatcher(input)) != null) {
 			result = exit(matcher);
 		} else {
 			result = new Result("Invalid command", false);

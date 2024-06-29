@@ -69,7 +69,7 @@ public class PreMatchMenusController {
 		return null;
 	}
 
-	public static Result deleteFromDeck(String cardName, int count) {
+	public static Result deleteFromDeck(int cardNumber, int count) {
 		// TODO:
 		return null;
 	}

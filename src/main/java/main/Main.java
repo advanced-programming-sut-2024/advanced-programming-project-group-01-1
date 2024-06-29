@@ -15,7 +15,7 @@ public class Main {
 				}, "Shutdown-thread"));
 		JsonController.load();
 		Appview.setMenu(new LoginMenu());
-		//TODO: run the graphical interface
+		Appview.runMenu();
 		Terminal terminal = new Terminal();
 		terminal.run();
 	}

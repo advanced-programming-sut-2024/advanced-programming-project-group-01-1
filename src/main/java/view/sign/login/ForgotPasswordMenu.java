@@ -5,7 +5,6 @@ import model.Result;
 import view.Appview;
 import view.Menuable;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class ForgotPasswordMenu implements Menuable {
@@ -14,12 +13,12 @@ public class ForgotPasswordMenu implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = LoginMenuCommands.ANSWER_QUESTION.getMatcher(input)) != null) {
+		if ((matcher = LoginMenusCommands.ANSWER_QUESTION.getMatcher(input)) != null) {
 			result = answerQuestion(matcher);
-		} else if ((matcher = LoginMenuCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
+		} else if ((matcher = LoginMenusCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
 			result = showCurrentMenu();
 		}
-		else if ((matcher = LoginMenuCommands.EXIT.getMatcher(input)) != null) {
+		else if ((matcher = LoginMenusCommands.EXIT.getMatcher(input)) != null) {
 			result = exit(matcher);
 		} else {
 			result = new Result("Invalid command", false);

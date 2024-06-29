@@ -76,7 +76,7 @@ public class MatchMenuController {
 		return null;
 	}
 
-	public static Result showRowPower() {
+	public static Result showRowPower(int rowNumber) {
 		// TODO:
 		return null;
 	}

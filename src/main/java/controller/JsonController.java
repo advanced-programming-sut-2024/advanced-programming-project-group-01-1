@@ -7,6 +7,7 @@ import model.user.User;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class JsonController {
 
 	private static void saveUsers() {
 		try {
-			String path = JsonController.class.getResource(USERS_FILE).getPath();
+			String path = Paths.get(JsonController.class.getResource(USERS_FILE).toURI()).toString();
 			FileWriter fileWriter = new FileWriter(path);
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String json = gson.toJson(User.getUsers());
@@ -28,8 +29,10 @@ public class JsonController {
 			fileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
+		} catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	public static void load() {
 		loadUsers();
@@ -37,7 +40,7 @@ public class JsonController {
 
 	public static void loadUsers() {
 		try {
-			String path = JsonController.class.getResource(USERS_FILE).getPath();
+			String path = Paths.get(JsonController.class.getResource(USERS_FILE).toURI()).toString();
 			Gson gson = new Gson();
 			String text = new String(Files.readAllBytes(Paths.get(path)));
 			ArrayList<User> users = gson.fromJson(text, new TypeToken<List<User>>(){}.getType());
