@@ -5,14 +5,20 @@ import model.card.ability.Ability;
 
 public class InstantSpell extends Spell {
 
+	private int rowNumber;
+
 	public InstantSpell(String name, Ability ability) {
 		super(name, ability);
 	}
 
 	@Override
 	public void put(int rowNumber) throws Exception {
-		if (rowNumber != -1) throw new Exception("Instant spell can only be put in the graveyard");
+		this.rowNumber = rowNumber;
 		ability.act(this);
+	}
+
+	public int getRowNumber() {
+		return rowNumber;
 	}
 
 	@Override
