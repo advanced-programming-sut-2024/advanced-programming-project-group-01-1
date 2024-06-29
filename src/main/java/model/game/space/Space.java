@@ -1,6 +1,7 @@
 package model.game.space;
 
 import model.card.Card;
+import model.card.unit.Unit;
 
 import java.util.ArrayList;
 
@@ -20,8 +21,9 @@ public class Space {
 		return cards;
 	}
 
-	public void clear(Space discardPile) throws Exception {
+	public void clear(Space discardPile, Unit stayingUnit) throws Exception {
 		for (Card card : cards) {
+			if(card == stayingUnit) continue;
 			card.pull();
 			discardPile.getCards().add(card);
 		}

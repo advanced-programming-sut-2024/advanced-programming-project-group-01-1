@@ -18,6 +18,7 @@ public class Game {
 	public static final int MELEE_ROW_NUMBER = 2;
 	private static Game currentGame;
 	User current, opponent;
+	int roundNumber = 1;
 	Row[] rows = new Row[6];
 	Space currentWeatherSystem = new Space(), opponentWeatherSystem = new Space();
 	Space currentDiscardPile = new Space(), opponentDiscardPile = new Space();
@@ -139,11 +140,6 @@ public class Game {
 		this.currentDeck = currentDeck;
 	}
 
-	public void startGame() {
-		// TODO:
-		return;
-	}
-
 	public void vetoCard(Card card) {
 		// TODO:
 		return;
@@ -202,16 +198,18 @@ public class Game {
 	}
 
 	public void endRound() {
+		roundNumber++;
 		int roundResult = getRoundResult();
 		if (roundResult <= 0) currentLife--;
 		if (roundResult >= 0) opponentLife--;
 		if (roundResult == 1 && currentFaction.equals("Northern Realms")) drawFromDeck(currentDeck, currentHand);
 		else if (roundResult == -1 && opponentFaction.equals("Northern Realms")) drawFromDeck(opponentDeck, opponentHand);
+		if (roundNumber == 3) skelligeAbility();
 		Unit currentUnit = currentFaction.equals("Monsters") ? keepUnit(true) : null;
 		Unit opponentUnit = opponentFaction.equals("Monsters") ? keepUnit(false) : null;
 		for (int i = 0; i < 6; i++) {
 			try {
-				rows[i].clear(i < 3 ? currentDiscardPile : opponentDiscardPile);
+				rows[i].clear(i < 3 ? currentDiscardPile : opponentDiscardPile, i < 3 ? currentUnit : opponentUnit);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -224,8 +222,8 @@ public class Game {
 			}
 		}
 		try {
-			currentWeatherSystem.clear(currentDiscardPile);
-			opponentWeatherSystem.clear(opponentDiscardPile);
+			currentWeatherSystem.clear(currentDiscardPile, null);
+			opponentWeatherSystem.clear(opponentDiscardPile, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -233,6 +231,17 @@ public class Game {
 		else {
 			hasOpponentPassed = false;
 			changeTurn();
+		}
+	}
+
+	private void skelligeAbility() {
+		if (currentFaction.equals("Skellige")) {
+			drawFromDeck(currentDeck, currentHand);
+			drawFromDeck(currentDeck, currentHand);
+		}
+		if (opponentFaction.equals("Skellige")) {
+			drawFromDeck(opponentDeck, opponentHand);
+			drawFromDeck(opponentDeck, opponentHand);
 		}
 	}
 
@@ -259,13 +268,17 @@ public class Game {
 	private Unit keepUnit(boolean isCurrentPlayer) {
 		Random random = new Random();
 		int size = 0;
-		for (int i = 0; i < 3; i++) size += rows[isCurrentPlayer ? i : i + 3].getCards().size();
+		for (int i = 0; i < 3; i++)
+			for (Card card : rows[isCurrentPlayer ? i : i + 3].getCards())
+				if (card instanceof Unit && !((Unit) card).isHero()) size++;
 		int randomIndex = random.nextInt(size);
-		for (int i = 0; i < 3; i++) {
-			if (randomIndex < rows[isCurrentPlayer ? i : i + 3].getCards().size())
-				return (Unit) rows[isCurrentPlayer ? i : i + 3].getCards().get(randomIndex);
-			randomIndex -= rows[isCurrentPlayer ? i : i + 3].getCards().size();
-		}
+		int counter = 0;
+		for (int i = 0; i < 3; i++)
+			for (Card card : rows[isCurrentPlayer ? i : i + 3].getCards())
+				if (card instanceof Unit && !((Unit) card).isHero()) {
+					if (counter == randomIndex) return (Unit) card;
+					counter++;
+				}
 		return null;
 	}
 

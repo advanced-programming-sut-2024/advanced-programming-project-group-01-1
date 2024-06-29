@@ -66,12 +66,12 @@ public class Row extends Space {
 		return isDebuffed;
 	}
 
-	public void clear(Space discardPile) throws Exception {
+	public void clear(Space discardPile, Unit stayingUnit) throws Exception {
 		if (buffer != null) {
 			buffer.pull();
 			buffer = null;
 		}
-		super.clear(discardPile);
+		super.clear(discardPile, stayingUnit);
 	}
 
 }
