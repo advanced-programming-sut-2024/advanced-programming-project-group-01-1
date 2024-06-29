@@ -24,4 +24,13 @@ public class LoginMenusController {
 		return null;
 	}
 
+	public static Result exit() {
+		// TODO:
+		return null;
+	}
+
+	public static Result goToRegisterMenu() {
+		// TODO:
+		return null;
+	}
 }

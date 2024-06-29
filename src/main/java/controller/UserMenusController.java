@@ -35,4 +35,8 @@ public class UserMenusController {
 		return null;
 	}
 
+	public static Result exit() {
+		// TODO:
+		return null;
+	}
 }

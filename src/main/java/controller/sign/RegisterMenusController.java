@@ -32,4 +32,9 @@ public class RegisterMenusController {
 		//TODO
 		return null;
 	}
+
+	public static Result exit() {
+		//TODO
+		return null;
+	}
 }

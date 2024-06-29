@@ -47,7 +47,6 @@ public class RegisterMenu implements Menuable {
 	}
 
 	private Result exit(Matcher matcher) {
-		Appview.setMenu(new LoginMenu());
-		return null;
+		return RegisterMenusController.exit();
 	}
 }

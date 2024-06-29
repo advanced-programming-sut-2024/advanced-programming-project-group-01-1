@@ -46,8 +46,7 @@ public class PickQuestionMenu implements Menuable {
 	}
 
 	private Result exit(Matcher matcher) {
-		Appview.setMenu(new RegisterMenu());
-		return null;
+		return RegisterMenusController.exit();
 	}
 
 }
