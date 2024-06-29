@@ -4,7 +4,7 @@ module w {
 	requires javafx.media;
 
 	//opens views to javafx.fxml;
-	opens view.sign.login to javafx.fxml;
+	opens view.sign.login to javafx.fxml, javafx.graphics;
 
 	// open models to gson and jackson
 	opens model to com.google.gson, com.fasterxml.jackson.databind;

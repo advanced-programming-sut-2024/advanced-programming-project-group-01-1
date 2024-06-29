@@ -1,15 +1,49 @@
 package view.sign.login;
 
 import controller.sign.LoginMenusController;
+import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 import model.Result;
 import view.Appview;
+import view.Constants;
 import view.Menuable;
 import view.sign.register.RegisterMenu;
 
 import java.util.regex.Matcher;
 
-public class LoginMenu implements Menuable {
+public class LoginMenu extends Application implements Menuable {
 
+	public static void createStage(){
+		launch();
+	}
+
+	/**
+	 * JavaFX version of the LoginMenu
+	 */
+
+	@Override
+	public void start(Stage stage) {
+		stage.setFullScreen(true);
+		Pane root = new Pane();
+		for (int i = 0; i < 1; i++) {
+			Button button = new Button("Button " + i);
+			button.setPrefHeight(Constants.STAGE_HEIGHT.getValue());
+			button.setPrefWidth(Constants.STAGE_WIDTH.getValue());
+			root.getChildren().add(button);
+		}
+		Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	/**
+	 * Terminal version of the LoginMenu
+	 */
 	@Override
 	public void run(String input) {
 		Matcher matcher;
