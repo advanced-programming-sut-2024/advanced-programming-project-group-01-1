@@ -2,6 +2,7 @@ package model.user;
 
 import model.card.Card;
 import model.card.special.Special;
+import model.game.Faction;
 import model.leader.Leader;
 
 import java.io.File;
@@ -11,21 +12,21 @@ import java.util.ArrayList;
 
 public class Deck {
 
-	private final String faction;
+	private final Faction faction;
 	private final ArrayList<Leader> availableLeaders;
 	private Leader leader;
 	private final ArrayList<Card> cards, availableCards;
 	private int specialCount = 0;
 	private int unitCount = 0;
 
-	public Deck(String faction) {
+	public Deck(Faction faction) {
 		this.faction = faction;
 		this.availableLeaders = new ArrayList<>();
 		File folder = new File("src/main/resources/leaders/");
 		for (File file : folder.listFiles()) {
 			try {
 				ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
-				String leaderFaction = (String) objectInputStream.readObject();
+				Faction leaderFaction = (Faction) objectInputStream.readObject();
 				if (leaderFaction.equals(faction))
 					availableLeaders.add((Leader) objectInputStream.readObject());
 				objectInputStream.close();
@@ -40,8 +41,8 @@ public class Deck {
 		for (File file : folder.listFiles()) {
 			try {
 				ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
-				String cardFaction = (String) objectInputStream.readObject();
-				if (cardFaction.equals(faction) || cardFaction.equals("Neutral")) {
+				Faction cardFaction = (Faction) objectInputStream.readObject();
+				if (cardFaction.equals(faction) || cardFaction.equals(Faction.NEUTRAL)) {
 					Integer count = (Integer) objectInputStream.readObject();
 					Card card = (Card) objectInputStream.readObject();
 					if (count == 0) continue;
@@ -60,7 +61,7 @@ public class Deck {
 	}
 
 
-	public String getFaction() {
+	public Faction getFaction() {
 		return faction;
 	}
 

@@ -66,7 +66,7 @@ public class Row extends Space {
 		return isDebuffed;
 	}
 
-	public void clear(Space discardPile, Unit stayingUnit) throws Exception {
+	public void clear(Space discardPile, Unit stayingUnit) {
 		if (buffer != null) {
 			buffer.pull();
 			buffer = null;

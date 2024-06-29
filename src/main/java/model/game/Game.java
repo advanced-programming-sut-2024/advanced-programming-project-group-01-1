@@ -30,7 +30,7 @@ public class Game {
 	Space currentDeck, opponentDeck;
 	Space currentHand = new Space(), opponentHand = new Space();
 	int currentLife = 2, opponentLife = 2;
-	String currentFaction, opponentFaction;
+	Faction currentFaction, opponentFaction;
 	boolean hasOpponentPassed;
 	Leader currentLeader, opponentLeader;
 	private boolean isLeaderAbilityDisabled = false, isSpyPowerDoubled = false,
@@ -76,7 +76,7 @@ public class Game {
 		}
 	}
 
-	public String getCurrentFaction() {
+	public Faction getCurrentFaction() {
 		return currentFaction;
 	}
 
@@ -240,9 +240,9 @@ public class Game {
 		int tempInt = currentLife;
 		currentLife = opponentLife;
 		opponentLife = tempInt;
-		String tempString = currentFaction;
+		Faction tempFaction = currentFaction;
 		currentFaction = opponentFaction;
-		opponentFaction = tempString;
+		opponentFaction = tempFaction;
 		Leader tempLeader = currentLeader;
 		currentLeader = opponentLeader;
 		opponentLeader = tempLeader;
@@ -261,11 +261,11 @@ public class Game {
 		int roundResult = getRoundResult();
 		if (roundResult <= 0) currentLife--;
 		if (roundResult >= 0) opponentLife--;
-		if (roundResult == 1 && currentFaction.equals("Northern Realms")) drawFromDeck(currentDeck, currentHand);
-		else if (roundResult == -1 && opponentFaction.equals("Northern Realms")) drawFromDeck(opponentDeck, opponentHand);
+		if (roundResult == 1 && currentFaction.equals(Faction.NORTHERN_REALMS)) drawFromDeck(currentDeck, currentHand);
+		else if (roundResult == -1 && opponentFaction.equals(Faction.NORTHERN_REALMS)) drawFromDeck(opponentDeck, opponentHand);
 		if (roundNumber == 3) skelligeAbility();
-		Unit currentUnit = currentFaction.equals("Monsters") ? keepUnit(true) : null;
-		Unit opponentUnit = opponentFaction.equals("Monsters") ? keepUnit(false) : null;
+		Unit currentUnit = currentFaction.equals(Faction.MONSTERS) ? keepUnit(true) : null;
+		Unit opponentUnit = opponentFaction.equals(Faction.MONSTERS) ? keepUnit(false) : null;
 		for (int i = 0; i < 6; i++) {
 			try {
 				rows[i].clear(i < 3 ? currentDiscardPile : opponentDiscardPile, i < 3 ? currentUnit : opponentUnit);
@@ -294,11 +294,11 @@ public class Game {
 	}
 
 	private void skelligeAbility() {
-		if (currentFaction.equals("Skellige")) {
+		if (currentFaction.equals(Faction.SKELLIGE)) {
 			drawFromDeck(currentDeck, currentHand);
 			drawFromDeck(currentDeck, currentHand);
 		}
-		if (opponentFaction.equals("Skellige")) {
+		if (opponentFaction.equals(Faction.SKELLIGE)) {
 			drawFromDeck(opponentDeck, opponentHand);
 			drawFromDeck(opponentDeck, opponentHand);
 		}
@@ -310,8 +310,8 @@ public class Game {
 		if (currentPower < opponentPower) roundResult = -1;
 		else if (currentPower > opponentPower) roundResult = 1;
 		else {
-			if (currentFaction.equals("Nilfgaard") && !opponentFaction.equals("Nilfgaard")) roundResult = 1;
-			else if (!currentFaction.equals("Nilfgaard") && opponentFaction.equals("Nilfgaard")) roundResult = -1;
+			if (currentFaction.equals(Faction.NILFGAARDIAN_EMPIRE) && !opponentFaction.equals(Faction.NILFGAARDIAN_EMPIRE)) roundResult = 1;
+			else if (!currentFaction.equals(Faction.NILFGAARDIAN_EMPIRE) && opponentFaction.equals(Faction.NILFGAARDIAN_EMPIRE)) roundResult = -1;
 			else roundResult = 0;
 		}
 		return roundResult;

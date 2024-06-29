@@ -1,5 +1,7 @@
 package model.user;
 
+import model.game.Faction;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class User implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.question = question;
-		this.deck = new Deck("Northern Realms");
+		this.deck = new Deck(Faction.NORTHERN_REALMS);
 		this.updateData();
 	}
 

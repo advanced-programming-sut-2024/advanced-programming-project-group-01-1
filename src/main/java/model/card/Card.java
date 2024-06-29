@@ -40,7 +40,7 @@ public abstract class Card implements Cloneable, Serializable {
 
 	}
 
-	public void pull() throws Exception {
+	public void pull() {
 
 	}
 

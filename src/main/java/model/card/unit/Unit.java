@@ -89,7 +89,8 @@ public abstract class Unit extends Card {
 	}
 
 	@Override
-	public void pull() throws Exception {
+	public void pull() {
+		if (space == null) return;
 		if (this.ability != null) this.ability.undo(this);
 		this.hornCount = 0;
 		this.boostCount = 0;
@@ -101,8 +102,7 @@ public abstract class Unit extends Card {
 	@Override
 	public Card clone() {
 		try {
-			return this.getClass().getConstructor(String.class, Ability.class, int.class,
-					boolean.class).newInstance(this.name, this.ability, this.basePower, this.isHero);
+			return this.getClass().getConstructor(String.class, Ability.class, int.class, boolean.class).newInstance(this.name, this.ability, this.basePower, this.isHero);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

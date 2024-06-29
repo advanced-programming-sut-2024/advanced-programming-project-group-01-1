@@ -5,10 +5,11 @@ import model.card.Card;
 import model.card.unit.Unit;
 import model.game.space.Space;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CardMover {
+public class CardMover implements Serializable {
 
 	private final int originId, destinationId;
 	private final boolean isRandom;

@@ -11,11 +11,7 @@ public enum Berserker implements Ability {
 
 	@Override
 	public void act(Card card) {
-		try {
-			card.pull();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		card.pull();
 		String transformedName = "Transformed " + card.getName().replace("Berserker", "Vildkaarl");
 		Card transformedCard = CardCreator.getCard(transformedName);
 		try {

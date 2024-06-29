@@ -42,11 +42,7 @@ public enum Scorch implements Ability {
 		if (sumOfPower < 10 && row != -1) return;
 		for (Unit unit : units)
 			if (unit.getPower() == maxPower) {
-				try {
-					unit.pull();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				unit.pull();
 				Game.getCurrentGame().getCurrentDiscardPile().getCards().add(unit);
 			}
 	}

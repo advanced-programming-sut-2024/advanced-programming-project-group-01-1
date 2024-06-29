@@ -21,7 +21,7 @@ public class Space {
 		return cards;
 	}
 
-	public void clear(Space discardPile, Unit stayingUnit) throws Exception {
+	public void clear(Space discardPile, Unit stayingUnit) {
 		for (Card card : cards) {
 			if(card == stayingUnit) continue;
 			card.pull();
