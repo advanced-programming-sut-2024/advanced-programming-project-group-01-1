@@ -40,8 +40,7 @@ public class SetPasswordMenu implements Menuable {
 	}
 
 	private Result exit(Matcher matcher) {
-		Appview.setMenu(new LoginMenu());
-		return null;
+		return LoginMenusController.exit();
 	}
 
 }

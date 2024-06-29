@@ -35,16 +35,11 @@ public class ForgotPasswordMenu implements Menuable {
 	private Result answerQuestion(Matcher matcher) {
 		int questionNumber = Integer.parseInt(matcher.group("questionNumber"));
 		String answer = matcher.group("answer");
-		Result result = LoginMenusController.answerQuestion(questionNumber, answer);
-		if (result.isSuccessful()) {
-			Appview.setMenu(new SetPasswordMenu());
-		}
-		return result;
+        return LoginMenusController.answerQuestion(questionNumber, answer);
 	}
 
 	private Result exit(Matcher matcher) {
-		Appview.setMenu(new LoginMenu());
-		return null;
+		return LoginMenusController.exit();
 	}
 
 }

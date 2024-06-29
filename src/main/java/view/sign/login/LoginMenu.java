@@ -41,25 +41,20 @@ public class LoginMenu implements Menuable {
 		String username = matcher.group("username");
 		String password = matcher.group("password");
 		boolean stayLoggedIn = matcher.group("stayLoggedIn") != null;
-		Result result = LoginMenusController.login(username, password, stayLoggedIn);
-		return result;
+        return LoginMenusController.login(username, password, stayLoggedIn);
 	}
 
 	private Result forgotPassword(Matcher matcher) {
 		String username = matcher.group("username");
-		Result result = LoginMenusController.forgotPassword(username);
-		Appview.setMenu(new ForgotPasswordMenu());
-		return result;
+        return LoginMenusController.forgotPassword(username);
 	}
 
 	private Result goToRegisterMenu(Matcher matcher) {
-		Appview.setMenu(new RegisterMenu());
-		return null;
+		return LoginMenusController.goToRegisterMenu();
 	}
 
 	private Result exit(Matcher matcher) {
-		System.exit(0);
-		return null;
+		return LoginMenusController.exit();
 	}
 
 }

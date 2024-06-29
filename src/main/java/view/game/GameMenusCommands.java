@@ -3,7 +3,7 @@ package view.game;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum MatchMenusCommands {
+public enum GameMenusCommands {
     CREATE_GAME("create game -p2 (?<opponent>\\w+)"),
     SHOW_FACTIONS("show factions"),
     SELECT_FACTION("select faction -f (?<faction>\\w+)"),
@@ -39,7 +39,7 @@ public enum MatchMenusCommands {
 
     private final Pattern pattern;
 
-    MatchMenusCommands(String regex) {
+    GameMenusCommands(String regex) {
         this.pattern = Pattern.compile(regex);
     }
 

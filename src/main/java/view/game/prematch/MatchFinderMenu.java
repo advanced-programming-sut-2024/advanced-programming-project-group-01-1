@@ -3,9 +3,8 @@ package view.game.prematch;
 import controller.game.PreMatchMenusController;
 import model.Result;
 import view.Menuable;
-import view.game.MatchMenusCommands;
+import view.game.GameMenusCommands;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class MatchFinderMenu implements Menuable {
@@ -14,7 +13,7 @@ public class MatchFinderMenu implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = MatchMenusCommands.CREATE_GAME.getMatcher(input)) != null) {
+		if ((matcher = GameMenusCommands.CREATE_GAME.getMatcher(input)) != null) {
 			result = createGame(matcher);
 		} else {
 			result = new Result("Invalid command", false);
