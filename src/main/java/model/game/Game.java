@@ -277,8 +277,8 @@ public class Game {
 		if (currentPower < opponentPower) roundResult = -1;
 		else if (currentPower > opponentPower) roundResult = 1;
 		else {
-			if (currentFaction.equals("Nilfgaardian Empire") && !opponentFaction.equals("Nilfgaardian Empire")) roundResult = 1;
-			else if (!currentFaction.equals("Nilfgaardian Empire") && opponentFaction.equals("Nilfgaardian Empire")) roundResult = -1;
+			if (currentFaction.equals("Nilfgaard") && !opponentFaction.equals("Nilfgaard")) roundResult = 1;
+			else if (!currentFaction.equals("Nilfgaard") && opponentFaction.equals("Nilfgaard")) roundResult = -1;
 			else roundResult = 0;
 		}
 		return roundResult;
