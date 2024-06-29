@@ -15,7 +15,13 @@ public class Game {
 	public static final int SIEGE_ROW_NUMBER = 0;
 	public static final int RANGED_ROW_NUMBER = 1;
 	public static final int MELEE_ROW_NUMBER = 2;
+	public static final int CURRENT_DECK = 6, OPPONENT_DECK = 9;
+	public static final int CURRENT_HAND = 7, OPPONENT_HAND = 10;
+	public static final int CURRENT_DISCARD_PILE = 8, OPPONENT_DISCARD_PILE = 11;
 	private static Game currentGame;
+
+
+
 	User current, opponent;
 	int roundNumber = 1;
 	Row[] rows = new Row[6];
@@ -45,6 +51,27 @@ public class Game {
 
 	public static Game getCurrentGame() {
 		return currentGame;
+	}
+
+	public static Space getSpaceById(int id) {
+		switch (id) {
+			case CURRENT_DECK:
+				return currentGame.currentDeck;
+			case OPPONENT_DECK:
+				return currentGame.opponentDeck;
+			case CURRENT_HAND:
+				return currentGame.currentHand;
+			case OPPONENT_HAND:
+				return currentGame.opponentHand;
+			case CURRENT_DISCARD_PILE:
+				return currentGame.currentDiscardPile;
+			case OPPONENT_DISCARD_PILE:
+				return currentGame.opponentDiscardPile;
+			case -1:
+				return null;
+			default:
+				return currentGame.rows[id];
+		}
 	}
 
 	public String getCurrentFaction() {
