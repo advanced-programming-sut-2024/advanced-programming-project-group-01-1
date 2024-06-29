@@ -1,9 +1,11 @@
 package model.leader;
 
-public abstract class Leader {
-	private final String name;
-	private boolean isDisable;
-	private final boolean isManual;
+import java.io.Serializable;
+
+public abstract class Leader implements Serializable, Cloneable {
+	protected final String name;
+	protected boolean isDisable;
+	protected final boolean isManual;
 
 	public Leader(String name, boolean isManual) {
 		this.name = name;
@@ -27,4 +29,7 @@ public abstract class Leader {
 	}
 
 	public abstract void act();
+
+	@Override
+	public abstract Leader clone();
 }

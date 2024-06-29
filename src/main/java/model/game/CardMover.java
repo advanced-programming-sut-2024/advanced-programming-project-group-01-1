@@ -10,24 +10,22 @@ import java.util.Random;
 
 public class CardMover {
 
-	private Space originSpace, destinationSpace;
-	private boolean isRandom;
-	private Random random;
-	private int count;
+	private final int originId, destinationId;
+	private final boolean isRandom;
+	private final Random random;
+	private final int count;
 
 	public CardMover(int originId, int destinationId, boolean isRandom, int count){
-		this(Game.getCurrentGame().getSpaceById(originId), Game.getCurrentGame().getSpaceById(originId), isRandom, count);
-	}
-
-	public CardMover(Space originSpace, Space destinationSpace, boolean isRandom, int count) {
-		this.originSpace = originSpace;
-		this.destinationSpace = destinationSpace;
+		this.originId = originId;
+		this.destinationId = destinationId;
 		this.isRandom = isRandom;
 		this.count = count;
 		random = new Random();
 	}
 
 	public void move() {
+		Space originSpace = Game.getCurrentGame().getSpaceById(originId);
+		Space destinationSpace = Game.getCurrentGame().getSpaceById(destinationId);
 		if (destinationSpace != null) {
 			ArrayList<Card> nonHeroCards = new ArrayList<>();
 			for (Card card : originSpace.getCards()) {

@@ -53,24 +53,24 @@ public class Game {
 		return currentGame;
 	}
 
-	public static Space getSpaceById(int id) {
+	public Space getSpaceById(int id) {
 		switch (id) {
 			case CURRENT_DECK:
-				return currentGame.currentDeck;
+				return currentDeck;
 			case OPPONENT_DECK:
-				return currentGame.opponentDeck;
+				return opponentDeck;
 			case CURRENT_HAND:
-				return currentGame.currentHand;
+				return currentHand;
 			case OPPONENT_HAND:
-				return currentGame.opponentHand;
+				return opponentHand;
 			case CURRENT_DISCARD_PILE:
-				return currentGame.currentDiscardPile;
+				return currentDiscardPile;
 			case OPPONENT_DISCARD_PILE:
-				return currentGame.opponentDiscardPile;
+				return opponentDiscardPile;
 			case -1:
 				return null;
 			default:
-				return currentGame.rows[id];
+				return rows[id];
 		}
 	}
 

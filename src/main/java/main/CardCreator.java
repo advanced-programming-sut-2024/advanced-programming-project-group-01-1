@@ -1,7 +1,6 @@
 package main;
 
 import model.card.Card;
-import model.leader.Leader;
 import model.card.ability.*;
 import model.card.special.Decoy;
 import model.card.special.spell.Buffer;
@@ -21,15 +20,6 @@ public class CardCreator {
 		oos.writeObject(count);
 		oos.writeObject(card);
 		oos.close();
-	}
-
-	private static void createLeader(String faction, String name, Ability ability) {
-		try {
-			//Leader leader = new Leader(name, ability);
-			//writeCard(faction, 1, leader);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	private static void createUnit(Class clazz, String faction, int count, String name, Ability ability, int basePower, boolean isHero) {
@@ -74,30 +64,6 @@ public class CardCreator {
 		createNilfgaardCards();
 		createNorthernRealmsCards();
 		createScoiataelCards();
-	}
-
-	private static void createLeaders() {
-		createLeader("Northern Realms", "The Siege Master", null);
-		createLeader("Northern Realms", "The Steel-Forged", null);
-		createLeader("Northern Realms", "King of Temeria", null);
-		createLeader("Northern Realms", "Lord Commander of The North", null);
-		createLeader("Northern Realms", "Son of Medell", null);
-		createLeader("Nilfgaardian Empire", "The White Flame", null);
-		createLeader("Nilfgaardian Empire", "His Imperial Majesty", null);
-		createLeader("Nilfgaardian Empire", "Emperor of Nilfgaard", null);
-		createLeader("Nilfgaardian Empire", "The Relentless", null);
-		createLeader("Nilfgaardian Empire", "Invader of the North", null);
-		createLeader("Monsters", "Bringer of Death", null);
-		createLeader("Monsters", "Destroyer of Worlds", null);
-		createLeader("Monsters", "Commander of the Red Riders", null);
-		createLeader("Monsters", "The Treacherous", null);
-		createLeader("Scoia'tael", "Queen of Dol Blathanna", null);
-		createLeader("Scoia'tael", "The Beautiful", null);
-		createLeader("Scoia'tael", "Daisy of the Valley", null);
-		createLeader("Scoia'tael", "Pureblood Elf", null);
-		createLeader("Scoia'tael", "Hope of the Aen Seidhe", null);
-		createLeader("Skellige", "Crach an Crite", null);
-		createLeader("Skellige", "King Bran", null);
 	}
 
 	private static void createNeutralCards() {
