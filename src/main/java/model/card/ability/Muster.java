@@ -13,8 +13,8 @@ public enum Muster implements Ability {
 	public void act(Card card) {
 		String musterName = ((Unit) card).getMusterName();
 		ArrayList<Card> aliveCards = new ArrayList<>();
-		for (Card cardInHand : Game.getCurrentGame().getCurrentHand()) aliveCards.add(cardInHand);
-		for (Card cardInDeck : Game.getCurrentGame().getCurrentDeck()) aliveCards.add(cardInDeck);
+		for (Card cardInHand : Game.getCurrentGame().getCurrentHand().getCards()) aliveCards.add(cardInHand);
+		for (Card cardInDeck : Game.getCurrentGame().getCurrentDeck().getCards()) aliveCards.add(cardInDeck);
 		for (Card aliveCard : aliveCards) {
 			Unit unit = (Unit) aliveCard;
 			if (unit.getMusterName().startsWith(musterName)) {

@@ -4,6 +4,7 @@ import model.game.CardMover;
 import model.game.Game;
 import model.leader.Leader;
 import model.leader.MoverLeader;
+import model.leader.PassiveLeader;
 import model.leader.SpellLeader;
 
 import java.io.FileOutputStream;
@@ -13,7 +14,7 @@ import java.io.ObjectOutputStream;
 public class LeaderCreator {
 
 	private static void writeLeader(String faction, Leader leader) throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/main/resources/leaders/" + leader.getName() + ".json"));
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("/src/main/resources/leaders/" + leader.getName() + ".json"));
 		oos.writeObject(faction);
 		oos.writeObject(leader);
 		oos.close();
@@ -32,6 +33,15 @@ public class LeaderCreator {
 		try {
 			MoverLeader moverLeader = new MoverLeader(name, isManual, cardMovers);
 			writeLeader(faction, moverLeader);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void createPassiveLeader(String faction, String name, String setterName) {
+		try {
+			PassiveLeader passiveLeader = new PassiveLeader(name, setterName);
+			writeLeader(faction, passiveLeader);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -57,6 +67,13 @@ public class LeaderCreator {
 		createMoverLeader("Skellige", "Crach an Craite", true,
 				new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_DECK, false, -1),
 				new CardMover(Game.OPPONENT_DISCARD_PILE, Game.OPPONENT_DECK, false, -1));
+	}
+
+	private static void createPassiveLeaders() {
+		createPassiveLeader("Nilfgaard", "Emhyr var Emreis Emperor of Nilfgaard", "setLeaderAbilityDisabled");
+		createPassiveLeader("Nilfgaard", "Emhyr var Emreis Invader of the North", "setMedicRandom");
+		createPassiveLeader("Monsters", "Eredin Breacc Glas The Treacherous", "setSpyPowerDoubled");
+		createPassiveLeader("Skellige", "King Bran", "setDebuffWeakened");
 	}
 
 }

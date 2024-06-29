@@ -28,13 +28,13 @@ public class SpellLeader extends Leader {
 		Spell spell;
 		ArrayList<Spell> availableSpells = new ArrayList<>();
 		if (useDeck) {
-			for (Card card : Game.getCurrentGame().getCurrentDeck()) {
+			for (Card card : Game.getCurrentGame().getCurrentDeck().getCards()) {
 				for (String spellName : spellNames) {
 					if (card.getName().equals(spellName)) availableSpells.add((Spell) card);
 				}
 			}
 			spell = availableSpells.get(random.nextInt(availableSpells.size()));
-			Game.getCurrentGame().getCurrentDeck().remove(spell);
+			Game.getCurrentGame().getCurrentDeck().getCards().remove(spell);
 		} else {
 			for (String spellName : spellNames)
 				availableSpells.add((Spell) CardCreator.getCard(spellName));

@@ -25,10 +25,10 @@ public enum Spy implements Ability {
 	}
 
 	private void pullFromDeck() {
-		ArrayList<Card> deckCards = Game.getCurrentGame().getCurrentDeck();
+		ArrayList<Card> deckCards = Game.getCurrentGame().getCurrentDeck().getCards();
 		if (deckCards.isEmpty()) return;
 		Card unit = deckCards.get((new Random()).nextInt(deckCards.size()));
 		deckCards.remove(unit);
-		Game.getCurrentGame().getCurrentHand().add(unit);
+		Game.getCurrentGame().getCurrentHand().getCards().add(unit);
 	}
 }

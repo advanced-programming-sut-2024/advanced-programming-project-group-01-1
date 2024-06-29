@@ -1,10 +1,10 @@
 package model.game;
 
 import model.card.Card;
-import model.leader.Leader;
 import model.card.unit.Unit;
 import model.game.space.Row;
 import model.game.space.Space;
+import model.leader.Leader;
 import model.user.User;
 
 import java.util.ArrayList;
@@ -33,6 +33,8 @@ public class Game {
 	String currentFaction, opponentFaction;
 	boolean hasOpponentPassed;
 	Leader currentLeader, opponentLeader;
+	private boolean isLeaderAbilityDisabled = false, isSpyPowerDoubled = false,
+					isDebuffWeakened = false, isMedicRandom = false;
 
 	private Game(User player1, User player2) {
 		this.current = player1;
@@ -102,12 +104,12 @@ public class Game {
 		return rows[rowNumber].getSumOfPowers();
 	}
 
-	public ArrayList<Card> getCurrentDeck() {
-		return currentDeck.getCards();
+	public Space getCurrentDeck() {
+		return currentDeck;
 	}
 
-	public ArrayList<Card> getCurrentHand() {
-		return currentHand.getCards();
+	public Space getCurrentHand() {
+		return currentHand;
 	}
 
 	public Space getCurrentDiscardPile() {
@@ -164,6 +166,38 @@ public class Game {
 
 	public void setCurrentDeck(Space currentDeck) {
 		this.currentDeck = currentDeck;
+	}
+
+	public boolean isLeaderAbilityDisabled() {
+		return isLeaderAbilityDisabled;
+	}
+
+	public boolean isSpyPowerDoubled() {
+		return isSpyPowerDoubled;
+	}
+
+	public boolean isDebuffWeakened() {
+		return isDebuffWeakened;
+	}
+
+	public boolean isMedicRandom() {
+		return isMedicRandom;
+	}
+
+	public void setLeaderAbilityDisabled(boolean leaderAbilityDisabled) {
+		isLeaderAbilityDisabled = leaderAbilityDisabled;
+	}
+
+	public void setSpyPowerDoubled(boolean spyPowerDoubled) {
+		isSpyPowerDoubled = spyPowerDoubled;
+	}
+
+	public void setDebuffWeakened(boolean debuffWeakened) {
+		isDebuffWeakened = debuffWeakened;
+	}
+
+	public void setMedicRandom(boolean medicRandom) {
+		isMedicRandom = medicRandom;
 	}
 
 	public void vetoCard(Card card) {
