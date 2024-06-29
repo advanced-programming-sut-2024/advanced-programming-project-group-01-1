@@ -1,8 +1,11 @@
 package controller.game;
 
 import model.Result;
+import model.card.Card;
 import model.card.unit.Unit;
 import model.game.space.Space;
+
+import java.util.ArrayList;
 
 public class MatchMenuController {
 
@@ -87,6 +90,21 @@ public class MatchMenuController {
 	}
 
 	public static Unit askSpace(Space space) {
+		return askSpace(space, false);
+	}
+
+	public static Unit askSpace(Space space, boolean isRandom) {
+		ArrayList<Unit> nonHeroInSpace = new ArrayList<>();
+		for (Card card : space.getCards()) {
+			if (card instanceof Unit && !((Unit) card).isHero()) {
+				nonHeroInSpace.add((Unit) card);
+			}
+		}
+		if (nonHeroInSpace.isEmpty()) return null;
+		if (isRandom) {
+			int randomIndex = (int) (Math.random() * nonHeroInSpace.size());
+			return nonHeroInSpace.get(randomIndex);
+		}
 		return null;
 	}
 

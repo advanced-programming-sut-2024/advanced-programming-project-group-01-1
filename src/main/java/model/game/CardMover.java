@@ -32,7 +32,7 @@ public class CardMover {
 				if (!(card instanceof Unit) || !((Unit) card).isHero())
 					nonHeroCards.add(card);
 			}
-			int toBeMoved = count == -1 ? nonHeroCards.size() : count;
+			int toBeMoved = (count == -1 || count > nonHeroCards.size()) ? nonHeroCards.size() : count;
 			for (int i = 0; i < toBeMoved; i++) {
 				Card card;
 				if (isRandom) {
@@ -43,28 +43,30 @@ public class CardMover {
 				originSpace.getCards().remove(card);
 				nonHeroCards.remove(card);
 			}
-		} else {
-			ArrayList<Card> cardsToBeShown = new ArrayList<>();
-			boolean[] shown = new boolean[originSpace.getCards().size()];
-			for (int i = 0; i < count; i++) {
-				Card card;
-				int randomIndex = random.nextInt(originSpace.getCards().size() - i);
-				int j = 0;
-				for (int k = 0; k < originSpace.getCards().size(); k++) {
-					if (!shown[k]) {
-						if (j == randomIndex) {
-							card = originSpace.getCards().get(k);
-							cardsToBeShown.add(card);
-							shown[k] = true;
-							break;
-						}
-						j++;
+		} else show(originSpace, destinationSpace);
+	}
+
+	private void show(Space originSpace, Space destinationSpace){
+		ArrayList<Card> cardsToBeShown = new ArrayList<>();
+		boolean[] shown = new boolean[originSpace.getCards().size()];
+		for (int i = 0; i < count; i++) {
+			Card card;
+			int randomIndex = random.nextInt(originSpace.getCards().size() - i);
+			int j = 0;
+			for (int k = 0; k < originSpace.getCards().size(); k++) {
+				if (!shown[k]) {
+					if (j == randomIndex) {
+						card = originSpace.getCards().get(k);
+						cardsToBeShown.add(card);
+						shown[k] = true;
+						break;
 					}
+					j++;
 				}
 			}
-			Space tmp = new Space(cardsToBeShown);
-			MatchMenuController.showSpace(tmp);
 		}
+		Space tmp = new Space(cardsToBeShown);
+		MatchMenuController.showSpace(tmp);
 	}
 
 }

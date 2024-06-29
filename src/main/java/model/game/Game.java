@@ -214,8 +214,7 @@ public class Game {
 	}
 
 	public void useLeaderAbility() {
-		// TODO:
-		return;
+		if (isLeaderAbilityDisabled) return;
 	}
 
 

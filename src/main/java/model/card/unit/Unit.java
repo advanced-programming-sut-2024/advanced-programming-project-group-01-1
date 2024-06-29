@@ -2,6 +2,7 @@ package model.card.unit;
 
 import model.card.Card;
 import model.card.ability.Ability;
+import model.card.ability.Spy;
 import model.game.Game;
 import model.game.space.Row;
 
@@ -63,10 +64,11 @@ public abstract class Unit extends Card {
 
 	public int getPower() {
 		int power = this.basePower;
-		if (this.debuff) power = 1;
+		if (this.debuff) power = Game.getCurrentGame().isDebuffWeakened() ? power / 2 : 1;
 		power *= this.multiplier;
 		power += this.boostCount;
 		if (this.hornCount > 0) power *= 2;
+		if (ability instanceof Spy && Game.getCurrentGame().isSpyPowerDoubled()) power *= 2;
 		return power;
 	}
 
