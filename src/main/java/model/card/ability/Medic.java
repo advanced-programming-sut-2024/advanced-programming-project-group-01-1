@@ -13,12 +13,6 @@ public enum Medic implements Ability {
 		Unit unit = MatchMenuController.askSpace(Game.getCurrentGame().getCurrentDiscardPile(), Game.getCurrentGame().isMedicRandom());
 		if (unit == null || unit.isHero()) return;
 		Game.getCurrentGame().getCurrentDiscardPile().getCards().remove(unit);
-		try {
-			if (unit instanceof Siege) unit.put(Game.SIEGE_ROW_NUMBER);
-			else if (unit instanceof Ranged) unit.put(Game.RANGED_ROW_NUMBER);
-			else unit.put(Game.MELEE_ROW_NUMBER);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Game.getCurrentGame().putRevived(unit, false);
 	}
 }

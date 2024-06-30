@@ -1,6 +1,9 @@
 package model.game;
 
+import controller.game.MatchMenuController;
 import model.card.Card;
+import model.card.unit.Ranged;
+import model.card.unit.Siege;
 import model.card.unit.Unit;
 import model.game.space.Row;
 import model.game.space.Space;
@@ -263,8 +266,10 @@ public class Game {
 		int roundResult = getRoundResult();
 		if (roundResult <= 0) currentLife--;
 		if (roundResult >= 0) opponentLife--;
-		if (roundResult == 1 && currentFaction.equals(Faction.NORTHERN_REALMS)) drawFromDeck(currentDeck, currentHand);
-		else if (roundResult == -1 && opponentFaction.equals(Faction.NORTHERN_REALMS)) drawFromDeck(opponentDeck, opponentHand);
+		if (roundResult == 1 && currentFaction.equals(Faction.NORTHERN_REALMS))
+			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1).move();
+		else if (roundResult == -1 && opponentFaction.equals(Faction.NORTHERN_REALMS))
+			new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 1).move();
 		if (roundNumber == 3) skelligeAbility();
 		Unit currentUnit = currentFaction.equals(Faction.MONSTERS) ? keepUnit(true) : null;
 		Unit opponentUnit = opponentFaction.equals(Faction.MONSTERS) ? keepUnit(false) : null;
@@ -295,14 +300,34 @@ public class Game {
 		}
 	}
 
+	public void putRevived(Unit unit, boolean isOpponent) {
+		try {
+			if (unit instanceof Siege) unit.put(isOpponent ? 5 - Game.SIEGE_ROW_NUMBER : Game.SIEGE_ROW_NUMBER);
+			else if (unit instanceof Ranged) unit.put(isOpponent ? 5 - Game.RANGED_ROW_NUMBER : Game.RANGED_ROW_NUMBER);
+			else unit.put(isOpponent ? 5 - Game.MELEE_ROW_NUMBER : Game.MELEE_ROW_NUMBER);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void skelligeAbility() {
 		if (currentFaction.equals(Faction.SKELLIGE)) {
-			drawFromDeck(currentDeck, currentHand);
-			drawFromDeck(currentDeck, currentHand);
+			for (int i = 0; i < 2; i++) {
+				Unit unit = MatchMenuController.askSpace(currentDiscardPile, true);
+				if (unit != null) {
+					putRevived(unit, false);
+					currentDiscardPile.getCards().remove(unit);
+				}
+			}
 		}
 		if (opponentFaction.equals(Faction.SKELLIGE)) {
-			drawFromDeck(opponentDeck, opponentHand);
-			drawFromDeck(opponentDeck, opponentHand);
+			for (int i = 0; i < 2; i++) {
+				Unit unit = MatchMenuController.askSpace(opponentDiscardPile, true);
+				if (unit != null) {
+					putRevived(unit, true);
+					opponentDiscardPile.getCards().remove(unit);
+				}
+			}
 		}
 	}
 
@@ -317,13 +342,6 @@ public class Game {
 			else roundResult = 0;
 		}
 		return roundResult;
-	}
-
-	private void drawFromDeck(Space deck, Space hand){
-		Random random = new Random();
-		int randomIndex = random.nextInt(deck.getCards().size());
-		hand.getCards().add(deck.getCards().get(randomIndex));
-		deck.getCards().remove(randomIndex);
 	}
 
 	private Unit keepUnit(boolean isCurrentPlayer) {
