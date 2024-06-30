@@ -7,7 +7,6 @@ import model.game.space.Space;
 import model.leader.Leader;
 import model.user.User;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
@@ -45,6 +44,7 @@ public class Game {
 		this.opponentLeader = player2.getDeck().getLeader();
 		this.currentDeck = new Space(player1.getDeck().getCards());
 		this.opponentDeck = new Space(player2.getDeck().getCards());
+		this.veto();
 	}
 
 	public static Game createGame(User player1, User player2) {
@@ -200,9 +200,11 @@ public class Game {
 		isMedicRandom = medicRandom;
 	}
 
-	public void vetoCard(Card card) {
-		// TODO:
-		return;
+	public void veto() {
+		for (int i = 0; i < 2; i++) {
+			new CardMover(CURRENT_HAND, CURRENT_DECK, false, 1).move();
+			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1).move();
+		}
 	}
 
 	public void placeCard(Card card, int spaceId) {
