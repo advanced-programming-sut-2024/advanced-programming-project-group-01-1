@@ -40,4 +40,9 @@ public abstract class Leader implements Serializable, Cloneable {
 
 	@Override
 	public abstract Leader clone();
+
+	@Override
+	public String toString() {
+		return "Leader: " + name + "\n" + this.getDescription();
+	}
 }

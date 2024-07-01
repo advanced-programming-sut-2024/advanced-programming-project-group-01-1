@@ -74,4 +74,8 @@ public class Row extends Space {
 		super.clear(discardPile, stayingUnit);
 	}
 
+	@Override
+	public String toString() {
+		return "Buffer: \n" + (buffer == null ? "None" : buffer.toString()) + "\n" + super.toString();
+	}
 }

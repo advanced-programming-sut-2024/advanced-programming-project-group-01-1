@@ -3,10 +3,6 @@ package controller.game;
 import main.CardCreator;
 import model.Result;
 import model.card.Card;
-import model.card.special.Decoy;
-import model.card.special.spell.Buffer;
-import model.card.special.spell.Weather;
-import model.card.unit.Unit;
 import model.game.Faction;
 import model.game.Game;
 import model.leader.Leader;
@@ -43,7 +39,7 @@ public class PreMatchMenusController {
 	public static Result showCards() {
 		StringBuilder message = new StringBuilder();
 		for (Card card : User.getLoggedInUser().getDeck().getAvailableCards()) {
-			message.append(printCard(card)).append("------------------\n");
+			message.append(card.toString()).append("\n------------------\n");
 		}
 		return new Result(message.toString(), true);
 	}
@@ -51,7 +47,7 @@ public class PreMatchMenusController {
 	public static Result showDeck() {
 		StringBuilder message = new StringBuilder();
 		for (Card card : User.getLoggedInUser().getDeck().getCards()) {
-			message.append(printCard(card)).append("------------------\n");
+			message.append(card.toString()).append("\n------------------\n");
 		}
 		return new Result(message.toString(), true);
 	}
@@ -92,7 +88,7 @@ public class PreMatchMenusController {
 	public static Result showLeaders() {
 		StringBuilder message = new StringBuilder();
 		for (Leader leader : User.getLoggedInUser().getDeck().getAvailableLeaders())
-			message.append("Leader: " + leader.getName() + " - " + leader.getDescription() + "\n");
+			message.append(leader + "\n");
 		return new Result(message.toString(), true);
 	}
 
@@ -133,20 +129,6 @@ public class PreMatchMenusController {
 	public static Result startGame() {
 		// TODO:
 		return null;
-	}
-
-
-	private static String printCard(Card card) {
-		StringBuilder result = new StringBuilder();
-		result.append(card.getName()).append(" - ").append(card instanceof Unit ? "Unit" : "Special").append("\n");
-		result.append("Placement: ").append(card instanceof Unit ? card.getClass().getSimpleName() :
-				(card instanceof Decoy ? "Replaces any Card in Rows" :
-					(card instanceof Weather ? "Weather System" :
-							card instanceof Buffer ? "Row Buffer" : "Instant")));
-		result.append(card.getAbility() == null ? "No Ability" : card.getAbility().toString()).append("\n");
-		result.append("Available: ").append(User.getLoggedInUser().getDeck().getAvailableCount(card)).append("\n");
-		if (card instanceof Unit) result.append("Power: ").append(((Unit) card).getPower()).append("\n");
-		return result.toString();
 	}
 
 }

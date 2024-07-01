@@ -30,4 +30,10 @@ public class Space {
 		cards.clear();
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder space = new StringBuilder();
+		cards.forEach(card -> space.append(card.toString()).append("\n------------------\n"));
+		return space.toString();
+	}
 }

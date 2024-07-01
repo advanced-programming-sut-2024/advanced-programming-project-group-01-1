@@ -15,46 +15,42 @@ public class MatchMenuController {
 		return null;
 	}
 
-
 	public static Result showHand(int number) {
 		StringBuilder hand = new StringBuilder();
 		if (number >= 0) hand.append(Game.getCurrentGame().getCurrentHand().getCards().get(number).toString());
-		else {
-			for (Card card : Game.getCurrentGame().getCurrentHand().getCards()) {
-				hand.append(card.toString()).append("\n");
-			}
-		}
+		else hand.append(Game.getCurrentGame().getCurrentHand().toString());
 		return new Result(hand.toString(), true);
 	}
 
 	public static Result remainingInDeck() {
-		// TODO:
-		return null;
+		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()), true);
 	}
 
-	public static Result showDiscordPile() {
-		// TODO:
-		return null;
+	public static Result showDiscordPiles() {
+		return new Result("Current Discard Pile:\n" + Game.getCurrentGame().getCurrentDiscardPile() +
+				"Opponent Discard Pile:\n" + Game.getCurrentGame().getOpponentDiscardPile(), true);
 	}
 
 	public static Result showRow(int rowNumber) {
-		// TODO:
-		return null;
+		return new Result(Game.getCurrentGame().getRow(rowNumber).toString(), true);
 	}
 
 	public static Result showWeatherSystem() {
-		// TODO:
-		return null;
+		return new Result(Game.getCurrentGame().getCurrentWeatherSystem() + "\n" +
+				Game.getCurrentGame().getOpponentWeatherSystem(), true);
 	}
 
 	public static Result placeCard(int cardNumber, int rowNumber) {
-		// TODO:
-		return null;
+		try {
+			Game.getCurrentGame().getCurrentHand().getCards().get(cardNumber).put(rowNumber);
+			return new Result("Card placed successfully", true);
+		} catch (Exception e) {
+			return new Result(e.getMessage(), false);
+		}
 	}
 
 	public static Result showLeader() {
-		// TODO:
-		return null;
+		return new Result(Game.getCurrentGame().getCurrentLeader().toString(), true);
 	}
 
 	public static Result useLeaderAbility() {

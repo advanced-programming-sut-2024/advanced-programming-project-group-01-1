@@ -20,7 +20,7 @@ public class MatchMenu implements Menuable {
 		} else if ((matcher = GameMenusCommands.REMAINING_CARDS_TO_PLAY.getMatcher(input)) != null) {
 			result = MatchMenuController.remainingInDeck();
 		} else if ((matcher = GameMenusCommands.OUT_OF_PLAY_CARDS.getMatcher(input)) != null) {
-			result = MatchMenuController.showDiscordPile();
+			result = MatchMenuController.showDiscordPiles();
 		} else if ((matcher = GameMenusCommands.CARDS_IN_ROW.getMatcher(input)) != null) {
 			result = showRow(matcher);
 		} else if ((matcher = GameMenusCommands.SPELLS_IN_PLAY.getMatcher(input)) != null) {
