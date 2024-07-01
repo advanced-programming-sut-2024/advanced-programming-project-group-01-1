@@ -13,11 +13,12 @@ public abstract class Unit extends Card {
 	int boostCount = 0;
 	int multiplier = 1;
 	boolean debuff = false;
-	boolean isHero;
+	final boolean isHero;
 
 	public Unit(String name, Ability ability, int basePower, boolean isHero) {
 		super(name, ability);
 		this.basePower = basePower;
+		this.isHero = isHero;
 	}
 
 	public boolean isHero() {
@@ -109,4 +110,10 @@ public abstract class Unit extends Card {
 		}
 	}
 
+	@Override
+	public String toString() {
+		String unit = super.toString() + "\nPower: " + this.basePower;
+		if (this.isHero) unit = "\033[1;33m" + unit + "\033[0m";
+		return unit;
+	}
 }

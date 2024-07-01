@@ -284,6 +284,7 @@ public class CardCreator {
 			ois.close();
 			return card;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

@@ -44,5 +44,10 @@ public abstract class Card implements Cloneable, Serializable {
 
 	}
 
-
+	@Override
+	public String toString() {
+		String card = this.name + "\nType: " + this.getClass().getSimpleName();
+		card += "\nAbility: " + (ability == null ? "No ability" : this.ability.getClass().getSimpleName());
+		return card;
+	}
 }

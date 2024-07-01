@@ -3,6 +3,7 @@ package controller.game;
 import model.Result;
 import model.card.Card;
 import model.card.unit.Unit;
+import model.game.Game;
 import model.game.space.Space;
 
 import java.util.ArrayList;
@@ -14,9 +15,16 @@ public class MatchMenuController {
 		return null;
 	}
 
+
 	public static Result showHand(int number) {
-		// TODO:
-		return null;
+		StringBuilder hand = new StringBuilder();
+		if (number >= 0) hand.append(Game.getCurrentGame().getCurrentHand().getCards().get(number).toString());
+		else {
+			for (Card card : Game.getCurrentGame().getCurrentHand().getCards()) {
+				hand.append(card.toString()).append("\n");
+			}
+		}
+		return new Result(hand.toString(), true);
 	}
 
 	public static Result remainingInDeck() {
