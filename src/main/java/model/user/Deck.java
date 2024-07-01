@@ -2,6 +2,7 @@ package model.user;
 
 import model.card.Card;
 import model.card.special.Special;
+import model.card.unit.Unit;
 import model.game.Faction;
 import model.leader.Leader;
 
@@ -85,12 +86,35 @@ public class Deck {
 		return this.unitCount;
 	}
 
+	public int getHeroCount() {
+		return (int) cards.stream().filter(card -> card instanceof Unit && ((Unit) card).isHero()).count();
+	}
+
+	public int getTotalPower() {
+		int totalPower = 0;
+		for (Card card : cards)
+			if (card instanceof Unit) totalPower += ((Unit) card).getPower();
+		return totalPower;
+	}
+
 	public boolean isValid() {
 		return unitCount >= 22 && specialCount <= 10;
 	}
 
 	public ArrayList<Card> getCards() {
 		return new ArrayList<>(this.cards);
+	}
+
+	public ArrayList<Leader> getAvailableLeaders() {
+		return new ArrayList<>(this.availableLeaders);
+	}
+
+	public ArrayList<Card> getAvailableCards() {
+		return new ArrayList<>(this.availableCards);
+	}
+
+	public int getAvailableCount(Card card) {
+		return (int) availableCards.stream().filter(c -> c.equals(card)).count();
 	}
 
 	public boolean add(Card card) {

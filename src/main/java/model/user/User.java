@@ -132,6 +132,10 @@ public class User implements Serializable {
 		return this.deck;
 	}
 
+	public void setDeck(Deck deck) {
+		this.deck = deck;
+	}
+
 	private void updateData() {
 		// TODO:
 	}
