@@ -47,6 +47,15 @@ public class User implements Serializable {
 		return null;
 	}
 
+	public static User getUserById(int id) {
+		for (User user : users) {
+			if (user.getId() == id) {
+				return user;
+			}
+		}
+		return null;
+	}
+
 	public static User getLoggedInUser() {
 		return loggedInUser;
 	}

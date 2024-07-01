@@ -48,4 +48,15 @@ public class GameInfo implements Serializable {
 	public int getWinnerId() {
 		return this.winnerId;
 	}
+
+	@Override
+	public String toString() {
+		return "Opponent: " + User.getUserById(this.opponentId).getNickname() + "\n" +
+				"Date: " + this.date + "\n" +
+				"Opponent Scores: " + this.opponentScores + "\n" +
+				"My Scores: " + this.myScores + "\n" +
+				"Opponent Final Score: " + this.getOpponentFinalScore() + "\n" +
+				"My Final Score: " + this.getMyFinalScore() + "\n" +
+				"Winner: " + User.getUserById(this.winnerId).getNickname();
+	}
 }

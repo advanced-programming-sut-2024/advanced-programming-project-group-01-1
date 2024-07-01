@@ -26,7 +26,7 @@ public class InfoMenu implements Menuable {
 	}
 
 	private Result showGameHistory(Matcher matcher) {
-		int numberOfGames = Integer.parseInt(matcher.group("numberOfGames"));
+		int numberOfGames = (matcher.group("numberOfGames") != null ? Integer.parseInt(matcher.group("numberOfGames")) : 5);
 		return UserMenusController.showGameHistory(numberOfGames);
 	}
 
