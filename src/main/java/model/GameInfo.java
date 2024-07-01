@@ -8,19 +8,16 @@ import java.util.Date;
 
 public class GameInfo implements Serializable {
 
-	private int opponentId;
-	private Date date;
-	private ArrayList<Integer> opponentScores, myScores;
-	private int opponentFinalScore, myFinalScore;
-	private int winnerId;
+	private final int opponentId;
+	private final Date date;
+	private final ArrayList<Integer> opponentScores, myScores;
+	private final int winnerId;
 
-	public GameInfo(User opponent, ArrayList<Integer> opponentScores, ArrayList<Integer> myScores, int opponentFinalScore, int myFinalScore, User winner) {
+	public GameInfo(User opponent, ArrayList<Integer> opponentScores, ArrayList<Integer> myScores, User winner) {
 		this.opponentId = opponent.getId();
 		this.date = new Date();
 		this.opponentScores = opponentScores;
 		this.myScores = myScores;
-		this.opponentFinalScore = opponentFinalScore;
-		this.myFinalScore = myFinalScore;
 		this.winnerId = winner.getId();
 	}
 
@@ -41,11 +38,11 @@ public class GameInfo implements Serializable {
 	}
 
 	public int getOpponentFinalScore() {
-		return this.opponentFinalScore;
+		return this.opponentScores.get(0) + this.opponentScores.get(1) + this.opponentScores.get(2);
 	}
 
 	public int getMyFinalScore() {
-		return this.myFinalScore;
+		return this.myScores.get(0) + this.myScores.get(1) + this.myScores.get(2);
 	}
 
 	public int getWinnerId() {
