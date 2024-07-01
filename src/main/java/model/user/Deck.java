@@ -117,6 +117,11 @@ public class Deck {
 		return (int) availableCards.stream().filter(c -> c.equals(card)).count();
 	}
 
+	public int getInDeckCount(Card card) {
+		return (int) cards.stream().filter(c -> c.equals(card)).count();
+
+	}
+
 	public boolean add(Card card) {
 		if (availableCards.contains(card)) {
 			if (card instanceof Special) specialCount++;

@@ -1,5 +1,6 @@
 package controller.game;
 
+import main.CardCreator;
 import model.Result;
 import model.card.Card;
 import model.card.special.Decoy;
@@ -11,8 +12,6 @@ import model.game.Game;
 import model.leader.Leader;
 import model.user.Deck;
 import model.user.User;
-
-import java.util.ArrayList;
 
 public class PreMatchMenusController {
 
@@ -98,18 +97,32 @@ public class PreMatchMenusController {
 	}
 
 	public static Result selectLeader(int leaderNumber) {
-		// TODO:
-		return null;
+		if (leaderNumber < 0 || leaderNumber >= User.getLoggedInUser().getDeck().getAvailableLeaders().size())
+			return new Result("Invalid Leader Number", false);
+		User.getLoggedInUser().getDeck().setLeader(User.getLoggedInUser().getDeck().getAvailableLeaders().get(leaderNumber));
+		return new Result("Leader Selected Successfully", true);
 	}
 
 	public static Result addToDeck(String cardName, int count) {
-		// TODO:
-		return null;
+		if (count < 1) return new Result("Invalid Count", false);
+		Card card = CardCreator.getCard(cardName);
+		if (User.getLoggedInUser().getDeck().getAvailableCount(card) < count)
+			return new Result("Not Enough Cards Available", false);
+		for (int i = 0; i < count; i++)
+			User.getLoggedInUser().getDeck().add(card);
+		return new Result(count > 1 ? "Cards" : "Card" + " Added Successfully", true);
 	}
 
 	public static Result deleteFromDeck(int cardNumber, int count) {
-		// TODO:
-		return null;
+		if (cardNumber < 0 || cardNumber >= User.getLoggedInUser().getDeck().getCards().size())
+			return new Result("Invalid Card Number", false);
+		Card card = User.getLoggedInUser().getDeck().getCards().get(cardNumber);
+		if (count < 1) return new Result("Invalid Count", false);
+		if (User.getLoggedInUser().getDeck().getInDeckCount(card) < count)
+			return new Result("Not Enough Cards in Deck", false);
+		for (int i = 0; i < count; i++)
+			User.getLoggedInUser().getDeck().getCards().remove(card);
+		return new Result(count > 1 ? "Cards" : "Card" + " Removed Successfully", true);
 	}
 
 	public static Result changeTurn() {
