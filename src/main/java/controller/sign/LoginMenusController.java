@@ -33,7 +33,7 @@ public class LoginMenusController {
 	public static Result setPassword(String password) {
 		if (!Validation.STRONG_PASSWORD.matches(password)) return new Result("Password is weak", false);
 		User user = User.getLoggedInUser();
-		user.setPassword(password);
+		user.setPassword(password.equals("random") ? User.generateRandomPassword() : password);
 		return new Result("Password set successfully", true);
 	}
 

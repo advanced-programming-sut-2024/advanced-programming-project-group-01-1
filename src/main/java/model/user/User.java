@@ -1,10 +1,12 @@
 package model.user;
 
+import controller.enums.Validation;
 import model.GameInfo;
 import model.game.Faction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class User implements Serializable {
 
@@ -19,7 +21,7 @@ public class User implements Serializable {
 	private Question question;
 	private Deck deck;
 	private final ArrayList<GameInfo> history;
-	private int elo;
+	private double elo;
 
 	public User(String username, String nickname, String password, String email, Question question) {
 		this.id = users.size() + 1;
@@ -30,7 +32,6 @@ public class User implements Serializable {
 		this.question = question;
 		this.deck = new Deck(Faction.NORTHERN_REALMS);
 		this.history = new ArrayList<>();
-		this.elo = 1000;
 		users.add(this);
 	}
 
@@ -83,6 +84,40 @@ public class User implements Serializable {
 	public static void setStayLoggedIn(boolean stayLoggedIn) {
 		User.stayLoggedIn = stayLoggedIn;
 	}
+
+	public static String generateRandomPassword(){
+		ArrayList<Character> characters = new ArrayList<>();
+		for (char c = 'a'; c <= 'z'; c++) characters.add(c);
+		for (char c = 'A'; c <= 'Z'; c++) characters.add(c);
+		for (char c = '0'; c <= '9'; c++) characters.add(c);
+		characters.add('!'); characters.add('@'); characters.add('#'); characters.add('$');
+		characters.add('%'); characters.add('^'); characters.add('&'); characters.add('*');
+		Random random = new Random();
+		StringBuilder password = new StringBuilder();
+		int length = 8 + random.nextInt(8);
+		for (int i = 0; i < length; i++) {
+			password.append(characters.get(random.nextInt(characters.size())));
+		}
+		if (!Validation.STRONG_PASSWORD.matches(password.toString())) return generateRandomPassword();
+		return password.toString();
+	}
+
+	public static double calculateElo(double elo1, double elo2, int winnerId) {
+		double expected1 = 1 / (1 + Math.pow(10, (elo2 - elo1) / 400.0));
+		int k = 32;
+		if (elo1 < 2100) k = 64;
+		if (elo1 < 1600) k = 128;
+		if (winnerId == 0) {
+			elo1 += (int) Math.round(k * (0.5 - expected1));
+		} else if (winnerId == 1) {
+			elo1 += (int) Math.round(k * (1 - expected1));
+		} else {
+			elo1 += (int) Math.round(k * (0 - expected1));
+		}
+		return elo1;
+	}
+
+
 
 	public int getId() {
 		return this.id;
@@ -141,11 +176,11 @@ public class User implements Serializable {
 		return maxScore;
 	}
 
-	public int getElo() {
+	public double getElo() {
 		return this.elo;
 	}
 
-	public void setElo(int elo) {
+	public void setElo(double elo) {
 		this.elo = elo;
 	}
 

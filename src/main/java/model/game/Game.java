@@ -380,11 +380,18 @@ public class Game {
 	}
 
 	private void endGame() {
+		double currentElo = current.getElo(), opponentElo = opponent.getElo();
 		if (currentLife == 0 && opponentLife == 0) {
+			current.setElo(User.calculateElo(currentElo, opponentElo, 0));
+			opponent.setElo(User.calculateElo(opponentElo, currentElo, 0));
 			// Draw
 		} else if (currentLife == 0) {
+			current.setElo(User.calculateElo(currentElo, opponentElo, -1));
+			opponent.setElo(User.calculateElo(opponentElo, currentElo, 1));
 			// Lose
 		} else {
+			current.setElo(User.calculateElo(currentElo, opponentElo, 1));
+			opponent.setElo(User.calculateElo(opponentElo, currentElo, -1));
 			// Win
 		}
 	}
