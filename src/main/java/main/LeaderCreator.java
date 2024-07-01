@@ -84,10 +84,10 @@ public class LeaderCreator {
 	}
 
 	private static void createPassiveLeaders() {
-		createPassiveLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis Emperor of Nilfgaard", "setLeaderAbilityDisabled");
-		createPassiveLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis Invader of the North", "setMedicRandom");
-		createPassiveLeader(Faction.MONSTERS, "Eredin Breacc Glas The Treacherous", "setSpyPowerDoubled");
-		createPassiveLeader(Faction.SKELLIGE, "King Bran", "setDebuffWeakened");
+		createPassiveLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis Emperor of Nilfgaard", "disableLeaderAbilities");
+		createPassiveLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis Invader of the North", "randomizeMedic");
+		createPassiveLeader(Faction.MONSTERS, "Eredin Breacc Glas The Treacherous", "doubleSpyPower");
+		createPassiveLeader(Faction.SKELLIGE, "King Bran", "weakenDebuff");
 	}
 
 }

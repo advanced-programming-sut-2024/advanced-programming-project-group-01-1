@@ -15,6 +15,7 @@ public class MoverLeader extends Leader {
 	public void act() {
 		for (CardMover cardMover : cardMovers)
 			cardMover.move();
+		super.act();
 	}
 
 	@Override

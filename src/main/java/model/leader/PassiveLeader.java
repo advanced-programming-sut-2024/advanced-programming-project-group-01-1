@@ -17,11 +17,12 @@ public class PassiveLeader extends Leader implements Serializable {
 	@Override
 	public void act() {
 		try {
-			Method method = Game.class.getDeclaredMethod(setterName, Boolean.TYPE);
-			method.invoke(Game.getCurrentGame(), true);
+			Method method = Game.class.getDeclaredMethod(setterName);
+			method.invoke(Game.getCurrentGame());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		super.act();
 	}
 
 	@Override

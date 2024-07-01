@@ -59,7 +59,7 @@ public class AgileOptimizer extends Leader {
 			pullAll();
 		}
 		putAll(maxMask);
-		disable();
+		super.act();
 	}
 
 	@Override

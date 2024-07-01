@@ -23,7 +23,6 @@ public class Game {
 	private static Game currentGame;
 
 
-
 	User current, opponent;
 	int roundNumber = 1;
 	Row[] rows = new Row[6];
@@ -35,8 +34,7 @@ public class Game {
 	Faction currentFaction, opponentFaction;
 	boolean hasOpponentPassed;
 	Leader currentLeader, opponentLeader;
-	private boolean isLeaderAbilityDisabled = false, isSpyPowerDoubled = false,
-					isDebuffWeakened = false, isMedicRandom = false;
+	private boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
 
 	private Game(User player1, User player2) {
 		this.current = player1;
@@ -48,6 +46,10 @@ public class Game {
 		this.currentDeck = new Space(player1.getDeck().getCards());
 		this.opponentDeck = new Space(player2.getDeck().getCards());
 		this.veto();
+		if (currentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentLeader.act();
+		else if (opponentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) opponentLeader.act();
+		if (!currentLeader.isDisable() && !currentLeader.isManual()) currentLeader.act();
+		if (!opponentLeader.isDisable() && !opponentLeader.isManual()) opponentLeader.act();
 	}
 
 	public static Game createGame(User player1, User player2) {
@@ -171,9 +173,6 @@ public class Game {
 		this.currentDeck = currentDeck;
 	}
 
-	public boolean isLeaderAbilityDisabled() {
-		return isLeaderAbilityDisabled;
-	}
 
 	public boolean isSpyPowerDoubled() {
 		return isSpyPowerDoubled;
@@ -187,20 +186,21 @@ public class Game {
 		return isMedicRandom;
 	}
 
-	public void setLeaderAbilityDisabled(boolean leaderAbilityDisabled) {
-		isLeaderAbilityDisabled = leaderAbilityDisabled;
+	public void disableLeaderAbilities() {
+		currentLeader.disable();
+		opponentLeader.disable();
 	}
 
-	public void setSpyPowerDoubled(boolean spyPowerDoubled) {
-		isSpyPowerDoubled = spyPowerDoubled;
+	public void doubleSpyPower() {
+		isSpyPowerDoubled = true;
 	}
 
-	public void setDebuffWeakened(boolean debuffWeakened) {
-		isDebuffWeakened = debuffWeakened;
+	public void weakenDebuff() {
+		isDebuffWeakened = true;
 	}
 
-	public void setMedicRandom(boolean medicRandom) {
-		isMedicRandom = medicRandom;
+	public void randomizeMedic() {
+		isMedicRandom = true;
 	}
 
 	public void veto() {
@@ -219,7 +219,7 @@ public class Game {
 	}
 
 	public void useLeaderAbility() {
-		if (isLeaderAbilityDisabled) return;
+		if (!currentLeader.isDisable()) currentLeader.act();
 	}
 
 
@@ -337,8 +337,10 @@ public class Game {
 		if (currentPower < opponentPower) roundResult = -1;
 		else if (currentPower > opponentPower) roundResult = 1;
 		else {
-			if (currentFaction.equals(Faction.NILFGAARDIAN_EMPIRE) && !opponentFaction.equals(Faction.NILFGAARDIAN_EMPIRE)) roundResult = 1;
-			else if (!currentFaction.equals(Faction.NILFGAARDIAN_EMPIRE) && opponentFaction.equals(Faction.NILFGAARDIAN_EMPIRE)) roundResult = -1;
+			if (currentFaction.equals(Faction.NILFGAARDIAN_EMPIRE) && !opponentFaction.equals(Faction.NILFGAARDIAN_EMPIRE))
+				roundResult = 1;
+			else if (!currentFaction.equals(Faction.NILFGAARDIAN_EMPIRE) && opponentFaction.equals(Faction.NILFGAARDIAN_EMPIRE))
+				roundResult = -1;
 			else roundResult = 0;
 		}
 		return roundResult;

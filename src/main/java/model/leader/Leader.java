@@ -28,7 +28,9 @@ public abstract class Leader implements Serializable, Cloneable {
 		return isManual;
 	}
 
-	public abstract void act();
+	public void act() {
+		this.disable();
+	}
 
 	@Override
 	public abstract Leader clone();

@@ -44,7 +44,7 @@ public class SpellLeader extends Leader {
 			spell.put(spaceNumber);
 		} catch (Exception ignored) {
 		}
-		this.disable();
+		super.act();
 	}
 
 	@Override
