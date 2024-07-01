@@ -10,7 +10,8 @@ public class Agile extends Unit {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
-		// TODO:
+		if (rowNumber != 1 && rowNumber != 2) throw new Exception("Invalid row number");
+		super.put(rowNumber);
 	}
 
 }
