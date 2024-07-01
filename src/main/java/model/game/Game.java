@@ -81,8 +81,20 @@ public class Game {
 		}
 	}
 
+	public User getCurrent() {
+		return current;
+	}
+
+	public User getOpponent() {
+		return opponent;
+	}
+
 	public Faction getCurrentFaction() {
 		return currentFaction;
+	}
+
+	public Faction getOpponentFaction() {
+		return opponentFaction;
 	}
 
 	public int getCurrentLife() {
@@ -218,8 +230,12 @@ public class Game {
 		}
 	}
 
-	public void useLeaderAbility() {
-		if (!currentLeader.isDisable()) currentLeader.act();
+	public void useLeaderAbility() throws Exception {
+		if (currentLeader.isDisable()) {
+			if (!currentLeader.isManual()) throw new Exception("Leader ability is not manual!");
+			throw new Exception("Leader ability is disabled!");
+		}
+		currentLeader.act();
 	}
 
 

@@ -31,10 +31,10 @@ public class MatchMenu implements Menuable {
 			result = MatchMenuController.showLeader();
 		} else if ((matcher = GameMenusCommands.COMMANDER_POWER_PLAY.getMatcher(input)) != null) {
 			result = MatchMenuController.useLeaderAbility();
-		} else if ((matcher = GameMenusCommands.SHOW_PLAYER_INFO.getMatcher(input)) != null) {
-			result = MatchMenuController.showPlayerInfo();
-		} else if ((matcher = GameMenusCommands.SHOW_PLAYER_LIVES.getMatcher(input)) != null) {
-			result = MatchMenuController.showPlayerLives();
+		} else if ((matcher = GameMenusCommands.SHOW_PLAYERS_INFO.getMatcher(input)) != null) {
+			result = MatchMenuController.showPlayersInfo();
+		} else if ((matcher = GameMenusCommands.SHOW_PLAYERS_LIVES.getMatcher(input)) != null) {
+			result = MatchMenuController.showPlayersLives();
 		} else if ((matcher = GameMenusCommands.SHOW_NUMBER_OF_CARDS_IN_HAND.getMatcher(input)) != null) {
 			result = MatchMenuController.showHandSize();
 		} else if ((matcher = GameMenusCommands.SHOW_TURN_INFO.getMatcher(input)) != null) {

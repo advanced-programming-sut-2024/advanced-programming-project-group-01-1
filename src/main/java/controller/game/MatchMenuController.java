@@ -54,43 +54,46 @@ public class MatchMenuController {
 	}
 
 	public static Result useLeaderAbility() {
-		// TODO:
-		return null;
+		try {
+			Game.getCurrentGame().useLeaderAbility();
+			return new Result("Leader ability played successfully", true);
+		} catch (Exception e) {
+			return new Result(e.getMessage(), false);
+		}
 	}
 
-	public static Result showPlayerInfo() {
-		// TODO:
-		return null;
+	public static Result showPlayersInfo() {
+		return new Result("Current: " + Game.getCurrentGame().getCurrent().getUsername() + " " +
+				Game.getCurrentGame().getCurrentFaction() + "\n" +
+				"Opponent: " + Game.getCurrentGame().getOpponent().getUsername() + " " +
+				Game.getCurrentGame().getOpponentFaction(), true);
 	}
 
-	public static Result showPlayerLives() {
-		// TODO:
-		return null;
+	public static Result showPlayersLives() {
+		return new Result("Current: " + Game.getCurrentGame().getCurrentLife() + "\n" +
+				"Opponent: " + Game.getCurrentGame().getOpponentLife(), true);
 	}
 
 	public static Result showHandSize() {
-		// TODO:
-		return null;
+		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size()), true);
 	}
 
 	public static Result showTurnInfo() {
-		// TODO:
-		return null;
+		return new Result(Game.getCurrentGame().getCurrent().getUsername(), true);
 	}
 
 	public static Result showTotalPower() {
-		// TODO:
-		return null;
+		return new Result("Current: " + Game.getCurrentGame().getCurrentPower() + "\n" +
+				"Opponent: " + Game.getCurrentGame().getOpponentPower(), true);
 	}
 
 	public static Result showRowPower(int rowNumber) {
-		// TODO:
-		return null;
+		return new Result(String.valueOf(Game.getCurrentGame().getRow(rowNumber).getSumOfPowers()), true);
 	}
 
 	public static Result passTurn() {
-		// TODO:
-		return null;
+		Game.getCurrentGame().passTurn();
+		return new Result("Turn passed successfully", true);
 	}
 
 	public static Card askSpace(Space space, boolean onlyUnit) {
