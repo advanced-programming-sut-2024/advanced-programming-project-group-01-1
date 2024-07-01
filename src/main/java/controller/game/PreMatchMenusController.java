@@ -91,7 +91,10 @@ public class PreMatchMenusController {
 	}
 
 	public static Result showLeaders() {
-		return null;
+		StringBuilder message = new StringBuilder();
+		for (Leader leader : User.getLoggedInUser().getDeck().getAvailableLeaders())
+			message.append("Leader: " + leader.getName() + " - " + leader.getDescription() + "\n");
+		return new Result(message.toString(), true);
 	}
 
 	public static Result selectLeader(int leaderNumber) {

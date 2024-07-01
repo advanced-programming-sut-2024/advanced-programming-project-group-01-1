@@ -9,8 +9,8 @@ public class PassiveLeader extends Leader implements Serializable {
 
 	String setterName;
 
-	public PassiveLeader(String name, String setterName) {
-		super(name, false);
+	public PassiveLeader(String name, String description, String setterName) {
+		super(name, description, false);
 		this.setterName = setterName;
 	}
 
@@ -27,6 +27,6 @@ public class PassiveLeader extends Leader implements Serializable {
 
 	@Override
 	public Leader clone() {
-		return new PassiveLeader(name, setterName);
+		return new PassiveLeader(name, getDescription(), setterName);
 	}
 }

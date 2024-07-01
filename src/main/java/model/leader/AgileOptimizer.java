@@ -11,7 +11,8 @@ public class AgileOptimizer extends Leader {
 	private ArrayList<Agile> agiles = null;
 
 	public AgileOptimizer() {
-		super("Francesca Findabair Hope of the Aen Seidhe", true);
+		super("Francesca Findabair Hope of the Aen Seidhe",
+		"Move agile units to whichever row maximizes their strength (don't move unit already in optimal row",true);
 	}
 
 	private int putAll(int mask) {

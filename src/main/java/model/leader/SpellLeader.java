@@ -15,8 +15,8 @@ public class SpellLeader extends Leader {
 	private final String[] spellNames;
 	private final Random random;
 
-	public SpellLeader(String name, boolean useDeck, int spaceNumber, String[] spellNames) {
-		super(name, true);
+	public SpellLeader(String name, String description, boolean useDeck, int spaceNumber, String[] spellNames) {
+		super(name, description, true);
 		this.useDeck = useDeck;
 		this.spaceNumber = spaceNumber;
 		this.spellNames = spellNames;
@@ -49,6 +49,6 @@ public class SpellLeader extends Leader {
 
 	@Override
 	public Leader clone() {
-		return new SpellLeader(name, useDeck, spaceNumber, spellNames);
+		return new SpellLeader(name, getDescription(), useDeck, spaceNumber, spellNames);
 	}
 }

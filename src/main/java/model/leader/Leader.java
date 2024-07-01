@@ -4,16 +4,22 @@ import java.io.Serializable;
 
 public abstract class Leader implements Serializable, Cloneable {
 	protected final String name;
+	private final String description;
 	protected boolean isDisable;
 	protected final boolean isManual;
 
-	public Leader(String name, boolean isManual) {
+	public Leader(String name, String description, boolean isManual) {
 		this.name = name;
+		this.description = description;
 		this.isManual = isManual;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	public boolean isDisable() {

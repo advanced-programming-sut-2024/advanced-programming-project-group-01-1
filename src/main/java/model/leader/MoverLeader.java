@@ -6,8 +6,8 @@ public class MoverLeader extends Leader {
 
 	private final CardMover[] cardMovers;
 
-	public MoverLeader(String name, boolean isManual, CardMover[] cardMovers) {
-		super(name, isManual);
+	public MoverLeader(String name, String description, boolean isManual, CardMover[] cardMovers) {
+		super(name, description, isManual);
 		this.cardMovers = cardMovers;
 	}
 
@@ -20,7 +20,7 @@ public class MoverLeader extends Leader {
 
 	@Override
 	public Leader clone() {
-		return new MoverLeader(name, isManual, cardMovers);
+		return new MoverLeader(name, getDescription(), isManual, cardMovers);
 	}
 
 }
