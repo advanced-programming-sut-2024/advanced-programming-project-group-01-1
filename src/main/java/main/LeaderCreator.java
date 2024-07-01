@@ -75,12 +75,12 @@ public class LeaderCreator {
 	}
 
 	private static void createMoverLeaders() {
-		createMoverLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis His Imperial Majesty", true, new CardMover(Game.OPPONENT_HAND, -1, true, 3));
-		createMoverLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis the Relentless", true, new CardMover(Game.OPPONENT_DISCARD_PILE, Game.CURRENT_HAND, false, 1));
-		createMoverLeader(Faction.MONSTERS, "Eredin King of the Wild Hunt", true, new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_HAND, false, 1));
-		createMoverLeader(Faction.MONSTERS, "Eredin Destroyer of Worlds", true, new CardMover(Game.CURRENT_HAND, Game.CURRENT_DISCARD_PILE, false, 2), new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1));
-		createMoverLeader(Faction.SCOIATAEL, "Francesca Findabair Daisy of the Valley", false, new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 1));
-		createMoverLeader(Faction.SKELLIGE, "Crach an Craite", true, new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_DECK, false, -1), new CardMover(Game.OPPONENT_DISCARD_PILE, Game.OPPONENT_DECK, false, -1));
+		createMoverLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis His Imperial Majesty", true, new CardMover(Game.OPPONENT_HAND, -1, true, 3, false));
+		createMoverLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis the Relentless", true, new CardMover(Game.OPPONENT_DISCARD_PILE, Game.CURRENT_HAND, false, 1, true));
+		createMoverLeader(Faction.MONSTERS, "Eredin King of the Wild Hunt", true, new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_HAND, false, 1, true));
+		createMoverLeader(Faction.MONSTERS, "Eredin Destroyer of Worlds", true, new CardMover(Game.CURRENT_HAND, Game.CURRENT_DISCARD_PILE, false, 2, false), new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1, false));
+		createMoverLeader(Faction.SCOIATAEL, "Francesca Findabair Daisy of the Valley", false, new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 1, false));
+		createMoverLeader(Faction.SKELLIGE, "Crach an Craite", true, new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_DECK, false, -1, false), new CardMover(Game.OPPONENT_DISCARD_PILE, Game.OPPONENT_DECK, false, -1, false));
 	}
 
 	private static void createPassiveLeaders() {

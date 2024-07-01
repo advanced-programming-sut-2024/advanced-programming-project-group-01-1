@@ -15,12 +15,14 @@ public class CardMover implements Serializable {
 	private final boolean isRandom;
 	private final Random random;
 	private final int count;
+	private final boolean onlyUnit;
 
-	public CardMover(int originId, int destinationId, boolean isRandom, int count){
+	public CardMover(int originId, int destinationId, boolean isRandom, int count, boolean onlyUnit){
 		this.originId = originId;
 		this.destinationId = destinationId;
 		this.isRandom = isRandom;
 		this.count = count;
+		this.onlyUnit = onlyUnit;
 		random = new Random();
 	}
 
@@ -39,7 +41,7 @@ public class CardMover implements Serializable {
 				if (isRandom) {
 					int randomIndex = random.nextInt(nonHeroCards.size());
 					card = nonHeroCards.get(randomIndex);
-				} else card = MatchMenuController.askSpace(originSpace);
+				} else card = MatchMenuController.askSpace(originSpace, onlyUnit);
 				destinationSpace.getCards().add(card);
 				originSpace.getCards().remove(card);
 				nonHeroCards.remove(card);

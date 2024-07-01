@@ -22,7 +22,7 @@ public class Decoy extends Special {
 		if (row.getCards().size() == 0) {
 			throw new Exception("Row is empty");
 		}
-		Unit unit = MatchMenuController.askSpace(row);
+		Unit unit = (Unit) MatchMenuController.askSpace(row, true);
 		unit.pull();
 		row.getCards().add(this);
 	}

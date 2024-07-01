@@ -89,21 +89,21 @@ public class MatchMenuController {
 		return null;
 	}
 
-	public static Unit askSpace(Space space) {
-		return askSpace(space, false);
+	public static Card askSpace(Space space, boolean onlyUnit) {
+		return askSpace(space, false, onlyUnit);
 	}
 
-	public static Unit askSpace(Space space, boolean isRandom) {
-		ArrayList<Unit> nonHeroInSpace = new ArrayList<>();
+	public static Card askSpace(Space space, boolean isRandom, boolean onlyUnit) {
+		ArrayList<Card> availableCards = new ArrayList<>();
 		for (Card card : space.getCards()) {
-			if (card instanceof Unit && !((Unit) card).isHero()) {
-				nonHeroInSpace.add((Unit) card);
-			}
+			if (card instanceof Unit) {
+				if (!((Unit) card).isHero()) availableCards.add(card);
+			} else if (!onlyUnit) availableCards.add(card);
 		}
-		if (nonHeroInSpace.isEmpty()) return null;
+		if (availableCards.isEmpty()) return null;
 		if (isRandom) {
-			int randomIndex = (int) (Math.random() * nonHeroInSpace.size());
-			return nonHeroInSpace.get(randomIndex);
+			int randomIndex = (int) (Math.random() * availableCards.size());
+			return availableCards.get(randomIndex);
 		}
 		return null;
 	}

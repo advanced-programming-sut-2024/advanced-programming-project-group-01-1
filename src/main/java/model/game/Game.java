@@ -205,8 +205,8 @@ public class Game {
 
 	public void veto() {
 		for (int i = 0; i < 2; i++) {
-			new CardMover(CURRENT_HAND, CURRENT_DECK, false, 1).move();
-			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1).move();
+			new CardMover(CURRENT_HAND, CURRENT_DECK, false, 1, false).move();
+			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false).move();
 		}
 	}
 
@@ -267,9 +267,9 @@ public class Game {
 		if (roundResult <= 0) currentLife--;
 		if (roundResult >= 0) opponentLife--;
 		if (roundResult == 1 && currentFaction.equals(Faction.NORTHERN_REALMS))
-			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1).move();
+			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false).move();
 		else if (roundResult == -1 && opponentFaction.equals(Faction.NORTHERN_REALMS))
-			new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 1).move();
+			new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 1, false).move();
 		if (roundNumber == 3) skelligeAbility();
 		Unit currentUnit = currentFaction.equals(Faction.MONSTERS) ? keepUnit(true) : null;
 		Unit opponentUnit = opponentFaction.equals(Faction.MONSTERS) ? keepUnit(false) : null;
@@ -313,7 +313,7 @@ public class Game {
 	private void skelligeAbility() {
 		if (currentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
-				Unit unit = MatchMenuController.askSpace(currentDiscardPile, true);
+				Unit unit = (Unit) MatchMenuController.askSpace(currentDiscardPile, true, true);
 				if (unit != null) {
 					putRevived(unit, false);
 					currentDiscardPile.getCards().remove(unit);
@@ -322,7 +322,7 @@ public class Game {
 		}
 		if (opponentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
-				Unit unit = MatchMenuController.askSpace(opponentDiscardPile, true);
+				Unit unit = (Unit) MatchMenuController.askSpace(opponentDiscardPile, true,true);
 				if (unit != null) {
 					putRevived(unit, true);
 					opponentDiscardPile.getCards().remove(unit);
