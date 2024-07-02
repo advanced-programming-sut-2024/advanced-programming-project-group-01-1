@@ -2,6 +2,7 @@ package controller.sign;
 
 import controller.enums.Validation;
 import model.Result;
+import model.user.Question;
 import model.user.User;
 import view.Appview;
 import view.sign.register.RegisterMenu;
@@ -25,6 +26,8 @@ public class LoginMenusController {
 
 	public static Result answerQuestion(int questionNumber, String answer) {
 		User user = User.getLoggedInUser();
+		if (!user.getQuestion().getQuestion().equals(Question.questions[questionNumber]))
+			return new Result("This question is not answered", true);
 		if (user.getQuestion().isAnswerCorrect(answer))
 			return new Result("Answer is correct\nSet a new password", true);
 		return new Result("Answer is incorrect", false);
