@@ -2,11 +2,23 @@ package view.sign.login;
 
 import controller.sign.LoginMenusController;
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Result;
+import view.AlertMaker;
 import view.Appview;
 import view.Menuable;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
@@ -22,10 +34,34 @@ public class SetPasswordMenu extends Application implements Menuable {
 		launch();
 	}
 
+	public TextField passwordField;
+
 	@Override
 	public void start(Stage stage) {
-		// TODO:
+		Appview.setStage(stage);
+		URL url = getClass().getResource("/FXML/SetPasswordMenu.fxml");
+		if (url == null){
+			System.out.println("Couldn't find file: FXML/SetPasswordMenu.fxml");
+			return;
+		}
+		Pane root = null;
+		try {
+			root = FXMLLoader.load(url);
+		} catch (IOException e){
+			throw new RuntimeException(e);
+		}
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
+
+
+	public void setPassword(MouseEvent mouseEvent) {
+		String password = passwordField.getText();
+		Result result = LoginMenusController.setPassword(password);
+		AlertMaker.makeAlert("set password", result);
+	}
+
 
 	/*
 	 * Terminal version of the LobbyMenu
