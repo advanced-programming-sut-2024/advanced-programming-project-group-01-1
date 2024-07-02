@@ -46,4 +46,8 @@ public class RegisterMenusController {
 		Appview.runMenu();
 		return new Result("Exiting Register Menu", true);
 	}
+
+	public static String[] getQuestions(){
+		return Question.questions;
+	}
 }

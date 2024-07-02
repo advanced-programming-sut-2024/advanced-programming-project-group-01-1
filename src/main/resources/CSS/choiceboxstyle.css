@@ -1,0 +1,21 @@
+.choice-box {
+    -fx-font-family: 'Mason Serif Regular';
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to top, #8b4513, #b22222);
+    -fx-padding: 10px;
+}
+
+
+.choice-box .label {
+    -fx-background-color: linear-gradient(to top, #8b4513, #b22222);
+}
+
+.choice-box .list-cell {
+    -fx-background-color: linear-gradient(to top, #8b4513, #b22222);
+}
+
+.choice-box .list-cell:filled:selected, .choice-box .list-cell:filled:selected:hover {
+    -fx-background-color: linear-gradient(to top, #8b4513, #b22222);
+    -fx-text-fill: white;
+}

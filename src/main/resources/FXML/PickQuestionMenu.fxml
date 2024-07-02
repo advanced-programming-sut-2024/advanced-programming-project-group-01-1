@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sign.register.PickQuestionMenu">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/backgrounds/LoginMenu.jpg" />
+         </image>
+      </ImageView>
+      <ChoiceBox fx:id="choiceBox" layoutX="390.0" layoutY="66.0" prefHeight="10.0" prefWidth="575.0" stylesheets="@../CSS/choiceboxstyle.css" />
+      <TextField fx:id="answerField" layoutX="533.0" layoutY="136.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <TextField fx:id="confirmAnswerField" layoutX="533.0" layoutY="213.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <Button id="ipad-dark-grey" layoutX="602.0" layoutY="327.0" mnemonicParsing="false" onMouseClicked="#pickQuestion" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="enter" />
+      <Label id="normal-text" layoutX="418.0" layoutY="151.0" stylesheets="@../CSS/textstyle.css" text="answer" />
+      <Label id="normal-text" layoutX="377.0" layoutY="228.0" stylesheets="@../CSS/textstyle.css" text="confirm answer" />
+   </children>
+</Pane>
