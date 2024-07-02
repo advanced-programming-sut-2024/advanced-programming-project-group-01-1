@@ -5,7 +5,6 @@ import javafx.stage.Stage;
 import model.Result;
 import view.Menuable;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
@@ -17,7 +16,7 @@ public class ProfileMenu implements Menuable {
 	 */
 
 	@Override
-	public void createStage(){
+	public void createStage() {
 		launch();
 	}
 
@@ -34,26 +33,17 @@ public class ProfileMenu implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = UserMenusCommands.CHANGE_USERNAME.getMatcher(input)) != null) {
-			result = changeUsername(matcher);
-		} else if ((matcher = UserMenusCommands.CHANGE_PASSWORD.getMatcher(input)) != null) {
+		if ((matcher = UserMenusCommands.CHANGE_USERNAME.getMatcher(input)) != null) result = changeUsername(matcher);
+		else if ((matcher = UserMenusCommands.CHANGE_PASSWORD.getMatcher(input)) != null)
 			result = changePassword(matcher);
-		} else if ((matcher = UserMenusCommands.CHANGE_NICKNAME.getMatcher(input)) != null) {
+		else if ((matcher = UserMenusCommands.CHANGE_NICKNAME.getMatcher(input)) != null)
 			result = changeNickname(matcher);
-		} else if ((matcher = UserMenusCommands.CHANGE_EMAIL.getMatcher(input)) != null) {
-			result = changeEmail(matcher);
-		} else if ((matcher = UserMenusCommands.ENTER_USER_INFO.getMatcher(input)) != null) {
-			result = enterUserInfo();
-		} else if ((matcher = UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
-			result = showCurrentMenu();
-		} else if ((matcher = UserMenusCommands.EXIT.getMatcher(input)) != null) {
-			result = exit();
-		} else {
-			result = new Result("Invalid command", false);
-		}
-		if (result != null) {
-			System.out.println(result);
-		}
+		else if ((matcher = UserMenusCommands.CHANGE_EMAIL.getMatcher(input)) != null) result = changeEmail(matcher);
+		else if (UserMenusCommands.ENTER_USER_INFO.getMatcher(input) != null) result = enterUserInfo();
+		else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
+		else if (UserMenusCommands.EXIT.getMatcher(input) != null) result = exit();
+		else result = new Result("Invalid command", false);
+		if (result != null) System.out.println(result);
 	}
 
 	private Result changeUsername(Matcher matcher) {

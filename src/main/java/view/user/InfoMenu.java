@@ -4,9 +4,7 @@ import controller.UserMenusController;
 import javafx.stage.Stage;
 import model.Result;
 import view.Menuable;
-import view.game.GameMenusCommands;
 
-import java.util.Scanner;
 import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
@@ -18,7 +16,7 @@ public class InfoMenu implements Menuable {
 	 */
 
 	@Override
-	public void createStage(){
+	public void createStage() {
 		launch();
 	}
 
@@ -35,15 +33,11 @@ public class InfoMenu implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = UserMenusCommands.GAME_HISTORY.getMatcher(input)) != null) {
-			result = showGameHistory(matcher);
-		} else if ((matcher = UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
-			result = showCurrentMenu();
-		} else if ((matcher = UserMenusCommands.EXIT.getMatcher(input)) != null) {
-			result = exit();
-		} else {
-			result = new Result("Invalid command", false);
-		}
+		if ((matcher = UserMenusCommands.GAME_HISTORY.getMatcher(input)) != null) result = showGameHistory(matcher);
+		else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
+		else if (UserMenusCommands.EXIT.getMatcher(input) != null) result = exit();
+		else result = new Result("Invalid command", false);
+		System.out.println(result);
 	}
 
 	private Result showGameHistory(Matcher matcher) {

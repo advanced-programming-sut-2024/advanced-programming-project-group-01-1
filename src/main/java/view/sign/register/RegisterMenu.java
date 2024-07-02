@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -13,7 +12,6 @@ import model.Result;
 import view.AlertMaker;
 import view.Appview;
 import view.Menuable;
-import view.sign.login.LoginMenu;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +23,7 @@ public class RegisterMenu extends Application implements Menuable {
 	 * JavaFX version of the RegisterMenu
 	 */
 
-	public void createStage(){
+	public void createStage() {
 		launch();
 	}
 
@@ -71,25 +69,18 @@ public class RegisterMenu extends Application implements Menuable {
 	}
 
 	/*
-	* Terminal version of the RegisterMenu
-	*/
+	 * Terminal version of the RegisterMenu
+	 */
 
 	@Override
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = RegisterMenusCommands.REGISTER.getMatcher(input)) != null) {
-			result = register(matcher);
-		} else if ((matcher = RegisterMenusCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
-			result = showCurrentMenu();
-		} else if ((matcher = RegisterMenusCommands.EXIT.getMatcher(input)) != null) {
-			result = exit(matcher);
-		} else {
-			result = new Result("Invalid command", false);
-		}
-		if (result != null) {
-			System.out.println(result);
-		}
+		if ((matcher = RegisterMenusCommands.REGISTER.getMatcher(input)) != null) result = register(matcher);
+		else if (RegisterMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
+		else if ((matcher = RegisterMenusCommands.EXIT.getMatcher(input)) != null) result = exit(matcher);
+		else result = new Result("Invalid command", false);
+		System.out.println(result);
 	}
 
 	private Result register(Matcher matcher) {

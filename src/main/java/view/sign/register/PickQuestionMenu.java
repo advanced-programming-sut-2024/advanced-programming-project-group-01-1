@@ -19,8 +19,6 @@ import view.sign.login.LoginMenu;
 import java.net.URL;
 import java.util.regex.Matcher;
 
-import static javafx.application.Application.launch;
-
 public class PickQuestionMenu extends Application implements Menuable {
 
 	/*
@@ -28,7 +26,7 @@ public class PickQuestionMenu extends Application implements Menuable {
 	 */
 
 	@Override
-	public void createStage(){
+	public void createStage() {
 		launch();
 	}
 
@@ -57,20 +55,20 @@ public class PickQuestionMenu extends Application implements Menuable {
 	}
 
 	@FXML
-	public void initialize(){
+	public void initialize() {
 		String[] questions = RegisterMenusController.getQuestions();
-		for (int i = 0; i < questions.length; i++){
+		for (int i = 0; i < questions.length; i++) {
 			choiceBox.getItems().add(questions[i]);
 		}
 	}
 
-	public void pickQuestion(MouseEvent mouseEvent){
+	public void pickQuestion(MouseEvent mouseEvent) {
 		String question = (String) choiceBox.getValue();
 		String answer = answerField.getText();
 		String answerConfirm = confirmAnswerField.getText();
 		int questionNumber = -1;
-		for (int i = 0; i < RegisterMenusController.getQuestions().length; i++){
-			if (RegisterMenusController.getQuestions()[i].equals(question)){
+		for (int i = 0; i < RegisterMenusController.getQuestions().length; i++) {
+			if (RegisterMenusController.getQuestions()[i].equals(question)) {
 				questionNumber = i;
 				break;
 			}
@@ -87,18 +85,11 @@ public class PickQuestionMenu extends Application implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = RegisterMenusCommands.PICK_QUESTION.getMatcher(input)) != null) {
-			result = pickQuestion(matcher);
-		} else if ((matcher = RegisterMenusCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
-			result = showCurrentMenu();
-		} else if ((matcher = RegisterMenusCommands.EXIT.getMatcher(input)) != null) {
-			result = exit(matcher);
-		} else {
-			result = new Result("Invalid command", false);
-		}
-		if (result != null) {
-			System.out.println(result);
-		}
+		if ((matcher = RegisterMenusCommands.PICK_QUESTION.getMatcher(input)) != null) result = pickQuestion(matcher);
+		else if (RegisterMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
+		else if ((matcher = RegisterMenusCommands.EXIT.getMatcher(input)) != null) result = exit(matcher);
+		else result = new Result("Invalid command", false);
+		System.out.println(result);
 	}
 
 

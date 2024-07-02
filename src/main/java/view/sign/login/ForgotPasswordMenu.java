@@ -5,8 +5,6 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -21,8 +19,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
 
-import static javafx.application.Application.launch;
-
 public class ForgotPasswordMenu extends Application implements Menuable {
 
 	/*
@@ -30,7 +26,7 @@ public class ForgotPasswordMenu extends Application implements Menuable {
 	 */
 
 	@Override
-	public void createStage(){
+	public void createStage() {
 		launch();
 	}
 
@@ -41,14 +37,14 @@ public class ForgotPasswordMenu extends Application implements Menuable {
 	public void start(Stage stage) {
 		Appview.setStage(stage);
 		URL url = getClass().getResource("/FXML/ForgotPasswordMenu.fxml");
-		if (url == null){
+		if (url == null) {
 			System.out.println("Couldn't find file: FXML/ForgotPasswordMenu.fxml");
 			return;
 		}
 		Pane root = null;
 		try {
 			root = FXMLLoader.load(url);
-		} catch (IOException e){
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 		Scene scene = new Scene(root);
@@ -79,19 +75,11 @@ public class ForgotPasswordMenu extends Application implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = LoginMenusCommands.ANSWER_QUESTION.getMatcher(input)) != null) {
-			result = answerQuestion(matcher);
-		} else if ((matcher = LoginMenusCommands.SHOW_CURRENT_MENU.getMatcher(input)) != null) {
-			result = showCurrentMenu();
-		}
-		else if ((matcher = LoginMenusCommands.EXIT.getMatcher(input)) != null) {
-			result = exit(matcher);
-		} else {
-			result = new Result("Invalid command", false);
-		}
-		if (result != null) {
-			System.out.println(result);
-		}
+		if ((matcher = LoginMenusCommands.ANSWER_QUESTION.getMatcher(input)) != null) result = answerQuestion(matcher);
+		else if (LoginMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
+		else if ((matcher = LoginMenusCommands.EXIT.getMatcher(input)) != null) result = exit(matcher);
+		else result = new Result("Invalid command", false);
+		System.out.println(result);
 	}
 
 	private Result showCurrentMenu() {
@@ -100,7 +88,7 @@ public class ForgotPasswordMenu extends Application implements Menuable {
 
 	private Result answerQuestion(Matcher matcher) {
 		String answer = matcher.group("answer");
-        return LoginMenusController.answerQuestion(answer);
+		return LoginMenusController.answerQuestion(answer);
 	}
 
 	private Result exit(Matcher matcher) {

@@ -23,4 +23,7 @@ public class MainMenuController {
 		return new Result("Entered Match Finder Menu", true);
 	}
 
+	public static Result showCurrentMenu() {
+		return new Result("Main Menu", true);
+	}
 }
