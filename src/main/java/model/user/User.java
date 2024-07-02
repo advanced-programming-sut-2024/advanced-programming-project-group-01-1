@@ -19,7 +19,7 @@ public class User implements Serializable {
 	private String password;
 	private String email;
 	private Question question;
-	private Deck deck;
+	private transient Deck deck;
 	private final ArrayList<GameInfo> history;
 	private double elo;
 

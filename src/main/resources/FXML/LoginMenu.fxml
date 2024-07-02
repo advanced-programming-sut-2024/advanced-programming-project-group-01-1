@@ -29,14 +29,14 @@
                </stops>
             </RadialGradient>
          </textFill></Label>
-   <Button id="ipad-dark-grey" layoutX="608.0" layoutY="293.0" onKeyPressed="#login" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="Login"/>
-      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="502.0" onKeyPressed="#register" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="Register" />
-      <TextField fx:id="usernameField" layoutX="533.0" layoutY="101.0" prefHeight="20.0" prefWidth="300.0" stylesheets="@../CSS/textfieldstyle.css" />
-      <Label id="normal-text" layoutX="433.0" layoutY="116.0" stylesheets="@../CSS/textstyle.css" text="username" />
-      <PasswordField fx:id="passwordField" layoutX="533.0" layoutY="177.0" stylesheets="@../CSS/textfieldstyle.css" />
-      <Label id="normal-text" layoutX="432.0" layoutY="191.0" stylesheets="@../CSS/textstyle.css" text="password" />
-      <Label id="normal-text" layoutX="569.0" layoutY="455.0" stylesheets="@../CSS/textstyle.css" text="doesn't have a account?" />
-      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="362.0" mnemonicParsing="false" prefWidth="300.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 12;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="forget password" onKeyPressed="#forgotPassword"/>
-      <CheckBox fx:id="rememberMe" layoutX="601.0" layoutY="236.0" mnemonicParsing="false" stylesheets="@../CSS/checkboxstyle.css" text="remember me" />
+   <Button id="ipad-dark-grey" layoutX="609.0" layoutY="304.0" onMouseClicked="#login" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="Login" />
+      <Button id="ipad-dark-grey" layoutX="609.0" layoutY="504.0" onMouseClicked="#register" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="Register" />
+      <TextField fx:id="usernameField" layoutX="534.0" layoutY="111.0" prefHeight="20.0" prefWidth="300.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <Label id="normal-text" layoutX="403.0" layoutY="126.0" stylesheets="@../CSS/textstyle.css" text="username" />
+      <PasswordField fx:id="passwordField" layoutX="534.0" layoutY="174.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <Label id="normal-text" layoutX="402.0" layoutY="189.0" stylesheets="@../CSS/textstyle.css" text="password" />
+      <Label id="normal-text" layoutX="569.0" layoutY="466.0" stylesheets="@../CSS/textstyle.css" text="doesn't have a account?" />
+      <Button id="ipad-dark-grey" layoutX="609.0" layoutY="369.0" mnemonicParsing="false" onMouseClicked="#forgotPassword" prefWidth="300.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 12;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="forget password" />
+      <CheckBox fx:id="rememberMe" layoutX="601.0" layoutY="235.0" mnemonicParsing="false" stylesheets="@../CSS/checkboxstyle.css" text="remember me" />
    </children>
 </Pane>

@@ -23,5 +23,9 @@ module w {
 	opens model.game to com.fasterxml.jackson.databind, com.google.gson;
 	opens model.game.space to com.fasterxml.jackson.databind, com.google.gson;
 	opens model.leader to com.fasterxml.jackson.databind, com.google.gson;
+
+	//opens other packages to gson and jackson
+	//opens java.util to com.google.gson, com.fasterxml.jackson.databind;
+
 	requires com.google.gson;
 }

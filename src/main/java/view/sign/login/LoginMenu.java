@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Scale;
@@ -44,6 +45,7 @@ public class LoginMenu extends Application implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
+		Appview.setStage(stage);
 		URL url = getClass().getResource("/FXML/loginMenu.fxml");
 		if (url == null) {
 			System.out.println("Couldn't find file: FXML/loginMenu.fxml");
@@ -60,7 +62,7 @@ public class LoginMenu extends Application implements Menuable {
 		stage.show();
     }
 
-	public void login(KeyEvent keyEvent) {
+	public void login(MouseEvent mouseEvent) {
 		String username = usernameField.getText();
 		String password = passwordField.getText();
 		boolean stayLoggedIn = rememberMe.isSelected();
@@ -68,11 +70,11 @@ public class LoginMenu extends Application implements Menuable {
 		makeAlert("Login", result);
 	}
 
-	public void register(KeyEvent keyEvent) {
+	public void register(MouseEvent mouseEvent) {
 		LoginMenusController.goToRegisterMenu();
 	}
 
-	public void forgotPassword(KeyEvent keyEvent) {
+	public void forgotPassword(MouseEvent mouseEvent) {
 		String username = usernameField.getText();
 		Result result = LoginMenusController.forgotPassword(username);
 		makeAlert("Forgot Password", result);

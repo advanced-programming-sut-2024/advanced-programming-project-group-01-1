@@ -11,17 +11,17 @@
             <Image url="@../images/backgrounds/LoginMenu.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="609.0" layoutY="27.0" stylesheets="@../CSS/textfieldstyle.css" fx:id="usernameField"/>
-      <TextField layoutX="609.0" layoutY="109.0" stylesheets="@../CSS/textfieldstyle.css" fx:id="nicknameField"/>
-      <TextField layoutX="609.0" layoutY="188.0" stylesheets="@../CSS/textfieldstyle.css" fx:id="emailField"/>
-      <PasswordField layoutX="609.0" layoutY="271.0" stylesheets="@../CSS/textfieldstyle.css" fx:id="passwordField"/>
-      <PasswordField layoutX="609.0" layoutY="356.0" stylesheets="@../CSS/textfieldstyle.css" fx:id="confirmPasswordField"/>
-      <Label id="normal-text" layoutX="488.0" layoutY="45.0" stylesheets="@../CSS/textstyle.css" text="username" />
-      <Label id="normal-text" layoutX="505.0" layoutY="206.0" stylesheets="@../CSS/textstyle.css" text="email" />
-      <Label id="normal-text" layoutX="487.0" layoutY="127.0" stylesheets="@../CSS/textstyle.css" text="nickname" />
-      <Label id="normal-text" layoutX="487.0" layoutY="289.0" stylesheets="@../CSS/textstyle.css" text="password" />
-      <Label id="normal-text" layoutX="453.0" layoutY="365.0" prefHeight="39.0" prefWidth="176.0" stylesheets="@../CSS/textstyle.css" text="repeat password" />
-      <Button id="ipad-dark-grey" layoutX="684.0" layoutY="470.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="register" onKeyPressed="#register"/>
-      <Button id="ipad-dark-grey" layoutX="684.0" layoutY="539.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" onKeyPressed="#back"/>
+      <TextField fx:id="usernameField" layoutX="533.0" layoutY="27.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <TextField fx:id="nicknameField" layoutX="533.0" layoutY="99.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <TextField fx:id="emailField" layoutX="533.0" layoutY="174.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <PasswordField fx:id="passwordField" layoutX="533.0" layoutY="247.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <PasswordField fx:id="confirmPasswordField" layoutX="533.0" layoutY="322.0" stylesheets="@../CSS/textfieldstyle.css" />
+      <Label id="normal-text" layoutX="392.0" layoutY="42.0" stylesheets="@../CSS/textstyle.css" text="username" />
+      <Label id="normal-text" layoutX="409.0" layoutY="189.0" stylesheets="@../CSS/textstyle.css" text="email" />
+      <Label id="normal-text" layoutX="391.0" layoutY="114.0" stylesheets="@../CSS/textstyle.css" text="nickname" />
+      <Label id="normal-text" layoutX="390.0" layoutY="262.0" stylesheets="@../CSS/textstyle.css" text="password" />
+      <Label id="normal-text" layoutX="347.0" layoutY="322.0" prefHeight="39.0" prefWidth="176.0" stylesheets="@../CSS/textstyle.css" text="repeat password" />
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#register" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="register" />
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="548.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
    </children>
 </Pane>

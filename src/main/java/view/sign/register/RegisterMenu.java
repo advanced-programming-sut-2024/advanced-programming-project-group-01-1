@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Result;
@@ -37,6 +38,7 @@ public class RegisterMenu extends Application implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
+		Appview.setStage(stage);
 		URL url = getClass().getResource("/FXML/RegisterMenu.fxml");
 		if (url == null) {
 			System.out.println("Couldn't find file: FXML/RegisterMenu.fxml");
@@ -53,17 +55,18 @@ public class RegisterMenu extends Application implements Menuable {
 		stage.show();
 	}
 
-	public void register(KeyEvent keyEvent) {
+	public void register(MouseEvent mouseEvent) {
 		String username = usernameField.getText();
 		String password = passwordField.getText();
 		String passwordConfirm = confirmPasswordField.getText();
 		String nickname = nicknameField.getText();
 		String email = emailField.getText();
+		System.err.println(username + " " + password + " " + passwordConfirm + " " + nickname + " " + email);
 		Result result = RegisterMenusController.register(username, password, passwordConfirm, nickname, email);
 		AlertMaker.makeAlert("register", result);
 	}
 
-	public void back(KeyEvent keyEvent) {
+	public void back(MouseEvent mouseEvent) {
 		RegisterMenusController.exit();
 	}
 
