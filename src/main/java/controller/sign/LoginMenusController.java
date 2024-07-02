@@ -48,7 +48,6 @@ public class LoginMenusController {
 	public static Result goToRegisterMenu() {
 		User.setLoggedInUser(null);
 		Appview.setMenu(new RegisterMenu());
-		Appview.runMenu();
 		return new Result("Going to register menu", true);
 	}
 }

@@ -102,7 +102,7 @@ public class RegisterMenu extends Application implements Menuable {
 		if (result.isSuccessful()) {
 			Appview.setMenu(new PickQuestionMenu());
 		}
-		return null;
+		return result;
 	}
 
 	private Result showCurrentMenu() {

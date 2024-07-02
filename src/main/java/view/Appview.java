@@ -15,6 +15,7 @@ public class Appview {
 
 	public static void setMenu(Menuable menu) {
 		Appview.menu = menu;
+		runMenu();
 	}
 
 	public static Stage getStage() {
@@ -25,7 +26,7 @@ public class Appview {
 		Appview.stage = stage;
 	}
 
-	public static void runMenu() {
+	private static void runMenu() {
 		if (stage == null) menu.createStage();
 		else Platform.runLater(() -> menu.start(stage));
 	}

@@ -43,7 +43,6 @@ public class RegisterMenusController {
 
 	public static Result exit() {
 		Appview.setMenu(new LoginMenu());
-		Appview.runMenu();
 		return new Result("Exiting Register Menu", true);
 	}
 

@@ -19,6 +19,5 @@ public class Main {
 		terminal.setDaemon(true);
 		terminal.start();
 		Appview.setMenu(new LoginMenu());
-		Appview.runMenu();
 	}
 }

@@ -55,7 +55,6 @@ public class UserMenusController {
 		userInfo.append("Number of draws: ").append(user.getNumberOfDraws()).append("\n");
 		userInfo.append("Number of losses: ").append(user.getNumberOfLosses()).append("\n");
 		Appview.setMenu(new InfoMenu());
-		Appview.runMenu();
 		return new Result(userInfo.toString(), true);
 	}
 
@@ -71,7 +70,6 @@ public class UserMenusController {
 	public static Result exit() {
 		if (Appview.getMenu() instanceof InfoMenu) Appview.setMenu(new ProfileMenu());
 		else if (Appview.getMenu() instanceof ProfileMenu) Appview.setMenu(new MainMenu());
-		Appview.runMenu();
 		return new Result("Exited successfully", true);
 	}
 }
