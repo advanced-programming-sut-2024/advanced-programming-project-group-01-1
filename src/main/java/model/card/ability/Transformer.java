@@ -8,7 +8,10 @@ public enum Transformer implements Ability {
 
 	@Override
 	public void act(Card card) {
-		card.pull();
+	}
+
+	@Override
+	public void undo(Card card) {
 		String transformedName = null;
 		if (card.getName().equals("Cow")) transformedName = "Bovine Defence Force";
 		else if (card.getName().equals("Kambi")) transformedName = "Hemdall";
@@ -20,8 +23,4 @@ public enum Transformer implements Ability {
 		}
 	}
 
-	@Override
-	public void undo(Card card) {
-
-	}
 }

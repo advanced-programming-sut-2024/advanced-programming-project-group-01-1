@@ -22,6 +22,7 @@ public class Space {
 	}
 
 	public void clear(Space discardPile, Unit stayingUnit) {
+		ArrayList<Card> cards = new ArrayList<>(this.cards);
 		for (Card card : cards) {
 			if(card == stayingUnit) continue;
 			card.pull();

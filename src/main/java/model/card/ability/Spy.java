@@ -2,6 +2,7 @@ package model.card.ability;
 
 import model.card.Card;
 import model.card.unit.Unit;
+import model.game.CardMover;
 import model.game.Game;
 import model.game.space.Row;
 
@@ -20,15 +21,7 @@ public enum Spy implements Ability {
 		unit.setHornCount(enemyRow.getHornCount());
 		unit.setBoostCount(enemyRow.getBoostCount());
 		unit.setDebuff(enemyRow.isDebuffed());
-		pullFromDeck();
-		pullFromDeck();
+		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 2, false).move();
 	}
 
-	private void pullFromDeck() {
-		ArrayList<Card> deckCards = Game.getCurrentGame().getCurrentDeck().getCards();
-		if (deckCards.isEmpty()) return;
-		Card unit = deckCards.get((new Random()).nextInt(deckCards.size()));
-		deckCards.remove(unit);
-		Game.getCurrentGame().getCurrentHand().getCards().add(unit);
-	}
 }

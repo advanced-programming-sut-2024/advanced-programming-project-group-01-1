@@ -43,6 +43,7 @@ public class Game {
 		this.opponentFaction = player2.getDeck().getFaction();
 		this.currentLeader = player1.getDeck().getLeader();
 		this.opponentLeader = player2.getDeck().getLeader();
+		for (int i = 0; i < 6; i++) rows[i] = new Row();
 		this.currentDeck = new Space(player1.getDeck().getCards());
 		this.opponentDeck = new Space(player2.getDeck().getCards());
 		if (currentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentLeader.act();
@@ -228,6 +229,8 @@ public class Game {
 	public void placeCard(Card card, int spaceId) {
 		try {
 			card.put(spaceId);
+			currentHand.getCards().remove(card);
+			changeTurn();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -276,8 +279,11 @@ public class Game {
 	}
 
 	public void passTurn() {
-		changeTurn();
-		hasOpponentPassed = true;
+		if (hasOpponentPassed) endRound();
+		else {
+			changeTurn();
+			hasOpponentPassed = true;
+		}
 	}
 
 	public void endRound() {
@@ -292,16 +298,10 @@ public class Game {
 		if (roundNumber == 3) skelligeAbility();
 		Unit currentUnit = currentFaction.equals(Faction.MONSTERS) ? keepUnit(true) : null;
 		Unit opponentUnit = opponentFaction.equals(Faction.MONSTERS) ? keepUnit(false) : null;
-		for (int i = 0; i < 6; i++) {
+		for (int i = 2; i >= 0; i--) {
 			try {
-				rows[i].clear(i < 3 ? currentDiscardPile : opponentDiscardPile, i < 3 ? currentUnit : opponentUnit);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		if (currentUnit != null) {
-			try {
-				currentUnit.put(0);
+				rows[i].clear(currentDiscardPile, currentUnit);
+				rows[5 - i].clear(opponentDiscardPile, opponentUnit);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -371,6 +371,7 @@ public class Game {
 		for (int i = 0; i < 3; i++)
 			for (Card card : rows[isCurrentPlayer ? i : i + 3].getCards())
 				if (card instanceof Unit && !((Unit) card).isHero()) size++;
+		if (size == 0) return null;
 		int randomIndex = random.nextInt(size);
 		int counter = 0;
 		for (int i = 0; i < 3; i++)
