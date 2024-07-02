@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Result;
 import view.game.prematch.LobbyMenu;
@@ -9,7 +10,7 @@ import java.util.regex.Matcher;
 import static controller.MainMenuController.*;
 import static javafx.application.Application.launch;
 
-public class MainMenu implements Menuable {
+public class MainMenu extends Application implements Menuable {
 
 	/*
 	 * JavaFX version of the LobbyMenu

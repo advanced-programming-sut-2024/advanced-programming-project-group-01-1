@@ -1,6 +1,7 @@
 package view.sign.login;
 
 import controller.sign.LoginMenusController;
+import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Result;
 import view.Appview;
@@ -10,7 +11,7 @@ import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
-public class SetPasswordMenu implements Menuable {
+public class SetPasswordMenu extends Application implements Menuable {
 
 	/*
 	 * JavaFX version of the LobbyMenu

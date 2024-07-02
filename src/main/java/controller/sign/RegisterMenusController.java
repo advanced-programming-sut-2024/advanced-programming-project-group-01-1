@@ -7,6 +7,7 @@ import model.user.Question;
 import model.user.User;
 import view.Appview;
 import view.sign.login.LoginMenu;
+import view.sign.register.PickQuestionMenu;
 
 public class RegisterMenusController {
 
@@ -27,6 +28,7 @@ public class RegisterMenusController {
 			return RegisterMenusResponses.PASSWORDS_DONT_MATCH.getResult();
 		} else {
 			registeringUser = new User(username, nickname, password, email, null);
+			Appview.setMenu(new PickQuestionMenu());
 			return RegisterMenusResponses.REGISTER_SUCCESSFUL.getResult();
 		}
 	}
@@ -37,6 +39,7 @@ public class RegisterMenusController {
 		else if (!answer.equals(answerConfirm)) return new Result("Answers don't match", false);
 		else {
 			registeringUser.setQuestion(new Question(Question.questions[questionNumber], answer));
+			Appview.setMenu(new LoginMenu());
 			return new Result("Question picked successfully", true);
 		}
 	}
