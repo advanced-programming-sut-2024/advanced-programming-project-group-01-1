@@ -4,6 +4,7 @@ import controller.JsonController;
 import view.Appview;
 import view.Terminal;
 import view.sign.login.LoginMenu;
+import view.sign.register.RegisterMenu;
 
 public class Main {
 	public static void main(String[] args) {
@@ -15,7 +16,7 @@ public class Main {
 				}, "Shutdown-thread"));
 		JsonController.load();
 		Appview.setMenu(new LoginMenu());
-		LoginMenu.createStage();
+		Appview.runMenu();
 		Terminal terminal = new Terminal();
 		terminal.run();
 	}

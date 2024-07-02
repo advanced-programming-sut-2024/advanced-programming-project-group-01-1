@@ -1,6 +1,7 @@
 package view.sign.register;
 
 import controller.sign.RegisterMenusController;
+import javafx.stage.Stage;
 import model.Result;
 import view.Appview;
 import view.Menuable;
@@ -9,7 +10,27 @@ import view.sign.login.LoginMenu;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
+import static javafx.application.Application.launch;
+
 public class PickQuestionMenu implements Menuable {
+
+	/*
+	 * JavaFX version of the LobbyMenu
+	 */
+
+	@Override
+	public void createStage(){
+		launch();
+	}
+
+	@Override
+	public void start(Stage stage) {
+		// TODO:
+	}
+
+	/*
+	 * Terminal version of the LobbyMenu
+	 */
 
 	@Override
 	public void run(String input) {

@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 public interface Menuable {
 
-	//void start(Stage stage);
+	void createStage();
+
+	void start(Stage stage);
 
 	void run(String input);
 }

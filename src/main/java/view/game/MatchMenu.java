@@ -1,13 +1,34 @@
 package view.game;
 
 import controller.game.MatchMenuController;
+import javafx.stage.Stage;
 import model.Result;
 import view.Menuable;
 
 import java.util.regex.Matcher;
 
+import static javafx.application.Application.launch;
+
 
 public class MatchMenu implements Menuable {
+
+	/*
+	 * JavaFX version of the LobbyMenu
+	 */
+
+	@Override
+	public void createStage(){
+		launch();
+	}
+
+	@Override
+	public void start(Stage stage) {
+		// TODO:
+	}
+
+	/*
+	 * Terminal version of the LobbyMenu
+	 */
 
 	@Override
 	public void run(String input) {

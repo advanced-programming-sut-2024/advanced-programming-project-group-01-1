@@ -28,17 +28,19 @@ import static view.AlertMaker.makeAlert;
 
 public class LoginMenu extends Application implements Menuable {
 
-    public TextField passwordField;
-	public TextField usernameField;
-	public CheckBox rememberMe;
-
-	public static void createStage(){
-		launch();
-	}
 
 	/**
 	 * JavaFX version of the LoginMenu
 	 */
+
+
+	public void createStage(){
+		launch();
+	}
+
+	public TextField passwordField;
+	public TextField usernameField;
+	public CheckBox rememberMe;
 
 	@Override
 	public void start(Stage stage) {
