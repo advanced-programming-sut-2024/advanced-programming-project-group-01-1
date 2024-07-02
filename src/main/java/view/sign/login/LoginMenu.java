@@ -46,7 +46,7 @@ public class LoginMenu extends Application implements Menuable {
 	@Override
 	public void start(Stage stage) {
 		Appview.setStage(stage);
-		URL url = getClass().getResource("/FXML/loginMenu.fxml");
+		URL url = getClass().getResource("/FXML/LoginMenu.fxml");
 		if (url == null) {
 			System.out.println("Couldn't find file: FXML/loginMenu.fxml");
 			return;

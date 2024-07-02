@@ -11,8 +11,20 @@ module w {
 	opens view.sign.register to javafx.fxml, javafx.graphics;
 	opens view.user to javafx.fxml, javafx.graphics;
 
-
 	// open models to gson and jackson
+	opens model to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.user to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.card to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.card.unit to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.card.ability to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.card.special to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.card.special.spell to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.game to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.game.space to com.google.gson, com.fasterxml.jackson.databind;
+	opens model.leader to com.google.gson, com.fasterxml.jackson.databind;
+
+
+
 	exports model;
 	exports model.user;
 	exports model.card;
