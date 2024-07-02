@@ -16,6 +16,7 @@ public class Buffer extends Spell {
 		Row row = Game.getCurrentGame().getRow(rowNumber);
 		if (row.getBuffer() != null) throw new Exception("Buffer already exists in this row");
 		row.setBuffer(this);
+		this.setSpace(row);
 		this.ability.act(this);
 	}
 

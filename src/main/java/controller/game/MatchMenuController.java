@@ -7,6 +7,7 @@ import model.game.Game;
 import model.game.space.Space;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MatchMenuController {
 
@@ -112,7 +113,10 @@ public class MatchMenuController {
 			int randomIndex = (int) (Math.random() * availableCards.size());
 			return availableCards.get(randomIndex);
 		}
-		return null;
+		Scanner scanner = new Scanner(System.in);
+		int index = scanner.nextInt();
+		if (index < 0 || index >= availableCards.size()) return null;
+		return availableCards.get(index);
 	}
 
 	public static void showSpace(Space tmp) {

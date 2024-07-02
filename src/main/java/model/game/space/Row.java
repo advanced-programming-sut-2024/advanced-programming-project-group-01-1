@@ -3,6 +3,7 @@ package model.game.space;
 import model.card.Card;
 import model.card.ability.Horn;
 import model.card.ability.Mardroeme;
+import model.card.special.Decoy;
 import model.card.special.spell.Buffer;
 import model.card.unit.Unit;
 
@@ -17,6 +18,7 @@ public class Row extends Space {
 	public int getSumOfPowers() {
 		int sumOfPowers = 0;
 		for (Card card : this.cards) {
+			if (card instanceof Decoy) continue;
 			sumOfPowers += ((Unit) card).getPower();
 		}
 		return sumOfPowers;
