@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.prematch.MatchFinderMenu">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/backgrounds/MatchFinderMenu.jpg" />
+         </image>
+      </ImageView>
+      <ListView fx:id="suggestUsersList" layoutX="533.0" layoutY="95.0" prefHeight="200.0" prefWidth="300.0" stylesheets="@../CSS/listviewstyle.css" />
+      <TextField layoutX="533.0" layoutY="27.0" stylesheets="@../CSS/textfieldstyle.css" fx:id="usernameField"/>
+      <Label id="normal-text" layoutX="310.0" layoutY="52.0" stylesheets="@../CSS/textstyle.css" text="username" />
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#startGame" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="start game" />
+      <Button id="ipad-dark-grey" layoutX="150.0" layoutY="582.0" mnemonicParsing="false" onMouseClicked="#quickMatch" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="quick match" />
+      <Button id="ipad-dark-grey" layoutX="1066.0" layoutY="607.0" mnemonicParsing="false" onMouseClicked="#tournamentMatch" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 12;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="tournament match" />
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="680.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
+   </children>
+</Pane>

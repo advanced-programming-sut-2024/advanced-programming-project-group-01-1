@@ -8,8 +8,11 @@ import model.game.Game;
 import model.leader.Leader;
 import model.user.Deck;
 import model.user.User;
+import view.Appview;
+import view.MainMenu;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class PreMatchMenusController {
 
@@ -174,4 +177,16 @@ public class PreMatchMenusController {
 		return new Result("Game Started Successfully", true);
 	}
 
+    public static Result exit() {
+		Appview.setMenu(new MainMenu());
+		return new Result("Exiting PreMatch Menu", true);
+    }
+
+	public static ArrayList<String> getUsernames() {
+		ArrayList<String> usernames = new ArrayList<>();
+		for (User user : User.getUsers()) {
+			usernames.add(user.getUsername());
+		}
+		return usernames;
+	}
 }

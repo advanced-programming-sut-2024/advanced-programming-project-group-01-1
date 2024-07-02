@@ -1,0 +1,30 @@
+.list-view {
+    -fx-font-family: "Mason Serif Regular";
+    -fx-font-size: 18;
+    -fx-background-color: linear-gradient(to top, #8b4513, #b22222);
+    -fx-text-fill: white;
+}
+
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+.list-view .list-cell:filled:selected, .list-view .list-cell:filled:selected:hover {
+    -fx-background-color: linear-gradient(to bottom, #ff4500, #ff8c00);
+    -fx-text-fill: white;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: linear-gradient(to bottom, #8b4513, #b22222, rgba(255,255,255,0.1));
+}
+
+.scroll-bar {
+    -fx-background-color: #b22222;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #8b4513;
+}
