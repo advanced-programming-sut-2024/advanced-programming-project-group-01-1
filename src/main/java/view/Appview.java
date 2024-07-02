@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class Appview {
@@ -25,12 +26,8 @@ public class Appview {
 	}
 
 	public static void runMenu() {
-		if (stage == null) {
-			menu.createStage();
-		}
-		else{
-			menu.start(stage);
-		}
+		if (stage == null) menu.createStage();
+		else Platform.runLater(() -> menu.start(stage));
 	}
 
 	public static String getMenuName() {

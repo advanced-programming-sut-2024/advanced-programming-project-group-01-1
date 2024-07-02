@@ -2,8 +2,9 @@ package view;
 
 import java.util.Scanner;
 
-public class Terminal {
+public class Terminal extends Thread {
 
+	@Override
 	public void run () {
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
@@ -11,4 +12,5 @@ public class Terminal {
 			Appview.getMenu().run(input);
 		}
 	}
+
 }

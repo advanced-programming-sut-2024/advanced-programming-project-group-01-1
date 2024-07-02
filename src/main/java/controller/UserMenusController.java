@@ -71,6 +71,7 @@ public class UserMenusController {
 	public static Result exit() {
 		if (Appview.getMenu() instanceof InfoMenu) Appview.setMenu(new ProfileMenu());
 		else if (Appview.getMenu() instanceof ProfileMenu) Appview.setMenu(new MainMenu());
+		Appview.runMenu();
 		return new Result("Exited successfully", true);
 	}
 }

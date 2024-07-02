@@ -15,9 +15,10 @@ public class Main {
 					}
 				}, "Shutdown-thread"));
 		JsonController.load();
+		Terminal terminal = new Terminal();
+		terminal.setDaemon(true);
+		terminal.start();
 		Appview.setMenu(new LoginMenu());
 		Appview.runMenu();
-		Terminal terminal = new Terminal();
-		terminal.run();
 	}
 }
