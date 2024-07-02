@@ -1,7 +1,5 @@
 package controller.game;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import main.CardCreator;
 import model.Result;
 import model.card.Card;
@@ -12,19 +10,17 @@ import model.user.Deck;
 import model.user.User;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class PreMatchMenusController {
+
+	private static User opponent = null;
 
 	public static Result createGame(String opponentUsername) {
 		User opponent = User.getUserByUsername(opponentUsername);
 		if (opponent == null) return new Result("User Not Found", false);
 		if (opponent.equals(User.getLoggedInUser())) return new Result("You Cannot Play With Yourself", false);
-		if (!User.getLoggedInUser().getDeck().isValid()) return new Result("Your Deck Is Invalid", false);
-		if (!opponent.getDeck().isValid()) return new Result("Opponent's Deck Is Invalid", false);
-		Game.createGame(User.getLoggedInUser(), opponent);
-		return new Result("Game Created Successfully", true);
+		PreMatchMenusController.opponent = opponent;
+		return new Result("Entering Lobby", true);
 	}
 
 	public static Result showFactions() {
@@ -164,13 +160,18 @@ public class PreMatchMenusController {
 	}
 
 	public static Result changeTurn() {
-		// TODO:
-		return null;
+		User temp = User.getLoggedInUser();
+		User.setLoggedInUser(opponent);
+		opponent = temp;
+		return new Result("Turn Changed Successfully", true);
 	}
 
 	public static Result startGame() {
-		// TODO:
-		return null;
+		if (!User.getLoggedInUser().getDeck().isValid()) return new Result("Your Deck Is Invalid", false);
+		if (!opponent.getDeck().isValid()) return new Result("Opponent's Deck Is Invalid", false);
+		changeTurn();
+		Game.createGame(User.getLoggedInUser(), opponent);
+		return new Result("Game Started Successfully", true);
 	}
 
 }
