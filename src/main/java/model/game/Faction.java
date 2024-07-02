@@ -1,6 +1,8 @@
 package model.game;
 
-public enum Faction {
+import java.io.Serializable;
+
+public enum Faction implements Serializable {
 
 	NEUTRAL("Neutral"),
 	NORTHERN_REALMS("Northern Realms"),

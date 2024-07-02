@@ -1,5 +1,7 @@
 package controller.game;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import main.CardCreator;
 import model.Result;
 import model.card.Card;
@@ -8,6 +10,10 @@ import model.game.Game;
 import model.leader.Leader;
 import model.user.Deck;
 import model.user.User;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class PreMatchMenusController {
 
@@ -65,24 +71,60 @@ public class PreMatchMenusController {
 		return new Result(message.toString(), true);
 	}
 
+//	public static void main(String[] args) {
+//		Deck test = new Deck(Faction.MONSTERS);
+//		test.setLeader(test.getAvailableLeaders().get(3));
+//		test.add(CardCreator.getCard("Leshen"));
+//		test.add(CardCreator.getCard("Skellige Storm"));
+//		test.add(CardCreator.getCard("Gaunter O'Dimm"));
+//		test.add(CardCreator.getCard("Gaunter O'Dimm; Darkness"));
+//		test.add(CardCreator.getCard("Gaunter O'Dimm; Darkness"));
+//		test.add(CardCreator.getCard("Gaunter O'Dimm; Darkness"));
+//		test.add(CardCreator.getCard("Geralt of Rivia"));
+//		test.add(CardCreator.getCard("Arachas"));
+//		test.add(CardCreator.getCard("Cow"));
+//		User user = new User("test", "test", "test", "test", null);
+//		user.setDeck(test);
+//		User.setLoggedInUser(user);
+//		saveDeckByAddress("/C:/Users/S2/Desktop/test.json");
+//		User user2 = new User("test2", "test2", "test2", "test2", null);
+//		User.setLoggedInUser(user2);
+//		loadDeckByAddress("/C:/Users/S2/Desktop/test.json");
+//		System.out.println(User.getLoggedInUser().getDeck().getHeroCount());
+//	}
+
 	public static Result saveDeckByAddress(String address) {
-		// TODO:
-		return null;
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(address));
+			oos.writeObject(User.getLoggedInUser().getDeck());
+			oos.close();
+		} catch (IOException e) {
+			return new Result("Invalid address", false);
+		}
+		return new Result("Deck Saved Successfully", true);
 	}
 
 	public static Result saveDeckByName(String name) {
-		// TODO:
-		return null;
+		String path = PreMatchMenusController.class.getResource("/decks/" + name + ".json").getPath();
+		return saveDeckByAddress(path);
 	}
 
 	public static Result loadDeckByAddress(String address) {
-		// TODO:
-		return null;
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(address));
+			Deck deck = (Deck) ois.readObject();
+			User.getLoggedInUser().setDeck(deck);
+		} catch (IOException e) {
+			return new Result("Invalid address", false);
+		} catch (ClassNotFoundException e) {
+			return new Result("Invalid Deck", false);
+		}
+		return new Result("Deck Loaded Successfully", true);
 	}
 
 	public static Result loadDeckByName(String name) {
-		// TODO:
-		return null;
+		String path = PreMatchMenusController.class.getResource("/decks/" + name + ".json").getPath();
+		return loadDeckByAddress(path);
 	}
 
 	public static Result showLeaders() {

@@ -9,9 +9,10 @@ import model.leader.Leader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Deck {
+public class Deck implements Serializable {
 
 	private final Faction faction;
 	private final ArrayList<Leader> availableLeaders;

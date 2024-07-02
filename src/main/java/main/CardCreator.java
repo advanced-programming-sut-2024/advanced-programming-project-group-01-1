@@ -126,7 +126,7 @@ public class CardCreator {
 	private static void createMonstersCards() {
 		createUnit(Melee.class, Faction.MONSTERS, 1, "Draug", null, 10, true);
 		createUnit(Melee.class, Faction.MONSTERS, 1, "Imlerith", null, 10, true);
-		createUnit(Melee.class, Faction.MONSTERS, 1, "Leshen", null, 10, true);
+		createUnit(Ranged.class, Faction.MONSTERS, 1, "Leshen", null, 10, true);
 		createUnit(Agile.class, Faction.MONSTERS, 1, "Kayran", MoralBooster.INSTANCE, 8, true);
 		createUnit(Ranged.class, Faction.MONSTERS, 1, "Toad", Scorch.INSTANCE, 7, false);
 		createUnit(Siege.class, Faction.MONSTERS, 1, "Arachas", Muster.INSTANCE, 6, false);

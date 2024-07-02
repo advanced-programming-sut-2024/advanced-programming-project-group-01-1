@@ -50,4 +50,10 @@ public abstract class Card implements Cloneable, Serializable {
 		card += "\nAbility: " + (ability == null ? "None" : this.ability.getClass().getSimpleName());
 		return card;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		return this.toString().equals(obj.toString());
+	}
 }
