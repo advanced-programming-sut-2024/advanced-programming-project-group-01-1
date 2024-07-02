@@ -147,4 +147,16 @@ public class Deck implements Serializable {
 		specialCount = 0;
 		unitCount = 0;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(leader).append("\n");
+		stringBuilder.append("Number of Cards: ").append(cards.size()).append("\n");
+		stringBuilder.append("Unit Cards: ").append(unitCount).append("\n");
+		stringBuilder.append("Special Cards: ").append(specialCount).append("\n");
+		stringBuilder.append("Hero Cards: ").append(getHeroCount()).append("\n");
+		stringBuilder.append("Total Power: ").append(getTotalPower()).append("\n");
+		return stringBuilder.toString();
+	}
 }

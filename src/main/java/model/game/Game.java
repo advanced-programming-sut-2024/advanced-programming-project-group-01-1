@@ -45,7 +45,6 @@ public class Game {
 		this.opponentLeader = player2.getDeck().getLeader();
 		this.currentDeck = new Space(player1.getDeck().getCards());
 		this.opponentDeck = new Space(player2.getDeck().getCards());
-		this.veto();
 		if (currentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentLeader.act();
 		else if (opponentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) opponentLeader.act();
 		if (!currentLeader.isDisable() && !currentLeader.isManual()) currentLeader.act();
@@ -53,7 +52,11 @@ public class Game {
 	}
 
 	public static Game createGame(User player1, User player2) {
-		return currentGame = new Game(player1, player2);
+		currentGame = new Game(player1, player2);
+		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false).move();
+		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false).move();
+//		currentGame.veto();
+		return currentGame;
 	}
 
 	public static Game getCurrentGame() {

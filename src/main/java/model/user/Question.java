@@ -19,7 +19,6 @@ public class Question {
 	private final String answer;
 
 	public Question(String question, String answer) {
-		System.out.println(answer.length());
 		this.question = question;
 		this.answer = answer;
 	}
