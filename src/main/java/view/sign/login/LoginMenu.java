@@ -2,10 +2,16 @@ package view.sign.login;
 
 import controller.sign.LoginMenusController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.Result;
@@ -14,9 +20,17 @@ import view.Constants;
 import view.Menuable;
 import view.sign.register.RegisterMenu;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.regex.Matcher;
 
+import static view.AlertMaker.makeAlert;
+
 public class LoginMenu extends Application implements Menuable {
+
+    public TextField passwordField;
+	public TextField usernameField;
+	public CheckBox rememberMe;
 
 	public static void createStage(){
 		launch();
@@ -28,17 +42,38 @@ public class LoginMenu extends Application implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
-		stage.setFullScreen(true);
-		Pane root = new Pane();
-		for (int i = 0; i < 1; i++) {
-			Button button = new Button("Button " + i);
-			button.setPrefHeight(Constants.STAGE_HEIGHT.getValue());
-			button.setPrefWidth(Constants.STAGE_WIDTH.getValue());
-			root.getChildren().add(button);
+		URL url = getClass().getResource("/FXML/loginMenu.fxml");
+		if (url == null) {
+			System.out.println("Couldn't find file: FXML/loginMenu.fxml");
+			return;
 		}
-		Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+		Pane root = null;
+        try {
+            root = FXMLLoader.load(url);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+    }
+
+	public void login(KeyEvent keyEvent) {
+		String username = usernameField.getText();
+		String password = passwordField.getText();
+		boolean stayLoggedIn = rememberMe.isSelected();
+		Result result = LoginMenusController.login(username, password, stayLoggedIn);
+		makeAlert("Login", result);
+	}
+
+	public void register(KeyEvent keyEvent) {
+		LoginMenusController.goToRegisterMenu();
+	}
+
+	public void forgotPassword(KeyEvent keyEvent) {
+		String username = usernameField.getText();
+		Result result = LoginMenusController.forgotPassword(username);
+		makeAlert("Forgot Password", result);
 	}
 
 	/**
@@ -90,5 +125,7 @@ public class LoginMenu extends Application implements Menuable {
 	private Result exit(Matcher matcher) {
 		return LoginMenusController.exit();
 	}
+
+
 
 }

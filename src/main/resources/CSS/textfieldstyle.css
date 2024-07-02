@@ -1,0 +1,27 @@
+.text-field{
+    -fx-font-family: "Mason Serif Regular";
+    -fx-font-size: 18;
+    -fx-border: gone;
+    -fx-background-color: linear-gradient(to top, #8b4513, #b22222);
+    -fx-background-insets: 0,1,4,5,6;
+    -fx-background-radius: 9,8,5,4,3;
+    -fx-padding: 15 30 15 30;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
+    -fx-pref-width: 300;
+    -fx-pref-height: 20;
+}
+
+.password-field{
+    -fx-font-family: "Mason Serif Regular";
+    -fx-font-size: 18;
+    -fx-border: gone;
+    -fx-background-color: linear-gradient(to top, #8b4513, #b22222);
+    -fx-background-insets: 0,1,4,5,6;
+    -fx-background-radius: 9,8,5,4,3;
+    -fx-padding: 15 30 15 30;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
+    -fx-pref-width: 300;
+    -fx-pref-height: 20;
+}

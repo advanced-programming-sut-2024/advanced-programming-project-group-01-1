@@ -2,16 +2,16 @@ package view;
 
 public enum Constants {
 
-    STAGE_WIDTH(1920),
-    STAGE_HEIGHT(1080);
+    WIDTH(800);
 
-    private final int value;
 
-    Constants(int value) {
+    private final double value;
+
+    Constants(double value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 }

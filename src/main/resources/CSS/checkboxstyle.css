@@ -1,0 +1,16 @@
+.check-box {
+    -fx-font-family: 'Mason Serif Regular';
+    -fx-font-size: 18;
+    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #ff4500, #ff8c00);
+    -fx-padding: 10px;
+}
+
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #ff4500;
+    -fx-border-width: 2px;
+}
+
+.check-box .box:selected {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ff4500, #ff8c00);
+}

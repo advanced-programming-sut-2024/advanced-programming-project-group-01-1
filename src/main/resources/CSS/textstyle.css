@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "Mason Serif Regular";
+    src: url("../fonts/MasonSerifRegular.otf");
+}
+
+@font-face {
+    font-family: "Mason Serif Bold";
+    src: url("../fonts/MasonSerifBold.otf");
+
+}
+
+#normal-text{
+    -fx-font-family: "Mason Serif Regular";
+    -fx-font-size: 20;
+    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #ff4500, #ff8c00);
+}
+
+#title-text{
+    -fx-font-family: "Mason Serif Bold";
+    -fx-font-size: 40;
+    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #8b4513, #b22222);
+}
