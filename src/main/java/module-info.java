@@ -13,17 +13,18 @@ module w {
 
 
 	// open models to gson and jackson
-	opens model to com.google.gson, com.fasterxml.jackson.databind;
-	opens model.user to com.fasterxml.jackson.databind, com.google.gson;
-	opens model.card to com.fasterxml.jackson.databind, com.google.gson;
-	opens model.card.unit to com.fasterxml.jackson.databind, com.google.gson;
-	opens model.card.ability to com.fasterxml.jackson.databind, com.google.gson;
-	opens model.card.special to com.fasterxml.jackson.databind, com.google.gson;
-	opens model.card.special.spell to com.fasterxml.jackson.databind, com.google.gson;
-	opens model.game to com.fasterxml.jackson.databind, com.google.gson;
-	opens model.game.space to com.fasterxml.jackson.databind, com.google.gson;
-	opens model.leader to com.fasterxml.jackson.databind, com.google.gson;
+	exports model;
+	exports model.user;
+	exports model.card;
+	exports model.card.unit;
+	exports model.card.ability;
+	exports model.card.special;
+	exports model.card.special.spell;
+	exports model.game;
+	exports model.game.space;
+	exports model.leader;
 
+	exports main;
 	//opens other packages to gson and jackson
 	//opens java.util to com.google.gson, com.fasterxml.jackson.databind;
 

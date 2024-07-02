@@ -63,6 +63,10 @@ public abstract class Unit extends Card {
 		this.debuff = debuff;
 	}
 
+	public int getBasePower() {
+		return basePower;
+	}
+
 	public int getPower() {
 		int power = this.basePower;
 		if (this.debuff) power = Game.getCurrentGame().isDebuffWeakened() ? power / 2 : 1;

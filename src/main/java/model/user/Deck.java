@@ -94,7 +94,7 @@ public class Deck implements Serializable {
 	public int getTotalPower() {
 		int totalPower = 0;
 		for (Card card : cards)
-			if (card instanceof Unit) totalPower += ((Unit) card).getPower();
+			if (card instanceof Unit) totalPower += ((Unit) card).getBasePower();
 		return totalPower;
 	}
 
