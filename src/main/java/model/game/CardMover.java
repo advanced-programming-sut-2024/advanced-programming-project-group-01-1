@@ -45,6 +45,7 @@ public class CardMover implements Serializable {
 				destinationSpace.getCards().add(card);
 				originSpace.getCards().remove(card);
 				nonHeroCards.remove(card);
+				card.setSpace(destinationSpace);
 			}
 		} else show(originSpace, destinationSpace);
 	}

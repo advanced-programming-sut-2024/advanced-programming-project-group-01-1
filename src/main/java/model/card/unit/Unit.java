@@ -5,6 +5,7 @@ import model.card.ability.Ability;
 import model.card.ability.Spy;
 import model.game.Game;
 import model.game.space.Row;
+import model.game.space.Space;
 
 public abstract class Unit extends Card {
 
@@ -78,13 +79,14 @@ public abstract class Unit extends Card {
 	}
 
 	@Override
-	public Row getSpace() {
-		return (Row) super.getSpace();
+	public Space getSpace() {
+		return super.getSpace();
 	}
 
 	@Override
 	public void put(int rowNumber) throws Exception {
 		Row row = Game.getCurrentGame().getRow(rowNumber);
+		this.space.getCards().remove(this);
 		this.space = row;
 		row.getCards().add(this);
 		this.hornCount = row.getHornCount();

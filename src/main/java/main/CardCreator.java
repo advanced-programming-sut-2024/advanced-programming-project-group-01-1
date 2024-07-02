@@ -283,7 +283,7 @@ public class CardCreator {
 			ois.readObject();
 			Card card = (Card) ois.readObject();
 			ois.close();
-			return card;
+			return card.clone();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

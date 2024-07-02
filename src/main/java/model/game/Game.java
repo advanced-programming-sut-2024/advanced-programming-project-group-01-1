@@ -46,6 +46,8 @@ public class Game {
 		for (int i = 0; i < 6; i++) rows[i] = new Row();
 		this.currentDeck = new Space(player1.getDeck().getCards());
 		this.opponentDeck = new Space(player2.getDeck().getCards());
+		for (Card card : this.currentDeck.getCards()) card.setSpace(currentDeck);
+		for (Card card : this.opponentDeck.getCards()) card.setSpace(opponentDeck);
 		if (currentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentLeader.act();
 		else if (opponentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) opponentLeader.act();
 		if (!currentLeader.isDisable() && !currentLeader.isManual()) currentLeader.act();
@@ -181,6 +183,13 @@ public class Game {
 		return null;
 	}
 
+	public int getRowNumber(Row row) {
+		for (int i = 0; i < 6; i++) {
+			if (row == rows[i]) return i;
+		}
+		return -1;
+	}
+
 	public void setCurrentLeader(Leader currentLeader) {
 		this.currentLeader = currentLeader;
 	}
@@ -229,7 +238,6 @@ public class Game {
 	public void placeCard(Card card, int spaceId) {
 		try {
 			card.put(spaceId);
-			currentHand.getCards().remove(card);
 			changeTurn();
 		} catch (Exception e) {
 			e.printStackTrace();

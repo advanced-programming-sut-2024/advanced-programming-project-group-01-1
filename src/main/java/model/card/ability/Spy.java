@@ -15,7 +15,7 @@ public enum Spy implements Ability {
 	@Override
 	public void act(Card card) {
 		Unit unit = (Unit) card;
-		Row enemyRow = Game.getCurrentGame().getEnemy(unit.getSpace());
+		Row enemyRow = Game.getCurrentGame().getEnemy((Row) unit.getSpace());
 		unit.getSpace().getCards().remove(unit);
 		enemyRow.getCards().add(unit);
 		unit.setHornCount(enemyRow.getHornCount());

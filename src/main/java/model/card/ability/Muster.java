@@ -16,6 +16,7 @@ public enum Muster implements Ability {
 		for (Card cardInHand : Game.getCurrentGame().getCurrentHand().getCards()) aliveCards.add(cardInHand);
 		for (Card cardInDeck : Game.getCurrentGame().getCurrentDeck().getCards()) aliveCards.add(cardInDeck);
 		for (Card aliveCard : aliveCards) {
+			if (!(aliveCard instanceof Unit)) continue;
 			Unit unit = (Unit) aliveCard;
 			if (unit.getMusterName().startsWith(musterName)) {
 				try {

@@ -33,6 +33,10 @@ public abstract class Card implements Cloneable, Serializable {
 		return space;
 	}
 
+	public void setSpace(Space space) {
+		this.space = space;
+	}
+
 	@Override
 	public abstract Card clone();
 
@@ -49,6 +53,10 @@ public abstract class Card implements Cloneable, Serializable {
 		String card = this.name + "\nType: " + this.getClass().getSimpleName();
 		card += "\nAbility: " + (ability == null ? "None" : this.ability.getClass().getSimpleName());
 		return card;
+	}
+
+	public String toSuperString() {
+		return super.toString();
 	}
 
 	@Override
