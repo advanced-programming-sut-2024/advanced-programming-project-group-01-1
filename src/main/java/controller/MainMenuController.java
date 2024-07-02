@@ -1,6 +1,7 @@
 package controller;
 
 import model.Result;
+import model.user.User;
 import view.Appview;
 import view.game.prematch.MatchFinderMenu;
 import view.sign.login.LoginMenu;
@@ -25,5 +26,9 @@ public class MainMenuController {
 
 	public static Result showCurrentMenu() {
 		return new Result("Main Menu", true);
+	}
+
+	public static String getLoggedInUsername() {
+		return User.getLoggedInUser().getUsername();
 	}
 }
