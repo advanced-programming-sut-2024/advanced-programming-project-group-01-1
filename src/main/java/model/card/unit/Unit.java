@@ -98,12 +98,10 @@ public abstract class Unit extends Card {
 	@Override
 	public void pull() {
 		if (space == null) return;
-		if (this.ability != null) this.ability.undo(this);
 		this.hornCount = 0;
 		this.boostCount = 0;
 		this.debuff = false;
-		this.getSpace().getCards().remove(this);
-		this.space = null;
+		super.pull();
 	}
 
 	@Override

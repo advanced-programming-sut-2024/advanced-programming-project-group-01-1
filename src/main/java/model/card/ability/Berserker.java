@@ -4,6 +4,7 @@ import main.CardCreator;
 import model.card.Card;
 import model.card.unit.Melee;
 import model.card.unit.Ranged;
+import model.card.unit.Unit;
 import model.game.space.Row;
 
 public enum Berserker implements Ability {
@@ -11,6 +12,7 @@ public enum Berserker implements Ability {
 
 	@Override
 	public void act(Card card) {
+		if (!((Row) card.getSpace()).hasMardroeme()) return;
 		card.pull();
 		String transformedName = "Transformed " + card.getName().replace("Berserker", "Vildkaarl");
 		Card transformedCard = CardCreator.getCard(transformedName);

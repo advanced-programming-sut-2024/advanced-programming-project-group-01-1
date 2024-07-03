@@ -30,6 +30,7 @@ public enum Debuffer implements Ability {
 	private void debuffRow(Row row) {
 		row.setDebuffed(true);
 		for (Card rowCard : row.getCards()) {
+			if (!(rowCard instanceof Unit)) continue;
 			Unit unit = (Unit) rowCard;
 			unit.setDebuff(true);
 		}
@@ -38,6 +39,7 @@ public enum Debuffer implements Ability {
 	private void removeDebuffRow(Row row) {
 		row.setDebuffed(false);
 		for (Card rowCard : row.getCards()) {
+			if (!(rowCard instanceof Unit)) continue;
 			Unit unit = (Unit) rowCard;
 			unit.setDebuff(false);
 		}

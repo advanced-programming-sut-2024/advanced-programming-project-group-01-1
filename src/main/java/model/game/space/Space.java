@@ -26,7 +26,6 @@ public class Space {
 		for (Card card : cards) {
 			if(card == stayingUnit) continue;
 			card.pull();
-			discardPile.getCards().add(card);
 		}
 		cards.clear();
 	}

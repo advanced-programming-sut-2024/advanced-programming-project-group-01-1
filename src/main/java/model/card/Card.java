@@ -1,6 +1,7 @@
 package model.card;
 
 import model.card.ability.Ability;
+import model.game.Game;
 import model.game.space.Space;
 
 import java.io.Serializable;
@@ -37,6 +38,12 @@ public abstract class Card implements Cloneable, Serializable {
 		this.space = space;
 	}
 
+	public void updateSpace(Space space) {
+		this.space.getCards().remove(this);
+		this.space = space;
+		this.space.getCards().add(this);
+	}
+
 	@Override
 	public abstract Card clone();
 
@@ -45,7 +52,8 @@ public abstract class Card implements Cloneable, Serializable {
 	}
 
 	public void pull() {
-
+		if (this.ability != null) this.ability.undo(this);
+		this.updateSpace(Game.getCurrentGame().getCurrentDiscardPile());
 	}
 
 	@Override

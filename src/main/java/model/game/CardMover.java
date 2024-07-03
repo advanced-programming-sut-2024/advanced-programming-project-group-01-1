@@ -42,10 +42,8 @@ public class CardMover implements Serializable {
 					int randomIndex = random.nextInt(nonHeroCards.size());
 					card = nonHeroCards.get(randomIndex);
 				} else card = MatchMenuController.askSpace(originSpace, onlyUnit);
-				destinationSpace.getCards().add(card);
-				originSpace.getCards().remove(card);
+				card.updateSpace(destinationSpace);
 				nonHeroCards.remove(card);
-				card.setSpace(destinationSpace);
 			}
 		} else show(originSpace, destinationSpace);
 	}

@@ -14,8 +14,9 @@ public class InstantSpell extends Spell {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
+		if (rowNumber != -1) throw new Exception("Instant spells can only be put in the graveyard");
 		this.rowNumber = rowNumber;
-		this.setSpace(Game.getCurrentGame().getRow(rowNumber));
+		this.updateSpace(Game.getCurrentGame().getCurrentDiscardPile());
 		ability.act(this);
 	}
 

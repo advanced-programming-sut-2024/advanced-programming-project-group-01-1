@@ -22,8 +22,7 @@ public class Weather extends Spell {
 	@Override
 	public void put(int rowNumber) throws Exception {
 		if (rowNumber != -1) throw new Exception("Weather can only be put in weather system");
-		Game.getCurrentGame().getCurrentWeatherSystem().getCards().add(this);
-		this.setSpace(Game.getCurrentGame().getCurrentWeatherSystem());
+		this.updateSpace(Game.getCurrentGame().getCurrentWeatherSystem());
 		this.ability.act(this);
 	}
 

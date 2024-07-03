@@ -24,11 +24,8 @@ public class Decoy extends Special {
 		}
 		Unit unit = (Unit) MatchMenuController.askSpace(row, true);
 		unit.pull();
-		Game.getCurrentGame().getCurrentHand().getCards().add(unit);
-		unit.setSpace(Game.getCurrentGame().getCurrentHand());
-		this.getSpace().getCards().remove(this);
-		row.getCards().add(this);
-		this.setSpace(row);
+		unit.updateSpace(Game.getCurrentGame().getCurrentHand());
+		this.updateSpace(row);
 	}
 
 	@Override
