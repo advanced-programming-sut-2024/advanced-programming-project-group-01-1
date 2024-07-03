@@ -40,8 +40,10 @@ public enum Scorch implements Ability {
 			}
 		}
 		if (sumOfPower < 10 && row != -1) return;
+		ArrayList<Unit> toBeKilled = new ArrayList<>();
 		for (Unit unit : units) if (unit.getPower() == maxPower)
-				unit.pull();
+			toBeKilled.add(unit);
+		for (Unit unit : toBeKilled) unit.pull();
 	}
 
 }

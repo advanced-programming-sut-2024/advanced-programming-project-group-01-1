@@ -59,6 +59,7 @@ public class Game {
 		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false).move();
 		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false).move();
 //		currentGame.veto();
+		// TODO: fix veto
 		return currentGame;
 	}
 

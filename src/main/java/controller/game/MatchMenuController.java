@@ -113,6 +113,7 @@ public class MatchMenuController {
 			int randomIndex = (int) (Math.random() * availableCards.size());
 			return availableCards.get(randomIndex);
 		}
+		// TODO: make it work with graphics and terminal
 		Scanner scanner = new Scanner(System.in);
 		int index = scanner.nextInt();
 		if (index < 0 || index >= availableCards.size()) return null;
