@@ -50,7 +50,8 @@ public class Deck implements Serializable {
 					if (count == 0) continue;
 					availableCards.add(card);
 					for (int i = 1; i < count; i++) {
-						availableCards.add(card.clone());
+						Card clone = card.clone();
+						availableCards.add(clone);
 					}
 				}
 				objectInputStream.close();
@@ -115,16 +116,22 @@ public class Deck implements Serializable {
 	}
 
 	public int getAvailableCount(Card card) {
-		return (int) availableCards.stream().filter(c -> c.equals(card)).count();
+		return (int) availableCards.stream().filter(c -> c.toString().equals(card.toString())).count();
 	}
 
 	public int getInDeckCount(Card card) {
-		return (int) cards.stream().filter(c -> c.equals(card)).count();
-
+		return (int) cards.stream().filter(c -> c.toString().equals(card.toString())).count();
 	}
 
 	public boolean add(Card card) {
-		if (availableCards.contains(card)) {
+		Card cardInDeck = null;
+		for (Card c : availableCards) {
+			if (c.toString().equals(card.toString())) {
+				cardInDeck = c;
+				break;
+			}
+		}
+		if (cardInDeck != null) {
 			if (card instanceof Special) specialCount++;
 			else unitCount++;
 			availableCards.remove(card);

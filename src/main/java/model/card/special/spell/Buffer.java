@@ -9,7 +9,9 @@ import model.game.space.Space;
 
 public class Buffer extends Spell {
 
-	public Buffer(String name, Ability ability) { super(name, ability); }
+	public Buffer(String name, Ability ability) {
+		super(name, ability);
+	}
 
 	@Override
 	public void updateSpace(Space space) {

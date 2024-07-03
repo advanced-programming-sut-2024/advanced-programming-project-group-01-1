@@ -16,13 +16,15 @@ public class CardMover implements Serializable {
 	private final Random random;
 	private final int count;
 	private final boolean onlyUnit;
+	private final boolean ignoreHero;
 
-	public CardMover(int originId, int destinationId, boolean isRandom, int count, boolean onlyUnit){
+	public CardMover(int originId, int destinationId, boolean isRandom, int count, boolean onlyUnit, boolean ignoreHero){
 		this.originId = originId;
 		this.destinationId = destinationId;
 		this.isRandom = isRandom;
 		this.count = count;
 		this.onlyUnit = onlyUnit;
+		this.ignoreHero = ignoreHero;
 		random = new Random();
 	}
 
@@ -30,22 +32,23 @@ public class CardMover implements Serializable {
 		Space originSpace = Game.getCurrentGame().getSpaceById(originId);
 		Space destinationSpace = Game.getCurrentGame().getSpaceById(destinationId);
 		if (destinationSpace != null) {
-			ArrayList<Card> nonHeroCards = new ArrayList<>();
+			ArrayList<Card> availableCards = new ArrayList<>();
 			for (Card card : originSpace.getCards()) {
-				if (!(card instanceof Unit) || !((Unit) card).isHero())
-					nonHeroCards.add(card);
+				if ((!(card instanceof Unit) || !((Unit) card).isHero()) || !ignoreHero)
+					availableCards.add(card);
 			}
-			int toBeMoved = (count == -1 || count > nonHeroCards.size()) ? nonHeroCards.size() : count;
+			int toBeMoved = (count == -1 || count > availableCards.size()) ? availableCards.size() : count;
 			for (int i = 0; i < toBeMoved; i++) {
 				Card card;
 				if (isRandom) {
-					int randomIndex = random.nextInt(nonHeroCards.size());
-					card = nonHeroCards.get(randomIndex);
+					int randomIndex = random.nextInt(availableCards.size());
+					card = availableCards.get(randomIndex);
 				} else card = MatchMenuController.askSpace(originSpace, onlyUnit);
 				card.updateSpace(destinationSpace);
-				nonHeroCards.remove(card);
+				availableCards.remove(card);
 			}
 		} else show(originSpace, destinationSpace);
+		System.out.println(destinationSpace.getCards().size() + "\n--------------");
 	}
 
 	private void show(Space originSpace, Space destinationSpace){

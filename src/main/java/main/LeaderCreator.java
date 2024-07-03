@@ -99,23 +99,24 @@ public class LeaderCreator {
 	private static void createMoverLeaders() {
 		createMoverLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis His Imperial Majesty",
 				"Look at 3 random cards from your opponent's hand",
-				true, new CardMover(Game.OPPONENT_HAND, -1, true, 3, false));
+				true, new CardMover(Game.OPPONENT_HAND, -1, true, 3, false, false));
 		createMoverLeader(Faction.NILFGAARDIAN_EMPIRE, "Emhyr var Emreis the Relentless",
 				"Return a card from your opponent's graveyard to your hand",
-				true, new CardMover(Game.OPPONENT_DISCARD_PILE, Game.CURRENT_HAND, false, 1, true));
+				true, new CardMover(Game.OPPONENT_DISCARD_PILE, Game.CURRENT_HAND, false, 1, true, true));
 		createMoverLeader(Faction.MONSTERS, "Eredin King of the Wild Hunt",
 				"Return a card from your graveyard to your hand",
-				true, new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_HAND, false, 1, true));
+				true, new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_HAND, false, 1, true, true));
 		createMoverLeader(Faction.MONSTERS, "Eredin Destroyer of Worlds",
 				"Discard 2 cards from your hand and draw 1 card of your choice from your deck",
-				true, new CardMover(Game.CURRENT_HAND, Game.CURRENT_DISCARD_PILE, false, 2, false), new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1, false));
+				true, new CardMover(Game.CURRENT_HAND, Game.CURRENT_DISCARD_PILE, false, 2, false, false),
+				new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1, false, false));
 		createMoverLeader(Faction.SCOIATAEL, "Francesca Findabair Daisy of the Valley",
 				"Draw one extra card at the beginning of the battle",
-				false, new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 1, false));
+				false, new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 1, false, false));
 		createMoverLeader(Faction.SKELLIGE, "Crach an Craite",
-				"Shuffles all non-hero cards from each player's graveyard back into their respective decks", true,
-				new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_DECK, false, -1, false),
-				new CardMover(Game.OPPONENT_DISCARD_PILE, Game.OPPONENT_DECK, false, -1, false));
+				"Shuffles all cards from each player's graveyard back into their respective decks", true,
+				new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_DECK, false, -1, false, false),
+				new CardMover(Game.OPPONENT_DISCARD_PILE, Game.OPPONENT_DECK, false, -1, false, false));
 	}
 
 	private static void createPassiveLeaders() {

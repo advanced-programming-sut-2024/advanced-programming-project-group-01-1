@@ -48,18 +48,18 @@ public class Game {
 		this.opponentDeck = new Space(player2.getDeck().getCards());
 		for (Card card : this.currentDeck.getCards()) card.setSpace(currentDeck);
 		for (Card card : this.opponentDeck.getCards()) card.setSpace(opponentDeck);
-		if (currentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentLeader.act();
-		else if (opponentLeader.getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) opponentLeader.act();
-		if (!currentLeader.isDisable() && !currentLeader.isManual()) currentLeader.act();
-		if (!opponentLeader.isDisable() && !opponentLeader.isManual()) opponentLeader.act();
 	}
 
 	public static Game createGame(User player1, User player2) {
 		currentGame = new Game(player1, player2);
-		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false).move();
-		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false).move();
+		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false, false).move();
+		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false, false).move();
 //		currentGame.veto();
 		// TODO: fix veto
+		if (currentGame.getCurrentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getCurrentLeader().act();
+		else if (currentGame.getOpponentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getOpponentLeader().act();
+		if (!currentGame.getCurrentLeader().isDisable() && !currentGame.getCurrentLeader().isManual()) currentGame.getCurrentLeader().act();
+		if (!currentGame.getOpponentLeader().isDisable() && !currentGame.getOpponentLeader().isManual()) currentGame.getOpponentLeader().act();
 		return currentGame;
 	}
 
@@ -172,6 +172,10 @@ public class Game {
 		return currentLeader;
 	}
 
+	public Leader getOpponentLeader() {
+		return opponentLeader;
+	}
+
 	public Row getRow(int index) {
 		return rows[index];
 	}
@@ -231,8 +235,8 @@ public class Game {
 
 	public void veto() {
 		for (int i = 0; i < 2; i++) {
-			new CardMover(CURRENT_HAND, CURRENT_DECK, false, 1, false).move();
-			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false).move();
+			new CardMover(CURRENT_HAND, CURRENT_DECK, false, 1, false, false).move();
+			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false, false).move();
 		}
 	}
 
@@ -301,9 +305,9 @@ public class Game {
 		if (roundResult <= 0) currentLife--;
 		if (roundResult >= 0) opponentLife--;
 		if (roundResult == 1 && currentFaction.equals(Faction.NORTHERN_REALMS))
-			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false).move();
+			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false, false).move();
 		else if (roundResult == -1 && opponentFaction.equals(Faction.NORTHERN_REALMS))
-			new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 1, false).move();
+			new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 1, false, false).move();
 		if (roundNumber == 3) skelligeAbility();
 		Unit currentUnit = currentFaction.equals(Faction.MONSTERS) ? keepUnit(true) : null;
 		Unit opponentUnit = opponentFaction.equals(Faction.MONSTERS) ? keepUnit(false) : null;

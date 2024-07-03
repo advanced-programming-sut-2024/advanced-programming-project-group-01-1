@@ -234,7 +234,7 @@ public class CardCreator {
 		createUnit(Agile.class, Faction.SCOIATAEL, 1, "Ciaran aep Easnillen", null, 3, false);
 		createUnit(Melee.class, Faction.SCOIATAEL, 1, "Dwarven Skirmisher0", Muster.INSTANCE, 3, false);
 		createUnit(Melee.class, Faction.SCOIATAEL, 1, "Dwarven Skirmisher1", Muster.INSTANCE, 3, false);
-		createUnit(Melee.class, Faction.SCOIATAEL, 1, "Dwarven Skirmisher3", Muster.INSTANCE, 3, false);
+		createUnit(Melee.class, Faction.SCOIATAEL, 1, "Dwarven Skirmisher2", Muster.INSTANCE, 3, false);
 		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Elven Skirmisher0", Muster.INSTANCE, 2, false);
 		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Elven Skirmisher1", Muster.INSTANCE, 2, false);
 		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Elven Skirmisher2", Muster.INSTANCE, 2, false);
@@ -247,14 +247,14 @@ public class CardCreator {
 
 	private static void createSkelligeCards() {
 		createNonWeatherSpell(Buffer.class, 3, "Mardroeme", Mardroeme.INSTANCE);
-		createUnit(Melee.class, Faction.SKELLIGE, 0, "Vidkaarl", MoralBooster.INSTANCE, 14, false);
+		createUnit(Melee.class, Faction.SKELLIGE, 0, "Transformed Vildkaarl", MoralBooster.INSTANCE, 14, false);
 		createUnit(Siege.class, Faction.SKELLIGE, 1, "Olaf", MoralBooster.INSTANCE, 12, false);
 		createUnit(Melee.class, Faction.SKELLIGE, 0, "Hemdall", null, 11, true);
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys", Muster.INSTANCE, 10, true);
 		createUnit(Ranged.class, Faction.SKELLIGE, 1, "Hjamlar", null, 10, true);
 		createUnit(Ranged.class, Faction.SKELLIGE, 1, "Ermion", Mardroeme.INSTANCE, 8, true);
-		createUnit(Ranged.class, Faction.SKELLIGE, 0, "Young Vidkaarl", TightBond.INSTANCE, 8, false);
-		createUnit(Melee.class, Faction.SKELLIGE, 3, "Clan an Craite", TightBond.INSTANCE, 6, false);
+		createUnit(Ranged.class, Faction.SKELLIGE, 0, "Transformed Young Vildkaarl", TightBond.INSTANCE, 8, false);
+		createUnit(Melee.class, Faction.SKELLIGE, 3, "Clan an Craite Warrior", TightBond.INSTANCE, 6, false);
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Blueboy Lugos", null, 6, false);
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Madman Lugos", null, 6, false);
 		createUnit(Ranged.class, Faction.SKELLIGE, 1, "Clan Dimun Pirate", Scorch.INSTANCE, 6, false);
@@ -264,9 +264,9 @@ public class CardCreator {
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Svanberg", null, 4, false);
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Udalryk", null, 4, false);
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Donar an Hindar", null, 4, false);
-		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys; Clan Drummond Shieldmaiden0", TightBond.INSTANCE, 4, false);
-		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys; Clan Drummond Shieldmaiden1", TightBond.INSTANCE, 4, false);
-		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys; Clan Drummond Shieldmaiden2", TightBond.INSTANCE, 4, false);
+		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys; Clan Drummond Shield Maiden0", TightBond.INSTANCE, 4, false);
+		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys; Clan Drummond Shield Maiden1", TightBond.INSTANCE, 4, false);
+		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys; Clan Drummond Shield Maiden2", TightBond.INSTANCE, 4, false);
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Clan Tordarroch Armorsmith", null, 4, false);
 		createUnit(Ranged.class, Faction.SKELLIGE, 3, "Light Longship", Muster.INSTANCE, 4, false);
 		createUnit(Siege.class, Faction.SKELLIGE, 1, "Holger Blackhand", null, 4, false);

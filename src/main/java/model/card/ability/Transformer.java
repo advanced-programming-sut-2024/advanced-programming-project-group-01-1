@@ -18,6 +18,7 @@ public enum Transformer implements Ability {
 		if (card.getName().equals("Cow")) transformedName = "Bovine Defence Force";
 		else if (card.getName().equals("Kambi")) transformedName = "Hemdall";
 		Card transformedCard = CardCreator.getCard(transformedName);
+		transformedCard.setSpace(Game.getCurrentGame().getCurrentDeck());
 		boolean isOpponent = Game.getCurrentGame().getRowNumber((Row) card.getSpace()) >= 3;
 		try {
 			transformedCard.put(isOpponent ? 3 : 2);
