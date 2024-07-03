@@ -1,19 +1,32 @@
 package view.user;
 
 import controller.UserMenusController;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Result;
+import model.user.User;
+import view.Appview;
 import view.Menuable;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
 public class InfoMenu implements Menuable {
-
-	/*
-	 * JavaFX version of the LobbyMenu
-	 */
+	public Label username;
+	public Label nickname;
+	public Label maxScore;
+	public Label rank;
+	public Label playedMatches;
+	public Label wins;
+	public Label draws;
+	public Label losses;
 
 	@Override
 	public void createStage() {
@@ -22,12 +35,34 @@ public class InfoMenu implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
-		// TODO:
+		Appview.setStage(stage);
+		URL url = getClass().getResource("/FXML/InfoMenu.fxml");
+		if (url == null){
+			System.out.println("Couldn't find file: FXML/InfoMenu.fxml");
+			return;
+		}
+		Pane root = null;
+		try {
+			root = FXMLLoader.load(url);
+		} catch (IOException e){
+			throw new RuntimeException(e);
+		}
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
 
-	/*
-	 * Terminal version of the LobbyMenu
-	 */
+	@FXML
+	public void initialize() {
+		username.setText(User.getLoggedInUser().getUsername());
+		nickname.setText(User.getLoggedInUser().getNickname());
+		maxScore.setText(String.valueOf(User.getLoggedInUser().getMaxScore()));
+		rank.setText(String.valueOf(User.getLoggedInUser().getRank()));
+		playedMatches.setText(String.valueOf(User.getLoggedInUser().getNumberOfPlayedMatches()));
+		wins.setText(String.valueOf(User.getLoggedInUser().getNumberOfWins()));
+		draws.setText(String.valueOf(User.getLoggedInUser().getNumberOfDraws()));
+		losses.setText(String.valueOf(User.getLoggedInUser().getNumberOfLosses()));
+	}
 
 	@Override
 	public void run(String input) {
@@ -49,6 +84,7 @@ public class InfoMenu implements Menuable {
 		return new Result("User Info Menu", true);
 	}
 
+	@FXML
 	private Result exit() {
 		return UserMenusController.exit();
 	}
