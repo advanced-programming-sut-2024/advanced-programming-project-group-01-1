@@ -27,10 +27,14 @@ public enum Scorch implements Ability {
 	public void killRow(int row) { // row = -1 for killing the maximum of table
 		ArrayList<Unit> units = new ArrayList<>();
 		if (row != -1)
-			for (Card cardInRow : Game.getCurrentGame().getRow(5 - row).getCards()) units.add((Unit) cardInRow);
+			for (Card cardInRow : Game.getCurrentGame().getRow(5 - row).getCards()) {
+				if (cardInRow instanceof Unit)
+					units.add((Unit) cardInRow);
+			}
 		else {
 			for (int i = 0; i < 6; i++)
-				for (Card cardInRow : Game.getCurrentGame().getRow(i).getCards()) units.add((Unit) cardInRow);
+				for (Card cardInRow : Game.getCurrentGame().getRow(i).getCards()) if (cardInRow instanceof Unit)
+					units.add((Unit) cardInRow);
 		}
 		int maxPower = -1, sumOfPower = 0;
 		for (Unit unit : units) {

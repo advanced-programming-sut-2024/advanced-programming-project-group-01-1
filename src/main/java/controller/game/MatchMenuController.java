@@ -108,6 +108,7 @@ public class MatchMenuController {
 				if (!((Unit) card).isHero()) availableCards.add(card);
 			} else if (!onlyUnit) availableCards.add(card);
 		}
+		System.out.println("Asking Space " + availableCards.size());
 		if (availableCards.isEmpty()) return null;
 		if (isRandom) {
 			int randomIndex = (int) (Math.random() * availableCards.size());

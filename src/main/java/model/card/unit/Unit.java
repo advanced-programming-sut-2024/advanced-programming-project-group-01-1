@@ -86,9 +86,7 @@ public abstract class Unit extends Card {
 	@Override
 	public void put(int rowNumber) throws Exception {
 		Row row = Game.getCurrentGame().getRow(rowNumber);
-		this.space.getCards().remove(this);
-		this.space = row;
-		row.getCards().add(this);
+		this.updateSpace(row);
 		this.hornCount = row.getHornCount();
 		this.boostCount = row.getBoostCount();
 		this.debuff = row.isDebuffed();

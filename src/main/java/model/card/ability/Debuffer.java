@@ -29,18 +29,18 @@ public enum Debuffer implements Ability {
 
 	private void debuffRow(Row row) {
 		row.setDebuffed(true);
-		for (Card rowCard : row.getCards()) {
-			if (!(rowCard instanceof Unit)) continue;
-			Unit unit = (Unit) rowCard;
+		for (Card cardInRow : row.getCards()) {
+			if (!(cardInRow instanceof Unit) || ((Unit) cardInRow).isHero()) continue;
+			Unit unit = (Unit) cardInRow;
 			unit.setDebuff(true);
 		}
 	}
 
 	private void removeDebuffRow(Row row) {
 		row.setDebuffed(false);
-		for (Card rowCard : row.getCards()) {
-			if (!(rowCard instanceof Unit)) continue;
-			Unit unit = (Unit) rowCard;
+		for (Card cardInRow : row.getCards()) {
+			if (!(cardInRow instanceof Unit) || ((Unit) cardInRow).isHero()) continue;
+			Unit unit = (Unit) cardInRow;
 			unit.setDebuff(false);
 		}
 	}
