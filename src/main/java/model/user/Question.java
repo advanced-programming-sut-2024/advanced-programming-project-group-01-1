@@ -1,6 +1,8 @@
 package model.user;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
 
 	public static final String[] questions = {
 			"What is the name of your favourite book?",

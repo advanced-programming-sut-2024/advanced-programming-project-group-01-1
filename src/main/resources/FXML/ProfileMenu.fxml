@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.user.ProfileMenu">
+    <children>
+        <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+            <image>
+                <Image url="@../images/backgrounds/MainMenu.jpg" />
+            </image>
+        </ImageView>
+        <VBox layoutX="45" layoutY="50" alignment="CENTER" maxWidth="477.5" minWidth="480" spacing="15">
+            <HBox alignment="CENTER">
+                <Label id="normal-text" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" text="username" />
+                <TextField fx:id="usernameField" alignment="CENTER" stylesheets="@../CSS/textfieldstyle.css" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label id="normal-text" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" text="nickname" />
+                <TextField fx:id="nicknameField" alignment="CENTER" stylesheets="@../CSS/textfieldstyle.css" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label id="normal-text" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" text="email" />
+                <TextField fx:id="emailField" alignment="CENTER" stylesheets="@../CSS/textfieldstyle.css" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label id="normal-text" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" text="old password" />
+                <PasswordField fx:id="oldPasswordField" alignment="CENTER" stylesheets="@../CSS/textfieldstyle.css" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label id="normal-text" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" text="new password" />
+                <VBox alignment="CENTER">
+                    <PasswordField fx:id="newPasswordField" alignment="CENTER" stylesheets="@../CSS/textfieldstyle.css" />
+                    <Label minWidth="300" text="Leave it blank if you don't want to change the password" textAlignment="CENTER">
+                        <font>
+                            <Font size="10.5" />
+                        </font>
+                    </Label>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label id="normal-text" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" text="confirm&#13;new password" textAlignment="CENTER" />
+                <PasswordField fx:id="confirmNewPasswordField" alignment="CENTER" stylesheets="@../CSS/textfieldstyle.css" />
+            </HBox>
+            <Button id="ipad-dark-grey" onMouseClicked="#enterUserInfo" text="user info" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css"/>
+        </VBox>
+        <Button id="ipad-dark-grey" layoutX="875.0" layoutY="450.0" onMouseClicked="#saveChanges" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="save changes" />
+        <Button id="ipad-dark-grey" layoutX="875.0" layoutY="534.0" onMouseClicked="#exit" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
+    </children>
+</Pane>

@@ -1,19 +1,34 @@
 package view.user;
 
 import controller.UserMenusController;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Result;
+import model.user.User;
+import view.AlertMaker;
+import view.Appview;
 import view.Menuable;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
 public class ProfileMenu implements Menuable {
-
-	/*
-	 * JavaFX version of the LobbyMenu
-	 */
+	public TextField usernameField;
+	public TextField nicknameField;
+	public TextField emailField;
+	public PasswordField oldPasswordField;
+	public PasswordField newPasswordField;
+	public PasswordField confirmNewPasswordField;
 
 	@Override
 	public void createStage() {
@@ -22,12 +37,30 @@ public class ProfileMenu implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
-		// TODO:
+		Appview.setStage(stage);
+		URL url = getClass().getResource("/FXML/ProfileMenu.fxml");
+		if (url == null){
+			System.out.println("Couldn't find file: FXML/ProfileMenu.fxml");
+			return;
+		}
+		Pane root = null;
+		try {
+			root = FXMLLoader.load(url);
+		} catch (IOException e){
+			throw new RuntimeException(e);
+		}
+		Scene scene = new Scene(root);
+		Platform.runLater(root::requestFocus);
+		stage.setScene(scene);
+		stage.show();
 	}
 
-	/*
-	 * Terminal version of the LobbyMenu
-	 */
+	@FXML
+	public void initialize() {
+		usernameField.setText(User.getLoggedInUser().getUsername());
+		nicknameField.setText(User.getLoggedInUser().getNickname());
+		emailField.setText(User.getLoggedInUser().getEmail());
+	}
 
 	@Override
 	public void run(String input) {
@@ -67,6 +100,7 @@ public class ProfileMenu implements Menuable {
 		return UserMenusController.changeEmail(email);
 	}
 
+	@FXML
 	private Result enterUserInfo() {
 		return UserMenusController.goToInfoMenu();
 	}
@@ -75,6 +109,18 @@ public class ProfileMenu implements Menuable {
 		return new Result("Profile Menu", true);
 	}
 
+	public void saveChanges(MouseEvent mouseEvent) {
+		String username = usernameField.getText();
+		String nickname = nicknameField.getText();
+		String email = emailField.getText();
+		String oldPassword = oldPasswordField.getText();
+		String newPassword = newPasswordField.getText();
+		String confirmNewPassword = confirmNewPasswordField.getText();
+		Result result = UserMenusController.saveChanges(username, nickname, email, oldPassword, newPassword, confirmNewPassword);
+		AlertMaker.makeAlert("update profile", result);
+	}
+
+	@FXML
 	private Result exit() {
 		return UserMenusController.exit();
 	}

@@ -72,4 +72,28 @@ public class UserMenusController {
 		else if (Appview.getMenu() instanceof ProfileMenu) Appview.setMenu(new MainMenu());
 		return new Result("Exited successfully", true);
 	}
+
+	public static Result saveChanges(String username, String nickname, String email, String oldPassword, String newPassword, String confirmNewPassword) {
+		if (!oldPassword.equals(User.getLoggedInUser().getPassword()))
+			return new Result("Wrong Password", false);
+		if (!username.equals(User.getLoggedInUser().getUsername()) && User.getUserByUsername(username) != null)
+			return RegisterMenusResponses.DUPLICATE_USERNAME.getResult();
+		else if (!Validation.USERNAME.matches(username))
+			return RegisterMenusResponses.INVALID_USERNAME.getResult();
+		else if (!Validation.EMAIL.matches(email))
+			return RegisterMenusResponses.INVALID_EMAIL.getResult();
+		else if (!newPassword.equals(confirmNewPassword))
+			return RegisterMenusResponses.PASSWORDS_DONT_MATCH.getResult();
+		else if (!newPassword.equals("")) {
+			if (!Validation.CORRECT_PASSWORD.matches(newPassword))
+				return RegisterMenusResponses.INVALID_PASSWORD.getResult();
+			else if (!Validation.STRONG_PASSWORD.matches(newPassword))
+				return RegisterMenusResponses.WEAK_PASSWORD.getResult();
+		}
+		User.getLoggedInUser().setUsername(username);
+		User.getLoggedInUser().setNickname(nickname);
+		User.getLoggedInUser().setEmail(email);
+		if (!newPassword.equals("")) User.getLoggedInUser().setPassword(newPassword);
+		return new Result("Your data updated successfully", true);
+	}
 }
