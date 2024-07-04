@@ -22,6 +22,8 @@
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="712.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="ready" />
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="649.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="save deck" />
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="586.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="load deck" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" height="265.0" layoutX="613.0" layoutY="146.0" stroke="BLACK" strokeType="INSIDE" width="140.0" fx:id="leaderField" onMouseClicked="#changeLeader"/>
+      <Rectangle fx:id="leaderField" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" height="265.0" layoutX="613.0" layoutY="146.0" onMouseClicked="#changeLeader" stroke="BLACK" strokeType="INSIDE" width="140.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="75.0" layoutX="646.0" stroke="BLACK" strokeType="INSIDE" width="75.0" fx:id="factionIconField" onMouseClicked="#changeFaction"/>
+      <Label alignment="CENTER" layoutX="500.0" layoutY="75.0" prefHeight="69.0" prefWidth="367.0" text="Label" textAlignment="CENTER" stylesheets="@../CSS/textstyle.css" id="normal-text" fx:id="factionNameField" onMouseClicked="#changeFaction"/>
    </children>
 </Pane>

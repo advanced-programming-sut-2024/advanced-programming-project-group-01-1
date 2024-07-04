@@ -46,6 +46,10 @@ public class PreMatchMenusController {
 		return new Result("Faction Selected Successfully", true);
 	}
 
+	public static Result showNowFactionToGraphics() {
+		return new Result(User.getLoggedInUser().getDeck().getFaction().getName(), true);
+	}
+
 	public static Result showCards() {
 		StringBuilder message = new StringBuilder();
 		for (Card card : User.getLoggedInUser().getDeck().getAvailableCards()) {

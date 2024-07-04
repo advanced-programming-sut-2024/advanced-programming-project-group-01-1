@@ -7,14 +7,14 @@ import view.Constants;
 
 import java.util.HashMap;
 
-public class LargeLeader extends Rectangle {
+public class LargeCard extends Rectangle {
 
     private static HashMap<String, ImagePattern> imagePatterns = new HashMap<>();
 
     private final String name;
     private final String description;
 
-    public LargeLeader(String name, String description) {
+    public LargeCard(String name, String description) {
         super(Constants.LARGE_CARD_WIDTH.getValue(), Constants.LARGE_CARD_HEIGHT.getValue());
         ImagePattern imagePattern = imagePatterns.get(name);
         if (imagePattern == null) {
