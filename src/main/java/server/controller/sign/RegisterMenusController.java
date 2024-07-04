@@ -30,13 +30,15 @@ public class RegisterMenusController {
 	}
 
 	public static Result pickQuestion(Client client, int questionNumber, String answer, String answerConfirm) {
-		if (questionNumber < 0 || questionNumber >= Question.questions.length)
-			return RegisterMenusResponses.INVALID_QUESTION_NUMBER.getResult();
-		else if (!answer.equals(answerConfirm)) return new Result("Answers don't match", false);
-		else {
-			client.getIdentity().setQuestion(new Question(Question.questions[questionNumber], answer));
-			client.setMenu(new LoginMenu());
-			return new Result("Question picked successfully", true);
+		synchronized (User.getUsers()) {
+			if (questionNumber < 0 || questionNumber >= Question.questions.length)
+				return RegisterMenusResponses.INVALID_QUESTION_NUMBER.getResult();
+			else if (!answer.equals(answerConfirm)) return new Result("Answers don't match", false);
+			else {
+				client.getIdentity().setQuestion(new Question(Question.questions[questionNumber], answer));
+				client.setMenu(new LoginMenu());
+				return new Result("Question picked successfully", true);
+			}
 		}
 	}
 

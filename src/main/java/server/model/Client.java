@@ -17,12 +17,19 @@ public class Client {
 
 	public Client() {
 		StringBuilder tmp = new StringBuilder();
-		while(clients.containsKey(tmp.toString()))
-			tmp.append((char) random.nextInt(128));
+		while (clients.containsKey(tmp.toString())) tmp.append((char) random.nextInt(128));
 		token = tmp.toString();
 		Menu = new LoginMenu();
 		identity = null;
 		clients.put(token, this);
+	}
+
+	public static Client getClient(String token) {
+		return clients.get(token);
+	}
+
+	public static void remove(Client client) {
+		clients.remove(client.getToken());
 	}
 
 	public String getToken() {
@@ -45,7 +52,4 @@ public class Client {
 		return identity;
 	}
 
-	public static Client getClient(String token) {
-		return clients.get(token);
-	}
 }

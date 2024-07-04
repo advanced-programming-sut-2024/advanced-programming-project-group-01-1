@@ -16,6 +16,8 @@ public class ForgotPasswordMenu implements Menuable {
 		Result result;
 		if ((matcher = LoginMenusCommands.ANSWER_QUESTION.getMatcher(command)) != null)
 			result = answerQuestion(client, matcher);
+		else if (LoginMenusCommands.GET_QUESTION.getMatcher(command) != null)
+			result = LoginMenusController.getQuestion(client);
 		else if (LoginMenusCommands.SHOW_CURRENT_MENU.getMatcher(command) != null)
 			result = showCurrentMenu();
 		else if ((matcher = LoginMenusCommands.EXIT.getMatcher(command)) != null) result = exit(client, matcher);
