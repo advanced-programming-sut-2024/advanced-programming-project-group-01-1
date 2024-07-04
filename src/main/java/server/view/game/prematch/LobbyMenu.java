@@ -16,7 +16,7 @@ public class LobbyMenu implements Menuable {
 		Matcher matcher;
 		Result result;
 		if (GameMenusCommands.SHOW_FACTIONS.getMatcher(command) != null)
-			result = PreMatchMenusController.showFactions(client);
+			result = PreMatchMenusController.showFactions();
 		else if ((matcher = GameMenusCommands.SELECT_FACTION.getMatcher(command)) != null)
 			result = selectFaction(client, matcher);
 		else if (GameMenusCommands.SHOW_CARDS.getMatcher(command) != null) result = PreMatchMenusController.showCards(client);

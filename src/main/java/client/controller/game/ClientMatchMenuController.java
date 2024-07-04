@@ -2,7 +2,7 @@ package client.controller.game;
 
 import message.Result;
 
-public class MatchMenuController {
+public class ClientMatchMenuController {
 
 	public static Result vetoCard(int cardNumber) {
 		// TODO:

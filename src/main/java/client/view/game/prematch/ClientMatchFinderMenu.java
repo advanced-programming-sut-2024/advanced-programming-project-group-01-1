@@ -1,6 +1,6 @@
 package client.view.game.prematch;
 
-import client.controller.game.PreMatchMenusController;
+import client.controller.game.ClientPreMatchMenusController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,10 +57,10 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 
 	@FXML
 	public void initialize() {
-		ArrayList<String> users = PreMatchMenusController.getUsernames();
+		ArrayList<String> users = ClientPreMatchMenusController.getUsernames();
 		suggestUsersList.getItems().addAll(users);
 		usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ArrayList<String> suggestedUsers = PreMatchMenusController.getUsernames();
+			ArrayList<String> suggestedUsers = ClientPreMatchMenusController.getUsernames();
 			suggestUsersList.getItems().clear();
 			for (String user : suggestedUsers) {
 				if (user.startsWith(newValue)) {
@@ -73,7 +73,7 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 	public void startGame(MouseEvent mouseEvent) {
 		//get selected user from list
 		String opponent = (String) suggestUsersList.getSelectionModel().getSelectedItem();
-		Result result = PreMatchMenusController.createGame(opponent);
+		Result result = ClientPreMatchMenusController.createGame(opponent);
 		AlertMaker.makeAlert("Game created", result);
 	}
 
@@ -86,7 +86,7 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 	}
 
 	public void back(MouseEvent mouseEvent) {
-		PreMatchMenusController.exit();
+		ClientPreMatchMenusController.exit();
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 
 	private Result createGame(Matcher matcher) {
 		String opponent = matcher.group("opponent");
-		Result result = PreMatchMenusController.createGame(opponent);
+		Result result = ClientPreMatchMenusController.createGame(opponent);
 		return null;
 	}
 }

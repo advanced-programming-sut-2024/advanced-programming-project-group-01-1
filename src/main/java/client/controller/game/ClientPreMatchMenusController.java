@@ -4,7 +4,7 @@ import message.Result;
 
 import java.util.ArrayList;
 
-public class PreMatchMenusController {
+public class ClientPreMatchMenusController {
 
 	public static Result createGame(String opponentUsername) {
 		return null;
