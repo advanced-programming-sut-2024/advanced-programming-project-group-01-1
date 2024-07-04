@@ -14,7 +14,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import message.Result;
 import server.view.AlertMaker;
-import server.view.Appview;
 import server.view.Menuable;
 
 import java.io.IOException;

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import message.Command;
 import message.Result;
-import server.view.Appview;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

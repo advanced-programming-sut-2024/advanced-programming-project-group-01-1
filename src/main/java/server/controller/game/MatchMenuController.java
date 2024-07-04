@@ -1,6 +1,7 @@
 package server.controller.game;
 
 import message.Result;
+import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 import server.model.game.Game;
@@ -11,37 +12,37 @@ import java.util.Scanner;
 
 public class MatchMenuController {
 
-	public static Result vetoCard(int cardNumber) {
+	public static Result vetoCard(Client client,int cardNumber) {
 		// TODO:
 		return null;
 	}
 
-	public static Result showHand(int number) {
+	public static Result showHand(Client client,int number) {
 		StringBuilder hand = new StringBuilder();
 		if (number >= 0) hand.append(Game.getCurrentGame().getCurrentHand().getCards().get(number).toString());
 		else hand.append(Game.getCurrentGame().getCurrentHand().toString());
 		return new Result(hand.toString(), true);
 	}
 
-	public static Result remainingInDeck() {
+	public static Result remainingInDeck(Client client) {
 		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()), true);
 	}
 
-	public static Result showDiscordPiles() {
+	public static Result showDiscordPiles(Client client) {
 		return new Result("Current Discard Pile:\n" + Game.getCurrentGame().getCurrentDiscardPile() +
 				"Opponent Discard Pile:\n" + Game.getCurrentGame().getOpponentDiscardPile(), true);
 	}
 
-	public static Result showRow(int rowNumber) {
+	public static Result showRow(Client client,int rowNumber) {
 		return new Result(Game.getCurrentGame().getRow(rowNumber).toString(), true);
 	}
 
-	public static Result showWeatherSystem() {
+	public static Result showWeatherSystem(Client client) {
 		return new Result(Game.getCurrentGame().getCurrentWeatherSystem() + "\n" +
 				Game.getCurrentGame().getOpponentWeatherSystem(), true);
 	}
 
-	public static Result placeCard(int cardNumber, int rowNumber) {
+	public static Result placeCard(Client client,int cardNumber, int rowNumber) {
 		try {
 			Game.getCurrentGame().getCurrentHand().getCards().get(cardNumber).put(rowNumber);
 			return new Result("Card placed successfully", true);
@@ -50,11 +51,11 @@ public class MatchMenuController {
 		}
 	}
 
-	public static Result showLeader() {
+	public static Result showLeader(Client client) {
 		return new Result(Game.getCurrentGame().getCurrentLeader().toString(), true);
 	}
 
-	public static Result useLeaderAbility() {
+	public static Result useLeaderAbility(Client client) {
 		try {
 			Game.getCurrentGame().useLeaderAbility();
 			return new Result("Leader ability played successfully", true);
@@ -63,45 +64,45 @@ public class MatchMenuController {
 		}
 	}
 
-	public static Result showPlayersInfo() {
+	public static Result showPlayersInfo(Client client) {
 		return new Result("Current: " + Game.getCurrentGame().getCurrent().getUsername() + " " +
 				Game.getCurrentGame().getCurrentFaction() + "\n" +
 				"Opponent: " + Game.getCurrentGame().getOpponent().getUsername() + " " +
 				Game.getCurrentGame().getOpponentFaction(), true);
 	}
 
-	public static Result showPlayersLives() {
+	public static Result showPlayersLives(Client client) {
 		return new Result("Current: " + Game.getCurrentGame().getCurrentLife() + "\n" +
 				"Opponent: " + Game.getCurrentGame().getOpponentLife(), true);
 	}
 
-	public static Result showHandSize() {
+	public static Result showHandSize(Client client) {
 		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size()), true);
 	}
 
-	public static Result showTurnInfo() {
+	public static Result showTurnInfo(Client client) {
 		return new Result(Game.getCurrentGame().getCurrent().getUsername(), true);
 	}
 
-	public static Result showTotalPower() {
+	public static Result showTotalPower(Client client) {
 		return new Result("Current: " + Game.getCurrentGame().getCurrentPower() + "\n" +
 				"Opponent: " + Game.getCurrentGame().getOpponentPower(), true);
 	}
 
-	public static Result showRowPower(int rowNumber) {
+	public static Result showRowPower(Client client,int rowNumber) {
 		return new Result(String.valueOf(Game.getCurrentGame().getRow(rowNumber).getSumOfPowers()), true);
 	}
 
-	public static Result passTurn() {
+	public static Result passTurn(Client client) {
 		Game.getCurrentGame().passTurn();
 		return new Result("Turn passed successfully", true);
 	}
 
-	public static Card askSpace(Space space, boolean onlyUnit) {
+	public static Card askSpace(Client client, Space space, boolean onlyUnit) {
 		return askSpace(space, false, onlyUnit);
 	}
 
-	public static Card askSpace(Space space, boolean isRandom, boolean onlyUnit) {
+	public static Card askSpace(Client client, Space space, boolean isRandom, boolean onlyUnit) {
 		ArrayList<Card> availableCards = new ArrayList<>();
 		for (Card card : space.getCards()) {
 			if (card instanceof Unit) {
@@ -120,6 +121,6 @@ public class MatchMenuController {
 		return availableCards.get(index);
 	}
 
-	public static void showSpace(Space tmp) {
+	public static void showSpace(Client client, Space tmp) {
 	}
 }

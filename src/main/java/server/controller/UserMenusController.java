@@ -2,10 +2,10 @@ package server.controller;
 
 import server.controller.enums.RegisterMenusResponses;
 import server.controller.enums.Validation;
+import server.model.Client;
 import server.model.GameInfo;
 import message.Result;
 import server.model.user.User;
-import server.view.Appview;
 import server.view.MainMenu;
 import server.view.user.InfoMenu;
 import server.view.user.ProfileMenu;
@@ -14,19 +14,19 @@ import java.util.ArrayList;
 
 public class UserMenusController {
 
-	public static Result changeUsername(String newUsername) {
+	public static Result changeUsername(Client client, String newUsername) {
 		if (User.getUserByUsername(newUsername) != null) return RegisterMenusResponses.DUPLICATE_USERNAME.getResult();
 		else if (!Validation.USERNAME.matches(newUsername)) return RegisterMenusResponses.INVALID_USERNAME.getResult();
 		User.getLoggedInUser().setUsername(newUsername);
 		return new Result("Username changed successfully", true);
 	}
 
-	public static Result changeNickname(String newNickname) {
+	public static Result changeNickname(Client client,String newNickname) {
 		User.getLoggedInUser().setNickname(newNickname);
 		return new Result("Nickname changed successfully", true);
 	}
 
-	public static Result changePassword(String newPassword, String oldPassword) {
+	public static Result changePassword(Client client,String newPassword, String oldPassword) {
 		if (!User.getLoggedInUser().getPassword().equals(oldPassword)) return new Result("Incorrect password", false);
 		else if (!Validation.CORRECT_PASSWORD.matches(newPassword))
 			return RegisterMenusResponses.INVALID_PASSWORD.getResult();
@@ -36,14 +36,14 @@ public class UserMenusController {
 		return new Result("Password changed successfully", true);
 	}
 
-	public static Result changeEmail(String email) {
+	public static Result changeEmail(Client client,String email) {
 		if (!Validation.EMAIL.matches(email)) return RegisterMenusResponses.INVALID_EMAIL.getResult();
 		User.getLoggedInUser().setEmail(email);
 		return new Result("Email changed successfully", true);
 	}
 
 
-	public static Result goToInfoMenu() {
+	public static Result goToInfoMenu(Client client) {
 		User user = User.getLoggedInUser();
 		StringBuilder userInfo = new StringBuilder();
 		userInfo.append("Username: ").append(user.getUsername()).append("\n");
@@ -58,7 +58,7 @@ public class UserMenusController {
 		return new Result(userInfo.toString(), true);
 	}
 
-	public static Result showGameHistory(int number) {
+	public static Result showGameHistory(Client client,int number) {
 		ArrayList<GameInfo> history = User.getLoggedInUser().getHistory();
 		StringBuilder gameHistory = new StringBuilder();
 		for (int i = 0; i < number; i++) {
@@ -67,13 +67,13 @@ public class UserMenusController {
 		return new Result(gameHistory.toString(), true);
 	}
 
-	public static Result exit() {
+	public static Result exit(Client client) {
 		if (Appview.getMenu() instanceof InfoMenu) Appview.setMenu(new ProfileMenu());
 		else if (Appview.getMenu() instanceof ProfileMenu) Appview.setMenu(new MainMenu());
 		return new Result("Exited successfully", true);
 	}
 
-	public static Result saveChanges(String username, String nickname, String email, String oldPassword, String newPassword, String confirmNewPassword) {
+	public static Result saveChanges(Client client,String username, String nickname, String email, String oldPassword, String newPassword, String confirmNewPassword) {
 		if (!oldPassword.equals(User.getLoggedInUser().getPassword()))
 			return new Result("Wrong Password", false);
 		if (!username.equals(User.getLoggedInUser().getUsername()) && User.getUserByUsername(username) != null)

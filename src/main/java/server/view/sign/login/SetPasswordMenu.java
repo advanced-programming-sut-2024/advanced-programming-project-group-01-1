@@ -12,7 +12,6 @@ import message.LoginMenusCommands;
 import server.controller.sign.LoginMenusController;
 import message.Result;
 import server.view.AlertMaker;
-import server.view.Appview;
 import server.view.Menuable;
 
 import java.io.IOException;
