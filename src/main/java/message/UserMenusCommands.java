@@ -10,7 +10,7 @@ public enum UserMenusCommands {
     CHANGE_PASSWORD("change password -p (?<newPassword>\\S+) -o (?<oldPassword>\\S+)"),
     ENTER_USER_INFO("menu enter user info menu"),
     SHOW_CURRENT_MENU("show current menu"),
-    GAME_HISTORY("game history (-n (?<numberOfGames>\\d+))?"),
+    GAME_HISTORY("game history( -n (?<numberOfGames>\\d+))?"),
     EXIT("menu exit");
 
     private final Pattern pattern;
@@ -25,5 +25,9 @@ public enum UserMenusCommands {
             return matcher;
         }
         return null;
+    }
+
+    public String getPattern() {
+        return pattern.pattern();
     }
 }

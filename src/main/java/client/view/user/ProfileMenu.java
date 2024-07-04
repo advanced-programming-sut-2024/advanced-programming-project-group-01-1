@@ -1,6 +1,6 @@
 package client.view.user;
 
-import client.controller.UserMenusController;
+import client.controller.ClientUserMenusController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -82,28 +82,28 @@ public class ProfileMenu implements Menuable {
 
 	private Result changeUsername(Matcher matcher) {
 		String username = matcher.group("username");
-		return UserMenusController.changeUsername(username);
+		return ClientUserMenusController.changeUsername(username);
 	}
 
 	private Result changePassword(Matcher matcher) {
 		String newPassword = matcher.group("newPassword");
 		String oldPassword = matcher.group("oldPassword");
-		return UserMenusController.changePassword(newPassword, oldPassword);
+		return ClientUserMenusController.changePassword(newPassword, oldPassword);
 	}
 
 	private Result changeNickname(Matcher matcher) {
 		String nickname = matcher.group("nickname");
-		return UserMenusController.changeNickname(nickname);
+		return ClientUserMenusController.changeNickname(nickname);
 	}
 
 	private Result changeEmail(Matcher matcher) {
 		String email = matcher.group("email");
-		return UserMenusController.changeEmail(email);
+		return ClientUserMenusController.changeEmail(email);
 	}
 
 	@FXML
 	private Result enterUserInfo() {
-		return UserMenusController.goToInfoMenu();
+		return ClientUserMenusController.goToInfoMenu();
 	}
 
 	private Result showCurrentMenu() {
@@ -117,13 +117,13 @@ public class ProfileMenu implements Menuable {
 		String oldPassword = oldPasswordField.getText();
 		String newPassword = newPasswordField.getText();
 		String confirmNewPassword = confirmNewPasswordField.getText();
-		Result result = UserMenusController.saveChanges(username, nickname, email, oldPassword, newPassword, confirmNewPassword);
+		Result result = ClientUserMenusController.saveChanges(username, nickname, email, oldPassword, newPassword, confirmNewPassword);
 		AlertMaker.makeAlert("update profile", result);
 	}
 
 	@FXML
 	private Result exit() {
-		return UserMenusController.exit();
+		return ClientUserMenusController.exit();
 	}
 
 }

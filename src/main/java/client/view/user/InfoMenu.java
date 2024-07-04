@@ -1,6 +1,6 @@
 package client.view.user;
 
-import client.controller.UserMenusController;
+import client.controller.ClientUserMenusController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -78,7 +78,7 @@ public class InfoMenu implements Menuable {
 
 	private Result showGameHistory(Matcher matcher) {
 		int numberOfGames = (matcher.group("numberOfGames") != null ? Integer.parseInt(matcher.group("numberOfGames")) : 5);
-		return UserMenusController.showGameHistory(numberOfGames);
+		return ClientUserMenusController.showGameHistory(numberOfGames);
 	}
 
 	private Result showCurrentMenu() {
@@ -87,7 +87,7 @@ public class InfoMenu implements Menuable {
 
 	@FXML
 	private Result exit() {
-		return UserMenusController.exit();
+		return ClientUserMenusController.exit();
 	}
 
 }

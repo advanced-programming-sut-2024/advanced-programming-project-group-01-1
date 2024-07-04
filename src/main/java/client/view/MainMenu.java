@@ -1,6 +1,6 @@
 package client.view;
 
-import client.controller.MainMenuController;
+import client.controller.ClientMainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,7 @@ import message.Result;
 
 import java.net.URL;
 
-import static client.controller.MainMenuController.*;
+import static client.controller.ClientMainMenuController.*;
 
 public class MainMenu extends Application implements Menuable {
 
@@ -47,7 +47,7 @@ public class MainMenu extends Application implements Menuable {
 
 	@FXML
 	public void initialize() {
-		username.setText(MainMenuController.getLoggedInUsername());
+		username.setText(ClientMainMenuController.getLoggedInUsername());
 	}
 
 	public void newGame(MouseEvent mouseEvent) {
@@ -71,7 +71,7 @@ public class MainMenu extends Application implements Menuable {
 	}
 
 	public void logout(MouseEvent mouseEvent) {
-		Result result = MainMenuController.logout();
+		Result result = ClientMainMenuController.logout();
 		AlertMaker.makeAlert("Logout", result);
 	}
 
@@ -84,7 +84,7 @@ public class MainMenu extends Application implements Menuable {
 		Result result;
 		if (MainMenuCommands.ENTER_GAME_MENU.getMatcher(input) != null) result = goToMatchFinderMenu();
 		else if (MainMenuCommands.ENTER_PROFILE_MENU.getMatcher(input) != null) result = goToProfileMenu();
-		else if (MainMenuCommands.LOGOUT.getMatcher(input) != null) result = MainMenuController.logout();
+		else if (MainMenuCommands.LOGOUT.getMatcher(input) != null) result = ClientMainMenuController.logout();
 		else if (MainMenuCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
 		else result = new Result("Invalid command", false);
 		return result;

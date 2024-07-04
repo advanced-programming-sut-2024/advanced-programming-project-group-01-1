@@ -22,4 +22,8 @@ public enum MainMenuCommands {
 		}
 		return null;
 	}
+
+	public String getPattern() {
+		return pattern.pattern();
+	}
 }
