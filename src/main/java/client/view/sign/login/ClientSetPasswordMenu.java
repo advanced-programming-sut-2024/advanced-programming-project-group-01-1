@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
 
-public class SetPasswordMenu extends Application implements Menuable {
+public class ClientSetPasswordMenu extends Application implements Menuable {
 
 	@Override
 	public void createStage() {
@@ -71,7 +71,7 @@ public class SetPasswordMenu extends Application implements Menuable {
 		String password = matcher.group("password");
 		Result result = ClientLoginMenusController.setPassword(password);
 		if (result.isSuccessful()) {
-			ClientAppview.setMenu(new LoginMenu());
+			ClientAppview.setMenu(new ClientLoginMenu());
 		}
 		return result;
 	}

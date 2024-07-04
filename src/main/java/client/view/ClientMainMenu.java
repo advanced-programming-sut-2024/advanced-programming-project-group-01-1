@@ -16,7 +16,7 @@ import java.net.URL;
 
 import static client.controller.ClientMainMenuController.*;
 
-public class MainMenu extends Application implements Menuable {
+public class ClientMainMenu extends Application implements Menuable {
 
 
 	@Override

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
 
-public class RegisterMenu extends Application implements Menuable {
+public class ClientRegisterMenu extends Application implements Menuable {
 
 	/*
 	 * JavaFX version of the RegisterMenu
@@ -92,7 +92,7 @@ public class RegisterMenu extends Application implements Menuable {
 		String email = matcher.group("email");
 		Result result = ClientRegisterMenusController.register(username, password, passwordConfirm, nickname, email);
 		if (result.isSuccessful()) {
-			ClientAppview.setMenu(new PickQuestionMenu());
+			ClientAppview.setMenu(new ClientPickQuestionMenu());
 		}
 		return result;
 	}

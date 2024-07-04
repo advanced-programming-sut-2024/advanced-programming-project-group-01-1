@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
 
-public class ForgotPasswordMenu extends Application implements Menuable {
+public class ClientForgotPasswordMenu extends Application implements Menuable {
 
 	/*
 	 * JavaFX version of the LobbyMenu

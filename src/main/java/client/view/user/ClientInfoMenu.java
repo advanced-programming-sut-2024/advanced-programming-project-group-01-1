@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
-public class InfoMenu implements Menuable {
+public class ClientInfoMenu implements Menuable {
 	public Label username;
 	public Label nickname;
 	public Label maxScore;

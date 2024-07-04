@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import static javafx.application.Application.launch;
 
 
-public class MatchMenu implements Menuable {
+public class ClientMatchMenu implements Menuable {
 
 
 	@Override

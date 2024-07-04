@@ -15,12 +15,12 @@ import message.Result;
 import client.view.AlertMaker;
 import client.view.ClientAppview;
 import client.view.Menuable;
-import client.view.sign.login.LoginMenu;
+import client.view.sign.login.ClientLoginMenu;
 
 import java.net.URL;
 import java.util.regex.Matcher;
 
-public class PickQuestionMenu extends Application implements Menuable {
+public class ClientPickQuestionMenu extends Application implements Menuable {
 
 	/*
 	 * JavaFX version of the LobbyMenu
@@ -100,7 +100,7 @@ public class PickQuestionMenu extends Application implements Menuable {
 		String answerConfirm = matcher.group("answerConfirm");
 		Result result = ClientRegisterMenusController.pickQuestion(questionNumber, answer, answerConfirm);
 		if (result.isSuccessful()) {
-			ClientAppview.setMenu(new LoginMenu());
+			ClientAppview.setMenu(new ClientLoginMenu());
 		}
 		return result;
 	}

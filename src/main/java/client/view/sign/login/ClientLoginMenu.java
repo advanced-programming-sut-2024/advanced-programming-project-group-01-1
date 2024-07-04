@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 
 import static client.view.AlertMaker.makeAlert;
 
-public class LoginMenu extends Application implements Menuable {
+public class ClientLoginMenu extends Application implements Menuable {
 
 
 	public void createStage() {

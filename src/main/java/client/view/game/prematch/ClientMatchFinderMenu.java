@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
-public class MatchFinderMenu extends Application implements Menuable {
+public class ClientMatchFinderMenu extends Application implements Menuable {
 
 	/*
 	 * JavaFX version of the LobbyMenu

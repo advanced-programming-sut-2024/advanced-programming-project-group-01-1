@@ -23,7 +23,7 @@ import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
-public class ProfileMenu implements Menuable {
+public class ClientProfileMenu implements Menuable {
 	public TextField usernameField;
 	public TextField nicknameField;
 	public TextField emailField;
