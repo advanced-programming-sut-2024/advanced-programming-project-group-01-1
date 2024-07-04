@@ -18,7 +18,7 @@ public class ServerWorker extends Thread {
 	private static final ArrayList<Socket> connections = new ArrayList<>();
 	private static final Gson gson = new GsonBuilder().create();
 
-	private static boolean setupServer(int port, int workersCount) {
+	static boolean setupServer(int port, int workersCount) {
 		try {
 			server = new ServerSocket(port);
 			for (int i = 0; i < workersCount; i++)
@@ -79,12 +79,4 @@ public class ServerWorker extends Thread {
 		}
 	}
 
-	public static void main(String[] args) {
-		setupServer(2357, 5);
-		try {
-			listen();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

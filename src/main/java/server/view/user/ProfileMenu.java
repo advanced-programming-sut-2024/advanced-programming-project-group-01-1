@@ -25,6 +25,12 @@ public class ProfileMenu implements Menuable {
 			result = changeEmail(client, matcher);
 		else if((matcher = UserMenusCommands.SAVE_CHANGES.getMatcher(command)) != null)
 			result = saveChanges(client, matcher);
+		else if (UserMenusCommands.GET_USERNAME.getMatcher(command) != null)
+			result = UserMenusController.getUsername(client);
+		else if (UserMenusCommands.GET_NICKNAME.getMatcher(command) != null)
+			result = UserMenusController.getNickname(client);
+		else if (UserMenusCommands.GET_EMAIL.getMatcher(command) != null)
+			result = UserMenusController.getEmail(client);
 		else if (UserMenusCommands.ENTER_USER_INFO.getMatcher(command) != null) result = enterUserInfo(client);
 		else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(command) != null)
 			result = showCurrentMenu();

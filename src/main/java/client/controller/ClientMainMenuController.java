@@ -14,20 +14,23 @@ public class ClientMainMenuController {
 
 	public static Result logout() {
 		String command = MainMenuCommands.LOGOUT.getPattern();
+		Result result = TCPClient.send(command);
 		ClientAppview.setMenu(new ClientLoginMenu());
-		return TCPClient.send(command);
+		return result;
 	}
 
 	public static Result goToProfileMenu() {
 		String command = MainMenuCommands.ENTER_PROFILE_MENU.getPattern();
+		Result result = TCPClient.send(command);
 		ClientAppview.setMenu(new ClientProfileMenu());
-		return TCPClient.send(command);
+		return result;
 	}
 
 	public static Result goToMatchFinderMenu() {
 		String command = MainMenuCommands.ENTER_GAME_MENU.getPattern();
+		Result result = TCPClient.send(command);
 		ClientAppview.setMenu(new ClientMatchFinderMenu());
-		return TCPClient.send(command);
+		return result;
 	}
 
 	public static Result showCurrentMenu() {

@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import message.Result;
-import client.model.user.User;
 import client.view.ClientAppview;
 import client.view.Menuable;
 import message.UserMenusCommands;
@@ -55,14 +54,14 @@ public class ClientInfoMenu implements Menuable {
 
 	@FXML
 	public void initialize() {
-		username.setText(User.getLoggedInUser().getUsername());
-		nickname.setText(User.getLoggedInUser().getNickname());
-		maxScore.setText(String.valueOf(User.getLoggedInUser().getMaxScore()));
-		rank.setText(String.valueOf(User.getLoggedInUser().getRank()));
-		playedMatches.setText(String.valueOf(User.getLoggedInUser().getNumberOfPlayedMatches()));
-		wins.setText(String.valueOf(User.getLoggedInUser().getNumberOfWins()));
-		draws.setText(String.valueOf(User.getLoggedInUser().getNumberOfDraws()));
-		losses.setText(String.valueOf(User.getLoggedInUser().getNumberOfLosses()));
+		username.setText(ClientUserMenusController.getUsername());
+		nickname.setText(ClientUserMenusController.getNickname());
+		maxScore.setText(ClientUserMenusController.getMaxScore());
+		rank.setText(ClientUserMenusController.getRank());
+		playedMatches.setText(ClientUserMenusController.getNumberOfPlayedMatches());
+		wins.setText(ClientUserMenusController.getNumberOfWins());
+		draws.setText(ClientUserMenusController.getNumberOfDraws());
+		losses.setText(ClientUserMenusController.getNumberOfLosses());
 	}
 
 	@Override

@@ -114,4 +114,60 @@ public class UserMenusController {
 			}
 		}
 	}
+
+	public static Result getUsername(Client client) {
+		synchronized (client.getIdentity()) {
+			return new Result(client.getIdentity().getUsername(), true);
+		}
+	}
+
+	public static Result getNickname(Client client) {
+		synchronized (client.getIdentity()) {
+			return new Result(client.getIdentity().getNickname(), true);
+		}
+	}
+
+	public static Result getEmail(Client client) {
+		synchronized (client.getIdentity()) {
+			return new Result(client.getIdentity().getEmail(), true);
+		}
+	}
+
+	public static Result getMaxScore(Client client) {
+		synchronized (client.getIdentity()) {
+			return new Result(String.valueOf(client.getIdentity().getMaxScore()), true);
+		}
+	}
+
+	public static Result getRank(Client client) {
+		synchronized (User.getUsers()) {
+			synchronized (client.getIdentity()) {
+				return new Result(String.valueOf(client.getIdentity().getRank()), true);
+			}
+		}
+	}
+
+	public static Result getNumberOfPlayedMatches(Client client) {
+		synchronized (client.getIdentity()) {
+			return new Result(String.valueOf(client.getIdentity().getNumberOfPlayedMatches()), true);
+		}
+	}
+
+	public static Result getNumberOfWins(Client client) {
+		synchronized (client.getIdentity()) {
+			return new Result(String.valueOf(client.getIdentity().getNumberOfWins()), true);
+		}
+	}
+
+	public static Result getNumberOfDraws(Client client) {
+		synchronized (client.getIdentity()) {
+			return new Result(String.valueOf(client.getIdentity().getNumberOfDraws()), true);
+		}
+	}
+
+	public static Result getNumberOfLosses(Client client) {
+		synchronized (client.getIdentity()) {
+			return new Result(String.valueOf(client.getIdentity().getNumberOfLosses()), true);
+		}
+	}
 }

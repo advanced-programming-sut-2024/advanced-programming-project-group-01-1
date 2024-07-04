@@ -35,8 +35,9 @@ public class ClientRegisterMenusController {
 
 	public static Result exit() {
 		String command = RegisterMenusCommands.EXIT.getPattern();
+		Result result = TCPClient.send(command);
 		ClientAppview.setMenu(new ClientLoginMenu());
-		return TCPClient.send(command);
+		return result;
 	}
 
 	public static String[] getQuestions() {

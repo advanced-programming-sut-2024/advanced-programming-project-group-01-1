@@ -11,11 +11,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import message.Result;
-import client.model.user.User;
 import client.view.AlertMaker;
 import client.view.ClientAppview;
 import client.view.Menuable;
 import message.UserMenusCommands;
+import server.controller.UserMenusController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -58,9 +58,9 @@ public class ClientProfileMenu implements Menuable {
 
 	@FXML
 	public void initialize() {
-		usernameField.setText(User.getLoggedInUser().getUsername());
-		nicknameField.setText(User.getLoggedInUser().getNickname());
-		emailField.setText(User.getLoggedInUser().getEmail());
+		usernameField.setText(ClientUserMenusController.getUsername());
+		nicknameField.setText(ClientUserMenusController.getNickname());
+		emailField.setText(ClientUserMenusController.getEmail());
 	}
 
 	@Override
