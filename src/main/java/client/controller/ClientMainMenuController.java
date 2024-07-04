@@ -35,7 +35,7 @@ public class ClientMainMenuController {
 	}
 
 	public static String getLoggedInUsername() {
-		String command = "get logged in username";
+		String command = MainMenuCommands.GET_LOGGED_IN_USERNAME.getPattern();
 		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
 	}
 }

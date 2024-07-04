@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public enum MainMenuCommands {
 	ENTER_GAME_MENU("menu enter game menu"),
 	ENTER_PROFILE_MENU("menu enter profile menu"),
+	GET_LOGGED_IN_USERNAME("get logged in username"),
 	SHOW_CURRENT_MENU("show current menu"),
 	LOGOUT("user logout");
 

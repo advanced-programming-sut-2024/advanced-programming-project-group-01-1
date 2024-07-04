@@ -40,7 +40,7 @@ public class ClientRegisterMenusController {
 	}
 
 	public static String[] getQuestions() {
-		String command = "get all questions";
+		String command = RegisterMenusCommands.GET_ALL_QUESTIONS.getPattern();
 		return Objects.requireNonNull(TCPClient.send(command)).getMessage().split(",");
 	}
 }

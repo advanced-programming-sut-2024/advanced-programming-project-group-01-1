@@ -62,7 +62,7 @@ public class ClientLoginMenusController {
 	}
 
 	public static String getQuestion() {
-		String command = "get question";
+		String command = LoginMenusCommands.GET_QUESTION.getPattern();
 		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
 	}
 }
