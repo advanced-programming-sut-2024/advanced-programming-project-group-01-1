@@ -186,6 +186,10 @@ public class PreMatchMenusController {
 		return new Result(message.toString(), true);
 	}
 
+	public static Result showNowLeaderToGraphics() {
+		return new Result(User.getLoggedInUser().getDeck().getLeader().getName(), true);
+	}
+
 	public static Result selectLeader(int leaderNumber) {
 		if (leaderNumber < 0 || leaderNumber >= User.getLoggedInUser().getDeck().getAvailableLeaders().size())
 			return new Result("Invalid Leader Number", false);
