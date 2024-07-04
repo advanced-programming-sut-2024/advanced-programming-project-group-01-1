@@ -10,8 +10,9 @@ public enum Horn implements Ability {
 	@Override
 	public void act(Card card) {
 		Row row = (Row) card.getSpace();
-		for (Card rowCard : row.getCards()) {
-			Unit unit = (Unit) rowCard;
+		for (Card cardInRow : row.getCards()) {
+			if (!(cardInRow instanceof Unit)) continue;
+			Unit unit = (Unit) cardInRow;
 			if (unit != card) unit.setHornCount(unit.getHornCount() + 1);
 		}
 		row.setHornCount(row.getHornCount() + 1);
@@ -21,8 +22,9 @@ public enum Horn implements Ability {
 	public void undo(Card card) {
 		Row row = (Row) card.getSpace();
 		row.setHornCount(row.getHornCount() - 1);
-		for (Card rowCard : row.getCards()) {
-			Unit unit = (Unit) rowCard;
+		for (Card cardInRow : row.getCards()) {
+			if (!(cardInRow instanceof Unit)) continue;
+			Unit unit = (Unit) cardInRow;
 			if (unit != card) unit.setHornCount(unit.getHornCount() - 1);
 		}
 	}

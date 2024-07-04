@@ -64,7 +64,7 @@ public class CardCreator {
 		createMonstersCards();
 		createNilfgaardCards();
 		createNorthernRealmsCards();
-		createScoiataelCards();
+		createScoiaTaelCards();
 	}
 
 	private static void createNeutralCards() {
@@ -131,7 +131,7 @@ public class CardCreator {
 		createUnit(Siege.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Heavy Zerrikanian Fire Scorpion", null, 10, false);
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Letho of Gulet", null, 10, false);
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Menno Coehoorn", Medic.INSTANCE, 10, true);
-		createUnit(Siege.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Morvan Voorhis", null, 10, true);
+		createUnit(Siege.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Morvran Voorhis", null, 10, true);
 		createUnit(Siege.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Tibor Eggebracht", null, 10, true);
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Stefan Skellen", Spy.INSTANCE, 9, false);
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Shilard Fitz-Oesterlen", Spy.INSTANCE, 7, false);
@@ -204,7 +204,7 @@ public class CardCreator {
 		createUnit(Melee.class, Faction.MONSTERS, 1, "Ghoul2", Muster.INSTANCE, 1, false);
 	}
 
-	private static void createScoiataelCards() {
+	private static void createScoiaTaelCards() {
 		createUnit(Melee.class, Faction.SCOIATAEL, 1, "Isengrim", MoralBooster.INSTANCE, 10, true);
 		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Eithne", null, 10, true);
 		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Iorveth", null, 10, true);
@@ -240,9 +240,9 @@ public class CardCreator {
 		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Elven Skirmisher2", Muster.INSTANCE, 2, false);
 		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Toruviel", null, 2, false);
 		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Riordain", null, 1, false);
-		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Havekar Healer0", Medic.INSTANCE, 1, false);
-		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Havekar Healer1", Medic.INSTANCE, 1, false);
-		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Havekar Healer2", Medic.INSTANCE, 1, false);
+		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Havekar Healer0", Medic.INSTANCE, 0, false);
+		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Havekar Healer1", Medic.INSTANCE, 0, false);
+		createUnit(Ranged.class, Faction.SCOIATAEL, 1, "Havekar Healer2", Medic.INSTANCE, 0, false);
 	}
 
 	private static void createSkelligeCards() {

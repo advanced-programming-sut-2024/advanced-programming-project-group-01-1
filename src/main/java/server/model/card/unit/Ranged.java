@@ -10,7 +10,7 @@ public class Ranged extends Agile {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
-		if (rowNumber != 1) throw new Exception("Invalid row number");
+		if (rowNumber != 1 && rowNumber != 4) throw new Exception("Invalid row number");
 		super.put(rowNumber);
 	}
 

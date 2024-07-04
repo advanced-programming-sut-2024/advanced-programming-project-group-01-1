@@ -49,7 +49,7 @@ public class MatchMenuController {
 
 	public static Result placeCard(Client client,int cardNumber, int rowNumber) {
 		/*try {
-			Game.getCurrentGame().getCurrentHand().getCards().get(cardNumber).put(rowNumber);
+			Game.getCurrentGame().placeCard(Game.getCurrentGame().getCurrentHand().getCards().get(cardNumber), rowNumber);
 			return new Result("Card placed successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);

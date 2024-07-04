@@ -10,7 +10,7 @@ public class Melee extends Agile {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
-		if (rowNumber != 2) throw new Exception("Invalid row number");
+		if (rowNumber != 2 && rowNumber != 3) throw new Exception("Invalid row number");
 		super.put(rowNumber);
 	}
 
