@@ -68,7 +68,10 @@ public class ServerWorker extends Thread {
 				result = new Result(new Client().getToken(), true);
 			else {
 				Client client = Client.getClient(command.getToken());
-				if (client != null) result = client.getMenu().run(client, command.getCommand());
+				if (client != null) {
+					if (command.getCommand().equals("remove token")) Client.remove(client);
+					else result = client.getMenu().run(client, command.getCommand());
+				}
 			}
 			sendBuffer.writeUTF(gson.toJson(result));
 			connection.close();

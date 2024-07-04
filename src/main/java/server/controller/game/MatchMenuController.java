@@ -138,6 +138,6 @@ public class MatchMenuController {
 		return null;
 	}
 
-	public static void showSpace(Client client, Space tmp) {
+	public static void showSpace( Space tmp) {
 	}
 }
