@@ -11,7 +11,7 @@ public enum Medic implements Ability {
 	@Override
 	public void act(Card card) {
 		Unit unit = (Unit) MatchMenuController.askSpace(Game.getCurrentGame().getCurrentDiscardPile(), Game.getCurrentGame().isMedicRandom(), true);
-		if (unit == null || unit.isHero()) return;
+		if (unit == null) return;
 		Game.getCurrentGame().getCurrentDiscardPile().getCards().remove(unit);
 		Game.getCurrentGame().putRevived(unit, false);
 	}

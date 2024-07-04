@@ -11,7 +11,7 @@ public enum Horn implements Ability {
 	public void act(Card card) {
 		Row row = (Row) card.getSpace();
 		for (Card cardInRow : row.getCards()) {
-			if (!(cardInRow instanceof Unit) || ((Unit) cardInRow).isHero()) continue;
+			if (!(cardInRow instanceof Unit)) continue;
 			Unit unit = (Unit) cardInRow;
 			if (unit != card) unit.setHornCount(unit.getHornCount() + 1);
 		}
@@ -23,7 +23,7 @@ public enum Horn implements Ability {
 		Row row = (Row) card.getSpace();
 		row.setHornCount(row.getHornCount() - 1);
 		for (Card cardInRow : row.getCards()) {
-			if (!(cardInRow instanceof Unit) || ((Unit) cardInRow).isHero()) continue;
+			if (!(cardInRow instanceof Unit)) continue;
 			Unit unit = (Unit) cardInRow;
 			if (unit != card) unit.setHornCount(unit.getHornCount() - 1);
 		}
