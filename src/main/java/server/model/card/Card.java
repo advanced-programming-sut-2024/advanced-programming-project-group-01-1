@@ -1,5 +1,6 @@
 package server.model.card;
 
+import server.model.Client;
 import server.model.card.ability.Ability;
 import server.model.game.Game;
 import server.model.game.space.Space;
@@ -47,13 +48,13 @@ public abstract class Card implements Cloneable, Serializable {
 	@Override
 	public abstract Card clone();
 
-	public void put(int rowNumber) throws Exception {
+	public void put(Client client, int rowNumber) throws Exception {
 
 	}
 
-	public void pull() {
-		if (this.ability != null) this.ability.undo(this);
-		this.updateSpace(Game.getCurrentGame().getCurrentDiscardPile());
+	public void pull(Client client) {
+		if (this.ability != null) this.ability.undo(client, this);
+		this.updateSpace(client.getIdentity().getCurrentGame().getCurrentDiscardPile());
 	}
 
 	@Override

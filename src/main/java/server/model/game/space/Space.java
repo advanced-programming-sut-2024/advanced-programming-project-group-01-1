@@ -1,5 +1,6 @@
 package server.model.game.space;
 
+import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 
@@ -21,11 +22,11 @@ public class Space {
 		return cards;
 	}
 
-	public void clear(Space discardPile, Unit stayingUnit) {
+	public void clear(Client client, Space discardPile, Unit stayingUnit) {
 		ArrayList<Card> cards = new ArrayList<>(this.cards);
 		for (Card card : cards) {
 			if(card == stayingUnit) continue;
-			card.pull();
+			card.pull(client);
 			card.updateSpace(discardPile);
 		}
 		cards.clear();

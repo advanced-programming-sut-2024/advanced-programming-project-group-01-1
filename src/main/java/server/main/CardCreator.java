@@ -85,7 +85,7 @@ public class CardCreator {
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Vesemir", null, 6, false);
 		createUnit(Agile.class, Faction.NEUTRAL, 1, "Olgierd von Everec", MoralBooster.INSTANCE, 6, false);
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Zoltan Chivay", null, 5, false);
-		createUnit(Melee.class, Faction.NEUTRAL, 1, "Emiel Regis Rohellec Terzief", null, 5, false);
+		createUnit(Melee.class, Faction.NEUTRAL, 1, "Emiel Regis Rohellec Terzieff", null, 5, false);
 		createUnit(Ranged.class, Faction.NEUTRAL, 3, "Gaunter O'Dimm; Darkness", Muster.INSTANCE, 4, false);
 		createUnit(Siege.class, Faction.NEUTRAL, 1, "Gaunter O'Dimm", Muster.INSTANCE, 2, false);
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Dandelion", Horn.INSTANCE, 2, false);

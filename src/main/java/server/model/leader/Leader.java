@@ -1,5 +1,7 @@
 package server.model.leader;
 
+import server.model.Client;
+
 import java.io.Serializable;
 
 public abstract class Leader implements Serializable, Cloneable {
@@ -34,7 +36,7 @@ public abstract class Leader implements Serializable, Cloneable {
 		return isManual;
 	}
 
-	public void act() {
+	public void act(Client client) {
 		this.disable();
 	}
 

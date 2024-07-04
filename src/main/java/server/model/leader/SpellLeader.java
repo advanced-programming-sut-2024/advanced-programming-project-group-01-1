@@ -1,6 +1,7 @@
 package server.model.leader;
 
 import server.main.CardCreator;
+import server.model.Client;
 import server.model.card.Card;
 import server.model.card.special.spell.Spell;
 import server.model.game.Game;
@@ -24,27 +25,27 @@ public class SpellLeader extends Leader {
 	}
 
 	@Override
-	public void act() {
+	public void act(Client client) {
 		Spell spell;
 		ArrayList<Spell> availableSpells = new ArrayList<>();
 		if (useDeck) {
-			for (Card card : Game.getCurrentGame().getCurrentDeck().getCards()) {
+			for (Card card : client.getIdentity().getCurrentGame().getCurrentDeck().getCards()) {
 				for (String spellName : spellNames) {
 					if (card.getName().equals(spellName)) availableSpells.add((Spell) card);
 				}
 			}
 			spell = availableSpells.get(random.nextInt(availableSpells.size()));
-			Game.getCurrentGame().getCurrentDeck().getCards().remove(spell);
+			client.getIdentity().getCurrentGame().getCurrentDeck().getCards().remove(spell);
 		} else {
 			for (String spellName : spellNames)
 				availableSpells.add((Spell) CardCreator.getCard(spellName));
 			spell = availableSpells.get(random.nextInt(availableSpells.size()));
 		}
 		try {
-			spell.put(spaceNumber);
+			spell.put(client, spaceNumber);
 		} catch (Exception ignored) {
 		}
-		super.act();
+		super.act(client);
 	}
 
 	@Override

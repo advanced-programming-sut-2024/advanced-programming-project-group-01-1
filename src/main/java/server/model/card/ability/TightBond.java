@@ -1,5 +1,6 @@
 package server.model.card.ability;
 
+import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 import server.model.game.space.Row;
@@ -8,7 +9,7 @@ public enum TightBond implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Card card) {
+	public void act(Client client, Card card) {
 		Row row = (Row) card.getSpace();
 		int groupPopulation = 0;
 		for (Card cardInRow : row.getCards())
@@ -21,7 +22,7 @@ public enum TightBond implements Ability {
 	}
 
 	@Override
-	public void undo(Card card) {
+	public void undo(Client client, Card card) {
 		Row row = (Row) card.getSpace();
 		int groupPopulation = 0;
 		for (Card cardInRow : row.getCards())

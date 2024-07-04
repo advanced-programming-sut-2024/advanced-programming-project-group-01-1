@@ -1,6 +1,7 @@
 package server.model.game;
 
 import server.controller.game.MatchMenuController;
+import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 import server.model.game.space.Space;
@@ -28,9 +29,9 @@ public class CardMover implements Serializable {
 		random = new Random();
 	}
 
-	public void move() {
-		Space originSpace = Game.getCurrentGame().getSpaceById(originId);
-		Space destinationSpace = Game.getCurrentGame().getSpaceById(destinationId);
+	public void move(Client client) {
+		Space originSpace = client.getIdentity().getCurrentGame().getSpaceById(originId);
+		Space destinationSpace = client.getIdentity().getCurrentGame().getSpaceById(destinationId);
 		if (destinationSpace != null) {
 			ArrayList<Card> availableCards = new ArrayList<>();
 			for (Card card : originSpace.getCards()) {

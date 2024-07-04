@@ -1,5 +1,6 @@
 package server.model.leader;
 
+import server.model.Client;
 import server.model.game.Game;
 
 import java.io.Serializable;
@@ -15,14 +16,14 @@ public class PassiveLeader extends Leader implements Serializable {
 	}
 
 	@Override
-	public void act() {
+	public void act(Client client) {
 		try {
 			Method method = Game.class.getDeclaredMethod(setterName);
-			method.invoke(Game.getCurrentGame());
+			method.invoke(client.getIdentity().getCurrentGame());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		super.act();
+		super.act(client);
 	}
 
 	@Override

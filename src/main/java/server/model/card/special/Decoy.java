@@ -1,6 +1,7 @@
 package server.model.card.special;
 
 import server.controller.game.MatchMenuController;
+import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 import server.model.game.Game;
@@ -13,17 +14,17 @@ public class Decoy extends Special {
 	}
 
 	@Override
-	public void put(int rowNumber) throws Exception {
+	public void put(Client client, int rowNumber) throws Exception {
 		if (rowNumber < 0 || rowNumber > 2) {
 			throw new Exception("Invalid row number");
 		}
-		Row row = Game.getCurrentGame().getRow(rowNumber);
+		Row row = client.getIdentity().getCurrentGame().getRow(rowNumber);
 		if (row.getCards().size() == 0) {
 			throw new Exception("Row is empty");
 		}
 		Unit unit = (Unit) MatchMenuController.askSpace(row, true);
-		unit.pull();
-		unit.updateSpace(Game.getCurrentGame().getCurrentHand());
+		unit.pull(client);
+		unit.updateSpace(client.getIdentity().getCurrentGame().getCurrentHand());
 		this.updateSpace(row);
 	}
 

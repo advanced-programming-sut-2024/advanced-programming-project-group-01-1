@@ -1,5 +1,6 @@
 package server.model.card.special.spell;
 
+import server.model.Client;
 import server.model.card.Card;
 import server.model.card.ability.Debuffer;
 import server.model.game.Game;
@@ -20,10 +21,10 @@ public class Weather extends Spell {
 	}
 
 	@Override
-	public void put(int rowNumber) throws Exception {
+	public void put(Client client, int rowNumber) throws Exception {
 		if (rowNumber != -1) throw new Exception("Weather can only be put in weather system");
-		this.updateSpace(Game.getCurrentGame().getCurrentWeatherSystem());
-		this.ability.act(this);
+		this.updateSpace(client.getIdentity().getCurrentGame().getCurrentWeatherSystem());
+		this.ability.act(client, this);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package server.model.leader;
 
+import server.model.Client;
 import server.model.game.CardMover;
 
 public class MoverLeader extends Leader {
@@ -12,10 +13,10 @@ public class MoverLeader extends Leader {
 	}
 
 	@Override
-	public void act() {
+	public void act(Client client) {
 		for (CardMover cardMover : cardMovers)
-			cardMover.move();
-		super.act();
+			cardMover.move(client);
+		super.act(client);
 	}
 
 	@Override

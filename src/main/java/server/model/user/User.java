@@ -3,6 +3,7 @@ package server.model.user;
 import server.controller.enums.Validation;
 import server.model.GameInfo;
 import server.model.game.Faction;
+import server.model.game.Game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class User implements Serializable {
 	private String email;
 	private Question question;
 	private Deck deck;
+	private Game currentGame;
 	private final ArrayList<GameInfo> history;
 	private double elo;
 
@@ -228,4 +230,11 @@ public class User implements Serializable {
 		this.deck = deck;
 	}
 
+	public Game getCurrentGame() {
+		return currentGame;
+	}
+
+	public void setCurrentGame(Game currentGame) {
+		this.currentGame = currentGame;
+	}
 }
