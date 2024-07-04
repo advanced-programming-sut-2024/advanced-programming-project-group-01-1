@@ -2,11 +2,11 @@ package client.controller.sign;
 
 import client.main.TCPClient;
 import client.view.ClientAppview;
-import client.view.MainMenu;
-import client.view.sign.login.ForgotPasswordMenu;
-import client.view.sign.login.LoginMenu;
-import client.view.sign.login.SetPasswordMenu;
-import client.view.sign.register.RegisterMenu;
+import client.view.ClientMainMenu;
+import client.view.sign.login.ClientForgotPasswordMenu;
+import client.view.sign.login.ClientLoginMenu;
+import client.view.sign.login.ClientSetPasswordMenu;
+import client.view.sign.register.ClientRegisterMenu;
 import message.LoginMenusCommands;
 import message.Result;
 
@@ -20,7 +20,7 @@ public class ClientLoginMenusController {
 		command = command.replace("(?<password>\\S+)", password);
 		command = command.replace("(?<stayLoggedIn> -stay-logged-in)?", (stayLoggedIn ? "-stay-logged-in" : ""));
 		Result result = TCPClient.send(command);
-		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new MainMenu());
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientMainMenu());
 		return result;
 	}
 
@@ -28,7 +28,7 @@ public class ClientLoginMenusController {
 		String command = LoginMenusCommands.FORGOT_PASSWORD.getPattern();
 		command = command.replace("(?<username>\\S+)", username);
 		Result result = TCPClient.send(command);
-		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ForgotPasswordMenu());
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientForgotPasswordMenu());
 		return result;
 	}
 
@@ -36,7 +36,7 @@ public class ClientLoginMenusController {
 		String command = LoginMenusCommands.ANSWER_QUESTION.getPattern();
 		command = command.replace("(?<answer>\\S+)", answer);
 		Result result = TCPClient.send(command);
-		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new SetPasswordMenu());
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientSetPasswordMenu());
 		return result;
 	}
 
@@ -44,7 +44,7 @@ public class ClientLoginMenusController {
 		String command = LoginMenusCommands.SET_PASSWORD.getPattern();
 		command = command.replace("(?<password>\\S+)", password);
 		Result result = TCPClient.send(command);
-		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new LoginMenu());
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientLoginMenu());
 		return result;
 	}
 
@@ -57,7 +57,7 @@ public class ClientLoginMenusController {
 
 	public static Result goToRegisterMenu() {
 		String command = LoginMenusCommands.ENTER_REGISTER_MENU.getPattern();
-		ClientAppview.setMenu(new RegisterMenu());
+		ClientAppview.setMenu(new ClientRegisterMenu());
 		return TCPClient.send(command);
 	}
 

@@ -2,8 +2,8 @@ package client.controller.sign;
 
 import client.main.TCPClient;
 import client.view.ClientAppview;
-import client.view.sign.login.LoginMenu;
-import client.view.sign.register.PickQuestionMenu;
+import client.view.sign.login.ClientLoginMenu;
+import client.view.sign.register.ClientPickQuestionMenu;
 import message.RegisterMenusCommands;
 import message.Result;
 
@@ -19,7 +19,7 @@ public class ClientRegisterMenusController {
 		command = command.replace("(?<nickname>\\S+)", nickname);
 		command = command.replace("(?<email>\\S+)", email);
 		Result result = TCPClient.send(command);
-		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new PickQuestionMenu());
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientPickQuestionMenu());
 		return result;
 	}
 
@@ -29,13 +29,13 @@ public class ClientRegisterMenusController {
 		command = command.replace("(?<answer>\\S+)", answer);
 		command = command.replace("(?<answerConfirm>\\S+)", answerConfirm);
 		Result result = TCPClient.send(command);
-		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new LoginMenu());
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientLoginMenu());
 		return result;
 	}
 
 	public static Result exit() {
 		String command = RegisterMenusCommands.EXIT.getPattern();
-		ClientAppview.setMenu(new LoginMenu());
+		ClientAppview.setMenu(new ClientLoginMenu());
 		return TCPClient.send(command);
 	}
 

@@ -17,6 +17,8 @@ public class PickQuestionMenu implements Menuable {
 		Result result;
 		if ((matcher = RegisterMenusCommands.PICK_QUESTION.getMatcher(command)) != null)
 			result = pickQuestion(client, matcher);
+		else if (RegisterMenusCommands.GET_ALL_QUESTIONS.getMatcher(command) != null)
+			result = RegisterMenusController.getQuestions();
 		else if (RegisterMenusCommands.SHOW_CURRENT_MENU.getMatcher(command) != null)
 			result = showCurrentMenu();
 		else if ((matcher = RegisterMenusCommands.EXIT.getMatcher(command)) != null)

@@ -2,9 +2,9 @@ package client.controller;
 
 import client.main.TCPClient;
 import client.view.ClientAppview;
-import client.view.MainMenu;
-import client.view.user.InfoMenu;
-import client.view.user.ProfileMenu;
+import client.view.ClientMainMenu;
+import client.view.user.ClientInfoMenu;
+import client.view.user.ClientProfileMenu;
 import message.Result;
 import message.UserMenusCommands;
 
@@ -38,7 +38,7 @@ public class ClientUserMenusController {
 
 	public static Result goToInfoMenu() {
 		String command = UserMenusCommands.ENTER_USER_INFO.getPattern();
-		ClientAppview.setMenu(new InfoMenu());
+		ClientAppview.setMenu(new ClientInfoMenu());
 		return TCPClient.send(command);
 	}
 
@@ -50,8 +50,8 @@ public class ClientUserMenusController {
 
 	public static Result exit() {
 		String command = UserMenusCommands.EXIT.getPattern();
-		if (ClientAppview.getMenu() instanceof InfoMenu) ClientAppview.setMenu(new ProfileMenu());
-		else if (ClientAppview.getMenu() instanceof ProfileMenu) ClientAppview.setMenu(new MainMenu());
+		if (ClientAppview.getMenu() instanceof ClientInfoMenu) ClientAppview.setMenu(new ClientProfileMenu());
+		else if (ClientAppview.getMenu() instanceof ClientProfileMenu) ClientAppview.setMenu(new ClientMainMenu());
 		return TCPClient.send(command);
 	}
 

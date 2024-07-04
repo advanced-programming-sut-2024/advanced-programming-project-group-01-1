@@ -12,7 +12,7 @@ public class Client {
 	private static final Random random = new Random();
 	private static final Map<String, Client> clients = new HashMap<>();
 	private final String token;
-	private Menuable currentMenu;
+	private Menuable Menu;
 	private User identity;
 
 	public Client() {
@@ -20,7 +20,7 @@ public class Client {
 		while(clients.containsKey(tmp.toString()))
 			tmp.append((char) random.nextInt(128));
 		token = tmp.toString();
-		currentMenu = new LoginMenu();
+		Menu = new LoginMenu();
 		identity = null;
 		clients.put(token, this);
 	}
@@ -29,12 +29,12 @@ public class Client {
 		return token;
 	}
 
-	public void setCurrentMenu(Menuable currentMenu) {
-		this.currentMenu = currentMenu;
+	public void setMenu(Menuable menu) {
+		this.Menu = menu;
 	}
 
-	public Menuable getCurrentMenu() {
-		return currentMenu;
+	public Menuable getMenu() {
+		return Menu;
 	}
 
 	public void setIdentity(User identity) {

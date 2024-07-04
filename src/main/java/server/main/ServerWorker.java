@@ -68,7 +68,7 @@ public class ServerWorker extends Thread {
 				result = new Result(new Client().getToken(), true);
 			else {
 				Client client = Client.getClient(command.getToken());
-				if (client != null) result = client.getCurrentMenu().run(client, command.getCommand());
+				if (client != null) result = client.getMenu().run(client, command.getCommand());
 			}
 			sendBuffer.writeUTF(gson.toJson(result));
 			connection.close();

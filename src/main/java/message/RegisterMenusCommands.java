@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public enum RegisterMenusCommands {
 	REGISTER("register -u (?<username>\\S+) -p (?<password>\\S+) (?<passwordConfirm>\\S+) -n (?<nickname>\\S+) -e (?<email>\\S+)"),
+	GET_ALL_QUESTIONS("get all questions"),
 	PICK_QUESTION("pick question -q (?<questionNumber>\\d+) -a (?<answer>\\S+) -c (?<answerConfirm>\\S+)"),
 	SHOW_CURRENT_MENU("show current menu"),
 	EXIT("menu exit");
