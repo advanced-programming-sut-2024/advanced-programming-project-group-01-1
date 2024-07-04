@@ -8,6 +8,8 @@ public enum UserMenusCommands {
     CHANGE_NICKNAME("change nickname -n (?<nickname>\\S+)"),
     CHANGE_EMAIL("change email -e (?<email>\\S+)"),
     CHANGE_PASSWORD("change password -p (?<newPassword>\\S+) -o (?<oldPassword>\\S+)"),
+    SAVE_CHANGES( "save changes -u (?<username>\\S+) -n (?<nickname>\\S+) -e (?<email>\\S+) -p (?<oldPassword>\\S+)" +
+            " -np (?<newPassword>\\S+) -cp (?<confirmNewPassword>\\S+)"),
     ENTER_USER_INFO("menu enter user info menu"),
     SHOW_CURRENT_MENU("show current menu"),
     GAME_HISTORY("game history( -n (?<numberOfGames>\\d+))?"),

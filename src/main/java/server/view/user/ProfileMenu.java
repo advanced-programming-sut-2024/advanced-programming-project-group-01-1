@@ -23,12 +23,24 @@ public class ProfileMenu implements Menuable {
 			result = changeNickname(client, matcher);
 		else if ((matcher = UserMenusCommands.CHANGE_EMAIL.getMatcher(command)) != null)
 			result = changeEmail(client, matcher);
+		else if((matcher = UserMenusCommands.SAVE_CHANGES.getMatcher(command)) != null)
+			result = saveChanges(client, matcher);
 		else if (UserMenusCommands.ENTER_USER_INFO.getMatcher(command) != null) result = enterUserInfo(client);
 		else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(command) != null)
 			result = showCurrentMenu();
 		else if (UserMenusCommands.EXIT.getMatcher(command) != null) result = exit(client);
 		else result = new Result("Invalid command", false);
 		return result;
+	}
+
+	private Result saveChanges(Client client, Matcher matcher) {
+		String username = matcher.group("username");
+		String nickname = matcher.group("nickname");
+		String email = matcher.group("email");
+		String oldPassword = matcher.group("oldPassword");
+		String newPassword = matcher.group("newPassword");
+		String confirmNewPassword = matcher.group("confirmNewPassword");
+		return UserMenusController.saveChanges(client, username, nickname, email, oldPassword, newPassword, confirmNewPassword);
 	}
 
 	private Result changeUsername(Client client, Matcher matcher) {

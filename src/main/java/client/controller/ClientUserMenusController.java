@@ -56,8 +56,13 @@ public class ClientUserMenusController {
 	}
 
 	public static Result saveChanges(String username, String nickname, String email, String oldPassword, String newPassword, String confirmNewPassword) {
-		String command = "save changes -u " + username + " -n " + nickname + " -e " + email + " -p " + oldPassword +
-				" -np " + newPassword + " -cp " + confirmNewPassword;
+		String command = UserMenusCommands.SAVE_CHANGES.getPattern();
+		command = command.replace("(?<username>\\S+)", username);
+		command = command.replace("(?<nickname>\\S+)", nickname);
+		command = command.replace("(?<email>\\S+)", email);
+		command = command.replace("(?<oldPassword>\\S+)", oldPassword);
+		command = command.replace("(?<newPassword>\\S+)", newPassword);
+		command = command.replace("(?<confirmNewPassword>\\\\S+)", confirmNewPassword);
 		return TCPClient.send(command);
 	}
 }

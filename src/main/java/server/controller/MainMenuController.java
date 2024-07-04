@@ -2,6 +2,7 @@ package server.controller;
 
 import message.Result;
 import server.model.Client;
+import server.model.user.User;
 import server.view.game.prematch.MatchFinderMenu;
 import server.view.sign.login.LoginMenu;
 import server.view.user.ProfileMenu;
@@ -29,7 +30,7 @@ public class MainMenuController {
 	}
 
 	public static Result getLoggedInUsername(Client client) {
-		synchronized (client.getIdentity()) {
+		synchronized (User.getUsers()) {
 			return new Result(client.getIdentity().getUsername(), true);
 		}
 	}
