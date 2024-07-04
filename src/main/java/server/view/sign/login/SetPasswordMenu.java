@@ -1,9 +1,9 @@
 package server.view.sign.login;
 
-import message.Command;
 import message.LoginMenusCommands;
 import message.Result;
 import server.controller.sign.LoginMenusController;
+import server.model.Client;
 import server.view.Menuable;
 
 import java.util.regex.Matcher;
@@ -11,14 +11,14 @@ import java.util.regex.Matcher;
 public class SetPasswordMenu implements Menuable {
 
 	@Override
-	public Result run(Command command) {
+	public Result run(Client client, String command) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = LoginMenusCommands.SET_PASSWORD.getMatcher(command.getCommand())) != null)
-			result = setPassword(matcher);
-		else if (LoginMenusCommands.SHOW_CURRENT_MENU.getMatcher(command.getCommand()) != null)
+		if ((matcher = LoginMenusCommands.SET_PASSWORD.getMatcher(command)) != null)
+			result = setPassword(client, matcher);
+		else if (LoginMenusCommands.SHOW_CURRENT_MENU.getMatcher(command) != null)
 			result = showCurrentMenu();
-		else if ((matcher = LoginMenusCommands.EXIT.getMatcher(command.getCommand())) != null) result = exit(matcher);
+		else if (LoginMenusCommands.EXIT.getMatcher(command) != null) result = exit(client);
 		else result = new Result("Invalid command", false);
 		return result;
 	}
@@ -27,17 +27,13 @@ public class SetPasswordMenu implements Menuable {
 		return new Result("Set Password Menu", true);
 	}
 
-	private Result setPassword(Matcher matcher) {
+	private Result setPassword(Client client, Matcher matcher) {
 		String password = matcher.group("password");
-		Result result = LoginMenusController.setPassword(password);
-		if (result.isSuccessful()) {
-			Appview.setMenu(new LoginMenu());
-		}
-		return result;
+		return LoginMenusController.setPassword(client, password);
 	}
 
-	private Result exit(Matcher matcher) {
-		return LoginMenusController.exit();
+	private Result exit(Client client) {
+		return LoginMenusController.exit(client);
 	}
 
 }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import message.Command;
 import message.Result;
+import server.model.Client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -61,7 +62,14 @@ public class ServerWorker extends Thread {
 		try {
 			DataInputStream receiveBuffer = new DataInputStream(connection.getInputStream());
 			DataOutputStream sendBuffer = new DataOutputStream(connection.getOutputStream());
-			Result result = Appview.getMenu().run(gson.fromJson(receiveBuffer.readUTF(), Command.class));
+			Command command = gson.fromJson(receiveBuffer.readUTF(), Command.class);
+			Result result = null;
+			if (command.getToken() == null && command.getCommand() == null)
+				result = new Result(new Client().getToken(), true);
+			else {
+				Client client = Client.getClient(command.getToken());
+				if (client != null) result = client.getCurrentMenu().run(client, command.getCommand());
+			}
 			sendBuffer.writeUTF(gson.toJson(result));
 			connection.close();
 			receiveBuffer.close();

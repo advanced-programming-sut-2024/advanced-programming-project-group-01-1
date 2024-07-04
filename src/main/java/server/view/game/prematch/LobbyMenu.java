@@ -1,122 +1,97 @@
 package server.view.game.prematch;
 
-import javafx.stage.Stage;
-import message.Command;
 import message.GameMenusCommands;
 import message.Result;
 import server.controller.game.PreMatchMenusController;
+import server.model.Client;
 import server.view.Menuable;
 
 import java.util.regex.Matcher;
 
-import static javafx.application.Application.launch;
-
 
 public class LobbyMenu implements Menuable {
 
-	/*
-	 * JavaFX version of the LobbyMenu
-	 */
-
 	@Override
-	public void createStage() {
-		launch();
-	}
-
-	@Override
-	public void start(Stage stage) {
-		// TODO:
-	}
-
-	/*
-	 * Terminal version of the LobbyMenu
-	 */
-
-	@Override
-	public Result run(Command command) {
+	public Result run(Client client, String command) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = GameMenusCommands.SHOW_FACTIONS.getMatcher(command.getCommand())) != null) {
-			result = PreMatchMenusController.showFactions();
-		} else if ((matcher = GameMenusCommands.SELECT_FACTION.getMatcher(command.getCommand())) != null) {
-			result = selectFaction(matcher);
-		} else if ((matcher = GameMenusCommands.SHOW_CARDS.getMatcher(command.getCommand())) != null) {
-			result = PreMatchMenusController.showCards();
-		} else if ((matcher = GameMenusCommands.SHOW_DECK.getMatcher(command.getCommand())) != null) {
-			result = PreMatchMenusController.showDeck();
-		} else if ((matcher = GameMenusCommands.SHOW_INFORMATION_CURRENT_USER.getMatcher(command.getCommand())) != null) {
-			result = PreMatchMenusController.showInfo();
-		} else if ((matcher = GameMenusCommands.SAVE_DECK_WITH_FILE_ADDRESS.getMatcher(command.getCommand())) != null) {
-			result = saveDeckWithAddress(matcher);
-		} else if ((matcher = GameMenusCommands.SAVE_DECK_WITH_NAME.getMatcher(command.getCommand())) != null) {
-			result = saveDeckWithName(matcher);
-		} else if ((matcher = GameMenusCommands.LOAD_DECK_WITH_FILE_ADDRESS.getMatcher(command.getCommand())) != null) {
-			result = loadDeckWithAddress(matcher);
-		} else if ((matcher = GameMenusCommands.LOAD_DECK_WITH_NAME.getMatcher(command.getCommand())) != null) {
-			result = loadDeckWithName(matcher);
-		} else if ((matcher = GameMenusCommands.SHOW_LEADERS.getMatcher(command.getCommand())) != null) {
-			result = PreMatchMenusController.showLeaders();
-		} else if ((matcher = GameMenusCommands.SELECT_LEADER.getMatcher(command.getCommand())) != null) {
-			result = selectLeader(matcher);
-		} else if ((matcher = GameMenusCommands.ADD_TO_DECK.getMatcher(command.getCommand())) != null) {
-			result = addToDeck(matcher);
-		} else if ((matcher = GameMenusCommands.REMOVE_FROM_DECK.getMatcher(command.getCommand())) != null) {
-			result = deleteFromDeck(matcher);
-		} else if ((matcher = GameMenusCommands.PASS_ROUND.getMatcher(command.getCommand())) != null) {
-			result = PreMatchMenusController.changeTurn();
-		} else if ((matcher = GameMenusCommands.START_GAME.getMatcher(command.getCommand())) != null) {
-			result = PreMatchMenusController.startGame();
-		} else {
-			result = new Result("Invalid command", false);
-		}
+		if (GameMenusCommands.SHOW_FACTIONS.getMatcher(command) != null)
+			result = PreMatchMenusController.showFactions(client);
+		else if ((matcher = GameMenusCommands.SELECT_FACTION.getMatcher(command)) != null)
+			result = selectFaction(client, matcher);
+		else if (GameMenusCommands.SHOW_CARDS.getMatcher(command) != null) result = PreMatchMenusController.showCards(client);
+		else if (GameMenusCommands.SHOW_DECK.getMatcher(command) != null) result = PreMatchMenusController.showDeck(client);
+		else if (GameMenusCommands.SHOW_INFORMATION_CURRENT_USER.getMatcher(command) != null)
+			result = PreMatchMenusController.showInfo(client);
+		else if ((matcher = GameMenusCommands.SAVE_DECK_WITH_FILE_ADDRESS.getMatcher(command)) != null)
+			result = saveDeckWithAddress(client, matcher);
+		else if ((matcher = GameMenusCommands.SAVE_DECK_WITH_NAME.getMatcher(command)) != null)
+			result = saveDeckWithName(client, matcher);
+		else if ((matcher = GameMenusCommands.LOAD_DECK_WITH_FILE_ADDRESS.getMatcher(command)) != null)
+			result = loadDeckWithAddress(client, matcher);
+		else if ((matcher = GameMenusCommands.LOAD_DECK_WITH_NAME.getMatcher(command)) != null)
+			result = loadDeckWithName(client, matcher);
+		else if (GameMenusCommands.SHOW_LEADERS.getMatcher(command) != null)
+			result = PreMatchMenusController.showLeaders(client);
+		else if ((matcher = GameMenusCommands.SELECT_LEADER.getMatcher(command)) != null)
+			result = selectLeader(client, matcher);
+		else if ((matcher = GameMenusCommands.ADD_TO_DECK.getMatcher(command)) != null) result = addToDeck(client, matcher);
+		else if ((matcher = GameMenusCommands.REMOVE_FROM_DECK.getMatcher(command)) != null)
+			result = deleteFromDeck(client, matcher);
+		else if (GameMenusCommands.PASS_ROUND.getMatcher(command) != null)
+			result = PreMatchMenusController.changeTurn(client);
+		else if (GameMenusCommands.START_GAME.getMatcher(command) != null)
+			result = PreMatchMenusController.startGame(client);
+		else result = new Result("Invalid command", false);
+
 		return result;
 	}
 
-	private Result loadDeckWithName(Matcher matcher) {
+	private Result loadDeckWithName(Client client, Matcher matcher) {
 		String name = matcher.group("name");
-		return PreMatchMenusController.loadDeckByName(name);
+		return PreMatchMenusController.loadDeckByName(client, name);
 	}
 
-	private Result loadDeckWithAddress(Matcher matcher) {
+	private Result loadDeckWithAddress(Client client, Matcher matcher) {
 		String address = matcher.group("fileAddress");
-		return PreMatchMenusController.loadDeckByAddress(address);
+		return PreMatchMenusController.loadDeckByAddress(client, address);
 	}
 
-	private Result selectFaction(Matcher matcher) {
+	private Result selectFaction(Client client, Matcher matcher) {
 		String faction = matcher.group("faction");
-		return PreMatchMenusController.selectFaction(faction);
+		return PreMatchMenusController.selectFaction(client, faction);
 	}
 
-	private Result saveDeckWithAddress(Matcher matcher) {
+	private Result saveDeckWithAddress(Client client, Matcher matcher) {
 		String address = matcher.group("fileAddress");
-		return PreMatchMenusController.saveDeckByAddress(address);
+		return PreMatchMenusController.saveDeckByAddress(client, address);
 	}
 
-	private Result saveDeckWithName(Matcher matcher) {
+	private Result saveDeckWithName(Client client, Matcher matcher) {
 		String name = matcher.group("name");
-		return PreMatchMenusController.saveDeckByName(name);
+		return PreMatchMenusController.saveDeckByName(client, name);
 	}
 
-	private Result loadDeck(Matcher matcher) {
+	private Result loadDeck(Client client, Matcher matcher) {
 		String address = matcher.group("fileAddress");
-		return PreMatchMenusController.loadDeckByAddress(address);
+		return PreMatchMenusController.loadDeckByAddress(client, address);
 	}
 
-	private Result selectLeader(Matcher matcher) {
+	private Result selectLeader(Client client, Matcher matcher) {
 		int leaderNumber = Integer.parseInt(matcher.group("leaderNumber"));
-		return PreMatchMenusController.selectLeader(leaderNumber);
+		return PreMatchMenusController.selectLeader(client, leaderNumber);
 	}
 
-	private Result addToDeck(Matcher matcher) {
+	private Result addToDeck(Client client, Matcher matcher) {
 		String cardName = matcher.group("cardName");
 		int count = Integer.parseInt(matcher.group("count"));
-		return PreMatchMenusController.addToDeck(cardName, count);
+		return PreMatchMenusController.addToDeck(client, cardName, count);
 	}
 
-	private Result deleteFromDeck(Matcher matcher) {
+	private Result deleteFromDeck(Client client, Matcher matcher) {
 		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
 		int count = Integer.parseInt(matcher.group("count"));
-		return PreMatchMenusController.deleteFromDeck(cardNumber, count);
+		return PreMatchMenusController.deleteFromDeck(client, cardNumber, count);
 	}
 
 }
