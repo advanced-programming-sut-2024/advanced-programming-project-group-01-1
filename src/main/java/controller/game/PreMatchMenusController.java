@@ -1,5 +1,8 @@
 package controller.game;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import javafx.util.Pair;
 import main.CardCreator;
 import model.Result;
 import model.card.Card;
@@ -49,12 +52,52 @@ public class PreMatchMenusController {
 		return new Result(message.toString(), true);
 	}
 
+	public static Result showCardsForGraphic() {
+		ArrayList<Pair<String, Integer>> cards = new ArrayList<>();
+		Card previousCard = null;
+		int count = 0;
+		for (Card card : User.getLoggedInUser().getDeck().getAvailableCards()) {
+			if (previousCard == null) {
+				previousCard = card;
+				count++;
+			} else if (previousCard.toString().equals(card.toString())) {
+				count++;
+			} else {
+				cards.add(new Pair<>(previousCard.getDisplayName(), count));
+				previousCard = card;
+				count = 1;
+			}
+		}
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return new Result(gson.toJson(cards), true);
+	}
+
 	public static Result showDeck() {
 		StringBuilder message = new StringBuilder();
 		for (Card card : User.getLoggedInUser().getDeck().getCards()) {
 			message.append(card.toString()).append("\n------------------\n");
 		}
 		return new Result(message.toString(), true);
+	}
+
+	public static Result showDeckForGraphic() {
+		ArrayList<Pair<String, Integer>> cards = new ArrayList<>();
+		Card previousCard = null;
+		int count = 0;
+		for (Card card : User.getLoggedInUser().getDeck().getCards()) {
+			if (previousCard == null) {
+				previousCard = card;
+				count++;
+			} else if (previousCard.toString().equals(card.toString())) {
+				count++;
+			} else {
+				cards.add(new Pair<>(previousCard.getDisplayName(), count));
+				previousCard = card;
+				count = 1;
+			}
+		}
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return new Result(gson.toJson(cards), true);
 	}
 
 	public static Result showInfo() {

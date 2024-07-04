@@ -240,7 +240,8 @@ public class Game {
 		}
 	}
 
-	public void placeCard(Card card, int spaceId) {
+	public void placeCard(Card card, int spaceId) throws Exception {
+		if (spaceId >= 3) throw new Exception("Can't place card for enemy");
 		try {
 			card.put(spaceId);
 			changeTurn();

@@ -10,7 +10,7 @@ public class Siege extends Unit {
 
 	@Override
 	public void put(int rowNumber) throws Exception {
-		if (rowNumber != 0) throw new Exception("Invalid row number");
+		if (rowNumber != 0 && rowNumber != 5) throw new Exception("Invalid row number");
 		super.put(rowNumber);
 	}
 
