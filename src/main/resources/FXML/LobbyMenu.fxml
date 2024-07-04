@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.prematch.LobbyMenu">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/backgrounds/MatchFinderMenu.jpg" />
+         </image>
+      </ImageView>
+      <ScrollPane fx:id="collectionCardPane" prefHeight="768.0" prefWidth="500.0" stylesheets="@../CSS/scrollpanestyle.css">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </ScrollPane>
+      <ScrollPane fx:id="inDeckCardPane" layoutX="866.0" prefHeight="768.0" prefWidth="500.0" stylesheets="@../CSS/scrollpanestyle.css"/>
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="712.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="ready" />
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="649.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="save deck" />
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="586.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="load deck" />
+   </children>
+</Pane>

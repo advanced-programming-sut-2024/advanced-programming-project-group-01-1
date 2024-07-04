@@ -132,18 +132,30 @@ public class Deck implements Serializable {
 			}
 		}
 		if (cardInDeck != null) {
-			if (card instanceof Special) specialCount++;
+			if (cardInDeck instanceof Special) specialCount++;
 			else unitCount++;
-			availableCards.remove(card);
-			return cards.add(card);
+			availableCards.remove(cardInDeck);
+			cards.add(cardInDeck);
+			cards.sort(Card::compareTo);
+			return true;
 		}
 		return false;
 	}
 
 	public boolean remove(Card card) {
-		if (cards.remove(card)) {
-			if (card instanceof Special) specialCount--;
+		Card cardInDeck = null;
+		for (Card c : cards) {
+			if (c.toString().equals(card.toString())) {
+				cardInDeck = c;
+				break;
+			}
+		}
+		if (cardInDeck != null) {
+			if (cardInDeck instanceof Special) specialCount--;
 			else unitCount--;
+			availableCards.add(cardInDeck);
+			cards.remove(cardInDeck);
+			cards.sort(Card::compareTo);
 			return true;
 		}
 		return false;

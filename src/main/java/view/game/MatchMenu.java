@@ -1,6 +1,7 @@
 package view.game;
 
 import controller.game.MatchMenuController;
+import javafx.application.Application;
 import javafx.stage.Stage;
 import model.Result;
 import view.Menuable;
@@ -10,7 +11,7 @@ import java.util.regex.Matcher;
 import static javafx.application.Application.launch;
 
 
-public class MatchMenu implements Menuable {
+public class MatchMenu extends Application implements Menuable {
 
 	/*
 	 * JavaFX version of the LobbyMenu

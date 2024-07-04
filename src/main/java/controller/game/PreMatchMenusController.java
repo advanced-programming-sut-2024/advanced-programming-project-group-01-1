@@ -13,6 +13,7 @@ import model.user.Deck;
 import model.user.User;
 import view.Appview;
 import view.MainMenu;
+import view.game.prematch.LobbyMenu;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class PreMatchMenusController {
 		if (opponent == null) return new Result("User Not Found", false);
 		if (opponent.equals(User.getLoggedInUser())) return new Result("You Cannot Play With Yourself", false);
 		PreMatchMenusController.opponent = opponent;
+		Appview.setMenu(new LobbyMenu());
 		return new Result("Entering Lobby", true);
 	}
 
@@ -53,23 +55,27 @@ public class PreMatchMenusController {
 	}
 
 	public static Result showCardsForGraphic() {
-		ArrayList<Pair<String, Integer>> cards = new ArrayList<>();
 		Card previousCard = null;
 		int count = 0;
-		for (Card card : User.getLoggedInUser().getDeck().getAvailableCards()) {
+		StringBuilder result = new StringBuilder();
+		ArrayList<Card> cards = User.getLoggedInUser().getDeck().getAvailableCards();
+		cards.sort(Card::compareTo);
+		for (Card card : cards) {
 			if (previousCard == null) {
 				previousCard = card;
 				count++;
 			} else if (previousCard.toString().equals(card.toString())) {
 				count++;
 			} else {
-				cards.add(new Pair<>(previousCard.getDisplayName(), count));
+				result.append(previousCard.getName()).append(":").append(count).append("\n");
 				previousCard = card;
 				count = 1;
 			}
 		}
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		return new Result(gson.toJson(cards), true);
+		if (previousCard != null) {
+			result.append(previousCard.getName()).append(":").append(count).append("\n");
+		}
+		return new Result(result.toString(), true);
 	}
 
 	public static Result showDeck() {
@@ -81,23 +87,27 @@ public class PreMatchMenusController {
 	}
 
 	public static Result showDeckForGraphic() {
-		ArrayList<Pair<String, Integer>> cards = new ArrayList<>();
 		Card previousCard = null;
 		int count = 0;
-		for (Card card : User.getLoggedInUser().getDeck().getCards()) {
+		StringBuilder result = new StringBuilder();
+		ArrayList<Card> cards = User.getLoggedInUser().getDeck().getCards();
+		cards.sort(Card::compareTo);
+		for (Card card : cards) {
 			if (previousCard == null) {
 				previousCard = card;
 				count++;
 			} else if (previousCard.toString().equals(card.toString())) {
 				count++;
 			} else {
-				cards.add(new Pair<>(previousCard.getDisplayName(), count));
+				result.append(previousCard.getName()).append(":").append(count).append("\n");
 				previousCard = card;
 				count = 1;
 			}
 		}
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		return new Result(gson.toJson(cards), true);
+		if (previousCard != null) {
+			result.append(previousCard.getName()).append(":").append(count).append("\n");
+		}
+		return new Result(result.toString(), true);
 	}
 
 	public static Result showInfo() {
@@ -201,7 +211,7 @@ public class PreMatchMenusController {
 		if (User.getLoggedInUser().getDeck().getInDeckCount(card) < count)
 			return new Result("Not Enough Cards in Deck", false);
 		for (int i = 0; i < count; i++)
-			User.getLoggedInUser().getDeck().getCards().remove(card);
+			User.getLoggedInUser().getDeck().remove(card);
 		return new Result(count > 1 ? "Cards" : "Card" + " Removed Successfully", true);
 	}
 

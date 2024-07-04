@@ -2,7 +2,10 @@ package view;
 
 public enum Constants {
 
-    WIDTH(800);
+    LARGE_CARD_WIDTH(140),
+    LARGE_CARD_HEIGHT(265),
+    PREVIEW_COUNT_ICON_WIDTH(29),
+    PREVIEW_COUNT_ICON_HEIGHT(23);
 
 
     private final double value;
