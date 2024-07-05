@@ -61,7 +61,7 @@ public class LobbyMenu extends Application implements Menuable {
 	public void start(Stage stage) {
 
 		Appview.setStage(stage);
-		URL url = getClass().getResource("/fxml/LobbyMenu.fxml");
+		URL url = getClass().getResource("/FXML/LobbyMenu.fxml");
 		if (url == null) {
 			System.out.println("Couldn't find file: LobbyMenu.fxml");
 			return;
