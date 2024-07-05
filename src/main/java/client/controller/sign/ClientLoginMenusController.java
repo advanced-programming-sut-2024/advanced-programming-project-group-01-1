@@ -3,6 +3,7 @@ package client.controller.sign;
 import client.main.TCPClient;
 import client.view.ClientAppview;
 import client.view.ClientMainMenu;
+import client.view.sign.login.ClientAuthenticationMenu;
 import client.view.sign.login.ClientForgotPasswordMenu;
 import client.view.sign.login.ClientLoginMenu;
 import client.view.sign.login.ClientSetPasswordMenu;
@@ -19,6 +20,20 @@ public class ClientLoginMenusController {
 		command = command.replace("(?<username>\\S+)", username);
 		command = command.replace("(?<password>\\S+)", password);
 		command = command.replace("(?<stayLoggedIn> -stay-logged-in)?", (stayLoggedIn ? "-stay-logged-in" : ""));
+		Result result = TCPClient.send(command);
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientAuthenticationMenu());
+		return result;
+	}
+
+
+	public static Result sendEmail() {
+		String command = LoginMenusCommands.SEND_EMAIL.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result checkCode(String code) {
+		String command = LoginMenusCommands.CHECK_CODE.getPattern();
+		command = command.replace("(?<code>\\d+)", code);
 		Result result = TCPClient.send(command);
 		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientMainMenu());
 		return result;
@@ -51,7 +66,8 @@ public class ClientLoginMenusController {
 	public static Result exit() {
 		String command = LoginMenusCommands.EXIT.getPattern();
 		Result result = TCPClient.send(command);
-		System.exit(0);
+		if (ClientAppview.getMenu() instanceof ClientAuthenticationMenu) ClientAppview.setMenu(new ClientLoginMenu());
+		else System.exit(0);
 		return result;
 	}
 

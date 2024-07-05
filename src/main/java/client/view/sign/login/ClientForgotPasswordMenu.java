@@ -68,10 +68,6 @@ public class ClientForgotPasswordMenu extends Application implements Menuable {
 		ClientLoginMenusController.exit();
 	}
 
-	/*
-	 * Terminal version of the LobbyMenu
-	 */
-
 	@Override
 	public Result run(String input) {
 		Matcher matcher;

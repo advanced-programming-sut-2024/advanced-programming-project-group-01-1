@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Hyperlink?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="client.view.sign.login.ClientAuthenticationMenu"
+            prefHeight="768.0" prefWidth="1366.0">
+    <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+        <Image url="@../images/backgrounds/LoginMenu.jpg"/>
+    </ImageView>
+    <VBox spacing="12.5" alignment="CENTER" layoutX="533" layoutY="135">
+        <Label id="normal-text" stylesheets="@../CSS/textstyle.css"
+               text="Enter Authentication Code"/>
+        <TextField fx:id="authenticationCodeField" layoutX="534.0" layoutY="111.0" prefHeight="20.0" prefWidth="300.0"
+                   stylesheets="@../CSS/textfieldstyle.css"/>
+        <Hyperlink onMouseClicked="#sendAgain" text="Didn't receive the code?" id="normal-text"/>
+        <Button onMouseClicked="#checkCode" text="Check" id="ipad-dark-grey" mnemonicParsing="false"
+                style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 12;"
+                stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css"/>
+        <Button onMouseClicked="#exit" text="Back" id="ipad-dark-grey" mnemonicParsing="false"
+                style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 12;"
+                stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css"/>
+
+    </VBox>
+</AnchorPane>

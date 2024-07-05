@@ -10,6 +10,8 @@ public enum LoginMenusCommands {
 	GET_QUESTION("get question"),
 	ANSWER_QUESTION("answer -a (?<answer>\\S+)"),
 	SET_PASSWORD("set-password -p (?<password>\\S+)"),
+	SEND_EMAIL("send email"),
+	CHECK_CODE("check code -c (?<code>\\d+)"),
 	SHOW_CURRENT_MENU("show current menu"),
 	EXIT("menu exit");
 

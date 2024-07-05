@@ -40,8 +40,9 @@ module w {
 	exports server.main;
 	exports server.view;
 	exports message;
+
 	//opens other packages to gson and jackson
 	//opens java.util to com.google.gson, com.fasterxml.jackson.databind;
-
 	requires com.google.gson;
+	requires jakarta.mail;
 }
