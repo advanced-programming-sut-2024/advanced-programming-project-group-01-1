@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class PreMatchMenusController {
 
+	private static int cnt = 0;
 	private static User opponent = null;
 
 	public static Result createGame(String opponentUsername) {
@@ -161,7 +162,8 @@ public class PreMatchMenusController {
 	}
 
 	public static Result saveDeckByName(String name) {
-		String path = PreMatchMenusController.class.getResource("/decks/" + name + ".json").getPath();
+		String path = PreMatchMenusController.class.getResource("/decks").getPath();
+		path = path + "/" + name + ".json";
 		return saveDeckByAddress(path);
 	}
 
@@ -179,7 +181,8 @@ public class PreMatchMenusController {
 	}
 
 	public static Result loadDeckByName(String name) {
-		String path = PreMatchMenusController.class.getResource("/decks/" + name + ".json").getPath();
+		String path = PreMatchMenusController.class.getResource("/decks").getPath();
+		path = path + "/" + name + ".json";
 		return loadDeckByAddress(path);
 	}
 
@@ -224,16 +227,20 @@ public class PreMatchMenusController {
 	}
 
 	public static Result changeTurn() {
+		if (!User.getLoggedInUser().getDeck().isValid()) return new Result("Your Deck Is Invalid", false);
 		User temp = User.getLoggedInUser();
 		User.setLoggedInUser(opponent);
 		opponent = temp;
-		return new Result("Turn Changed Successfully", true);
+		cnt++;
+		if (cnt % 2 == 0){
+			return startGame();
+		}
+		else {
+			return new Result("Turn Changed Successfully", true);
+		}
 	}
 
 	public static Result startGame() {
-		if (!User.getLoggedInUser().getDeck().isValid()) return new Result("Your Deck Is Invalid", false);
-		if (!opponent.getDeck().isValid()) return new Result("Opponent's Deck Is Invalid", false);
-		changeTurn();
 		Game.createGame(User.getLoggedInUser(), opponent);
 		return new Result("Game Started Successfully", true);
 	}

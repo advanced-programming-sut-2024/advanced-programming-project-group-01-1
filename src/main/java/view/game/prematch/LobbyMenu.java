@@ -5,16 +5,20 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Result;
+import view.AlertMaker;
 import view.Appview;
 import view.Constants;
 import view.Menuable;
@@ -22,6 +26,7 @@ import view.game.GameMenusCommands;
 import view.model.LargeCard;
 import view.model.PreviewCard;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -46,7 +51,11 @@ public class LobbyMenu extends Application implements Menuable {
 	public Rectangle leaderField;
 	public Rectangle factionIconField;
 	public Label factionNameField;
-
+	public Label countField;
+	public Label strengthField;
+	public Label unitField;
+	public Label specialField;
+	public Label heroField;
 
 	@Override
 	public void start(Stage stage) {
@@ -78,6 +87,17 @@ public class LobbyMenu extends Application implements Menuable {
 		updateInDeckCardPane();
 		updateLeader();
 		updateFaction();
+		updateStats();
+	}
+
+	private void updateStats() {
+		Result result = PreMatchMenusController.showInfo();
+		String[] parts = result.getMessage().split("\n");
+		countField.setText(parts[5].substring(25));
+		specialField.setText(parts[6].substring(33));
+		unitField.setText(parts[7].substring(30));
+		heroField.setText(parts[8].substring(30));
+		strengthField.setText(parts[9].substring(21));
 	}
 
 	public void updateCollectionCardPane() {
@@ -363,6 +383,180 @@ public class LobbyMenu extends Application implements Menuable {
 		updateFactionPane();
 	}
 
+	/*
+	 * save deck panel
+	 */
+
+	public Pane saveDeckPane;
+	public Label saveDeckLabel;
+	public TextField saveDeckByNameTextField;
+	public Button saveDeckByNameButton;
+	public Button saveDeckByAddressButton;
+
+	public void saveDeck(MouseEvent mouseEvent) {
+
+		saveDeckPane = new Pane();
+		saveDeckPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+		saveDeckPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
+
+		saveDeckLabel = new Label("Save deck");
+		saveDeckLabel.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 100);
+		saveDeckLabel.setLayoutY(Constants.SCREEN_HEIGHT.getValue() / 2 - 100);
+		saveDeckLabel.setPrefWidth(200);
+		saveDeckLabel.setPrefHeight(50);
+		saveDeckLabel.setAlignment(javafx.geometry.Pos.CENTER);
+		saveDeckLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+
+		String textCSS = getClass().getResource("/CSS/textstyle.css").toExternalForm();
+		saveDeckLabel.getStylesheets().add(textCSS);
+		saveDeckLabel.setId("normal-text");
+
+		saveDeckByNameTextField = new TextField();
+		saveDeckByNameTextField.setAlignment(javafx.geometry.Pos.CENTER);
+		String textFieldCSS = getClass().getResource("/CSS/textfieldstyle.css").toExternalForm();
+		saveDeckByNameTextField.getStylesheets().add(textFieldCSS);
+		System.err.println(saveDeckByNameTextField.getPrefWidth());
+		saveDeckByNameTextField.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 150);
+		saveDeckByNameTextField.setLayoutY(saveDeckLabel.getLayoutY() + 70);
+		saveDeckByNameTextField.setPromptText("Enter deck name");
+
+		//saveDeckLabel.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
+
+		saveDeckByNameButton = new Button("Save by name");
+		String buttonCSS = getClass().getResource("/CSS/buttonstyle.css").toExternalForm();
+		saveDeckByNameButton.getStylesheets().add(buttonCSS);
+		saveDeckByNameButton.getStylesheets().add(textCSS);
+		saveDeckByNameButton.setId("ipad-dark-grey");
+		saveDeckByNameButton.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
+		saveDeckByNameButton.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 75);
+		saveDeckByNameButton.setLayoutY(saveDeckByNameTextField.getLayoutY() + 70);
+		saveDeckByNameButton.setOnMouseClicked(this::saveDeckByName);
+
+
+		saveDeckByAddressButton = new Button("choose file");
+		saveDeckByAddressButton.getStylesheets().add(buttonCSS);
+		saveDeckByAddressButton.getStylesheets().add(textCSS);
+		saveDeckByAddressButton.setId("ipad-dark-grey");
+		saveDeckByAddressButton.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
+		saveDeckByAddressButton.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 75);
+		saveDeckByAddressButton.setLayoutY(saveDeckByNameButton.getLayoutY() + 70);
+		saveDeckByAddressButton.setOnMouseClicked(this::saveDeckByAddress);
+
+
+		saveDeckPane.getChildren().addAll(saveDeckLabel, saveDeckByNameTextField,  saveDeckByNameButton, saveDeckByAddressButton);
+		root.getChildren().add(saveDeckPane);
+	}
+
+	public void saveDeckByName(MouseEvent mouseEvent) {
+		Result result = PreMatchMenusController.saveDeckByName(saveDeckByNameTextField.getText());
+		AlertMaker.makeAlert("Save deck", result);
+		root.getChildren().remove(saveDeckPane);
+		updateScreen();
+	}
+
+	public void saveDeckByAddress(MouseEvent mouseEvent) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save deck");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON file", "*.json"));
+		File file = fileChooser.showOpenDialog(Appview.getStage());
+		if (file == null) {
+			return;
+		}
+		String address = file.getAbsolutePath();
+		Result result = PreMatchMenusController.saveDeckByAddress(address);
+		AlertMaker.makeAlert("Save deck", result);
+		root.getChildren().remove(saveDeckPane);
+		updateScreen();
+	}
+
+	/*
+	 * load deck panel
+	 */
+
+	public Pane loadDeckPane;
+	public Label loadDeckLabel;
+	public TextField loadDeckByNameTextField;
+	public Button loadDeckByNameButton;
+	public Button loadDeckByAddressButton;
+
+	public void loadDeck(MouseEvent mouseEvent) {
+		loadDeckPane = new Pane();
+		loadDeckPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+		loadDeckPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
+
+		loadDeckLabel = new Label("Load deck");
+		loadDeckLabel.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 100);
+		loadDeckLabel.setLayoutY(Constants.SCREEN_HEIGHT.getValue() / 2 - 100);
+		loadDeckLabel.setPrefWidth(200);
+		loadDeckLabel.setPrefHeight(50);
+		loadDeckLabel.setAlignment(javafx.geometry.Pos.CENTER);
+		loadDeckLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+
+		String textCSS = getClass().getResource("/CSS/textstyle.css").toExternalForm();
+		loadDeckLabel.getStylesheets().add(textCSS);
+		loadDeckLabel.setId("normal-text");
+
+		loadDeckByNameTextField = new TextField();
+		loadDeckByNameTextField.setAlignment(javafx.geometry.Pos.CENTER);
+		String textFieldCSS = getClass().getResource("/CSS/textfieldstyle.css").toExternalForm();
+		loadDeckByNameTextField.getStylesheets().add(textFieldCSS);
+		System.err.println(loadDeckByNameTextField.getPrefWidth());
+		loadDeckByNameTextField.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 150);
+		loadDeckByNameTextField.setLayoutY(loadDeckLabel.getLayoutY() + 70);
+		loadDeckByNameTextField.setPromptText("Enter deck name");
+
+		//loadDeckLabel.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
+
+		loadDeckByNameButton = new Button("Load by name");
+		String buttonCSS = getClass().getResource("/CSS/buttonstyle.css").toExternalForm();
+		loadDeckByNameButton.getStylesheets().add(buttonCSS);
+		loadDeckByNameButton.getStylesheets().add(textCSS);
+		loadDeckByNameButton.setId("ipad-dark-grey");
+		loadDeckByNameButton.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
+		loadDeckByNameButton.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 75);
+		loadDeckByNameButton.setLayoutY(loadDeckByNameTextField.getLayoutY() + 70);
+		loadDeckByNameButton.setOnMouseClicked(this::loadDeckByName);
+
+		loadDeckByAddressButton = new Button("choose file");
+		loadDeckByAddressButton.getStylesheets().add(buttonCSS);
+		loadDeckByAddressButton.getStylesheets().add(textCSS);
+		loadDeckByAddressButton.setId("ipad-dark-grey");
+		loadDeckByAddressButton.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
+		loadDeckByAddressButton.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 75);
+		loadDeckByAddressButton.setLayoutY(loadDeckByNameButton.getLayoutY() + 70);
+		loadDeckByAddressButton.setOnMouseClicked(this::loadDeckByAddress);
+
+		loadDeckPane.getChildren().addAll(loadDeckLabel, loadDeckByNameTextField,  loadDeckByNameButton, loadDeckByAddressButton);
+		root.getChildren().add(loadDeckPane);
+	}
+
+	public void loadDeckByName(MouseEvent mouseEvent) {
+		Result result = PreMatchMenusController.loadDeckByName(loadDeckByNameTextField.getText());
+		AlertMaker.makeAlert("Load deck", result);
+		root.getChildren().remove(loadDeckPane);
+		updateScreen();
+	}
+
+	public void loadDeckByAddress(MouseEvent mouseEvent) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Load deck");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON file", "*.json"));
+		File file = fileChooser.showOpenDialog(Appview.getStage());
+		if (file == null) {
+			return;
+		}
+		String address = file.getAbsolutePath();
+		Result result = PreMatchMenusController.loadDeckByAddress(address);
+		AlertMaker.makeAlert("Load deck", result);
+		root.getChildren().remove(loadDeckPane);
+		updateScreen();
+	}
+
+	public void ready(MouseEvent mouseEvent) {
+		Result result = PreMatchMenusController.changeTurn();
+		AlertMaker.makeAlert("ready", result);
+		updateScreen();
+	}
 
 
 	/*
