@@ -11,12 +11,29 @@
             <Image url="@../images/backgrounds/MainMenu.jpg" />
          </image>
       </ImageView>
-      <Button id="ipad-dark-grey" layoutX="150.0" layoutY="359.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="new game" onMouseClicked="#newGame"/>
-      <Button id="ipad-dark-grey" layoutX="150.0" layoutY="536.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text=" profile" onMouseClicked="#profile"/>
-      <Button id="ipad-dark-grey" layoutX="1066.0" layoutY="359.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="leaderboard" onMouseClicked="#leaderboard"/>
-      <Button id="ipad-dark-grey" layoutX="1066.0" layoutY="536.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="gogo tv" onMouseClicked="#tv"/>
-      <Button id="ipad-dark-grey" layoutX="1216.0" layoutY="718.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="logout" onMouseClicked="#logout"/>
+      <Button id="ipad-dark-grey" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="friends" />
+      <Button id="ipad-dark-grey" layoutX="150.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#newGame" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="new game" />
+      <Button id="ipad-dark-grey" layoutX="150.0" layoutY="536.0" mnemonicParsing="false" onMouseClicked="#profile" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text=" profile" />
+      <Button id="ipad-dark-grey" layoutX="1066.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#leaderboard" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="leaderboard" />
+      <Button id="ipad-dark-grey" layoutX="1066.0" layoutY="536.0" mnemonicParsing="false" onMouseClicked="#tv" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="gogo tv" />
+      <Button id="ipad-dark-grey" layoutX="1216.0" layoutY="718.0" mnemonicParsing="false" onMouseClicked="#logout" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="logout" />
       <Label id="title-text" alignment="CENTER" layoutX="-4.0" prefHeight="113.0" prefWidth="1366.0" stylesheets="@../CSS/textstyle.css" text="welcome back commander" textAlignment="CENTER" />
-      <Label id="title-text" alignment="CENTER" layoutY="64.0" prefHeight="99.0" prefWidth="1366.0" stylesheets="@../CSS/textstyle.css" text="Label" textAlignment="CENTER" fx:id="username"/>
+      <Label id="title-text" fx:id="username" alignment="CENTER" layoutY="64.0" prefHeight="99.0" prefWidth="1366.0" stylesheets="@../CSS/textstyle.css" text="Label" textAlignment="CENTER" />
+      <VBox alignment="TOP_CENTER" layoutY="64.0" prefHeight="250.0" prefWidth="316.0" spacing="10.0">
+         <children>
+            <TextField fx:id="usernameField" layoutX="533.0" layoutY="27.0" stylesheets="@../CSS/textfieldstyle.css" />
+            <Button id="ipad-dark-grey" mnemonicParsing="false" prefHeight="22.0" prefWidth="119.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 15" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="Send Reqeuest" />
+            <HBox alignment="CENTER" prefHeight="44.0" prefWidth="282.0">
+               <children>
+                  <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="109.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Friends">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="show" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="116.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Pending" toggleGroup="$show" />
+                  <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="91.0" selected="true" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Sent" toggleGroup="$show" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </Pane>
