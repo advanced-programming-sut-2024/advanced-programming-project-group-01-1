@@ -13,12 +13,12 @@
             <Image url="@../images/backgrounds/MatchFinderMenu.jpg" />
          </image>
       </ImageView>
-      <ScrollPane fx:id="collectionCardPane" prefHeight="768.0" prefWidth="500.0">
+      <ScrollPane fx:id="collectionCardPane" prefHeight="768.0" prefWidth="500.0" stylesheets="@../CSS/scrollpanestyle.css">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </ScrollPane>
-      <ScrollPane fx:id="inDeckCardPane" layoutX="866.0" prefHeight="768.0" prefWidth="500.0" />
+      <ScrollPane fx:id="inDeckCardPane" layoutX="866.0" prefHeight="768.0" prefWidth="500.0" stylesheets="@../CSS/scrollpanestyle.css"/>
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="712.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="ready" onMouseClicked="#ready"/>
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="649.0" mnemonicParsing="false" onMouseClicked="#saveDeck" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="save deck" />
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="586.0" mnemonicParsing="false" onMouseClicked="#loadDeck" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="load deck" />

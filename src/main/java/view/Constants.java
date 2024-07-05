@@ -11,7 +11,10 @@ public enum Constants {
     PREVIEW_COUNT_ICON_HEIGHT(23),
 
     LARGE_CARD_WIDTH(264),
-    LARGE_CARD_HEIGHT(500);
+    LARGE_CARD_HEIGHT(500),
+
+    SMALL_CARD_WIDTH(75),
+    SMALL_CARD_HEIGHT(95);
 
     private final double value;
 

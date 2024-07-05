@@ -82,30 +82,33 @@ public abstract class Card implements Cloneable, Serializable, Comparable<Card> 
 	public int compareTo(Card card) {
 		int thisPriority;
 		if (this instanceof Decoy) {
-			thisPriority = 1000;
+			thisPriority = -1000;
 		} else if (this instanceof InstantSpell) {
-			thisPriority = 999;
+			thisPriority = -999;
 		} else if (this instanceof Buffer) {
-			thisPriority = 998;
+			thisPriority = -998;
 		} else if (this instanceof Weather) {
-			thisPriority = 997;
+			thisPriority = -997;
 		} else {
 			Unit unit = (Unit) this;
 			thisPriority = unit.getBasePower();
 		}
 		int cardPriority;
 		if (card instanceof Decoy) {
-			cardPriority = 1000;
+			cardPriority = -1000;
 		} else if (card instanceof InstantSpell) {
-			cardPriority = 999;
+			cardPriority = -999;
 		} else if (card instanceof Buffer) {
-			cardPriority = 998;
+			cardPriority = -998;
 		} else if (card instanceof Weather) {
-			cardPriority = 997;
+			cardPriority = -997;
 		} else {
 			Unit unit = (Unit) card;
 			cardPriority = unit.getBasePower();
 		}
-		return cardPriority - thisPriority;
+		if (cardPriority == thisPriority){
+			return this.getName().compareTo(card.getName());
+		}
+		return thisPriority - cardPriority;
 	}
 }

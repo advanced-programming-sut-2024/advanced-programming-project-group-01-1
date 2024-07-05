@@ -2,10 +2,15 @@ package view.game;
 
 import controller.game.MatchMenuController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Result;
+import view.Appview;
 import view.Menuable;
 
+import java.net.URL;
 import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
@@ -24,7 +29,21 @@ public class MatchMenu extends Application implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
-		// TODO:
+		Appview.setStage(stage);
+		URL url = getClass().getResource("/FXML/MatchMenu.fxml");
+		if (url == null){
+			System.out.println("Couldn't find file: FXML/MatchMenu.fxml");
+			return;
+		}
+		Pane root = null;
+		try {
+			root = FXMLLoader.load(url);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
 
 	/*
