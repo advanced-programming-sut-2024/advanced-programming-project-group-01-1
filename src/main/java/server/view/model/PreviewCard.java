@@ -1,11 +1,10 @@
-package view.model;
+package server.view.model;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import view.Constants;
 
 import java.util.HashMap;
 

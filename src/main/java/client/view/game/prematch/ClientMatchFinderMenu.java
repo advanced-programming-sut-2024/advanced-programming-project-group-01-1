@@ -1,6 +1,9 @@
 package client.view.game.prematch;
 
 import client.controller.game.ClientPreMatchMenusController;
+import client.view.AlertMaker;
+import client.view.ClientAppview;
+import client.view.Menuable;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,26 +13,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import message.Result;
-import client.view.AlertMaker;
-import client.view.ClientAppview;
-import client.view.Menuable;
 import message.GameMenusCommands;
+import message.Result;
+import server.controller.game.PreMatchMenusController;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
-import static javafx.application.Application.launch;
-
 public class ClientMatchFinderMenu extends Application implements Menuable {
 
-	/*
-	 * JavaFX version of the LobbyMenu
-	 */
 
 	@Override
-	public void createStage(){
+	public void createStage() {
 		launch();
 	}
 
@@ -71,10 +67,9 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 	}
 
 	public void startGame(MouseEvent mouseEvent) {
-		//get selected user from list
 		String opponent = (String) suggestUsersList.getSelectionModel().getSelectedItem();
 		Result result = ClientPreMatchMenusController.createGame(opponent);
-		AlertMaker.makeAlert("Game created", result);
+		AlertMaker.makeAlert("GAME", result);
 	}
 
 	public void quickMatch(MouseEvent mouseEvent) {
@@ -89,21 +84,19 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 		ClientPreMatchMenusController.exit();
 	}
 
+
 	@Override
 	public Result run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = GameMenusCommands.CREATE_GAME.getMatcher(input)) != null) {
-			result = createGame(matcher);
-		} else {
-			result = new Result("Invalid command", false);
-		}
+		if ((matcher = GameMenusCommands.CREATE_GAME.getMatcher(input)) != null) result = createGame(matcher);
+		else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(input) != null) result = PreMatchMenusController.exit();
+		else result = new Result("Invalid command", false);
 		return result;
 	}
 
 	private Result createGame(Matcher matcher) {
 		String opponent = matcher.group("opponent");
-		Result result = ClientPreMatchMenusController.createGame(opponent);
-		return null;
+		return ClientPreMatchMenusController.createGame(opponent);
 	}
 }

@@ -2,12 +2,17 @@ package server.model.card;
 
 import server.model.Client;
 import server.model.card.ability.Ability;
+import server.model.card.special.Decoy;
+import server.model.card.special.spell.Buffer;
+import server.model.card.special.spell.InstantSpell;
+import server.model.card.special.spell.Weather;
+import server.model.card.unit.Unit;
 import server.model.game.Game;
 import server.model.game.space.Space;
 
 import java.io.Serializable;
 
-public abstract class Card implements Cloneable, Serializable {
+public abstract class Card implements Cloneable, Serializable, Comparable<Card> {
 	protected final String name;
 	protected final Ability ability;
 	protected Space space = null;
@@ -71,5 +76,39 @@ public abstract class Card implements Cloneable, Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		return this == obj;
+	}
+
+	@Override
+	public int compareTo(Card card) {
+		int thisPriority;
+		if (this instanceof Decoy) {
+			thisPriority = -1000;
+		} else if (this instanceof InstantSpell) {
+			thisPriority = -999;
+		} else if (this instanceof Buffer) {
+			thisPriority = -998;
+		} else if (this instanceof Weather) {
+			thisPriority = -997;
+		} else {
+			Unit unit = (Unit) this;
+			thisPriority = unit.getBasePower();
+		}
+		int cardPriority;
+		if (card instanceof Decoy) {
+			cardPriority = -1000;
+		} else if (card instanceof InstantSpell) {
+			cardPriority = -999;
+		} else if (card instanceof Buffer) {
+			cardPriority = -998;
+		} else if (card instanceof Weather) {
+			cardPriority = -997;
+		} else {
+			Unit unit = (Unit) card;
+			cardPriority = unit.getBasePower();
+		}
+		if (cardPriority == thisPriority){
+			return this.getName().compareTo(card.getName());
+		}
+		return thisPriority - cardPriority;
 	}
 }

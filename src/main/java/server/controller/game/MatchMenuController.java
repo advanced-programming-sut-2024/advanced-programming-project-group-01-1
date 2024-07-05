@@ -1,10 +1,10 @@
-package controller.game;
+package server.controller.game;
 
-import model.Result;
-import model.card.Card;
-import model.card.unit.Unit;
-import model.game.Game;
-import model.game.space.Space;
+import message.Result;
+import server.model.card.Card;
+import server.model.card.unit.Unit;
+import server.model.game.Game;
+import server.model.game.space.Space;
 
 import java.util.ArrayList;
 import java.util.Scanner;

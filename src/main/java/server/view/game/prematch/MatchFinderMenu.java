@@ -11,10 +11,12 @@ import java.util.regex.Matcher;
 public class MatchFinderMenu implements Menuable {
 
 	@Override
-	public Result run(Client client, String command) {
+	public Result run(Client client, String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = GameMenusCommands.CREATE_GAME.getMatcher(command)) != null) result = createGame(client, matcher);
+		if ((matcher = GameMenusCommands.CREATE_GAME.getMatcher(input)) != null) result = createGame(client, matcher);
+		else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(input) != null)
+			result = PreMatchMenusController.exit(client);
 		else result = new Result("Invalid command", false);
 		return result;
 	}

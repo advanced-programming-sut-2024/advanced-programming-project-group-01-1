@@ -75,10 +75,6 @@ public class ClientMainMenu extends Application implements Menuable {
 		AlertMaker.makeAlert("Logout", result);
 	}
 
-	/*
-	 * Terminal version of the LobbyMenu
-	 */
-
 	@Override
 	public Result run(String input) {
 		Result result;

@@ -1,4 +1,4 @@
-package view.model;
+package server.view.model;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;

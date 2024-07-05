@@ -1,27 +1,45 @@
 package client.view.game;
 
 import client.controller.game.ClientMatchMenuController;
+import client.view.ClientAppview;
+import client.view.Menuable;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import message.GameMenusCommands;
 import message.Result;
-import client.view.Menuable;
 
+import java.net.URL;
 import java.util.regex.Matcher;
 
-import static javafx.application.Application.launch;
 
-
-public class ClientMatchMenu implements Menuable {
+public class ClientMatchMenu extends Application implements Menuable {
 
 
 	@Override
-	public void createStage(){
+	public void createStage() {
 		launch();
 	}
 
 	@Override
 	public void start(Stage stage) {
-		// TODO:
+		ClientAppview.setStage(stage);
+		URL url = getClass().getResource("/FXML/MatchMenu.fxml");
+		if (url == null) {
+			System.out.println("Couldn't find file: FXML/MatchMenu.fxml");
+			return;
+		}
+		Pane root = null;
+		try {
+			root = FXMLLoader.load(url);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
 
 	@Override
@@ -67,22 +85,33 @@ public class ClientMatchMenu implements Menuable {
 	}
 
 	private Result vetoCard(Matcher matcher) {
-		return null;
+		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
+		return ClientMatchMenuController.vetoCard(cardNumber);
 	}
 
 	private Result showHand(Matcher matcher) {
-		return null;
+		boolean option = matcher.group("option") != null;
+		if (option) {
+			int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
+			return ClientMatchMenuController.showHand(cardNumber);
+		} else {
+			return ClientMatchMenuController.showHand(-1);
+		}
 	}
 
 	private Result showRow(Matcher matcher) {
-		return null;
+		int rowNumber = Integer.parseInt(matcher.group("rowNumber"));
+		return ClientMatchMenuController.showRow(rowNumber);
 	}
 
 	private Result placeCard(Matcher matcher) {
-		return null;
+		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
+		int rowNumber = matcher.group("rowNumber") != null ? Integer.parseInt(matcher.group("rowNumber")) : -1;
+		return ClientMatchMenuController.placeCard(cardNumber, rowNumber);
 	}
 
 	private Result showTotalScoreOfRow(Matcher matcher) {
-		return null;
+		int rowNumber = Integer.parseInt(matcher.group("rowNumber"));
+		return ClientMatchMenuController.showRowPower(rowNumber);
 	}
 }

@@ -35,7 +35,8 @@ public enum GameMenusCommands {
     SHOW_TURN_INFO("show turn info"),
     SHOW_TOTAL_SCORE("show total score"),
     SHOW_TOTAL_SCORE_OF_ROW("show total score of row (?<rowNumber>\\d+)"),
-    PASS_ROUND("pass round");
+    PASS_ROUND("pass round"),
+    EXIT_MATCH_FINDER("menu exit");
 
     private final Pattern pattern;
 

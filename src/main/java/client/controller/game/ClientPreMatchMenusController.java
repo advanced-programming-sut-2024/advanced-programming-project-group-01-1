@@ -1,5 +1,6 @@
 package client.controller.game;
 
+import message.GameMenusCommands;
 import message.Result;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 public class ClientPreMatchMenusController {
 
 	public static Result createGame(String opponentUsername) {
-		return null;
+	return null;
 	}
 
 	public static Result showFactions() {
