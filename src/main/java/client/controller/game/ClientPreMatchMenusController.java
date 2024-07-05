@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ClientPreMatchMenusController {
 
@@ -22,7 +23,7 @@ public class ClientPreMatchMenusController {
 
 	public static Result selectFaction(String factionName) {
 		String command = GameMenusCommands.SELECT_FACTION.getPattern();
-		command.replace("(?<faction>\\S+)", factionName);
+		command = command.replace("(?<faction>\\S+)", factionName);
 		return TCPClient.send(command);
 	}
 
@@ -88,21 +89,21 @@ public class ClientPreMatchMenusController {
 
 	public static Result selectLeader(int leaderNumber) {
 		String command = GameMenusCommands.SELECT_LEADER.getPattern();
-		command.replace("(?<leaderNumber>\\d+)", String.valueOf(leaderNumber));
+		command = command.replace("(?<leaderNumber>\\d+)", String.valueOf(leaderNumber));
 		return TCPClient.send(command);
 	}
 
 	public static Result addToDeck(String cardName, int count) {
 		String command = GameMenusCommands.ADD_TO_DECK.getPattern();
-		command.replace("(?<cardName>\\S+)", cardName);
-		command.replace("(?<count>\\d+)", String.valueOf(count));
+		command = command.replace("(?<cardName>\\S+)", cardName);
+		command = command.replace("(?<count>\\d+)", String.valueOf(count));
 		return TCPClient.send(command);
 	}
 
 	public static Result deleteFromDeck(int cardNumber, int count) {
 		String command = GameMenusCommands.REMOVE_FROM_DECK.getPattern();
-		command.replace("(?<cardNumber>\\d+)", String.valueOf(cardNumber));
-		command.replace("(?<count>\\d+)", String.valueOf(count));
+		command = command.replace("(?<cardNumber>\\d+)", String.valueOf(cardNumber));
+		command = command.replace("(?<count>\\d+)", String.valueOf(count));
 		return TCPClient.send(command);
 	}
 
@@ -121,14 +122,32 @@ public class ClientPreMatchMenusController {
 		return TCPClient.send(command);
     }
 
-	public static ArrayList<String> getUsernames() {
+	public static ArrayList<String> getOtherUsernames() {
 		String command = GameMenusCommands.SHOW_PLAYERS_INFO.getPattern();
 		Result result = TCPClient.send(command);
 		String[] usernames = result.getMessage().split("\n");
 		ArrayList<String> usernamesList = new ArrayList<>();
-		for (String username : usernames) {
-			usernamesList.add(username);
-		}
+		Collections.addAll(usernamesList, usernames);
 		return usernamesList;
+	}
+
+	public static Result showCardsForGraphic() {
+		String command = GameMenusCommands.SHOW_CARDS_GRAPHIC.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result showDeckForGraphic() {
+		String command = GameMenusCommands.SHOW_DECK_GRAPHIC.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result showNowLeaderToGraphics() {
+		String command = GameMenusCommands.SHOW_LEADER_GRAPHIC.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result showNowFactionToGraphics() {
+		String command = GameMenusCommands.SHOW_FACTION_GRAPHIC.getPattern();
+		return TCPClient.send(command);
 	}
 }

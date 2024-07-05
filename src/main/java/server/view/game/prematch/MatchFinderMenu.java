@@ -15,6 +15,8 @@ public class MatchFinderMenu implements Menuable {
 		Matcher matcher;
 		Result result;
 		if ((matcher = GameMenusCommands.CREATE_GAME.getMatcher(input)) != null) result = createGame(client, matcher);
+		else if (GameMenusCommands.SHOW_PLAYERS_INFO.getMatcher(input) != null)
+			result = PreMatchMenusController.getOtherUsernames(client);
 		else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(input) != null)
 			result = PreMatchMenusController.exit(client);
 		else result = new Result("Invalid command", false);

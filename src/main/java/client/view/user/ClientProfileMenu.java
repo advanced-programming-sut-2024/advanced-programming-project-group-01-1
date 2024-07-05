@@ -15,7 +15,6 @@ import client.view.AlertMaker;
 import client.view.ClientAppview;
 import client.view.Menuable;
 import message.UserMenusCommands;
-import server.controller.UserMenusController;
 
 import java.io.IOException;
 import java.net.URL;

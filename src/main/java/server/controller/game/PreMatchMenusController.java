@@ -12,7 +12,6 @@ import server.model.user.User;
 import server.view.MainMenu;
 import server.view.game.prematch.LobbyMenu;
 
-import java.io.*;
 import java.util.ArrayList;
 
 public class PreMatchMenusController {
@@ -73,7 +72,7 @@ public class PreMatchMenusController {
 		ArrayList<Card> cards = client.getIdentity().getDeck().getCards();
 		return new Result(showCardSForGraphic(cards), true);
 	}
-	
+
 	private static String showCardSForGraphic(ArrayList<Card> cards) {
 		Card previousCard = null;
 		int count = 0;
@@ -169,7 +168,7 @@ public class PreMatchMenusController {
 		opponent = temp;
 		cnt++;
 		if (cnt % 2 == 0) {
-			return startGame();
+			return startGame(client);
 		} else {
 			return new Result("Turn Changed Successfully", true);
 		}
@@ -185,11 +184,11 @@ public class PreMatchMenusController {
 		return new Result("Exiting PreMatch Menu", true);
 	}
 
-	public static ArrayList<String> getUsernames() {
-		ArrayList<String> usernames = new ArrayList<>();
+	public static Result getOtherUsernames(Client client) {
+		StringBuilder usernames = new StringBuilder();
 		for (User user : User.getUsers()) {
-			usernames.add(user.getUsername());
+			if (user != client.getIdentity()) usernames.append(user.getUsername()).append("\n");
 		}
-		return usernames;
+		return new Result(usernames.toString(), true);
 	}
 }

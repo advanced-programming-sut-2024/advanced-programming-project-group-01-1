@@ -37,6 +37,10 @@ public enum GameMenusCommands {
     SHOW_TURN_INFO("show turn info"),
     SHOW_TOTAL_SCORE("show total score"),
     SHOW_TOTAL_SCORE_OF_ROW("show total score of row (?<rowNumber>\\d+)"),
+    SHOW_CARDS_GRAPHIC("show cards for graphic"),
+    SHOW_DECK_GRAPHIC("show deck for graphic"),
+    SHOW_LEADER_GRAPHIC("show current leader for graphic"),
+    SHOW_FACTION_GRAPHIC("show current faction for graphic"),
     PASS_ROUND("pass round"),
     EXIT_MATCH_FINDER("menu exit");
 

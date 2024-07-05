@@ -15,7 +15,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import message.GameMenusCommands;
 import message.Result;
-import server.controller.game.PreMatchMenusController;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,10 +52,10 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 
 	@FXML
 	public void initialize() {
-		ArrayList<String> users = ClientPreMatchMenusController.getUsernames();
+		ArrayList<String> users = ClientPreMatchMenusController.getOtherUsernames();
 		suggestUsersList.getItems().addAll(users);
 		usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
-			ArrayList<String> suggestedUsers = ClientPreMatchMenusController.getUsernames();
+			ArrayList<String> suggestedUsers = ClientPreMatchMenusController.getOtherUsernames();
 			suggestUsersList.getItems().clear();
 			for (String user : suggestedUsers) {
 				if (user.startsWith(newValue)) {
@@ -90,7 +89,7 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 		Matcher matcher;
 		Result result;
 		if ((matcher = GameMenusCommands.CREATE_GAME.getMatcher(input)) != null) result = createGame(matcher);
-		else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(input) != null) result = PreMatchMenusController.exit();
+		else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(input) != null) result = ClientPreMatchMenusController.exit();
 		else result = new Result("Invalid command", false);
 		return result;
 	}

@@ -1,7 +1,12 @@
 package client.view.game.prematch;
 
 import client.controller.game.ClientPreMatchMenusController;
+import client.view.AlertMaker;
+import client.view.ClientAppview;
 import client.view.Constants;
+import client.view.Menuable;
+import client.view.game.SelectPanel;
+import client.view.model.PreviewCard;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,25 +25,17 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import message.GameMenusCommands;
 import message.Result;
-import client.view.AlertMaker;
-import client.view.ClientAppview;
-import client.view.Menuable;
-import client.view.model.LargeCard;
-import client.view.model.PreviewCard;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
-import static javafx.application.Application.launch;
-
 
 public class ClientLobbyMenu extends Application implements Menuable {
 
-
 	@Override
-	public void createStage(){
+	public void createStage() {
 		launch();
 	}
 
@@ -56,7 +53,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
-
+		System.out.println("aha");
 		ClientAppview.setStage(stage);
 		URL url = getClass().getResource("/FXML/LobbyMenu.fxml");
 		if (url == null) {
@@ -72,11 +69,13 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+		System.out.println("khob");
 	}
 
 	@FXML
 	public void initialize() {
-		updateScreen();
+		System.out.println("what");
+		//updateScreen();
 	}
 
 	public void updateScreen() {
@@ -97,17 +96,17 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		strengthField.setText(parts[9].substring(21));
 	}
 
-	public void updateCollectionCardPane() {
-		Result result = ClientPreMatchMenusController.showCardsForGraphic();
+	private void updateCardsPane(Result result, ScrollPane cardPane, boolean add) {
 		String[] cards = result.getMessage().split("\n");
 		ArrayList<PreviewCard> previewCards = new ArrayList<>();
-		if (!result.getMessage().isEmpty()){
+		if (!result.getMessage().isEmpty()) {
 			for (String card : cards) {
 				String[] cardInfo = card.split(":");
 				String cardName = cardInfo[0];
 				int count = Integer.parseInt(cardInfo[1]);
 				PreviewCard previewCard = new PreviewCard(cardName, count);
-				previewCard.setOnMouseClicked(this::addToDeck);
+				if (add) previewCard.setOnMouseClicked(this::addToDeck);
+				else previewCard.setOnMouseClicked(this::removeFromDeck);
 				previewCards.add(previewCard);
 			}
 		}
@@ -122,10 +121,19 @@ public class ClientLobbyMenu extends Application implements Menuable {
 				row++;
 			}
 		}
-		//hide the scroll bar
 		gridPane.setVgap(20);
 		gridPane.setHgap(20);
-		collectionCardPane.setContent(gridPane);
+		cardPane.setContent(gridPane);
+	}
+
+	public void updateCollectionCardPane() {
+		Result result = ClientPreMatchMenusController.showCardsForGraphic();
+		updateCardsPane(result, collectionCardPane, true);
+	}
+
+	public void updateInDeckCardPane() {
+		Result result = ClientPreMatchMenusController.showDeckForGraphic();
+		updateCardsPane(result, inDeckCardPane, false);
 	}
 
 	public void addToDeck(MouseEvent mouseEvent) {
@@ -133,36 +141,6 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		PreviewCard largeCard = (PreviewCard) mouseEvent.getSource();
 		Result result = ClientPreMatchMenusController.addToDeck(largeCard.getName(), 1);
 		updateScreen();
-	}
-
-	public void updateInDeckCardPane() {
-		Result result = ClientPreMatchMenusController.showDeckForGraphic();
-		String[] cards = result.getMessage().split("\n");
-		ArrayList<PreviewCard> previewCards = new ArrayList<>();
-		if (!result.getMessage().equals("")){
-			for (String card : cards) {
-				String[] cardInfo = card.split(":");
-				String cardName = cardInfo[0];
-				int count = Integer.parseInt(cardInfo[1]);
-				PreviewCard previewCard = new PreviewCard(cardName, count);
-				previewCard.setOnMouseClicked(this::removeFromDeck);
-				previewCards.add(previewCard);
-			}
-		}
-		GridPane gridPane = new GridPane();
-		int row = 0;
-		int column = 0;
-		for (PreviewCard largeCard : previewCards) {
-			gridPane.add(largeCard, column, row);
-			column++;
-			if (column == 3) {
-				column = 0;
-				row++;
-			}
-		}
-		gridPane.setVgap(20);
-		gridPane.setHgap(20);
-		inDeckCardPane.setContent(gridPane);
 	}
 
 	private void updateLeader() {
@@ -197,192 +175,61 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		updateScreen();
 	}
 
-	/*
-	 * change leader panel
-	 */
-
-	public Pane changeLeaderPane;
-	public ArrayList<LargeCard> leaders;
-	int ptrLeader;
-
 	public void changeLeader(MouseEvent mouseEvent) {
-		changeLeaderPane = new Pane();
-		leaders = new ArrayList<>();
-		changeLeaderPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
-		changeLeaderPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
 		Result result = ClientPreMatchMenusController.showLeaders();
-		String[] parts = result.getMessage().split("\n");
-		for (int i = 0; i < parts.length; i += 2) {
-			String leaderName = parts[i].substring(8);
-			String description = parts[i+1];
-			LargeCard largeCard = new LargeCard(leaderName, description);
-			leaders.add(largeCard);
+		String[] leaders = result.getMessage().split("\n");
+		for (int i = 0; i < leaders.length; i += 2) {
+			leaders[i] = leaders[i].substring(8);
+
 		}
 		String currentLeader = ClientPreMatchMenusController.showNowLeaderToGraphics().getMessage();
-		for (int i = 0; i < leaders.size(); i++) {
-			if (leaders.get(i).getName().equals(currentLeader)) {
-				ptrLeader = i;
+		int ptr = -1;
+		for (int i = 0; i < leaders.length; i += 2) {
+			if (leaders[i].equals(currentLeader)) {
+				ptr = i / 2;
 				break;
 			}
 		}
-		updateLeaderPane();
-		root.getChildren().add(changeLeaderPane);
+		new SelectPanel(root, leaders, ptr, this::selectLeaderByGraphic);
 	}
 
-	public void updateLeaderPane() {
-		changeLeaderPane.getChildren().clear();
-		leaders.get(ptrLeader).setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - Constants.LARGE_CARD_WIDTH.getValue() / 2);
-		leaders.get(ptrLeader).setLayoutY(50);
-		leaders.get(ptrLeader).setStyle("-fx-opacity: 1");
-		leaders.get(ptrLeader).setOnMouseClicked(this::selectLeader);
-		changeLeaderPane.getChildren().add(leaders.get(ptrLeader));
-		Label label = new Label(leaders.get(ptrLeader).getDescription());
-		label.setLayoutX(leaders.get(ptrLeader).getLayoutX());
-		label.setLayoutY(Constants.SCREEN_HEIGHT.getValue() - 200);
-		label.setPrefWidth(Constants.LARGE_CARD_WIDTH.getValue());
-		label.setPrefHeight(150);
-		label.setWrapText(true);
-		label.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-background-color: rgba(0, 0, 0, 0.9)");
-		label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-		label.setAlignment(javafx.geometry.Pos.CENTER);
-		changeLeaderPane.getChildren().add(label);
-		for (int i = 0; i < leaders.size(); i++) {
-			if (i < ptrLeader -1 && i > ptrLeader + 1) {
-				continue;
-			} else if (i == ptrLeader -1) {
-				leaders.get(i).setLayoutX(leaders.get(ptrLeader).getLayoutX() - Constants.LARGE_CARD_WIDTH.getValue() - 100);
-				leaders.get(i).setLayoutY(leaders.get(ptrLeader).getLayoutY());
-				leaders.get(i).setStyle("-fx-opacity: 0.8");
-				leaders.get(i).setOnMouseClicked(this::previousLeader);
-				changeLeaderPane.getChildren().add(leaders.get(i));
-			} else if (i == ptrLeader + 1) {
-				leaders.get(i).setLayoutX(leaders.get(ptrLeader).getLayoutX() + Constants.LARGE_CARD_WIDTH.getValue() + 100);
-				leaders.get(i).setLayoutY(leaders.get(ptrLeader).getLayoutY());
-				leaders.get(i).setStyle("-fx-opacity: 0.8");
-				leaders.get(i).setOnMouseClicked(this::nextLeader);
-				changeLeaderPane.getChildren().add(leaders.get(i));
-			}
-		}
-	}
-
-	public void selectLeader(MouseEvent mouseEvent) {
-		LargeCard largeCard = (LargeCard) mouseEvent.getSource();
-		Result result = ClientPreMatchMenusController.selectLeader(leaders.indexOf(largeCard));
-		root.getChildren().remove(changeLeaderPane);
+	public void selectLeaderByGraphic(int idx) {
+		Result result = ClientPreMatchMenusController.selectLeader(idx);
 		updateScreen();
 	}
-
-	public void previousLeader(MouseEvent mouseEvent) {
-		ptrLeader--;
-		if (ptrLeader < 0) {
-			ptrLeader = leaders.size() - 1;
-		}
-		updateLeaderPane();
-	}
-
-	public void nextLeader(MouseEvent mouseEvent) {
-		ptrLeader++;
-		if (ptrLeader == leaders.size()) {
-			ptrLeader = 0;
-		}
-		updateLeaderPane();
-	}
-
-	/*
-	 * change faction panel
-	 */
-
-	public Pane changeFactionPane;
-	ArrayList<LargeCard> factions;
-	int ptrFaction;
 
 	public void changeFaction(MouseEvent mouseEvent) {
-		changeFactionPane = new Pane();
-		factions = new ArrayList<>();
-		changeFactionPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
-		changeFactionPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
 		Result result = ClientPreMatchMenusController.showFactions();
 		String[] parts = result.getMessage().split("\n");
+		String[] factions = new String[parts.length - 2];
 		for (int i = 2; i < parts.length; i += 2) {
-			String factionName = parts[i].substring(9);
-			String description = parts[i+1];
-			LargeCard largeCard = new LargeCard(factionName, description);
-			factions.add(largeCard);
+			factions[i - 2] = parts[i].substring(9);
+			factions[i - 1] = parts[i + 1];
+
 		}
 		String currentFaction = ClientPreMatchMenusController.showNowFactionToGraphics().getMessage();
-		for (int i = 0; i < factions.size(); i++) {
-			if (factions.get(i).getName().equals(currentFaction)) {
-				ptrFaction = i;
+		int ptr = -1;
+		for (int i = 0; i < factions.length; i += 2) {
+			if (factions[i].equals(currentFaction)) {
+				ptr = i / 2;
 				break;
 			}
 		}
-		updateFactionPane();
-		root.getChildren().add(changeFactionPane);
+		new SelectPanel(root, factions, ptr, this::selectFactionByGraphic);
 	}
 
-	public void updateFactionPane() {
-		changeFactionPane.getChildren().clear();
-		factions.get(ptrFaction).setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - Constants.LARGE_CARD_WIDTH.getValue() / 2);
-		factions.get(ptrFaction).setLayoutY(50);
-		factions.get(ptrFaction).setStyle("-fx-opacity: 1");
-		factions.get(ptrFaction).setOnMouseClicked(this::selectFaction);
-		changeFactionPane.getChildren().add(factions.get(ptrFaction));
-		Label label = new Label(factions.get(ptrFaction).getDescription());
-		label.setLayoutX(factions.get(ptrFaction).getLayoutX());
-		label.setLayoutY(Constants.SCREEN_HEIGHT.getValue() - 200);
-		label.setPrefWidth(Constants.LARGE_CARD_WIDTH.getValue());
-		label.setPrefHeight(150);
-		label.setWrapText(true);
-		label.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-background-color: rgba(0, 0, 0, 0.9)");
-		label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-		label.setAlignment(javafx.geometry.Pos.CENTER);
-		changeFactionPane.getChildren().add(label);
-		for (int i = 0; i < factions.size(); i++) {
-			if (i < ptrFaction -1 && i > ptrFaction + 1) {
-				continue;
-			} else if (i == ptrFaction -1) {
-				factions.get(i).setLayoutX(factions.get(ptrFaction).getLayoutX() - Constants.LARGE_CARD_WIDTH.getValue() - 100);
-				factions.get(i).setLayoutY(factions.get(ptrFaction).getLayoutY());
-				factions.get(i).setStyle("-fx-opacity: 0.8");
-				factions.get(i).setOnMouseClicked(this::previousFaction);
-				changeFactionPane.getChildren().add(factions.get(i));
-			} else if (i == ptrFaction + 1) {
-				factions.get(i).setLayoutX(factions.get(ptrFaction).getLayoutX() + Constants.LARGE_CARD_WIDTH.getValue() + 100);
-				factions.get(i).setLayoutY(factions.get(ptrFaction).getLayoutY());
-				factions.get(i).setStyle("-fx-opacity: 0.8");
-				factions.get(i).setOnMouseClicked(this::nextFaction);
-				changeFactionPane.getChildren().add(factions.get(i));
-			}
+	public void selectFactionByGraphic(int idx) {
+		Result result = ClientPreMatchMenusController.showFactions();
+		String[] parts = result.getMessage().split("\n");
+		String[] factions = new String[parts.length - 2];
+		for (int i = 2; i < parts.length; i += 2) {
+			factions[i - 2] = parts[i].substring(9);
+			factions[i - 1] = parts[i + 1];
+
 		}
-	}
-
-	public void selectFaction(MouseEvent mouseEvent) {
-		LargeCard largeCard = (LargeCard) mouseEvent.getSource();
-		Result result = ClientPreMatchMenusController.selectFaction(largeCard.getName());
-		System.out.println(result);
-		root.getChildren().remove(changeFactionPane);
+		Result result1 = ClientPreMatchMenusController.selectFaction(factions[idx * 2]);
 		updateScreen();
 	}
-
-	public void previousFaction(MouseEvent mouseEvent) {
-		ptrFaction--;
-		if (ptrFaction < 0) {
-			ptrFaction = factions.size() - 1;
-		}
-		updateFactionPane();
-	}
-
-	public void nextFaction(MouseEvent mouseEvent) {
-		ptrFaction++;
-		if (ptrFaction == factions.size()) {
-			ptrFaction = 0;
-		}
-		updateFactionPane();
-	}
-
-	/*
-	 * save deck panel
-	 */
 
 	public Pane saveDeckPane;
 	public Label saveDeckLabel;
@@ -440,7 +287,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		saveDeckByAddressButton.setOnMouseClicked(this::saveDeckByAddress);
 
 
-		saveDeckPane.getChildren().addAll(saveDeckLabel, saveDeckByNameTextField,  saveDeckByNameButton, saveDeckByAddressButton);
+		saveDeckPane.getChildren().addAll(saveDeckLabel, saveDeckByNameTextField, saveDeckByNameButton, saveDeckByAddressButton);
 		root.getChildren().add(saveDeckPane);
 	}
 
@@ -455,7 +302,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save deck");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON file", "*.json"));
-		File file = fileChooser.showOpenDialog(Appview.getStage());
+		File file = fileChooser.showOpenDialog(ClientAppview.getStage());
 		if (file == null) {
 			return;
 		}
@@ -465,10 +312,6 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		root.getChildren().remove(saveDeckPane);
 		updateScreen();
 	}
-
-	/*
-	 * load deck panel
-	 */
 
 	public Pane loadDeckPane;
 	public Label loadDeckLabel;
@@ -502,8 +345,6 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		loadDeckByNameTextField.setLayoutY(loadDeckLabel.getLayoutY() + 70);
 		loadDeckByNameTextField.setPromptText("Enter deck name");
 
-		//loadDeckLabel.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
-
 		loadDeckByNameButton = new Button("Load by name");
 		String buttonCSS = getClass().getResource("/CSS/buttonstyle.css").toExternalForm();
 		loadDeckByNameButton.getStylesheets().add(buttonCSS);
@@ -523,7 +364,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		loadDeckByAddressButton.setLayoutY(loadDeckByNameButton.getLayoutY() + 70);
 		loadDeckByAddressButton.setOnMouseClicked(this::loadDeckByAddress);
 
-		loadDeckPane.getChildren().addAll(loadDeckLabel, loadDeckByNameTextField,  loadDeckByNameButton, loadDeckByAddressButton);
+		loadDeckPane.getChildren().addAll(loadDeckLabel, loadDeckByNameTextField, loadDeckByNameButton, loadDeckByAddressButton);
 		root.getChildren().add(loadDeckPane);
 	}
 
@@ -538,7 +379,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Load deck");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON file", "*.json"));
-		File file = fileChooser.showOpenDialog(Appview.getStage());
+		File file = fileChooser.showOpenDialog(ClientAppview.getStage());
 		if (file == null) {
 			return;
 		}
@@ -559,39 +400,35 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	public Result run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = GameMenusCommands.SHOW_FACTIONS.getMatcher(input)) != null){
+		if (GameMenusCommands.SHOW_FACTIONS.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.showFactions();
-		} else if ((matcher = GameMenusCommands.SELECT_FACTION.getMatcher(input)) != null){
+		else if ((matcher = GameMenusCommands.SELECT_FACTION.getMatcher(input)) != null)
 			result = selectFaction(matcher);
-		} else if ((matcher = GameMenusCommands.SHOW_CARDS.getMatcher(input)) != null){
+		else if (GameMenusCommands.SHOW_CARDS.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.showCards();
-		} else if ((matcher = GameMenusCommands.SHOW_DECK.getMatcher(input)) != null){
+		else if (GameMenusCommands.SHOW_DECK.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.showDeck();
-		} else if ((matcher = GameMenusCommands.SHOW_INFORMATION_CURRENT_USER.getMatcher(input)) != null) {
+		else if (GameMenusCommands.SHOW_INFORMATION_CURRENT_USER.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.showInfo();
-		} else if ((matcher = GameMenusCommands.SAVE_DECK_WITH_FILE_ADDRESS.getMatcher(input)) != null) {
+		else if ((matcher = GameMenusCommands.SAVE_DECK_WITH_FILE_ADDRESS.getMatcher(input)) != null)
 			result = saveDeckWithAddress(matcher);
-		} else if ((matcher = GameMenusCommands.SAVE_DECK_WITH_NAME.getMatcher(input)) != null) {
+		else if ((matcher = GameMenusCommands.SAVE_DECK_WITH_NAME.getMatcher(input)) != null)
 			result = saveDeckWithName(matcher);
-		} else if ((matcher = GameMenusCommands.LOAD_DECK_WITH_FILE_ADDRESS.getMatcher(input)) != null) {
+		else if ((matcher = GameMenusCommands.LOAD_DECK_WITH_FILE_ADDRESS.getMatcher(input)) != null)
 			result = loadDeckWithAddress(matcher);
-		} else if ((matcher = GameMenusCommands.LOAD_DECK_WITH_NAME.getMatcher(input)) != null) {
+		else if ((matcher = GameMenusCommands.LOAD_DECK_WITH_NAME.getMatcher(input)) != null)
 			result = loadDeckWithName(matcher);
-		} else if ((matcher = GameMenusCommands.SHOW_LEADERS.getMatcher(input)) != null) {
+		else if (GameMenusCommands.SHOW_LEADERS.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.showLeaders();
-		} else if ((matcher = GameMenusCommands.SELECT_LEADER.getMatcher(input)) != null) {
-			result = selectLeader(matcher);
-		} else if ((matcher = GameMenusCommands.ADD_TO_DECK.getMatcher(input)) != null) {
-			result = addToDeck(matcher);
-		} else if ((matcher = GameMenusCommands.REMOVE_FROM_DECK.getMatcher(input)) != null) {
+		else if ((matcher = GameMenusCommands.SELECT_LEADER.getMatcher(input)) != null) result = selectLeader(matcher);
+		else if ((matcher = GameMenusCommands.ADD_TO_DECK.getMatcher(input)) != null) result = addToDeck(matcher);
+		else if ((matcher = GameMenusCommands.REMOVE_FROM_DECK.getMatcher(input)) != null)
 			result = deleteFromDeck(matcher);
-		} else if ((matcher = GameMenusCommands.PASS_ROUND.getMatcher(input)) != null) {
+		else if (GameMenusCommands.PASS_ROUND.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.changeTurn();
-		} else if ((matcher = GameMenusCommands.START_GAME.getMatcher(input)) != null) {
+		else if (GameMenusCommands.START_GAME.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.startGame();
-		} else {
-			result = new Result("Invalid command", false);
-		}
+		else result = new Result("Invalid command", false);
 		return result;
 	}
 
@@ -618,11 +455,6 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	private Result saveDeckWithName(Matcher matcher) {
 		String name = matcher.group("name");
 		return ClientPreMatchMenusController.saveDeckByName(name);
-	}
-
-	private Result loadDeck(Matcher matcher) {
-		String address = matcher.group("fileAddress");
-		return ClientPreMatchMenusController.loadDeckByAddress(address);
 	}
 
 	private Result selectLeader(Matcher matcher) {

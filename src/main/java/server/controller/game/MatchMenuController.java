@@ -17,92 +17,108 @@ public class MatchMenuController {
 	}
 
 	public static Result showHand(int number) {
-		StringBuilder hand = new StringBuilder();
+		/*StringBuilder hand = new StringBuilder();
 		if (number >= 0) hand.append(Game.getCurrentGame().getCurrentHand().getCards().get(number).toString());
 		else hand.append(Game.getCurrentGame().getCurrentHand().toString());
-		return new Result(hand.toString(), true);
+		return new Result(hand.toString(), true);*/
+		return null;
 	}
 
 	public static Result remainingInDeck() {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()), true);
+		/*return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()), true);*/
+		return null;
 	}
 
 	public static Result showDiscordPiles() {
-		return new Result("Current Discard Pile:\n" + Game.getCurrentGame().getCurrentDiscardPile() +
-				"Opponent Discard Pile:\n" + Game.getCurrentGame().getOpponentDiscardPile(), true);
+		/*return new Result("Current Discard Pile:\n" + Game.getCurrentGame().getCurrentDiscardPile() +
+				"Opponent Discard Pile:\n" + Game.getCurrentGame().getOpponentDiscardPile(), true);*/
+		return null;
 	}
 
 	public static Result showRow(int rowNumber) {
-		return new Result(Game.getCurrentGame().getRow(rowNumber).toString(), true);
+		//return new Result(Game.getCurrentGame().getRow(rowNumber).toString(), true);
+		return null;
 	}
 
 	public static Result showWeatherSystem() {
-		return new Result(Game.getCurrentGame().getCurrentWeatherSystem() + "\n" +
-				Game.getCurrentGame().getOpponentWeatherSystem(), true);
+		/*return new Result(Game.getCurrentGame().getCurrentWeatherSystem() + "\n" +
+				Game.getCurrentGame().getOpponentWeatherSystem(), true);*/
+		return null;
 	}
 
 	public static Result placeCard(int cardNumber, int rowNumber) {
-		try {
+		/*try {
 			Game.getCurrentGame().placeCard(Game.getCurrentGame().getCurrentHand().getCards().get(cardNumber), rowNumber);
 			return new Result("Card placed successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
-		}
+		}*/
+		return null;
 	}
 
 	public static Result showLeader() {
-		return new Result(Game.getCurrentGame().getCurrentLeader().toString(), true);
+		//return new Result(Game.getCurrentGame().getCurrentLeader().toString(), true);
+		return null;
 	}
 
 	public static Result useLeaderAbility() {
-		try {
+		/*try {
 			Game.getCurrentGame().useLeaderAbility();
 			return new Result("Leader ability played successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
-		}
+		}*/
+		return null;
 	}
 
 	public static Result showPlayersInfo() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrent().getUsername() + " " +
+		/*return new Result("Current: " + Game.getCurrentGame().getCurrent().getUsername() + " " +
 				Game.getCurrentGame().getCurrentFaction() + "\n" +
 				"Opponent: " + Game.getCurrentGame().getOpponent().getUsername() + " " +
-				Game.getCurrentGame().getOpponentFaction(), true);
+				Game.getCurrentGame().getOpponentFaction(), true);*/
+		return null;
 	}
 
 	public static Result showPlayersLives() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrentLife() + "\n" +
-				"Opponent: " + Game.getCurrentGame().getOpponentLife(), true);
+		/*return new Result("Current: " + Game.getCurrentGame().getCurrentLife() + "\n" +
+				"Opponent: " + Game.getCurrentGame().getOpponentLife(), true);*/
+		return null;
 	}
 
 	public static Result showHandSize() {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size()), true);
+	//	return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size()), true);
+		return null;
 	}
 
 	public static Result showTurnInfo() {
-		return new Result(Game.getCurrentGame().getCurrent().getUsername(), true);
+		//return new Result(Game.getCurrentGame().getCurrent().getUsername(), true);
+		return null;
 	}
 
 	public static Result showTotalPower() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrentPower() + "\n" +
-				"Opponent: " + Game.getCurrentGame().getOpponentPower(), true);
+		/*return new Result("Current: " + Game.getCurrentGame().getCurrentPower() + "\n" +
+				"Opponent: " + Game.getCurrentGame().getOpponentPower(), true);*/
+		return null;
 	}
 
 	public static Result showRowPower(int rowNumber) {
-		return new Result(String.valueOf(Game.getCurrentGame().getRow(rowNumber).getSumOfPowers()), true);
+		//return new Result(String.valueOf(Game.getCurrentGame().getRow(rowNumber).getSumOfPowers()), true);
+		return null;
 	}
 
 	public static Result passTurn() {
-		Game.getCurrentGame().passTurn();
-		return new Result("Turn passed successfully", true);
+		/*Game.getCurrentGame().passTurn();
+		return new Result("Turn passed successfully", true);*/
+		return null;
 	}
 
 	public static Card askSpace(Space space, boolean onlyUnit) {
-		return askSpace(space, false, onlyUnit);
+		//return askSpace(space, false, onlyUnit);
+		return null;
 	}
 
 	public static Card askSpace(Space space, boolean isRandom, boolean onlyUnit) {
-		ArrayList<Card> availableCards = new ArrayList<>();
+		/*ArrayList<Card> availableCards = new ArrayList<>();
 		for (Card card : space.getCards()) {
 			if (card instanceof Unit) {
 				if (!((Unit) card).isHero()) availableCards.add(card);
@@ -118,7 +134,8 @@ public class MatchMenuController {
 		Scanner scanner = new Scanner(System.in);
 		int index = scanner.nextInt();
 		if (index < 0 || index >= availableCards.size()) return null;
-		return availableCards.get(index);
+		return availableCards.get(index);*/
+		return null;
 	}
 
 	public static void showSpace(Space tmp) {
