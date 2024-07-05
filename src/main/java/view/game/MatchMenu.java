@@ -86,6 +86,8 @@ public class MatchMenu extends Application implements Menuable {
 			result = showTotalScoreOfRow(matcher);
 		} else if ((matcher = GameMenusCommands.PASS_ROUND.getMatcher(input)) != null) {
 			result = MatchMenuController.passTurn();
+		} else if ((matcher = GameMenusCommands.SHOW_HAND.getMatcher(input)) != null) {
+			result = MatchMenuController.showCurrentHand();
 		} else {
 			result = new Result("Invalid command", false);
 		}

@@ -79,6 +79,10 @@ public class MatchMenuController {
 		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size()), true);
 	}
 
+	public static Result showCurrentHand() {
+		return new Result(Game.getCurrentGame().getCurrentHand().toString(), true);
+	}
+
 	public static Result showTurnInfo() {
 		return new Result(Game.getCurrentGame().getCurrent().getUsername(), true);
 	}

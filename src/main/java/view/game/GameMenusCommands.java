@@ -15,6 +15,7 @@ public enum GameMenusCommands {
     LOAD_DECK_WITH_FILE_ADDRESS("load deck -f (?<fileAddress>\\S+)"),
     LOAD_DECK_WITH_NAME("load deck -n (?<name>\\S+)"),
     SHOW_LEADERS("show leaders"),
+    SHOW_HAND("show hand"),
     SELECT_LEADER("select leader -l (?<leaderNumber>\\d+)"),
     ADD_TO_DECK("add to deck -c (?<cardName>\\S+) (?<count>\\d+)"),
     REMOVE_FROM_DECK("remove from deck -n (?<cardNumber>\\d+) -c (?<count>\\d+)"),

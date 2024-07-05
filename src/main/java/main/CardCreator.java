@@ -132,7 +132,7 @@ public class CardCreator {
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Letho of Gulet", null, 10, false);
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Menno Coehoorn", Medic.INSTANCE, 10, true);
 		createUnit(Siege.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Morvran Voorhis", null, 10, true);
-		createUnit(Siege.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Tibor Eggebracht", null, 10, true);
+		createUnit(Ranged.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Tibor Eggebracht", null, 10, true);
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Stefan Skellen", Spy.INSTANCE, 9, false);
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Shilard Fitz-Oesterlen", Spy.INSTANCE, 7, false);
 		createUnit(Ranged.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Assire var Anahid", null, 6, false);
