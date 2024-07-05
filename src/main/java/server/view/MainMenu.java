@@ -13,7 +13,6 @@ public class MainMenu implements Menuable {
 
 	@Override
 	public Result run(Client client, String command) {
-		System.out.println("command: " + command);
 		Matcher matcher;
 		Result result;
 		if (MainMenuCommands.ENTER_GAME_MENU.getMatcher(command) != null) result = goToMatchFinderMenu(client);

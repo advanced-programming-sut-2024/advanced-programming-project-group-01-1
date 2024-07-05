@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.prematch.LobbyMenu">
+   <children>
+      <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/backgrounds/MatchFinderMenu.jpg" />
+         </image>
+      </ImageView>
+      <ScrollPane fx:id="collectionCardPane" prefHeight="768.0" prefWidth="500.0" stylesheets="@../CSS/scrollpanestyle.css">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </ScrollPane>
+      <ScrollPane fx:id="inDeckCardPane" layoutX="866.0" prefHeight="768.0" prefWidth="500.0" stylesheets="@../CSS/scrollpanestyle.css"/>
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="712.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="ready" onMouseClicked="#ready"/>
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="649.0" mnemonicParsing="false" onMouseClicked="#saveDeck" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="save deck" />
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="586.0" mnemonicParsing="false" onMouseClicked="#loadDeck" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="load deck" />
+      <Rectangle fx:id="leaderField" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" height="265.0" layoutX="613.0" layoutY="146.0" onMouseClicked="#changeLeader" stroke="BLACK" strokeType="INSIDE" width="140.0" />
+      <Rectangle fx:id="factionIconField" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="75.0" layoutX="646.0" onMouseClicked="#changeFaction" stroke="BLACK" strokeType="INSIDE" width="75.0" />
+      <Label id="normal-text" fx:id="factionNameField" alignment="CENTER" layoutX="500.0" layoutY="75.0" onMouseClicked="#changeFaction" prefHeight="69.0" prefWidth="367.0" stylesheets="@../CSS/textstyle.css" text="Label" textAlignment="CENTER" />
+      <Pane layoutX="594.0" layoutY="411.0" prefHeight="176.0" prefWidth="180.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="45.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/deck_stats_count.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="45.0" layoutY="14.0" prefHeight="30.0" prefWidth="45.0" text="count" textFill="WHITE" fx:id="countField"/>
+            <ImageView fitHeight="30.0" fitWidth="45.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/deck_stats_strength.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="14.0" prefHeight="30.0" prefWidth="45.0" text="strength" textFill="WHITE" fx:id="strengthField"/>
+            <ImageView fitHeight="30.0" fitWidth="45.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/deck_stats_unit.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="45.0" layoutY="73.0" prefHeight="30.0" prefWidth="45.0" text="unit" textFill="WHITE" fx:id="unitField"/>
+            <ImageView fitHeight="30.0" fitWidth="45.0" layoutX="90.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/deck_stats_special.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="73.0" prefHeight="30.0" prefWidth="45.0" text="special" textFill="WHITE" fx:id="specialField"/>
+            <ImageView fitHeight="30.0" fitWidth="45.0" layoutX="45.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/deck_stats_hero.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="90.0" layoutY="132.0" prefHeight="30.0" prefWidth="45.0" text="hero" textFill="WHITE" fx:id="heroField"/>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Pane>
+   </children>
+</Pane>
