@@ -12,8 +12,10 @@ public enum GameMenusCommands {
     SHOW_INFORMATION_CURRENT_USER("show information current user"),
     SAVE_DECK_WITH_FILE_ADDRESS("save deck -f (?<fileAddress>\\S+)"),
     SAVE_DECK_WITH_NAME("save deck -n (?<name>\\S+)"),
+    SAVE_DECK("save deck"),
     LOAD_DECK_WITH_FILE_ADDRESS("load deck -f (?<fileAddress>\\S+)"),
     LOAD_DECK_WITH_NAME("load deck -n (?<name>\\S+)"),
+    LOAD_DECK("load deck -f (?<deckFson>\\S+)"),
     SHOW_LEADERS("show leaders"),
     SELECT_LEADER("select leader -l (?<leaderNumber>\\d+)"),
     ADD_TO_DECK("add to deck -c (?<cardName>\\S+) (?<count>\\d+)"),
@@ -50,5 +52,9 @@ public enum GameMenusCommands {
             return matcher;
         }
         return null;
+    }
+
+    public String getPattern() {
+        return pattern.pattern();
     }
 }

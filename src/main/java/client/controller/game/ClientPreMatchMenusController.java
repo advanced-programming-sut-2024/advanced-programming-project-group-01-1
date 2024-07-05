@@ -1,8 +1,12 @@
 package client.controller.game;
 
+import client.main.TCPClient;
 import message.GameMenusCommands;
 import message.Result;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class ClientPreMatchMenusController {
@@ -12,70 +16,119 @@ public class ClientPreMatchMenusController {
 	}
 
 	public static Result showFactions() {
-		return null;
+		String command = GameMenusCommands.SHOW_FACTIONS.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result selectFaction(String factionName) {
-		return null;
+		String command = GameMenusCommands.SELECT_FACTION.getPattern();
+		command.replace("(?<faction>\\S+)", factionName);
+		return TCPClient.send(command);
 	}
 
 	public static Result showCards() {
-		return null;
+		String command = GameMenusCommands.SHOW_CARDS.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showDeck() {
-		return null;
+		String command = GameMenusCommands.SHOW_DECK.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showInfo() {
-		return null;
+		String command = GameMenusCommands.SHOW_INFORMATION_CURRENT_USER.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result saveDeckByAddress(String address) {
-		return null;
+		String command = GameMenusCommands.SAVE_DECK.getPattern();
+		Result result = TCPClient.send(command);
+		try {
+			File deckFile = new File(address);
+			FileOutputStream fileOutputStream = new FileOutputStream(deckFile);
+			fileOutputStream.write(result.getMessage().getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result("Error Saving Deck", false);
+		}
+		return new Result("Deck Saved Successfully", true);
 	}
 
 	public static Result saveDeckByName(String name) {
-		return null;
+		String address = ClientPreMatchMenusController.class.getResource("/resources/decks/") + name + ".txt";
+		return saveDeckByAddress(address);
 	}
 
 	public static Result loadDeckByAddress(String address) {
-		return null;
+		String command = GameMenusCommands.LOAD_DECK.getPattern();
+		try {
+			File deckFile = new File(address);
+			FileInputStream fileInputStream = new FileInputStream(deckFile);
+			byte[] bytes = new byte[(int) deckFile.length()];
+			fileInputStream.read(bytes);
+			String deckFson = new String(bytes);
+			command.replace("(?<deckFson>\\S+)", deckFson);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result("Error Loading Deck", false);
+		}
+		return TCPClient.send(command);
 	}
 
 	public static Result loadDeckByName(String name) {
-		return null;
+		String address = ClientPreMatchMenusController.class.getResource("/resources/decks/") + name + ".txt";
+		return loadDeckByAddress(address);
 	}
 
 	public static Result showLeaders() {
-		return null;
+		String command = GameMenusCommands.SHOW_LEADERS.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result selectLeader(int leaderNumber) {
-		return null;
+		String command = GameMenusCommands.SELECT_LEADER.getPattern();
+		command.replace("(?<leaderNumber>\\d+)", String.valueOf(leaderNumber));
+		return TCPClient.send(command);
 	}
 
 	public static Result addToDeck(String cardName, int count) {
-		return null;
+		String command = GameMenusCommands.ADD_TO_DECK.getPattern();
+		command.replace("(?<cardName>\\S+)", cardName);
+		command.replace("(?<count>\\d+)", String.valueOf(count));
+		return TCPClient.send(command);
 	}
 
 	public static Result deleteFromDeck(int cardNumber, int count) {
-		return null;
+		String command = GameMenusCommands.REMOVE_FROM_DECK.getPattern();
+		command.replace("(?<cardNumber>\\d+)", String.valueOf(cardNumber));
+		command.replace("(?<count>\\d+)", String.valueOf(count));
+		return TCPClient.send(command);
 	}
 
 	public static Result changeTurn() {
-		return null;
+		String command = GameMenusCommands.CHANGE_TURN.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result startGame() {
-		return null;
+		String command = GameMenusCommands.START_GAME.getPattern();
+		return TCPClient.send(command);
 	}
 
     public static Result exit() {
-		return null;
+		String command = GameMenusCommands.EXIT_MATCH_FINDER.getPattern();
+		return TCPClient.send(command);
     }
 
 	public static ArrayList<String> getUsernames() {
-		return null;
+		String command = GameMenusCommands.SHOW_PLAYERS_INFO.getPattern();
+		Result result = TCPClient.send(command);
+		String[] usernames = result.getMessage().split("\n");
+		ArrayList<String> usernamesList = new ArrayList<>();
+		for (String username : usernames) {
+			usernamesList.add(username);
+		}
+		return usernamesList;
 	}
 }

@@ -1,5 +1,7 @@
 package server.model.user;
 
+import server.main.CardCreator;
+import server.main.LeaderCreator;
 import server.model.card.Card;
 import server.model.card.special.Special;
 import server.model.card.unit.Unit;
@@ -166,4 +168,31 @@ public class Deck implements Serializable {
 		stringBuilder.append("Total Power: ").append(getTotalPower()).append("\n");
 		return stringBuilder.toString();
 	}
+
+	public String fuckGson() {
+		StringBuilder fson = new StringBuilder();
+		fson.append(this.faction.getName()).append("\n");
+		fson.append(this.leader.getName()).append("\n");
+		fson.append(this.cards.size()).append("\n");
+		for (Card card : cards) fson.append(card.getName()).append("\n");
+		return fson.toString();
+	}
+
+	public static Deck fsonReader(String fson) {
+		String[] info = fson.split("\n");
+		Deck deck = new Deck(Faction.getFaction(info[0]));
+		for (Leader leader : deck.getAvailableLeaders()) {
+			if (leader.getName().equals(info[1])) {
+				deck.setLeader(leader);
+				break;
+			}
+		}
+		int size = Integer.parseInt(info[2]);
+		for (int i = 0; i < size; i++) {
+			Card card = CardCreator.getCard(info[i + 3]);
+			deck.add(card);
+		}
+		return deck;
+	}
+
 }
