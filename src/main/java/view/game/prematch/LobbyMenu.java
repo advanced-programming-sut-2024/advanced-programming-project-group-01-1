@@ -23,6 +23,7 @@ import view.Appview;
 import view.Constants;
 import view.Menuable;
 import view.game.GameMenusCommands;
+import view.game.SelectPanel;
 import view.model.LargeCard;
 import view.model.PreviewCard;
 
@@ -204,183 +205,65 @@ public class LobbyMenu extends Application implements Menuable {
 	 * change leader panel
 	 */
 
-	public Pane changeLeaderPane;
-	public ArrayList<LargeCard> leaders;
-	int ptrLeader;
-
 	public void changeLeader(MouseEvent mouseEvent) {
-		changeLeaderPane = new Pane();
-		leaders = new ArrayList<>();
-		changeLeaderPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
-		changeLeaderPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
 		Result result = PreMatchMenusController.showLeaders();
-		String[] parts = result.getMessage().split("\n");
-		for (int i = 0; i < parts.length; i += 2) {
-			String leaderName = parts[i].substring(8);
-			String description = parts[i+1];
-			LargeCard largeCard = new LargeCard(leaderName, description);
-			leaders.add(largeCard);
+		String[] leaders = result.getMessage().split("\n");
+		for (int i = 0; i < leaders.length; i += 2) {
+			leaders[i] = leaders[i].substring(8);
+
 		}
 		String currentLeader = PreMatchMenusController.showNowLeaderToGraphics().getMessage();
-		for (int i = 0; i < leaders.size(); i++) {
-			if (leaders.get(i).getName().equals(currentLeader)) {
-				ptrLeader = i;
+		int ptr = -1;
+		for (int i = 0; i < leaders.length; i += 2) {
+			if (leaders[i].equals(currentLeader)) {
+				ptr = i/2;
 				break;
 			}
 		}
-		updateLeaderPane();
-		root.getChildren().add(changeLeaderPane);
+		new SelectPanel(root, leaders, ptr, this::selectLeaderByGraphic);
 	}
 
-	public void updateLeaderPane() {
-		changeLeaderPane.getChildren().clear();
-		leaders.get(ptrLeader).setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - Constants.LARGE_CARD_WIDTH.getValue() / 2);
-		leaders.get(ptrLeader).setLayoutY(50);
-		leaders.get(ptrLeader).setStyle("-fx-opacity: 1");
-		leaders.get(ptrLeader).setOnMouseClicked(this::selectLeader);
-		changeLeaderPane.getChildren().add(leaders.get(ptrLeader));
-		Label label = new Label(leaders.get(ptrLeader).getDescription());
-		label.setLayoutX(leaders.get(ptrLeader).getLayoutX());
-		label.setLayoutY(Constants.SCREEN_HEIGHT.getValue() - 200);
-		label.setPrefWidth(Constants.LARGE_CARD_WIDTH.getValue());
-		label.setPrefHeight(150);
-		label.setWrapText(true);
-		label.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-background-color: rgba(0, 0, 0, 0.9)");
-		label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-		label.setAlignment(javafx.geometry.Pos.CENTER);
-		changeLeaderPane.getChildren().add(label);
-		for (int i = 0; i < leaders.size(); i++) {
-			if (i < ptrLeader -1 && i > ptrLeader + 1) {
-				continue;
-			} else if (i == ptrLeader -1) {
-				leaders.get(i).setLayoutX(leaders.get(ptrLeader).getLayoutX() - Constants.LARGE_CARD_WIDTH.getValue() - 100);
-				leaders.get(i).setLayoutY(leaders.get(ptrLeader).getLayoutY());
-				leaders.get(i).setStyle("-fx-opacity: 0.8");
-				leaders.get(i).setOnMouseClicked(this::previousLeader);
-				changeLeaderPane.getChildren().add(leaders.get(i));
-			} else if (i == ptrLeader + 1) {
-				leaders.get(i).setLayoutX(leaders.get(ptrLeader).getLayoutX() + Constants.LARGE_CARD_WIDTH.getValue() + 100);
-				leaders.get(i).setLayoutY(leaders.get(ptrLeader).getLayoutY());
-				leaders.get(i).setStyle("-fx-opacity: 0.8");
-				leaders.get(i).setOnMouseClicked(this::nextLeader);
-				changeLeaderPane.getChildren().add(leaders.get(i));
-			}
-		}
-	}
-
-	public void selectLeader(MouseEvent mouseEvent) {
-		LargeCard largeCard = (LargeCard) mouseEvent.getSource();
-		Result result = PreMatchMenusController.selectLeader(leaders.indexOf(largeCard));
-		root.getChildren().remove(changeLeaderPane);
+	public void selectLeaderByGraphic(int idx) {
+		Result result = PreMatchMenusController.selectLeader(idx);
 		updateScreen();
-	}
-
-	public void previousLeader(MouseEvent mouseEvent) {
-		ptrLeader--;
-		if (ptrLeader < 0) {
-			ptrLeader = leaders.size() - 1;
-		}
-		updateLeaderPane();
-	}
-
-	public void nextLeader(MouseEvent mouseEvent) {
-		ptrLeader++;
-		if (ptrLeader == leaders.size()) {
-			ptrLeader = 0;
-		}
-		updateLeaderPane();
 	}
 
 	/*
 	 * change faction panel
 	 */
 
-	public Pane changeFactionPane;
-	ArrayList<LargeCard> factions;
-	int ptrFaction;
 
 	public void changeFaction(MouseEvent mouseEvent) {
-		changeFactionPane = new Pane();
-		factions = new ArrayList<>();
-		changeFactionPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
-		changeFactionPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
 		Result result = PreMatchMenusController.showFactions();
 		String[] parts = result.getMessage().split("\n");
+		String[] factions = new String[parts.length-2];
 		for (int i = 2; i < parts.length; i += 2) {
-			String factionName = parts[i].substring(9);
-			String description = parts[i+1];
-			LargeCard largeCard = new LargeCard(factionName, description);
-			factions.add(largeCard);
+			factions[i-2] = parts[i].substring(9);
+			factions[i-1] = parts[i+1];
+
 		}
 		String currentFaction = PreMatchMenusController.showNowFactionToGraphics().getMessage();
-		for (int i = 0; i < factions.size(); i++) {
-			if (factions.get(i).getName().equals(currentFaction)) {
-				ptrFaction = i;
+		int ptr = -1;
+		for (int i = 0; i < factions.length; i += 2) {
+			if (factions[i].equals(currentFaction)) {
+				ptr = i/2;
 				break;
 			}
 		}
-		updateFactionPane();
-		root.getChildren().add(changeFactionPane);
+		new SelectPanel(root, factions, ptr, this::selectFactionByGraphic);
 	}
 
-	public void updateFactionPane() {
-		changeFactionPane.getChildren().clear();
-		factions.get(ptrFaction).setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - Constants.LARGE_CARD_WIDTH.getValue() / 2);
-		factions.get(ptrFaction).setLayoutY(50);
-		factions.get(ptrFaction).setStyle("-fx-opacity: 1");
-		factions.get(ptrFaction).setOnMouseClicked(this::selectFaction);
-		changeFactionPane.getChildren().add(factions.get(ptrFaction));
-		Label label = new Label(factions.get(ptrFaction).getDescription());
-		label.setLayoutX(factions.get(ptrFaction).getLayoutX());
-		label.setLayoutY(Constants.SCREEN_HEIGHT.getValue() - 200);
-		label.setPrefWidth(Constants.LARGE_CARD_WIDTH.getValue());
-		label.setPrefHeight(150);
-		label.setWrapText(true);
-		label.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-background-color: rgba(0, 0, 0, 0.9)");
-		label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-		label.setAlignment(javafx.geometry.Pos.CENTER);
-		changeFactionPane.getChildren().add(label);
-		for (int i = 0; i < factions.size(); i++) {
-			if (i < ptrFaction -1 && i > ptrFaction + 1) {
-				continue;
-			} else if (i == ptrFaction -1) {
-				factions.get(i).setLayoutX(factions.get(ptrFaction).getLayoutX() - Constants.LARGE_CARD_WIDTH.getValue() - 100);
-				factions.get(i).setLayoutY(factions.get(ptrFaction).getLayoutY());
-				factions.get(i).setStyle("-fx-opacity: 0.8");
-				factions.get(i).setOnMouseClicked(this::previousFaction);
-				changeFactionPane.getChildren().add(factions.get(i));
-			} else if (i == ptrFaction + 1) {
-				factions.get(i).setLayoutX(factions.get(ptrFaction).getLayoutX() + Constants.LARGE_CARD_WIDTH.getValue() + 100);
-				factions.get(i).setLayoutY(factions.get(ptrFaction).getLayoutY());
-				factions.get(i).setStyle("-fx-opacity: 0.8");
-				factions.get(i).setOnMouseClicked(this::nextFaction);
-				changeFactionPane.getChildren().add(factions.get(i));
-			}
+	public void selectFactionByGraphic(int idx) {
+		Result result = PreMatchMenusController.showFactions();
+		String[] parts = result.getMessage().split("\n");
+		String[] factions = new String[parts.length-2];
+		for (int i = 2; i < parts.length; i += 2) {
+			factions[i-2] = parts[i].substring(9);
+			factions[i-1] = parts[i+1];
+
 		}
-	}
-
-	public void selectFaction(MouseEvent mouseEvent) {
-		LargeCard largeCard = (LargeCard) mouseEvent.getSource();
-		Result result = PreMatchMenusController.selectFaction(largeCard.getName());
-		System.out.println(result);
-		root.getChildren().remove(changeFactionPane);
+		Result result1 = PreMatchMenusController.selectFaction(factions[idx*2]);
 		updateScreen();
-	}
-
-	public void previousFaction(MouseEvent mouseEvent) {
-		ptrFaction--;
-		if (ptrFaction < 0) {
-			ptrFaction = factions.size() - 1;
-		}
-		updateFactionPane();
-	}
-
-	public void nextFaction(MouseEvent mouseEvent) {
-		ptrFaction++;
-		if (ptrFaction == factions.size()) {
-			ptrFaction = 0;
-		}
-		updateFactionPane();
 	}
 
 	/*
