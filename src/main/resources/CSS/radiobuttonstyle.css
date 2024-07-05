@@ -1,0 +1,34 @@
+/*
+change the color when it's clicked
+ */
+
+.radio-button {
+    -fx-background-color: linear-gradient(to top, #8b4513, #b22222);
+    -fx-text-fill: #FF6347;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-border-color: #FF6347;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+/* change the color when it's clicked to cream */
+.radio-button:selected {
+    -fx-background-color: linear-gradient(to top, #F5F5DC, #FFA500); /* Gradient from Cream to Orange */
+    -fx-text-fill: #FF6347;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-border-color: #FF6347;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.radio-button .dot {
+    -fx-background-color: transparent; /* Dot is invisible when not selected */
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: linear-gradient(to top, #FFA500, #8b4513); /* Color of the dot when selected */
+    -fx-shape: "M250,75 L323,301 L131,161 L369,161 L177,301 Z"; /* Shape of the dot (6 leg star) */
+}
