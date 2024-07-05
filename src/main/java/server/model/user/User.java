@@ -22,7 +22,8 @@ public class User implements Serializable {
 	private Question question;
 	private Deck deck;
 	private Game currentGame;
-	private final ArrayList<GameInfo> history;
+	private final ArrayList<GameInfo> history = new ArrayList<>();
+	private final ArrayList<User> sentRequests = new ArrayList<>(), receivedRequests = new ArrayList<>();
 	private double elo;
 
 	public User(String username, String nickname, String password, String email, Question question) {
@@ -33,7 +34,6 @@ public class User implements Serializable {
 		this.email = email;
 		this.question = question;
 		this.deck = new Deck(Faction.NORTHERN_REALMS);
-		this.history = new ArrayList<>();
 		users.add(this);
 	}
 
@@ -237,4 +237,39 @@ public class User implements Serializable {
 	public void setCurrentGame(Game currentGame) {
 		this.currentGame = currentGame;
 	}
+
+	public ArrayList<User> getFriends() {
+		ArrayList<User> friends = new ArrayList<>(this.sentRequests);
+		friends.retainAll(this.receivedRequests);
+		return friends;
+	}
+
+	public ArrayList<User> getSentRequests() {
+		ArrayList<User> sentRequests = new ArrayList<>(this.sentRequests);
+		sentRequests.removeAll(this.receivedRequests);
+		return sentRequests;
+	}
+
+	public ArrayList<User> getReceivedRequests() {
+		ArrayList<User> receivedRequests = new ArrayList<>(this.receivedRequests);
+		receivedRequests.removeAll(this.sentRequests);
+		return receivedRequests;
+	}
+
+	public void addSentRequest(User user) {
+		this.sentRequests.add(user);
+	}
+
+	public void removeSentRequest(User user) {
+		this.sentRequests.remove(user);
+	}
+
+	public void addReceivedRequest(User user) {
+		this.receivedRequests.add(user);
+	}
+
+	public void removeReceivedRequest(User user) {
+		this.receivedRequests.remove(user);
+	}
+
 }

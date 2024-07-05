@@ -41,4 +41,50 @@ public class ClientMainMenuController {
 		String command = MainMenuCommands.GET_LOGGED_IN_USERNAME.getPattern();
 		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
 	}
+
+	public static Result showFriends() {
+		String command = MainMenuCommands.SHOW_FRIENDS.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result showReceivedFriendRequests() {
+		String command = MainMenuCommands.SHOW_RECEIVED_FRIEND_REQUESTS.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result showSentFriendRequests() {
+		String command = MainMenuCommands.SHOW_SENT_FRIEND_REQUESTS.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result acceptFriendRequest(String username) {
+		String command = MainMenuCommands.ACCEPT_FRIEND_REQUEST.getPattern();
+		command = command.replace("(?<username>.+)", username);
+		return TCPClient.send(command);
+	}
+
+	public static Result declineFriendRequest(String username) {
+		String command = MainMenuCommands.DECLINE_FRIEND_REQUEST.getPattern();
+		command = command.replace("(?<username>.+)", username);
+		return TCPClient.send(command);
+	}
+
+	public static Result removeFriend(String username) {
+		String command = MainMenuCommands.REMOVE_FRIEND.getPattern();
+		command = command.replace("(?<username>.+)", username);
+		return TCPClient.send(command);
+	}
+
+	public static Result sendFriendRequest(String username) {
+		String command = MainMenuCommands.SEND_FRIEND_REQUEST.getPattern();
+		command = command.replace("(?<username>.+)", username);
+		return TCPClient.send(command);
+	}
+
+	public static Result unsendFriendRequest(String username) {
+		String command = MainMenuCommands.UNSEND_FRIEND_REQUEST.getPattern();
+		command = command.replace("(?<username>.+)", username);
+		return TCPClient.send(command);
+	}
+
 }
