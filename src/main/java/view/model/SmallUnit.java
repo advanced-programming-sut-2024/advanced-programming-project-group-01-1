@@ -1,7 +1,8 @@
 package view.model;
 
 import javafx.scene.control.Label;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import view.Constants;
 
 public class SmallUnit extends SmallCard {
@@ -16,15 +17,18 @@ public class SmallUnit extends SmallCard {
         this.power = power;
         this.hero = hero;
 
-        Rectangle rectangle = new Rectangle(Constants.SMALL_CARD_WIDTH.getValue() / 2, Constants.SMALL_CARD_WIDTH.getValue() / 2);
+        ImageView powerIcon = new ImageView();
         if (hero) {
-            rectangle.setFill(getIconImagePattern("power_hero"));
+            powerIcon.setImage(new Image(SmallCard.class.getResourceAsStream("/images/icons/power_hero.png")));
         } else {
-            rectangle.setFill(getIconImagePattern("power_normal"));
+            powerIcon.setImage(new Image(SmallCard.class.getResourceAsStream("/images/icons/power_normal.png")));
         }
-        rectangle.setLayoutX(-2);
-        rectangle.setLayoutY(-2);
-        this.getChildren().add(rectangle);
+        powerIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue() / 2);
+        powerIcon.setFitHeight(Constants.SMALL_CARD_WIDTH.getValue() / 2);
+        powerIcon.setPreserveRatio(false);
+        powerIcon.setLayoutX(-2);
+        powerIcon.setLayoutY(-2);
+        this.getChildren().add(powerIcon);
 
         powerField = new Label(String.valueOf(power));
         powerField.setLayoutX(0);
@@ -37,18 +41,24 @@ public class SmallUnit extends SmallCard {
         else powerField.setStyle("-fx-text-fill: black; -fx-font-size: 10");
         this.getChildren().add(powerField);
 
-        Rectangle typeRectangle = new Rectangle(Constants.SMALL_CARD_WIDTH.getValue() / 4, Constants.SMALL_CARD_WIDTH.getValue() / 4);
-        typeRectangle.setFill(getIconImagePattern("card_row_" + type.toLowerCase()));
-        typeRectangle.setLayoutX(Constants.SMALL_CARD_WIDTH.getValue() * 3 / 4);
-        typeRectangle.setLayoutY(Constants.SMALL_CARD_HEIGHT.getValue() - Constants.SMALL_CARD_WIDTH.getValue() / 4);
-        this.getChildren().add(typeRectangle);
+        ImageView typeIcon = new ImageView();
+        typeIcon.setImage(new Image(SmallCard.class.getResourceAsStream("/images/icons/card_row_" + type.toLowerCase() + ".png")));
+        typeIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue() / 4);
+        typeIcon.setFitHeight(Constants.SMALL_CARD_WIDTH.getValue() / 4);
+        typeIcon.setLayoutX(Constants.SMALL_CARD_WIDTH.getValue() * 3 / 4);
+        typeIcon.setLayoutY(Constants.SMALL_CARD_HEIGHT.getValue() - Constants.SMALL_CARD_WIDTH.getValue() / 4);
+        typeIcon.setPreserveRatio(false);
+        this.getChildren().add(typeIcon);
 
         if (ability.equals("None")) return;
-        Rectangle abilityRectangle = new Rectangle(Constants.SMALL_CARD_WIDTH.getValue() / 4, Constants.SMALL_CARD_WIDTH.getValue() / 4);
-        abilityRectangle.setFill(getIconImagePattern("card_ability_" + ability.toLowerCase()));
-        abilityRectangle.setLayoutX(Constants.SMALL_CARD_WIDTH.getValue() / 2);
-        abilityRectangle.setLayoutY(Constants.SMALL_CARD_HEIGHT.getValue() - Constants.SMALL_CARD_WIDTH.getValue() / 4);
-        this.getChildren().add(abilityRectangle);
+        ImageView abilityIcon = new ImageView();
+        abilityIcon.setImage(new Image(SmallCard.class.getResourceAsStream("/images/icons/card_ability_" + ability.toLowerCase() + ".png")));
+        abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue() / 4);
+        abilityIcon.setFitHeight(Constants.SMALL_CARD_WIDTH.getValue() / 4);
+        abilityIcon.setLayoutX(Constants.SMALL_CARD_WIDTH.getValue() / 2);
+        abilityIcon.setLayoutY(Constants.SMALL_CARD_HEIGHT.getValue() - Constants.SMALL_CARD_WIDTH.getValue() / 4);
+        abilityIcon.setPreserveRatio(false);
+        this.getChildren().add(abilityIcon);
     }
 
     public static SmallUnit getInstance(String name, String description, String type, String Ability, int power, boolean hero, String uniqueCode) {

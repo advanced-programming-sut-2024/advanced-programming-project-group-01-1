@@ -9,19 +9,14 @@ import java.util.HashMap;
 
 public class LargeCard extends Rectangle {
 
-    private static HashMap<String, ImagePattern> imagePatterns = new HashMap<>();
-
     private final String name;
     private final String description;
 
     public LargeCard(String name, String description) {
         super(Constants.LARGE_CARD_WIDTH.getValue(), Constants.LARGE_CARD_HEIGHT.getValue());
-        ImagePattern imagePattern = imagePatterns.get(name);
-        if (imagePattern == null) {
-            System.out.println("Loading image: " + name + ".jpg");
-            imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/largecards/" + name + ".jpg")));
-            imagePatterns.put(name, imagePattern);
-        }
+        ImagePattern imagePattern;
+        System.out.println("Loading image: " + name + ".jpg");
+        imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/largecards/" + name + ".jpg")));
         this.setFill(imagePattern);
         this.name = name;
         this.description = description;

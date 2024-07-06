@@ -1,9 +1,9 @@
 package view.model;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import view.Constants;
 
 import java.util.HashMap;
@@ -13,33 +13,26 @@ public class SmallCard extends Pane {
     static HashMap<String, ImagePattern> iconImagePatterns = new HashMap<>();
     static HashMap<String, ImagePattern> imagePatterns = new HashMap<>();
     static HashMap<String, SmallCard> smallCards = new HashMap<>();
+    static HashMap<String, String> iconNames = new HashMap<>();
+
+    {
+        iconNames.put("Decoy", "power_decoy");
+        iconNames.put("Commander's Horn", "power_horn");
+        iconNames.put("Scorch", "power_scorch");
+        iconNames.put("Biting Frost", "power_frost");
+        iconNames.put("Impenetrable Fog", "power_fog");
+        iconNames.put("Torrential Rain", "power_rain");
+        iconNames.put("Clear Weather", "power_clear");
+        iconNames.put("Skellige Storm", "power_storm");
+        iconNames.put("Mardroeme", "power_mardroeme");
+    }
 
     String name;
     String description;
     String type;
     String ability;
-    ImagePattern front;
-    Rectangle picture;
-
-    public static ImagePattern getImagePattern(String name) {
-        ImagePattern imagePattern = imagePatterns.get(name);
-        if (imagePattern == null) {
-            System.out.println("Loading image: " + name + ".jpg");
-            imagePattern = new ImagePattern(new Image(SmallCard.class.getResourceAsStream("/images/smallcards/" + name + ".jpg")));
-            imagePatterns.put(name, imagePattern);
-        }
-        return imagePattern;
-    }
-
-    public static ImagePattern getIconImagePattern(String name) {
-        ImagePattern imagePattern = iconImagePatterns.get(name);
-        if (imagePattern == null) {
-            System.out.println("Loading image: " + name + ".png");
-            imagePattern = new ImagePattern(new Image(SmallCard.class.getResourceAsStream("/images/icons/" + name + ".png")));
-            iconImagePatterns.put(name, imagePattern);
-        }
-        return imagePattern;
-    }
+    Image front;
+    ImageView picture;
 
     SmallCard(String name, String description, String type, String ability) {
         super();
@@ -49,49 +42,26 @@ public class SmallCard extends Pane {
         this.description = description;
         this.type = type;
         this.ability = ability;
-        front = getImagePattern(name);
-        picture = new Rectangle(Constants.SMALL_CARD_WIDTH.getValue(), Constants.SMALL_CARD_HEIGHT.getValue());
-        picture.setFill(front);
+        front = new Image(SmallCard.class.getResourceAsStream("/images/smallcards/" + name + ".jpg"));
+        picture = new ImageView(front);
+        picture.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+        picture.setFitHeight(Constants.SMALL_CARD_HEIGHT.getValue());
+        picture.setPreserveRatio(false);
         this.getChildren().add(picture);
 
-        Rectangle rectangle = new Rectangle(Constants.SMALL_CARD_WIDTH.getValue() / 2, Constants.SMALL_CARD_WIDTH.getValue() / 2);
         if (type.equals("faction")){
             return;
         }
-        switch (name) {
-            case "Decoy":
-                rectangle.setFill(getIconImagePattern("power_decoy"));
-                break;
-            case "Commander's Horn":
-                rectangle.setFill(getIconImagePattern("power_horn"));
-                break;
-            case "Scorch":
-                rectangle.setFill(getIconImagePattern("power_scorch"));
-                break;
-            case "Biting Frost":
-                rectangle.setFill(getIconImagePattern("power_frost"));
-                break;
-            case "Impenetrable Fog":
-                rectangle.setFill(getIconImagePattern("power_fog"));
-                break;
-            case "Torrential Rain":
-                rectangle.setFill(getIconImagePattern("power_rain"));
-                break;
-            case "Clear Weather":
-                rectangle.setFill(getIconImagePattern("power_clear"));
-                break;
-            case "Skellige Storm":
-                rectangle.setFill(getIconImagePattern("power_storm"));
-                break;
-            case "Mardroeme":
-                rectangle.setFill(getIconImagePattern("power_mardroeme"));
-                break;
-            default:
-                return;
+        if (iconNames.get(name) != null) {
+            ImageView icon = new ImageView(new Image(SmallCard.class.getResourceAsStream("/images/icons/" + iconNames.get(name) + ".png")));
+            System.out.println("Loading image: " + iconNames.get(name) + ".png");
+            icon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue() / 2);
+            icon.setFitHeight(Constants.SMALL_CARD_WIDTH.getValue() / 2);
+            icon.setLayoutX(-5);
+            icon.setLayoutY(-5);
+            icon.setPreserveRatio(false);
+            this.getChildren().add(icon);
         }
-        rectangle.setLayoutX(-5);
-        rectangle.setLayoutY(-5);
-        this.getChildren().add(rectangle);
     }
 
     public static SmallCard getInstance(String name, String description, String type, String Ability, String uniqueCode) {
