@@ -96,13 +96,13 @@ public class CardCreator {
 	private static void createNorthernRealmsCards() {
 		createUnit(Melee.class, Faction.NORTHERN_REALMS, 1, "Esterad Thyssen", null, 10, true);
 		createUnit(Melee.class, Faction.NORTHERN_REALMS, 1, "John Natalis", null, 10, true);
-		createUnit(Melee.class, Faction.NORTHERN_REALMS, 1, "Verden Roche", null, 10, true);
+		createUnit(Melee.class, Faction.NORTHERN_REALMS, 1, "Vernon Roche", null, 10, true);
 		createUnit(Ranged.class, Faction.NORTHERN_REALMS, 1, "Philippa Eilhart", null, 10, true);
 		createUnit(Siege.class, Faction.NORTHERN_REALMS, 2, "Catapult", TightBond.INSTANCE, 8, false);
 		createUnit(Siege.class, Faction.NORTHERN_REALMS, 1, "Ballista", null, 6, false);
 		createUnit(Siege.class, Faction.NORTHERN_REALMS, 1, "Siege Tower", null, 6, false);
-		createUnit(Siege.class, Faction.NORTHERN_REALMS, 1, "Trebutchet0", null, 6, false);
-		createUnit(Siege.class, Faction.NORTHERN_REALMS, 1, "Trebutchet1", null, 6, false);
+		createUnit(Siege.class, Faction.NORTHERN_REALMS, 1, "Trebuchet0", null, 6, false);
+		createUnit(Siege.class, Faction.NORTHERN_REALMS, 1, "Trebuchet1", null, 6, false);
 		createUnit(Ranged.class, Faction.NORTHERN_REALMS, 1, "Dethmold", null, 6, false);
 		createUnit(Ranged.class, Faction.NORTHERN_REALMS, 1, "Keira Metz", null, 5, false);
 		createUnit(Ranged.class, Faction.NORTHERN_REALMS, 1, "Sile de Tansarville", null, 5, false);

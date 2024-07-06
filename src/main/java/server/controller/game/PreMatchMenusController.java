@@ -60,12 +60,12 @@ public class PreMatchMenusController {
 
 	public static Result checkRequest(Client client) {
 		if (!((MatchFinderMenu) client.getMenu()).isWaiting()) return new Result("You were not waiting", false);
-		if (!client.getIdentity().getRequestedOpponent().getMatchRequests().contains(client.getIdentity()))
-			return new Result("You are rejected", true);
 		if (client.getIdentity() == client.getIdentity().getRequestedOpponent().getAcceptedOpponent()) {
 			client.setMenu(new LobbyMenu());
 			return new Result("You are accepted", true);
 		}
+		if (!client.getIdentity().getRequestedOpponent().getMatchRequests().contains(client.getIdentity()))
+			return new Result("You are rejected", true);
 		return new Result("Still wait", false);
 	}
 
@@ -191,6 +191,8 @@ public class PreMatchMenusController {
 	public static Result addToDeck(Client client, String cardName, int count) {
 		if (count < 1) return new Result("Invalid Count", false);
 		Card card = CardCreator.getCard(cardName);
+		System.out.println("haaa? : " + cardName + " " + count + " ::: " +
+				client.getIdentity().getDeck().getAvailableCount(card));
 		if (client.getIdentity().getDeck().getAvailableCount(card) < count)
 			return new Result("Not Enough Cards Available", false);
 		for (int i = 0; i < count; i++)

@@ -1,7 +1,6 @@
 package server.model.user;
 
 import server.main.CardCreator;
-import server.main.LeaderCreator;
 import server.model.card.Card;
 import server.model.card.special.Special;
 import server.model.card.unit.Unit;
@@ -31,8 +30,7 @@ public class Deck implements Serializable {
 			try {
 				ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
 				Faction leaderFaction = (Faction) objectInputStream.readObject();
-				if (leaderFaction.equals(faction))
-					availableLeaders.add((Leader) objectInputStream.readObject());
+				if (leaderFaction.equals(faction)) availableLeaders.add((Leader) objectInputStream.readObject());
 				objectInputStream.close();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -136,16 +134,28 @@ public class Deck implements Serializable {
 		if (cardInDeck != null) {
 			if (card instanceof Special) specialCount++;
 			else unitCount++;
-			availableCards.remove(card);
-			return cards.add(card);
+			availableCards.remove(cardInDeck);
+			cards.add(cardInDeck);
+			cards.sort(Card::compareTo);
+			return true;
 		}
 		return false;
 	}
 
 	public boolean remove(Card card) {
-		if (cards.remove(card)) {
-			if (card instanceof Special) specialCount--;
+		Card cardInDeck = null;
+		for (Card c : cards) {
+			if (c.toString().equals(card.toString())) {
+				cardInDeck = c;
+				break;
+			}
+		}
+		if (cardInDeck != null) {
+			if (cardInDeck instanceof Special) specialCount--;
 			else unitCount--;
+			availableCards.add(cardInDeck);
+			cards.remove(cardInDeck);
+			cards.sort(Card::compareTo);
 			return true;
 		}
 		return false;

@@ -18,7 +18,6 @@ import java.util.Collections;
 
 public class ClientPreMatchMenusController {
 
-
 	public static Result requestMatch(String opponentUsername, ClientMatchFinderMenu menu) {
 		String command = GameMenusCommands.SEND_MATCH_REQUEST.getPattern();
 		command = command.replace("(?<opponent>\\S+)", opponentUsername);
@@ -26,17 +25,14 @@ public class ClientPreMatchMenusController {
 		if (result != null && result.isSuccessful()) {
 			new Thread(() -> {
 				while (true) {
-					System.out.println("wtf waiting");
 					try {
 						if (!isWaiting().isSuccessful()) break;
 						Result check = checkRequest();
-						System.out.println(check);
 						if (check.isSuccessful()) {
 							if (check.getMessage().equals("You are accepted"))
-								ClientAppview.setMenu(new ClientLobbyMenu());
+								Platform.runLater(() -> ClientAppview.setMenu(new ClientLobbyMenu()));
 							else if (menu != null) {
 								Platform.runLater(() -> {
-
 									AlertMaker.makeAlert("Request", new Result("Your are rejected", false));
 									menu.stopWaiting(null);
 								});
@@ -62,7 +58,6 @@ public class ClientPreMatchMenusController {
 		String command = GameMenusCommands.HANDLE_MATCH_REQUEST.getPattern();
 		command = command.replace("(?<handle>(accept|reject))", (accept ? "accept" : "reject"));
 		command = command.replace("(?<sender>\\S+)", senderUsername);
-		System.out.println("aha :: " + command);
 		Result result = TCPClient.send(command);
 		if (result != null && result.isSuccessful() && accept) ClientAppview.setMenu(new ClientLobbyMenu());
 		return result;
@@ -90,7 +85,7 @@ public class ClientPreMatchMenusController {
 
 	public static Result selectFaction(String factionName) {
 		String command = GameMenusCommands.SELECT_FACTION.getPattern();
-		command = command.replace("(?<faction>\\S+)", factionName);
+		command = command.replace("(?<faction>.+)", factionName);
 		return TCPClient.send(command);
 	}
 
@@ -136,9 +131,8 @@ public class ClientPreMatchMenusController {
 			byte[] bytes = new byte[(int) deckFile.length()];
 			fileInputStream.read(bytes);
 			String deckFson = new String(bytes);
-			command.replace("(?<deckFson>\\S+)", deckFson);
+			command = command.replace("(?<deckFson>\\S+)", deckFson);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new Result("Error Loading Deck", false);
 		}
 		return TCPClient.send(command);
@@ -162,9 +156,11 @@ public class ClientPreMatchMenusController {
 
 	public static Result addToDeck(String cardName, int count) {
 		String command = GameMenusCommands.ADD_TO_DECK.getPattern();
-		command = command.replace("(?<cardName>\\S+)", cardName);
+		command = command.replace("(?<cardName>.+)", cardName);
 		command = command.replace("(?<count>\\d+)", String.valueOf(count));
-		return TCPClient.send(command);
+		Result result =  TCPClient.send(command);
+		System.out.println(cardName + " " + count + " :: " + result);
+		return result;
 	}
 
 	public static Result deleteFromDeck(int cardNumber, int count) {

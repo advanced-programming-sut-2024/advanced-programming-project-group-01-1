@@ -59,7 +59,7 @@ public class LeaderCreator {
 	}
 
 	private static void createSpellLeaders() {
-		createSpellLeader(Faction.NORTHERN_REALMS, "Foltest the SiegeMaster",
+		createSpellLeader(Faction.NORTHERN_REALMS, "Foltest the Siegemaster",
 				"Pick an Impenetrable Fog from your deck and play it instantly",
 				true, -1, "Impenetrable Fog");
 		createSpellLeader(Faction.NORTHERN_REALMS, "Foltest the Steel-Forged",
