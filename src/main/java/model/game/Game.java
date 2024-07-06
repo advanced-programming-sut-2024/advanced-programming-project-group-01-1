@@ -402,6 +402,7 @@ public class Game {
 	}
 
 	private void endGame() {
+		MatchMenuController.endGame();
 		double currentElo = current.getElo(), opponentElo = opponent.getElo();
 		if (currentLife == 0 && opponentLife == 0) {
 			current.setElo(User.calculateElo(currentElo, opponentElo, 0));

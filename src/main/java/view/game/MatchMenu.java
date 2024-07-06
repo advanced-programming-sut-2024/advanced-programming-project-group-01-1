@@ -305,6 +305,7 @@ public class MatchMenu extends Application implements Menuable {
 	}
 
 	public void showSpace(MouseEvent mouseEvent) {
+		clearSelectedCard();
 		Pane pane = (Pane) mouseEvent.getSource();
 		String[] cardsInfo = new String[pane.getChildren().size()*2];
 		if (cardsInfo.length == 0) {
@@ -316,6 +317,11 @@ public class MatchMenu extends Application implements Menuable {
 			cardsInfo[i*2+1] = card.getDescription();
 		}
 		SelectPanel selectPanel = new SelectPanel(root, cardsInfo, 0, null);
+	}
+
+	public void passTurn(MouseEvent mouseEvent) {
+		MatchMenuController.passTurn();
+		updateScreen();
 	}
 
 	/*

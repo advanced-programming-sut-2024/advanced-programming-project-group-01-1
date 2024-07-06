@@ -6,6 +6,9 @@ import model.card.special.spell.Buffer;
 import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Space;
+import view.Appview;
+import view.MainMenu;
+import view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -196,5 +199,9 @@ public class MatchMenuController {
 	}
 
 	public static void showSpace(Space tmp) {
+	}
+
+	public static void endGame() {
+		Appview.setMenu(new MatchFinderMenu());
 	}
 }
