@@ -15,7 +15,7 @@ import java.io.Serializable;
 public abstract class Card implements Cloneable, Serializable, Comparable<Card> {
 	protected final String name;
 	protected final Ability ability;
-	protected Space space = null;
+	protected transient Space space = null;
 
 	public Card(String name, Ability ability) {
 		this.name = name;

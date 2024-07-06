@@ -69,6 +69,7 @@ public abstract class Unit extends Card {
 	}
 
 	public int getPower() {
+		if (Game.getCurrentGame() == null) return this.basePower;
 		if (isHero) return this.basePower;
 		int power = this.basePower;
 		if (this.debuff) power = Game.getCurrentGame().isDebuffWeakened() ? power / 2 : 1;
