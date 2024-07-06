@@ -2,15 +2,33 @@
 
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.MatchMenu" fx:id="root">
    <children>
       <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
          <image>
             <Image url="@../images/backgrounds/MatchMenu.jpg" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="95.0" layoutX="97.0" layoutY="593.0" stroke="BLACK" strokeType="INSIDE" width="75.0" />
+      <Pane fx:id="handPane" layoutX="410.0" layoutY="598.0" prefHeight="92.0" prefWidth="667.0" />
+      <Pane fx:id="rowPane0" layoutX="505.0" layoutY="492.0" prefHeight="92.0" prefWidth="574.0" />
+      <Pane fx:id="rowPane1" layoutX="505.0" layoutY="394.0" prefHeight="92.0" prefWidth="574.0" />
+      <Pane fx:id="rowPane2" layoutX="505.0" layoutY="302.0" prefHeight="92.0" prefWidth="574.0" />
+      <Pane fx:id="rowPane3" layoutX="505.0" layoutY="195.0" prefHeight="92.0" prefWidth="574.0" />
+      <Pane fx:id="rowPane4" layoutX="505.0" layoutY="97.0" prefHeight="92.0" prefWidth="574.0" />
+      <Pane fx:id="rowPane5" layoutX="505.0" layoutY="5.0" prefHeight="92.0" prefWidth="574.0" />
+      <Pane fx:id="rowBuffer0" layoutX="405.0" layoutY="494.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer1" layoutX="405.0" layoutY="394.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer2" layoutX="405.0" layoutY="303.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer3" layoutX="405.0" layoutY="197.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer4" layoutX="405.0" layoutY="97.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer5" layoutX="405.0" layoutY="5.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="myLeaderPane" layoutX="102.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
+      <Pane fx:id="opponentLeaderPane" layoutX="102.0" layoutY="59.0" prefHeight="92.0" prefWidth="67.0" />
+      <Pane fx:id="weatherPane" layoutX="102.0" layoutY="323.0" prefHeight="92.0" prefWidth="197.0" />
+      <Pane layoutX="1105.0" layoutY="59.0" prefHeight="92.0" prefWidth="67.0" fx:id="opponentPilePane"/>
+      <Pane layoutX="1231.0" layoutY="51.0" prefHeight="92.0" prefWidth="67.0" fx:id="opponentDeckPane"/>
+      <Pane layoutX="1105.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" fx:id="myPilePane"/>
+      <Pane layoutX="1231.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" fx:id="myDeckPane"/>
    </children>
 </Pane>

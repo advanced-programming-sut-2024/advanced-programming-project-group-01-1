@@ -13,6 +13,7 @@ import model.user.Deck;
 import model.user.User;
 import view.Appview;
 import view.MainMenu;
+import view.game.MatchMenu;
 import view.game.prematch.LobbyMenu;
 
 import java.io.*;
@@ -241,6 +242,7 @@ public class PreMatchMenusController {
 	}
 
 	public static Result startGame() {
+		Appview.setMenu(new MatchMenu());
 		Game.createGame(User.getLoggedInUser(), opponent);
 		return new Result("Game Started Successfully", true);
 	}

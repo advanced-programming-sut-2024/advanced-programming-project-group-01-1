@@ -132,6 +132,10 @@ public class Game {
 		return currentDeck;
 	}
 
+	public Space getOpponentDeck() {
+		return opponentDeck;
+	}
+
 	public Space getCurrentHand() {
 		return currentHand;
 	}

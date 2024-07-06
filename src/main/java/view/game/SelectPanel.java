@@ -3,6 +3,7 @@ package view.game;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import view.Constants;
 import view.model.LargeCard;
 
@@ -17,7 +18,7 @@ public class SelectPanel {
     ArrayList<LargeCard> cards = new ArrayList<>();
     int ptr = 0;
     SelectionHandler selectionHandler;
-
+    Rectangle backButton;
     public SelectPanel(Pane root, String[] cards, int ptr, SelectionHandler selectionHandler) {
         this.root = root;
         this.selectionHandler = selectionHandler;
@@ -25,6 +26,9 @@ public class SelectPanel {
         selectPanelPane = new Pane();
         selectPanelPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
         selectPanelPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+        backButton = new Rectangle(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+        backButton.setStyle("-fx-fill: transparent;");
+        backButton.setOnMouseClicked(event -> root.getChildren().remove(selectPanelPane));
         for (int i = 0; i < cards.length; i += 2) {
             LargeCard card = new LargeCard(cards[i], cards[i + 1]);
             this.cards.add(card);
@@ -35,6 +39,7 @@ public class SelectPanel {
 
     private void updatePanel() {
         selectPanelPane.getChildren().clear();
+        selectPanelPane.getChildren().add(backButton);
 		cards.get(ptr).setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - Constants.LARGE_CARD_WIDTH.getValue() / 2);
 		cards.get(ptr).setLayoutY(50);
 		cards.get(ptr).setStyle("-fx-opacity: 1");
@@ -71,7 +76,7 @@ public class SelectPanel {
 
     private void selectCard(MouseEvent mouseEvent) {
         root.getChildren().remove(selectPanelPane);
-        selectionHandler.handle(ptr);
+        if (selectionHandler != null) selectionHandler.handle(ptr);
     }
 
     private void previousCard(MouseEvent mouseEvent) {

@@ -15,6 +15,6 @@ public class AlertMaker {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(result.getMessage());
-        alert.showAndWait();
+        alert.show();
     }
 }

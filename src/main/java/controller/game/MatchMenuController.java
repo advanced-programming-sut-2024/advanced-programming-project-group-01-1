@@ -2,6 +2,7 @@ package controller.game;
 
 import model.Result;
 import model.card.Card;
+import model.card.special.spell.Buffer;
 import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Space;
@@ -23,8 +24,23 @@ public class MatchMenuController {
 		return new Result(hand.toString(), true);
 	}
 
+	public static Result showHandForGraphic() {
+		StringBuilder hand = new StringBuilder();
+		for (Card card : Game.getCurrentGame().getCurrentHand().getCards()) {
+			hand.append(card.toString()).append("\n");
+			hand.append("unique code: ").append(card.toSuperString());
+			hand.append("\n------------------\n");
+		}
+		return new Result(hand.toString(), true);
+	}
+
 	public static Result remainingInDeck() {
 		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()), true);
+	}
+
+	public static Result remainingInDecksForGraphic() {
+		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()) + "\n" +
+				Game.getCurrentGame().getOpponentDeck().getCards().size(), true);
 	}
 
 	public static Result showDiscordPiles() {
@@ -32,13 +48,62 @@ public class MatchMenuController {
 				"Opponent Discard Pile:\n" + Game.getCurrentGame().getOpponentDiscardPile(), true);
 	}
 
+	public static Result showDiscardPilesForGraphic() {
+		StringBuilder discardPiles = new StringBuilder();
+		discardPiles.append("Current Discard Pile:\n");
+		for (Card card : Game.getCurrentGame().getCurrentDiscardPile().getCards()) {
+			discardPiles.append(card.toString()).append("\n");
+			discardPiles.append("unique code: ").append(card.toSuperString());
+			discardPiles.append("\n------------------\n");
+		}
+		discardPiles.append("\n------------------\n");
+		discardPiles.append("Opponent Discard Pile:\n");
+		for (Card card : Game.getCurrentGame().getOpponentDiscardPile().getCards()) {
+			discardPiles.append(card.toString()).append("\n");
+			discardPiles.append("unique code: ").append(card.toSuperString());
+			discardPiles.append("\n------------------\n");
+		}
+		return new Result(discardPiles.toString(), true);
+	}
+
 	public static Result showRow(int rowNumber) {
 		return new Result(Game.getCurrentGame().getRow(rowNumber).toString(), true);
+	}
+
+	public static Result showRowForGraphic(int rowNumber) {
+		StringBuilder row = new StringBuilder();
+		Buffer buffer = Game.getCurrentGame().getRow(rowNumber).getBuffer();
+		if (buffer != null) {
+			row.append("Buffer: ").append(buffer.toString()).append("\n");
+			row.append("unique code: ").append(buffer.toSuperString());
+			row.append("\n------------------\n");
+		}
+		for (Card card : Game.getCurrentGame().getRow(rowNumber).getCards()) {
+			row.append(card.toString()).append("\n");
+			row.append("unique code: ").append(card.toSuperString());
+			row.append("\n------------------\n");
+		}
+		return new Result(row.toString(), true);
 	}
 
 	public static Result showWeatherSystem() {
 		return new Result(Game.getCurrentGame().getCurrentWeatherSystem() + "\n" +
 				Game.getCurrentGame().getOpponentWeatherSystem(), true);
+	}
+
+	public static Result showWeatherSystemForGraphic() {
+		StringBuilder weather = new StringBuilder();
+		for (Card card : Game.getCurrentGame().getCurrentWeatherSystem().getCards()) {
+			weather.append(card.toString()).append("\n");
+			weather.append("unique code: ").append(card.toSuperString());
+			weather.append("\n------------------\n");
+		}
+		for (Card card : Game.getCurrentGame().getOpponentWeatherSystem().getCards()) {
+			weather.append(card.toString()).append("\n");
+			weather.append("unique code: ").append(card.toSuperString());
+			weather.append("\n------------------\n");
+		}
+		return new Result(weather.toString(), true);
 	}
 
 	public static Result placeCard(int cardNumber, int rowNumber) {
@@ -61,6 +126,11 @@ public class MatchMenuController {
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
 		}
+	}
+
+	public static Result showFactionsForGraphic() {
+		return new Result(Game.getCurrentGame().getCurrentFaction() + "\n" +
+				Game.getCurrentGame().getOpponentFaction(), true);
 	}
 
 	public static Result showPlayersInfo() {

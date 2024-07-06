@@ -116,7 +116,7 @@ public abstract class Unit extends Card {
 	@Override
 	public String toString() {
 		String unit = super.toString() + "\nPower: " + this.basePower;
-		if (this.isHero) unit = "\033[1;33m" + unit + "\033[0m";
+		if (this.isHero) unit += "\nHero";
 		return unit;
 	}
 }
