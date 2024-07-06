@@ -57,8 +57,8 @@ public class SmallCard extends Pane {
             System.out.println("Loading image: " + iconNames.get(name) + ".png");
             icon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue() / 2);
             icon.setFitHeight(Constants.SMALL_CARD_WIDTH.getValue() / 2);
-            icon.setLayoutX(-5);
-            icon.setLayoutY(-5);
+            icon.setLayoutX(0);
+            icon.setLayoutY(0);
             icon.setPreserveRatio(false);
             this.getChildren().add(icon);
         }

@@ -248,7 +248,7 @@ public class CardCreator {
 	private static void createSkelligeCards() {
 		createNonWeatherSpell(Buffer.class, 3, "Mardroeme", Mardroeme.INSTANCE);
 		createUnit(Melee.class, Faction.SKELLIGE, 0, "Transformed Vildkaarl", MoralBooster.INSTANCE, 14, false);
-		createUnit(Siege.class, Faction.SKELLIGE, 1, "Olaf", MoralBooster.INSTANCE, 12, false);
+		createUnit(Agile.class, Faction.SKELLIGE, 1, "Olaf", MoralBooster.INSTANCE, 12, false);
 		createUnit(Melee.class, Faction.SKELLIGE, 0, "Hemdall", null, 11, true);
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys", Muster.INSTANCE, 10, true);
 		createUnit(Ranged.class, Faction.SKELLIGE, 1, "Hjalmar", null, 10, true);

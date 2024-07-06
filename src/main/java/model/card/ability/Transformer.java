@@ -15,7 +15,7 @@ public enum Transformer implements Ability {
 	@Override
 	public void undo(Card card) {
 		String transformedName = null;
-		if (card.getName().equals("Cow")) transformedName = "Bovine Defence Force";
+		if (card.getName().equals("Cow")) transformedName = "Bovine Defense Force";
 		else if (card.getName().equals("Kambi")) transformedName = "Hemdall";
 		Card transformedCard = CardCreator.getCard(transformedName);
 		transformedCard.setSpace(Game.getCurrentGame().getCurrentDeck());
