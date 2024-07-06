@@ -78,7 +78,7 @@ public class CardCreator {
 		createDecoy();
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Geralt of Rivia", null, 15, true);
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Cirilla Fiona Elen Riannon", null, 15, true);
-		createUnit(Melee.class, Faction.NEUTRAL, 0, "Bovine Defence Force", null, 8, false);
+		createUnit(Melee.class, Faction.NEUTRAL, 0, "Bovine Defense Force", null, 8, false);
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Triss Merigold", null, 7, true);
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Villentretenmerth", Scorch.INSTANCE, 7, false);
 		createUnit(Ranged.class, Faction.NEUTRAL, 1, "Yennefer of Vengerberg", Medic.INSTANCE, 7, true);
