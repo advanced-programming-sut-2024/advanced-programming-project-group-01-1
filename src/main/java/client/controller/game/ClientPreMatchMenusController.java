@@ -1,6 +1,9 @@
 package client.controller.game;
 
 import client.main.TCPClient;
+import client.view.ClientAppview;
+import client.view.game.prematch.ClientLobbyMenu;
+import client.view.game.prematch.ClientMatchFinderMenu;
 import message.GameMenusCommands;
 import message.Result;
 
@@ -12,8 +15,63 @@ import java.util.Collections;
 
 public class ClientPreMatchMenusController {
 
-	public static Result createGame(String opponentUsername) {
-	return null;
+
+	public static Result requestMatch(String opponentUsername, ClientMatchFinderMenu menu) {
+		String command = GameMenusCommands.SEND_MATCH_REQUEST.getPattern();
+		command = command.replace("(?<opponent>\\S+)", opponentUsername);
+		Result result = TCPClient.send(command);
+		if (result != null && result.isSuccessful()) {
+			new Thread(() -> {
+				while (true) {
+					System.out.println("wtf waiting");
+					try {
+						if (!isWaiting().isSuccessful()) break;
+						Result check = checkRequest();
+						System.out.println(check);
+						if (check.isSuccessful()) {
+							if (check.getMessage().equals("You are accepted"))
+								ClientAppview.setMenu(new ClientLobbyMenu());
+							else if (menu != null) menu.stopWaiting(null);
+							break;
+						}
+						Thread.sleep(234);
+					} catch (Exception e) {
+						break;
+					}
+				}
+			}).start();
+		}
+		return result;
+	}
+
+	public static Result getMatchRequests() {
+		String command = GameMenusCommands.GET_MATCH_REQUESTS.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result handleMatchRequest(String senderUsername, boolean accept) {
+		String command = GameMenusCommands.HANDLE_MATCH_REQUEST.getPattern();
+		command = command.replace("(?<handle>(accept|reject))", (accept ? "accept" : "reject"));
+		command = command.replace("(?<sender>\\S+)", senderUsername);
+		System.out.println("aha :: " + command);
+		Result result = TCPClient.send(command);
+		if (result != null && result.isSuccessful() && accept) ClientAppview.setMenu(new ClientLobbyMenu());
+		return result;
+	}
+
+	public static Result checkRequest() {
+		String command = GameMenusCommands.CHECK_REQUEST.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result stopWait() {
+		String command = GameMenusCommands.STOP_WAIT.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result isWaiting() {
+		String command = GameMenusCommands.IS_WAITING.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showFactions() {
@@ -117,10 +175,10 @@ public class ClientPreMatchMenusController {
 		return TCPClient.send(command);
 	}
 
-    public static Result exit() {
+	public static Result exit() {
 		String command = GameMenusCommands.EXIT_MATCH_FINDER.getPattern();
 		return TCPClient.send(command);
-    }
+	}
 
 	public static ArrayList<String> getOtherUsernames() {
 		String command = GameMenusCommands.SHOW_PLAYERS_INFO.getPattern();
@@ -150,4 +208,5 @@ public class ClientPreMatchMenusController {
 		String command = GameMenusCommands.SHOW_FACTION_GRAPHIC.getPattern();
 		return TCPClient.send(command);
 	}
+
 }

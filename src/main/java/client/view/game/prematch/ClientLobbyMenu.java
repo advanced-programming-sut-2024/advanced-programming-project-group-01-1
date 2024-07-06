@@ -53,7 +53,6 @@ public class ClientLobbyMenu extends Application implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
-		System.out.println("aha");
 		ClientAppview.setStage(stage);
 		URL url = getClass().getResource("/FXML/LobbyMenu.fxml");
 		if (url == null) {
@@ -69,13 +68,11 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		System.out.println("khob");
 	}
 
 	@FXML
 	public void initialize() {
-		System.out.println("what");
-		//updateScreen();
+		updateScreen();
 	}
 
 	public void updateScreen() {

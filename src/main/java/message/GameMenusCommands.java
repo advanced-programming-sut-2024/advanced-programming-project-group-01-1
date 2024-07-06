@@ -4,7 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum GameMenusCommands {
-    CREATE_GAME("create game -p2 (?<opponent>\\S+)"),
+    SEND_MATCH_REQUEST("send match request -p2 (?<opponent>\\S+)"),
+    GET_MATCH_REQUESTS("get all match requests"),
+    HANDLE_MATCH_REQUEST("(?<handle>(accept|reject)) match request (?<sender>\\S+)"),
+    CHECK_REQUEST("check request"),
+    STOP_WAIT("stop waiting"),
+    IS_WAITING("is still waiting"),
     SHOW_FACTIONS("show factions"),
     SELECT_FACTION("select faction -f (?<faction>\\S+)"),
     SHOW_CARDS("show cards"),

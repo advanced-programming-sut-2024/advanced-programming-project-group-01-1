@@ -7,16 +7,17 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.game.prematch.ClientMatchFinderMenu">
    <children>
       <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
-         <image>
-            <Image url="@../images/backgrounds/MatchFinderMenu.jpg" />
-         </image>
+         <Image url="@../images/backgrounds/MatchFinderMenu.jpg"/>
       </ImageView>
-      <ListView fx:id="suggestUsersList" layoutX="533.0" layoutY="95.0" prefHeight="200.0" prefWidth="300.0" stylesheets="@../CSS/listviewstyle.css" />
+      <ListView fx:id="suggestUsersList" layoutX="533.0" layoutY="90.0" prefHeight="200.0" prefWidth="300.0" stylesheets="@../CSS/listviewstyle.css" />
       <TextField layoutX="533.0" layoutY="27.0" stylesheets="@../CSS/textfieldstyle.css" fx:id="usernameField"/>
       <Label id="normal-text" layoutX="310.0" layoutY="52.0" stylesheets="@../CSS/textstyle.css" text="username" />
-      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#startGame" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="start game" />
-      <Button id="ipad-dark-grey" layoutX="150.0" layoutY="582.0" mnemonicParsing="false" onMouseClicked="#quickMatch" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="quick match" />
-      <Button id="ipad-dark-grey" layoutX="1066.0" layoutY="607.0" mnemonicParsing="false" onMouseClicked="#tournamentMatch" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 12;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="tournament match" />
-      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="680.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
+      <Button fx:id="sendRequest" id="ipad-dark-grey" layoutX="608.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#sendRequest" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="send request" />
+      <Button fx:id="updateRequests" id="ipad-dark-grey" layoutX="608.0" layoutY="380.0" mnemonicParsing="false" onMouseClicked="#updateRequests" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="show requests"/>
+      <ScrollPane opacity="0" fx:id="requests" minWidth="400" maxWidth="400" layoutX="483" layoutY="440" />
+      <Button fx:id="quickMatch" id="ipad-dark-grey" layoutX="150.0" layoutY="582.0" mnemonicParsing="false" onMouseClicked="#quickMatch" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="quick match" />
+      <Button fx:id="tournamentMatch" id="ipad-dark-grey" layoutX="1066.0" layoutY="607.0" mnemonicParsing="false" onMouseClicked="#tournamentMatch" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 12;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="tournament match" />
+      <Button opacity="0" fx:id="stopWaiting" id="ipad-dark-grey" layoutX="608.0" layoutY="615.0" mnemonicParsing="false" onMouseClicked="#stopWaiting" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="stop waiting"/>
+      <Button fx:id="back" id="ipad-dark-grey" layoutX="608.0" layoutY="680.0" mnemonicParsing="false" onMouseClicked="#back" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
    </children>
 </Pane>

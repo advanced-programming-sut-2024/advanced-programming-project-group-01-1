@@ -29,6 +29,8 @@ public class Client {
 	}
 
 	public static void remove(Client client) {
+		client.getIdentity().setRequestedOpponent(null);
+		client.getIdentity().setAcceptedOpponent(null);
 		clients.remove(client.getToken());
 	}
 

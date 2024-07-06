@@ -11,6 +11,7 @@ import server.model.user.Deck;
 import server.model.user.User;
 import server.view.MainMenu;
 import server.view.game.prematch.LobbyMenu;
+import server.view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
 
@@ -19,13 +20,59 @@ public class PreMatchMenusController {
 	private static int cnt = 0;
 	private static User opponent = null;
 
-	public static Result createGame(Client client, String opponentUsername) {
+	public static Result requestMatch(Client client, String opponentUsername) {
+		System.out.println("realy wtf :: " + client.getIdentity().getUsername() + ", " + opponentUsername);
 		User opponent = User.getUserByUsername(opponentUsername);
-		if (opponent == null) return new Result("User Not Found", false);
-		if (opponent.equals(client.getIdentity())) return new Result("You Cannot Play With Yourself", false);
-		PreMatchMenusController.opponent = opponent;
-		client.setMenu(new LobbyMenu());
-		return new Result("Entering Lobby", true);
+		if (opponent == null) return new Result("User not found", false);
+		if (opponent.equals(client.getIdentity())) return new Result("You cannot play with yourself", false);
+		if (((MatchFinderMenu) client.getMenu()).isWaiting())
+			return new Result("You cannot send two requests simultaneously", false);
+		client.getIdentity().setRequestedOpponent(opponent);
+		opponent.getMatchRequests().add(client.getIdentity());
+		((MatchFinderMenu) client.getMenu()).setWaiting(true);
+		return new Result("Request sent", true);
+	}
+
+	public static Result getMatchRequests(Client client) {
+		StringBuilder requests = new StringBuilder();
+		for (User requestSender : client.getIdentity().getMatchRequests()) {
+			requests.append(requestSender.getUsername()).append("\n");
+		}
+		return new Result(requests.toString(), true);
+	}
+
+	public static Result handleMatchRequest(Client client, String senderUsername, boolean accept) {
+		System.out.println("fuck " + client.getIdentity().getUsername() + ", " + senderUsername + " " + accept);
+		User sender = User.getUserByUsername(senderUsername);
+		if (sender == null) return new Result("no such user", false);
+		if (!client.getIdentity().getMatchRequests().contains(sender))
+			return new Result("No request from this user", false);
+		client.getIdentity().getMatchRequests().remove(sender);
+		if (accept) {
+			client.getIdentity().setAcceptedOpponent(sender);
+			client.setMenu(new LobbyMenu());
+			return new Result("Request accepted", true);
+		} else return new Result("Request rejected", true);
+	}
+
+
+	public static Result checkRequest(Client client) {
+		if (!((MatchFinderMenu) client.getMenu()).isWaiting()) return new Result("You were not waiting", false);
+		if (!client.getIdentity().getRequestedOpponent().getMatchRequests().contains(client.getIdentity()))
+			return new Result("You are rejected", true);
+		if (client.getIdentity() == client.getIdentity().getRequestedOpponent().getAcceptedOpponent()) {
+			client.setMenu(new LobbyMenu());
+			return new Result("You are accepted", true);
+		}
+		return new Result("Still wait", false);
+	}
+
+	public static Result stopWait(Client client) {
+		if (!((MatchFinderMenu) client.getMenu()).isWaiting()) return new Result("You were not waiting", false);
+		client.getIdentity().getRequestedOpponent().getMatchRequests().remove(client.getIdentity());
+		client.getIdentity().setRequestedOpponent(null);
+		((MatchFinderMenu) client.getMenu()).setWaiting(false);
+		return new Result("stopped successfully", true);
 	}
 
 	public static Result showFactions(Client client) {
