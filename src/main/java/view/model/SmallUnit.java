@@ -37,9 +37,8 @@ public class SmallUnit extends SmallCard {
         powerField.setPrefHeight(Constants.SMALL_CARD_WIDTH.getValue() / 4);
         powerField.setAlignment(javafx.geometry.Pos.CENTER);
         powerField.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        if (hero) powerField.setStyle("-fx-text-fill: white; -fx-font-size: 10");
-        else powerField.setStyle("-fx-text-fill: black; -fx-font-size: 10");
         this.getChildren().add(powerField);
+        setCurrentPower(currentPower);
 
         ImageView typeIcon = new ImageView();
         typeIcon.setImage(new Image(SmallCard.class.getResourceAsStream("/images/icons/card_row_" + type.toLowerCase() + ".png")));
@@ -64,6 +63,19 @@ public class SmallUnit extends SmallCard {
 
     public void setCurrentPower(String currentPower) {
         powerField.setText(currentPower);
+        int power = Integer.parseInt(currentPower);
+        if (power < this.power) {
+            powerField.setStyle("-fx-text-fill: red; -fx-font-size: 10");
+        } else if (power > this.power) {
+            powerField.setStyle("-fx-text-fill: green; -fx-font-size: 10");
+        } else {
+            if (hero) powerField.setStyle("-fx-text-fill: white; -fx-font-size: 10");
+            else powerField.setStyle("-fx-text-fill: black; -fx-font-size: 10");
+        }
+    }
+
+    public int getCurrentPower() {
+        return Integer.parseInt(powerField.getText());
     }
 
     public static SmallUnit getInstance(String name, String description, String type, String Ability, int power, String currentPower, boolean hero, String uniqueCode) {

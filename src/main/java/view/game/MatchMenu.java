@@ -5,7 +5,10 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -47,6 +50,14 @@ public class MatchMenu extends Application implements Menuable {
 	public Pane rowBuffer3;
 	public Pane rowBuffer4;
 	public Pane rowBuffer5;
+	public Label rowPowerLabel0;
+	public Label rowPowerLabel1;
+	public Label rowPowerLabel2;
+	public Label rowPowerLabel3;
+	public Label rowPowerLabel4;
+	public Label rowPowerLabel5;
+	public Label myPower;
+	public Label opponentPower;
 	public Pane myLeaderPane;
 	public Pane opponentLeaderPane;
 	public Pane weatherPane;
@@ -57,6 +68,7 @@ public class MatchMenu extends Application implements Menuable {
 
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
+	public Label[] rowPowerLabels;
 	public Pane selectedCard;
 	public ArrayList<Pane> selectedPanes = new ArrayList<>();
 
@@ -83,6 +95,7 @@ public class MatchMenu extends Application implements Menuable {
 	public void initialize() {
 		rowPanes = new Pane[]{rowPane0, rowPane1, rowPane2, rowPane3, rowPane4, rowPane5};
 		rowBufferPanes = new Pane[]{rowBuffer0, rowBuffer1, rowBuffer2, rowBuffer3, rowBuffer4, rowBuffer5};
+		rowPowerLabels = new Label[]{rowPowerLabel0, rowPowerLabel1, rowPowerLabel2, rowPowerLabel3, rowPowerLabel4, rowPowerLabel5};
 		for (Pane pane : rowPanes) {
 			pane.setOnMouseClicked(this::showSpace);
 		}
@@ -104,6 +117,7 @@ public class MatchMenu extends Application implements Menuable {
 		updateDiscardPiles();
 		updateDecks();
 		//updateLeader();
+		updateInfo();
 	}
 
 	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> eventHandler) {
@@ -231,6 +245,32 @@ public class MatchMenu extends Application implements Menuable {
 		}
 		updateSpace(myDeckPane, myDeckInfo, null);
 		updateSpace(opponentDeckPane, opponentDeckInfo, null);
+	}
+
+	public void updateInfo() {
+		for (int i = 0; i < 6; i++) {
+			int power = 0;
+			for (Node node: rowPanes[i].getChildren()){
+				if (node instanceof SmallUnit) {
+					SmallUnit unit = (SmallUnit) node;
+					power += unit.getCurrentPower();
+				}
+			}
+			rowPowerLabels[i].setText(String.valueOf(power));
+			rowPowerLabels[i].setStyle("-fx-font-size: 20");
+		}
+		int power = 0;
+		for (int i = 0; i < 3; i++) {
+			power += Integer.parseInt(rowPowerLabels[i].getText());
+		}
+		myPower.setText(String.valueOf(power));
+		myPower.setStyle("-fx-font-size: 20");
+		power = 0;
+		for (int i = 3; i < 6; i++) {
+			power += Integer.parseInt(rowPowerLabels[i].getText());
+		}
+		opponentPower.setText(String.valueOf(power));
+		opponentPower.setStyle("-fx-font-size: 20");
 	}
 
 	public void selectCard(MouseEvent event) {

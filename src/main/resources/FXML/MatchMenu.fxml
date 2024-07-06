@@ -33,6 +33,14 @@
       <Pane fx:id="myDeckPane" layoutX="1231.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
       <Pane layoutX="14.0" layoutY="440.0" prefHeight="146.0" prefWidth="287.0" />
       <Pane layoutX="14.0" layoutY="157.0" prefHeight="146.0" prefWidth="287.0" />
-      <Button id="ipad-dark-grey" layoutX="158.0" layoutY="704.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="43.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="pass" onMouseClicked="#passTurn"/>
+      <Button id="ipad-dark-grey" layoutX="158.0" layoutY="704.0" mnemonicParsing="false" onMouseClicked="#passTurn" prefHeight="57.0" prefWidth="43.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="pass" />
+      <Label fx:id="rowPowerLabel0" alignment="CENTER" layoutX="360.0" layoutY="520.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel1" alignment="CENTER" layoutX="360.0" layoutY="423.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel2" alignment="CENTER" layoutX="360.0" layoutY="328.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel3" alignment="CENTER" layoutX="360.0" layoutY="223.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel4" alignment="CENTER" layoutX="360.0" layoutY="123.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel5" alignment="CENTER" layoutX="360.0" layoutY="31.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label alignment="CENTER" layoutX="301.0" layoutY="500.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" fx:id="myPower"/>
+      <Label alignment="CENTER" layoutX="301.0" layoutY="214.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" fx:id="opponentPower"/>
    </children>
 </Pane>
