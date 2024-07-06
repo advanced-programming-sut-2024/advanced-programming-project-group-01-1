@@ -21,7 +21,7 @@ public class Request extends HBox {
 		Button button = new Button(text);
 		button.getStylesheets().add(buttonCSS);
 		button.getStylesheets().add(textCSS);
-		button.setId("ipad-dark-grey");
+		button.setId("ipad-dark-grey-small");
 		button.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
 		return button;
 	}

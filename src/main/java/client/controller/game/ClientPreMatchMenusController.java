@@ -1,9 +1,12 @@
 package client.controller.game;
 
 import client.main.TCPClient;
+import client.view.AlertMaker;
 import client.view.ClientAppview;
+import client.view.ClientMainMenu;
 import client.view.game.prematch.ClientLobbyMenu;
 import client.view.game.prematch.ClientMatchFinderMenu;
+import javafx.application.Platform;
 import message.GameMenusCommands;
 import message.Result;
 
@@ -31,7 +34,13 @@ public class ClientPreMatchMenusController {
 						if (check.isSuccessful()) {
 							if (check.getMessage().equals("You are accepted"))
 								ClientAppview.setMenu(new ClientLobbyMenu());
-							else if (menu != null) menu.stopWaiting(null);
+							else if (menu != null) {
+								Platform.runLater(() -> {
+
+									AlertMaker.makeAlert("Request", new Result("Your are rejected", false));
+									menu.stopWaiting(null);
+								});
+							}
 							break;
 						}
 						Thread.sleep(234);
@@ -177,7 +186,9 @@ public class ClientPreMatchMenusController {
 
 	public static Result exit() {
 		String command = GameMenusCommands.EXIT_MATCH_FINDER.getPattern();
-		return TCPClient.send(command);
+		Result result = TCPClient.send(command);
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientMainMenu());
+		return result;
 	}
 
 	public static ArrayList<String> getOtherUsernames() {

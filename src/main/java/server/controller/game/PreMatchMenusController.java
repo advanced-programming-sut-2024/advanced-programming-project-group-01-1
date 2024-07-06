@@ -21,12 +21,15 @@ public class PreMatchMenusController {
 	private static User opponent = null;
 
 	public static Result requestMatch(Client client, String opponentUsername) {
-		System.out.println("realy wtf :: " + client.getIdentity().getUsername() + ", " + opponentUsername);
 		User opponent = User.getUserByUsername(opponentUsername);
 		if (opponent == null) return new Result("User not found", false);
 		if (opponent.equals(client.getIdentity())) return new Result("You cannot play with yourself", false);
 		if (((MatchFinderMenu) client.getMenu()).isWaiting())
 			return new Result("You cannot send two requests simultaneously", false);
+		if (opponent.getRequestedOpponent() == client.getIdentity()) {
+			if (handleMatchRequest(client, opponentUsername, true).isSuccessful())
+				return new Result("Request sent", true);
+		}
 		client.getIdentity().setRequestedOpponent(opponent);
 		opponent.getMatchRequests().add(client.getIdentity());
 		((MatchFinderMenu) client.getMenu()).setWaiting(true);
@@ -42,7 +45,6 @@ public class PreMatchMenusController {
 	}
 
 	public static Result handleMatchRequest(Client client, String senderUsername, boolean accept) {
-		System.out.println("fuck " + client.getIdentity().getUsername() + ", " + senderUsername + " " + accept);
 		User sender = User.getUserByUsername(senderUsername);
 		if (sender == null) return new Result("no such user", false);
 		if (!client.getIdentity().getMatchRequests().contains(sender))

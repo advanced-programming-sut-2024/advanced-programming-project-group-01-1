@@ -107,7 +107,6 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 	}
 
 	public void stopWaiting(MouseEvent mouseEvent) {
-		//if (mouseEvent == null) AlertMaker.makeAlert("Request", new Result("Your are rejected", false));
 		ClientPreMatchMenusController.stopWait();
 		update();
 	}
@@ -136,7 +135,7 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 			vBox.getChildren().add(new Request(requester, this));
 		}
 		requests.setContent(vBox);
-		requests.setOpacity(0.9);
+		requests.setOpacity(0.7);
 		requests.setMinHeight(Math.min(vBox.getPrefHeight() + 30, 200));
 		updateRequests.setText("hide requests");
 	}
