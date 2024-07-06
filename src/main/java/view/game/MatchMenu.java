@@ -119,9 +119,10 @@ public class MatchMenu extends Application implements Menuable {
 			String Ability = cardInfo[2].substring(9);
 			if (type.equals("Melee") || type.equals("Ranged") || type.equals("Siege") || type.equals("Agile")) {
 				int power = Integer.parseInt(cardInfo[3].substring(7));
-				boolean hero = (cardInfo.length == 6);
+				String currentPower = cardInfo[4].substring(15);
+				boolean hero = (cardInfo.length == 7);
 				String uniqueCode = cardInfo[cardInfo.length - 1].substring(13);
-				smallCard = SmallUnit.getInstance(cardName, cardDescription, type, Ability, power, hero, uniqueCode);
+				smallCard = SmallUnit.getInstance(cardName, cardDescription, type, Ability, power, currentPower, hero, uniqueCode);
 
 			} else {
 				String uniqueCode = cardInfo[3].substring(13);

@@ -11,7 +11,7 @@ public class SmallUnit extends SmallCard {
     boolean hero;
     Label powerField;
 
-    SmallUnit(String name, String description, String type, String ability, int power, boolean hero) {
+    SmallUnit(String name, String description, String type, String ability, int power, String currentPower, boolean hero) {
 
         super(name, description, type, ability);
         this.power = power;
@@ -30,7 +30,7 @@ public class SmallUnit extends SmallCard {
         powerIcon.setLayoutY(-2);
         this.getChildren().add(powerIcon);
 
-        powerField = new Label(String.valueOf(power));
+        powerField = new Label(currentPower);
         powerField.setLayoutX(0);
         powerField.setLayoutY(0);
         powerField.setPrefWidth(Constants.SMALL_CARD_WIDTH.getValue() / 4);
@@ -62,11 +62,17 @@ public class SmallUnit extends SmallCard {
         this.getChildren().add(abilityIcon);
     }
 
-    public static SmallUnit getInstance(String name, String description, String type, String Ability, int power, boolean hero, String uniqueCode) {
+    public void setCurrentPower(String currentPower) {
+        powerField.setText(currentPower);
+    }
+
+    public static SmallUnit getInstance(String name, String description, String type, String Ability, int power, String currentPower, boolean hero, String uniqueCode) {
         SmallUnit smallUnit = (SmallUnit) smallCards.get(uniqueCode);
         if (smallUnit == null) {
-            smallUnit = new SmallUnit(name, description, type, Ability, power, hero);
+            smallUnit = new SmallUnit(name, description, type, Ability, power, currentPower, hero);
             smallCards.put(uniqueCode, smallUnit);
+        }  else {
+            smallUnit.setCurrentPower(currentPower);
         }
         return smallUnit;
     }

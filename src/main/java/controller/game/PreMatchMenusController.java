@@ -70,7 +70,7 @@ public class PreMatchMenusController {
 			if (previousCard == null) {
 				previousCard = card;
 				count++;
-			} else if (previousCard.toString().equals(card.toString())) {
+			} else if (previousCard.getName().equals(card.getName())) {
 				count++;
 			} else {
 				result.append(previousCard.getName()).append(":").append(count).append("\n");
@@ -102,7 +102,7 @@ public class PreMatchMenusController {
 			if (previousCard == null) {
 				previousCard = card;
 				count++;
-			} else if (previousCard.toString().equals(card.toString())) {
+			} else if (previousCard.getName().equals(card.getName())) {
 				count++;
 			} else {
 				result.append(previousCard.getName()).append(":").append(count).append("\n");
