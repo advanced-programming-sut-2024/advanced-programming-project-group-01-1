@@ -1,6 +1,7 @@
 package client.view.user;
 
 import client.controller.ClientUserMenusController;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,7 +19,7 @@ import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
-public class ClientInfoMenu implements Menuable {
+public class ClientInfoMenu extends Application implements Menuable {
 	public Label username;
 	public Label nickname;
 	public Label maxScore;

@@ -5,9 +5,12 @@ import client.view.ClientAppview;
 import client.view.ClientMainMenu;
 import client.view.user.ClientInfoMenu;
 import client.view.user.ClientProfileMenu;
+import client.view.user.ClientSocialMenu;
 import message.Result;
 import message.UserMenusCommands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class ClientUserMenusController {
@@ -56,6 +59,7 @@ public class ClientUserMenusController {
 		Result result = TCPClient.send(command);
 		if (ClientAppview.getMenu() instanceof ClientInfoMenu) ClientAppview.setMenu(new ClientProfileMenu());
 		else if (ClientAppview.getMenu() instanceof ClientProfileMenu) ClientAppview.setMenu(new ClientMainMenu());
+		else if (ClientAppview.getMenu() instanceof ClientSocialMenu) ClientAppview.setMenu(new ClientMainMenu());
 		return result;
 	}
 
@@ -114,4 +118,59 @@ public class ClientUserMenusController {
 		String command = UserMenusCommands.GET_LOSSES.getPattern();
 		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
 	}
+
+	public static Result showFriends() {
+		String command = UserMenusCommands.SHOW_FRIENDS.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result showReceivedFriendRequests() {
+		String command = UserMenusCommands.SHOW_RECEIVED_FRIEND_REQUESTS.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result showSentFriendRequests() {
+		String command = UserMenusCommands.SHOW_SENT_FRIEND_REQUESTS.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result acceptFriendRequest(String username) {
+		String command = UserMenusCommands.ACCEPT_FRIEND_REQUEST.getPattern();
+		command = command.replace("(?<username>.*)", username);
+		return TCPClient.send(command);
+	}
+
+	public static Result declineFriendRequest(String username) {
+		String command = UserMenusCommands.DECLINE_FRIEND_REQUEST.getPattern();
+		command = command.replace("(?<username>.*)", username);
+		return TCPClient.send(command);
+	}
+
+	public static Result removeFriend(String username) {
+		String command = UserMenusCommands.REMOVE_FRIEND.getPattern();
+		command = command.replace("(?<username>.*)", username);
+		return TCPClient.send(command);
+	}
+
+	public static Result sendFriendRequest(String username) {
+		String command = UserMenusCommands.SEND_FRIEND_REQUEST.getPattern();
+		System.out.println(username);
+		command = command.replace("(?<username>.*)", username);
+		return TCPClient.send(command);
+	}
+
+	public static Result unsendFriendRequest(String username) {
+		String command = UserMenusCommands.UNSEND_FRIEND_REQUEST.getPattern();
+		command = command.replace("(?<username>.*)", username);
+		return TCPClient.send(command);
+	}
+
+	public static ArrayList<String> showPlayersInfo() {
+		String command = UserMenusCommands.SHOW_PLAYERS_INFO.getPattern();
+		Result result = TCPClient.send(command);
+		if (result == null) return null;
+		String[] players = result.getMessage().split("\n");
+		return new ArrayList<>(Arrays.asList(players));
+	}
+
 }

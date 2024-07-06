@@ -1,6 +1,7 @@
 package client.view.user;
 
 import client.controller.ClientUserMenusController;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
-public class ClientProfileMenu implements Menuable {
+public class ClientProfileMenu extends Application implements Menuable {
 	public TextField usernameField;
 	public TextField nicknameField;
 	public TextField emailField;

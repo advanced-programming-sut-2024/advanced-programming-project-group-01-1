@@ -22,6 +22,15 @@ public enum UserMenusCommands {
     ENTER_USER_INFO("menu enter user info menu"),
     SHOW_CURRENT_MENU("show current menu"),
     GAME_HISTORY("game history( -n (?<numberOfGames>\\d+))?"),
+    SHOW_FRIENDS("show friends"),
+    SHOW_RECEIVED_FRIEND_REQUESTS("show received friend requests"),
+    SHOW_SENT_FRIEND_REQUESTS("show sent friend requests"),
+    ACCEPT_FRIEND_REQUEST("accept friend request (?<username>.*)"),
+    DECLINE_FRIEND_REQUEST("decline friend request (?<username>.*)"),
+    REMOVE_FRIEND("remove friend (?<username>.*)"),
+    SEND_FRIEND_REQUEST("send friend request (?<username>.*)"),
+    UNSEND_FRIEND_REQUEST("unsend friend request (?<username>.*)"),
+    SHOW_PLAYERS_INFO("show players info"),
     EXIT("menu exit");
 
 	private final Pattern pattern;

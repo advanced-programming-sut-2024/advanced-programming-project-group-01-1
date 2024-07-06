@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.user.ClientSocialMenu">
+	<children>
+		<ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+			<image>
+				<Image url="@../images/backgrounds/SocialMenu.jpg" />
+			</image>
+		</ImageView>
+		<VBox alignment="TOP_CENTER" layoutX="77.0" layoutY="199.0" prefHeight="371.0" prefWidth="316.0" spacing="30.0">
+			<children>
+				<HBox alignment="CENTER" prefHeight="44.0" prefWidth="282.0">
+					<children>
+						<RadioButton fx:id="showFriends" mnemonicParsing="false" onAction="#updateFriendsList" prefHeight="30.0" prefWidth="109.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Friends">
+							<toggleGroup>
+								<ToggleGroup fx:id="show" />
+							</toggleGroup></RadioButton>
+						<RadioButton fx:id="showReceivedFriendRequests" mnemonicParsing="false" onAction="#updateFriendsList" prefHeight="30.0" prefWidth="116.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Pending" toggleGroup="$show" />
+						<RadioButton fx:id="showSentFriendRequests" mnemonicParsing="false" onAction="#updateFriendsList" prefHeight="30.0" prefWidth="91.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Sent" toggleGroup="$show" />
+					</children>
+				</HBox>
+				<ListView fx:id="friendsList" layoutX="533.0" layoutY="95.0" prefHeight="203.0" prefWidth="316.0" stylesheets="@../CSS/listviewstyle.css" visible="false" />
+			</children>
+		</VBox>
+		<VBox alignment="CENTER" layoutX="959.0" layoutY="179.0" prefHeight="410.0" prefWidth="300.0" spacing="30.0">
+			<TextField fx:id="usernameField" layoutX="533.0" layoutY="27.0" stylesheets="@../CSS/textfieldstyle.css" />
+			<ListView fx:id="suggestUsersList" layoutX="533.0" layoutY="95.0" prefHeight="203.0" prefWidth="300.0" stylesheets="@../CSS/listviewstyle.css" />
+			<Button id="ipad-dark-grey" layoutX="608.0" layoutY="334.0" mnemonicParsing="false" onAction="#sendRequest" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="send request" />
+
+		</VBox>
+	</children>
+</Pane>

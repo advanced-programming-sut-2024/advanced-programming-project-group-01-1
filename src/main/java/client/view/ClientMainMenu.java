@@ -58,6 +58,10 @@ public class ClientMainMenu extends Application implements Menuable {
 		Result result = goToProfileMenu();
 	}
 
+	public void social(MouseEvent mouseEvent) {
+		Result result = goToSocialMenu();
+	}
+
 	public void leaderboard(MouseEvent mouseEvent) {
 		Result result = new Result("coming soon!!!", true);
 		AlertMaker.makeAlert("leaderboard", result);
@@ -80,30 +84,11 @@ public class ClientMainMenu extends Application implements Menuable {
 		Result result;
 		if (MainMenuCommands.ENTER_GAME_MENU.getMatcher(input) != null) result = goToMatchFinderMenu();
 		else if (MainMenuCommands.ENTER_PROFILE_MENU.getMatcher(input) != null) result = goToProfileMenu();
+		else if (MainMenuCommands.ENTER_SOCIAL_MENU.getMatcher(input) != null) result = goToSocialMenu();
 		else if (MainMenuCommands.LOGOUT.getMatcher(input) != null) result = ClientMainMenuController.logout();
 		else if (MainMenuCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
 		else if (MainMenuCommands.GET_LOGGED_IN_USERNAME.getMatcher(input) != null) result = new Result(getLoggedInUsername(), true);
-		else if (MainMenuCommands.SHOW_FRIENDS.getMatcher(input) != null) result = showFriends();
-		else if (MainMenuCommands.SHOW_RECEIVED_FRIEND_REQUESTS.getMatcher(input) != null) result = showReceivedFriendRequests();
-		else if (MainMenuCommands.SHOW_SENT_FRIEND_REQUESTS.getMatcher(input) != null) result = showSentFriendRequests();
-		else if (MainMenuCommands.ACCEPT_FRIEND_REQUEST.getMatcher(input) != null) {
-			String username = MainMenuCommands.ACCEPT_FRIEND_REQUEST.getMatcher(input).group("username");
-			result = acceptFriendRequest(username);
-		} else if (MainMenuCommands.DECLINE_FRIEND_REQUEST.getMatcher(input) != null) {
-			String username = MainMenuCommands.DECLINE_FRIEND_REQUEST.getMatcher(input).group("username");
-			result = declineFriendRequest(username);
-		} else if (MainMenuCommands.REMOVE_FRIEND.getMatcher(input) != null) {
-			String username = MainMenuCommands.REMOVE_FRIEND.getMatcher(input).group("username");
-			result = removeFriend(username);
-		} else if (MainMenuCommands.SEND_FRIEND_REQUEST.getMatcher(input) != null) {
-			String username = MainMenuCommands.SEND_FRIEND_REQUEST.getMatcher(input).group("username");
-			result = sendFriendRequest(username);
-		} else if (MainMenuCommands.UNSEND_FRIEND_REQUEST.getMatcher(input) != null) {
-			String username = MainMenuCommands.UNSEND_FRIEND_REQUEST.getMatcher(input).group("username");
-			result = unsendFriendRequest(username);
-		}
 		else result = new Result("Invalid command", false);
 		return result;
 	}
-
 }
