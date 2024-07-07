@@ -15,6 +15,8 @@ import java.util.Objects;
 
 public class ClientUserMenusController {
 
+	public static Thread friendListUpdater;
+
 	public static Result changeUsername(String newUsername) {
 		String command = UserMenusCommands.CHANGE_USERNAME.getPattern();
 		command = command.replace("(?<username>\\S+)", newUsername);
@@ -59,7 +61,10 @@ public class ClientUserMenusController {
 		Result result = TCPClient.send(command);
 		if (ClientAppview.getMenu() instanceof ClientInfoMenu) ClientAppview.setMenu(new ClientProfileMenu());
 		else if (ClientAppview.getMenu() instanceof ClientProfileMenu) ClientAppview.setMenu(new ClientMainMenu());
-		else if (ClientAppview.getMenu() instanceof ClientSocialMenu) ClientAppview.setMenu(new ClientMainMenu());
+		else if (ClientAppview.getMenu() instanceof ClientSocialMenu) {
+			ClientAppview.setMenu(new ClientMainMenu());
+			stopUpdating();
+		}
 		return result;
 	}
 
@@ -171,6 +176,26 @@ public class ClientUserMenusController {
 		if (result == null) return null;
 		String[] players = result.getMessage().split("\n");
 		return new ArrayList<>(Arrays.asList(players));
+	}
+
+	public static void startUpdating(ClientSocialMenu menu) {
+		if (friendListUpdater != null) stopUpdating();
+		friendListUpdater = new Thread(() -> {
+			while (!Thread.currentThread().isInterrupted()) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+				javafx.application.Platform.runLater(menu::updateFriendsList);
+			}
+		});
+		friendListUpdater.start();
+	}
+
+	private static void stopUpdating() {
+		friendListUpdater.interrupt();
+		friendListUpdater = null;
 	}
 
 }

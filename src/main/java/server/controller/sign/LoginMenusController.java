@@ -29,7 +29,10 @@ public class LoginMenusController {
 		synchronized (User.getUsers()) {
 			User user = User.getUserByUsername(username);
 			if (user == null) return new Result("Username doesn't exist", false);
+			System.out.println(User.getOnlineUsers().size());
+			if (User.getOnlineUsers().contains(user)) return new Result("User is already online", false);
 			if (!user.getPassword().equals(password)) return new Result("Password is incorrect", false);
+			User.getOnlineUsers().add(user);
 			client.setIdentity(user);
 			client.setMenu(new AuthenticationMenu());
 			return new Result("Enter authentication code to login", true);
@@ -37,7 +40,7 @@ public class LoginMenusController {
 	}
 
 	public static Result sendEmail(Client client) {
-		final String username = "gopasttenseofgo@gmail.com";
+		/*final String username = "gopasttenseofgo@gmail.com";
 		final String password = "icwx uork uhlz ltfj ";
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", "smtp.gmail.com");
@@ -65,7 +68,7 @@ public class LoginMenusController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result("email not sent", false);
-		}
+		}*/
 		loggingInClients.put(client, "123456");
 		return new Result("email sent", true);
 	}

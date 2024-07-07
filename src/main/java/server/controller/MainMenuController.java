@@ -11,6 +11,7 @@ import server.view.user.SocialMenu;
 public class MainMenuController {
 
 	public static Result logout(Client client) {
+		User.getOnlineUsers().remove(client.getIdentity());
 		client.setIdentity(null);
 		client.setMenu(new LoginMenu());
 		return new Result("Logged out successfully", true);

@@ -47,8 +47,6 @@ public class LobbyMenu implements Menuable {
 			result = addToDeck(client, matcher);
 		else if ((matcher = GameMenusCommands.REMOVE_FROM_DECK.getMatcher(input)) != null)
 			result = deleteFromDeck(client, matcher);
-		else if (GameMenusCommands.PASS_ROUND.getMatcher(input) != null)
-			result = PreMatchMenusController.changeTurn(client);
 		else if (GameMenusCommands.SHOW_CARDS_GRAPHIC.getMatcher(input) != null)
 			result = PreMatchMenusController.showCardsForGraphic(client);
 		else if (GameMenusCommands.SHOW_DECK_GRAPHIC.getMatcher(input) != null)

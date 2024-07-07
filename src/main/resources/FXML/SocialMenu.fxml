@@ -15,12 +15,12 @@
 			<children>
 				<HBox alignment="CENTER" prefHeight="44.0" prefWidth="282.0">
 					<children>
-						<RadioButton fx:id="showFriends" mnemonicParsing="false" onAction="#updateFriendsList" prefHeight="30.0" prefWidth="109.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Friends">
+						<RadioButton fx:id="showFriends" mnemonicParsing="false" onAction="#updateDisplayPanel" prefHeight="30.0" prefWidth="109.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Friends">
 							<toggleGroup>
 								<ToggleGroup fx:id="show" />
 							</toggleGroup></RadioButton>
-						<RadioButton fx:id="showReceivedFriendRequests" mnemonicParsing="false" onAction="#updateFriendsList" prefHeight="30.0" prefWidth="116.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Pending" toggleGroup="$show" />
-						<RadioButton fx:id="showSentFriendRequests" mnemonicParsing="false" onAction="#updateFriendsList" prefHeight="30.0" prefWidth="91.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Sent" toggleGroup="$show" />
+						<RadioButton fx:id="showReceivedFriendRequests" mnemonicParsing="false" onAction="#updateDisplayPanel" prefHeight="30.0" prefWidth="116.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Pending" toggleGroup="$show" />
+						<RadioButton fx:id="showSentFriendRequests" mnemonicParsing="false" onAction="#updateDisplayPanel" prefHeight="30.0" prefWidth="91.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/radiobuttonstyle.css, @../CSS/textstyle.css" text="Sent" toggleGroup="$show" />
 					</children>
 				</HBox>
 				<ListView fx:id="friendsList" layoutX="533.0" layoutY="95.0" prefHeight="203.0" prefWidth="316.0" stylesheets="@../CSS/listviewstyle.css" visible="false" />

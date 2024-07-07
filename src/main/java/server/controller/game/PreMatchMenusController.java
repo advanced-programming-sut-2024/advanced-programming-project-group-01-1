@@ -24,6 +24,8 @@ public class PreMatchMenusController {
 		User opponent = User.getUserByUsername(opponentUsername);
 		if (opponent == null) return new Result("User not found", false);
 		if (opponent.equals(client.getIdentity())) return new Result("You cannot play with yourself", false);
+		if (!User.getOnlineUsers().contains(opponent)) return new Result("User is not online", false);
+		if (Client.getClient(opponent).isInGame()) return new Result("User is in another game", false);
 		if (client.isWaiting()) return new Result("You cannot send two requests simultaneously", false);
 		if (opponent.getChallengedUser() == client.getIdentity()) {
 			if (handleMatchRequest(client, opponentUsername, true).isSuccessful())
@@ -51,6 +53,7 @@ public class PreMatchMenusController {
 		client.getIdentity().getMatchRequests().remove(sender);
 		if (accept) {
 			client.getIdentity().setChallengedUser(sender);
+			client.setInGame(true);
 			client.setMenu(new LobbyMenu());
 			return new Result("Request accepted", true);
 		} else return new Result("Request rejected", true);
@@ -208,19 +211,6 @@ public class PreMatchMenusController {
 		for (int i = 0; i < count; i++)
 			client.getIdentity().getDeck().remove(card);
 		return new Result(count > 1 ? "Cards" : "Card" + " Removed Successfully", true);
-	}
-
-	public static Result changeTurn(Client client) {
-		if (!client.getIdentity().getDeck().isValid()) return new Result("Your Deck Is Invalid", false);
-		User temp = client.getIdentity();
-		User.setLoggedInUser(opponent);
-		opponent = temp;
-		cnt++;
-		if (cnt % 2 == 0) {
-			return startGame(client);
-		} else {
-			return new Result("Turn Changed Successfully", true);
-		}
 	}
 
 	public static Result startGame(Client client) {

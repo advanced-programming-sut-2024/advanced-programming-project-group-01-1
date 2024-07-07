@@ -4,10 +4,10 @@ import client.controller.ClientUserMenusController;
 import client.controller.game.ClientPreMatchMenusController;
 import client.view.AlertMaker;
 import client.view.ClientAppview;
+import client.view.ClientMainMenu;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -17,8 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import message.Result;
 import message.UserMenusCommands;
-import server.model.Client;
-import server.model.user.User;
 import client.view.Menuable;
 
 import java.io.IOException;
@@ -43,6 +41,8 @@ public class ClientSocialMenu extends Application implements Menuable {
 	@FXML
 	private RadioButton showFriends, showReceivedFriendRequests, showSentFriendRequests;
 
+	private String previousFriendList = "";
+
 	@FXML
 	private void initialize() {
 		ArrayList<String> users = ClientUserMenusController.showPlayersInfo();
@@ -56,6 +56,7 @@ public class ClientSocialMenu extends Application implements Menuable {
 				}
 			}
 		});
+		ClientUserMenusController.startUpdating(this);
 	}
 
 
@@ -120,67 +121,29 @@ public class ClientSocialMenu extends Application implements Menuable {
 	}
 
 	@FXML
-	private void updateFriendsList() {
+	private void updateDisplayPanel() {
 		if (((VBox) friendsList.getParent()).getChildren().get(((VBox) friendsList.getParent()).getChildren().size() - 1) instanceof HBox) {
 			((VBox) friendsList.getParent()).getChildren().remove(((VBox) friendsList.getParent()).getChildren().size() - 1);
 		}
 		friendsList.setVisible(true);
+		updateFriendsList();
+		showButtons();
+	}
+
+	public void updateFriendsList() {
 		String friends = "";
 		if (show.getSelectedToggle() == showFriends) friends = ClientUserMenusController.showFriends().getMessage();
 		else if (show.getSelectedToggle() == showReceivedFriendRequests) friends = ClientUserMenusController.showReceivedFriendRequests().getMessage();
 		else if (show.getSelectedToggle() == showSentFriendRequests) friends = ClientUserMenusController.showSentFriendRequests().getMessage();
 		displayFriendsList(friends);
-		if (show.getSelectedToggle() == showFriends) {
-			Button removeFriendButton = new Button("Remove Friend");
-			removeFriendButton.setOnAction(event -> {
-				if (friendsList.getSelectionModel().getSelectedItem() == null) return;
-				Result result = ClientUserMenusController.removeFriend(friendsList.getSelectionModel().getSelectedItem().getText());
-				AlertMaker.makeAlert("Remove Friend", result);
-				updateFriendsList();
-			});
-			setStyleForButtons(removeFriendButton);
-			HBox hBox = initializeHBox();
-			hBox.getChildren().add(removeFriendButton);
-			((VBox) friendsList.getParent()).getChildren().add(hBox);
-		} else if (show.getSelectedToggle() == showReceivedFriendRequests) {
-			Button acceptFriendRequestButton = new Button("Accept");
-			acceptFriendRequestButton.setOnAction(event -> {
-				if (friendsList.getSelectionModel().getSelectedItem() == null) return;
-				Result result = ClientUserMenusController.acceptFriendRequest(friendsList.getSelectionModel().getSelectedItem().getText());
-				AlertMaker.makeAlert("Accept Friend Request", result);
-				updateFriendsList();
-			});
-			Button declineFriendRequestButton = new Button("Decline");
-			declineFriendRequestButton.setOnAction(event -> {
-				if (friendsList.getSelectionModel().getSelectedItem() == null) return;
-				Result result = ClientUserMenusController.declineFriendRequest(friendsList.getSelectionModel().getSelectedItem().getText());
-				AlertMaker.makeAlert("Decline Friend Request", result);
-				updateFriendsList();
-			});
-			setStyleForButtons(acceptFriendRequestButton);
-			setStyleForButtons(declineFriendRequestButton);
-			HBox hBox = initializeHBox();
-			hBox.getChildren().addAll(acceptFriendRequestButton, declineFriendRequestButton);
-			((VBox) friendsList.getParent()).getChildren().add(hBox);
-		} else if (show.getSelectedToggle() == showSentFriendRequests) {
-			Button unsendFriendRequestButton = new Button("Unsend");
-			unsendFriendRequestButton.setOnAction(event -> {
-				if (friendsList.getSelectionModel().getSelectedItem() == null) return;
-				Result result = ClientUserMenusController.unsendFriendRequest(friendsList.getSelectionModel().getSelectedItem().getText());
-				AlertMaker.makeAlert("Unsend Friend Request", result);
-				updateFriendsList();
-			});
-			setStyleForButtons(unsendFriendRequestButton);
-			HBox hBox = initializeHBox();
-			hBox.getChildren().add(unsendFriendRequestButton);
-			((VBox) friendsList.getParent()).getChildren().add(hBox);
-		}
 	}
 
 	private void displayFriendsList(String friends) {
-		friendsList.getItems().clear();
+		if (friends.equals(previousFriendList)) return;
+		previousFriendList = friends;
 		System.out.println(friends);
 		String[] friendsArray = friends.split("\n");
+		friendsList.getItems().clear();
 		for (String friend : friendsArray) {
 			Label label = new Label(friend);
 			label.setTextFill(Color.WHITE);
@@ -195,11 +158,59 @@ public class ClientSocialMenu extends Application implements Menuable {
 		button.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;");
 	}
 
-	private HBox initializeHBox() {
+	private HBox initializeHBox(Button... buttons) {
 		HBox hBox = new HBox();
 		hBox.setSpacing(10);
 		hBox.setAlignment(javafx.geometry.Pos.CENTER);
+		for (Button button : buttons) {
+			hBox.getChildren().add(button);
+		}
 		return hBox;
+	}
+
+	private void showButtons() {
+		if (show.getSelectedToggle() == showFriends) {
+			Button removeFriendButton = new Button("Remove Friend");
+			removeFriendButton.setOnAction(event -> {
+				if (friendsList.getSelectionModel().getSelectedItem() == null) return;
+				Result result = ClientUserMenusController.removeFriend(friendsList.getSelectionModel().getSelectedItem().getText());
+				AlertMaker.makeAlert("Remove Friend", result);
+				updateDisplayPanel();
+			});
+			setStyleForButtons(removeFriendButton);
+			HBox hBox = initializeHBox(removeFriendButton);
+			((VBox) friendsList.getParent()).getChildren().add(hBox);
+		} else if (show.getSelectedToggle() == showReceivedFriendRequests) {
+			Button acceptFriendRequestButton = new Button("Accept");
+			acceptFriendRequestButton.setOnAction(event -> {
+				if (friendsList.getSelectionModel().getSelectedItem() == null) return;
+				Result result = ClientUserMenusController.acceptFriendRequest(friendsList.getSelectionModel().getSelectedItem().getText());
+				AlertMaker.makeAlert("Accept Friend Request", result);
+				updateDisplayPanel();
+			});
+			Button declineFriendRequestButton = new Button("Decline");
+			declineFriendRequestButton.setOnAction(event -> {
+				if (friendsList.getSelectionModel().getSelectedItem() == null) return;
+				Result result = ClientUserMenusController.declineFriendRequest(friendsList.getSelectionModel().getSelectedItem().getText());
+				AlertMaker.makeAlert("Decline Friend Request", result);
+				updateDisplayPanel();
+			});
+			setStyleForButtons(acceptFriendRequestButton);
+			setStyleForButtons(declineFriendRequestButton);
+			HBox hBox = initializeHBox(acceptFriendRequestButton, declineFriendRequestButton);
+			((VBox) friendsList.getParent()).getChildren().add(hBox);
+		} else if (show.getSelectedToggle() == showSentFriendRequests) {
+			Button unsendFriendRequestButton = new Button("Unsend");
+			unsendFriendRequestButton.setOnAction(event -> {
+				if (friendsList.getSelectionModel().getSelectedItem() == null) return;
+				Result result = ClientUserMenusController.unsendFriendRequest(friendsList.getSelectionModel().getSelectedItem().getText());
+				AlertMaker.makeAlert("Unsend Friend Request", result);
+				updateDisplayPanel();
+			});
+			setStyleForButtons(unsendFriendRequestButton);
+			HBox hBox = initializeHBox(unsendFriendRequestButton);
+			((VBox) friendsList.getParent()).getChildren().add(hBox);
+		}
 	}
 
 }

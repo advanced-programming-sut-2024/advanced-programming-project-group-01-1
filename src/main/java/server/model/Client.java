@@ -15,6 +15,7 @@ public class Client {
 	private Menuable Menu;
 	private User identity;
 	private boolean isWaiting;
+	private boolean isInGame;
 
 	public Client() {
 		StringBuilder tmp = new StringBuilder();
@@ -39,6 +40,7 @@ public class Client {
 
 	public static void remove(Client client) {
 		if (client.getIdentity() != null) {
+			User.getOnlineUsers().remove(client.getIdentity());
 			if (client.getIdentity().getChallengedUser() != null) {
 				client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
 				client.getIdentity().setChallengedUser(null);
@@ -73,5 +75,13 @@ public class Client {
 
 	public void setWaiting(boolean waiting) {
 		isWaiting = waiting;
+	}
+
+	public boolean isInGame() {
+		return isInGame;
+	}
+
+	public void setInGame(boolean inGame) {
+		isInGame = inGame;
 	}
 }

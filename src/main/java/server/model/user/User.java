@@ -11,9 +11,8 @@ import java.util.Random;
 
 public class User implements Serializable {
 
-	private static User loggedInUser = null;
-	private static boolean stayLoggedIn = false;
 	private static ArrayList<User> users = new ArrayList<>();
+	private static ArrayList<User> onlineUsers = new ArrayList<>();
 	private final int id;
 	private String username;
 	private String nickname;
@@ -39,10 +38,6 @@ public class User implements Serializable {
 		users.add(this);
 	}
 
-	public static void setLoggedInUser(User loggedInUser) {
-		User.loggedInUser = loggedInUser;
-	}
-
 	public static User getUserByUsername(String username) {
 		for (User user : users) {
 			if (user.getUsername().equals(username)) {
@@ -61,12 +56,12 @@ public class User implements Serializable {
 		return null;
 	}
 
-	public static User getLoggedInUser() {
-		return loggedInUser;
-	}
-
 	public static ArrayList<User> getUsers() {
 		return users;
+	}
+
+	public static ArrayList<User> getOnlineUsers() {
+		return onlineUsers;
 	}
 
 	public static void setUsers(ArrayList<User> users) {
@@ -79,14 +74,6 @@ public class User implements Serializable {
 
 	public static void removeUser(User user) {
 		users.remove(user);
-	}
-
-	public static boolean isStayLoggedIn() {
-		return stayLoggedIn;
-	}
-
-	public static void setStayLoggedIn(boolean stayLoggedIn) {
-		User.stayLoggedIn = stayLoggedIn;
 	}
 
 	public static String generateRandomPassword(){
