@@ -37,8 +37,8 @@ public class LoginMenusController {
 	}
 
 	public static Result sendEmail(Client client) {
-		/*final String username = "mohamed.mahdi.khavari@gmail.com";
-		final String password = "iqupkzowfhlbsvsc";
+		final String username = "gopasttenseofgo@gmail.com";
+		final String password = "icwx uork uhlz ltfj ";
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", "smtp.gmail.com");
 		properties.put("mail.smtp.port", "587");
@@ -52,17 +52,20 @@ public class LoginMenusController {
 		});
 		try {
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("mohamed.mahdi.khavari@gmail.com"));
+			message.setFrom(new InternetAddress("gopasttenseofgo@gmail.com"));
 			message.setRecipient(Message.RecipientType.TO, new InternetAddress(client.getIdentity().getEmail()));
-			message.setSubject("Testing Gmail SSL");
-			message.setText("Dear Mail Crawler,"
-					+ "\n\n Please do not spam my email!");
+			message.setSubject("Authentication Code");
+			StringBuilder code = new StringBuilder();
+			for (int i = 0;i < 6; i++) {
+				code.append(random.nextInt(10));
+			}
+			loggingInClients.put(client, code.toString());
+			message.setText(code.toString());
 			Transport.send(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result("email not sent", false);
 		}
-		return new Result("email sent", true);*/
 		loggingInClients.put(client, "123456");
 		return new Result("email sent", true);
 	}
@@ -71,6 +74,7 @@ public class LoginMenusController {
 
 	public static Result checkCode(Client client, String code) {
 		if (loggingInClients.containsKey(client) && loggingInClients.get(client).equals(code)) {
+			loggingInClients.remove(client);
 			client.setMenu(new MainMenu());
 			return new Result("Code is correct", true);
 		}
