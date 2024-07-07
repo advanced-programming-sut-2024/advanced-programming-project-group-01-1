@@ -34,14 +34,14 @@
       <Pane fx:id="myDeckPane" layoutX="1231.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
       <Pane layoutX="14.0" layoutY="440.0" prefHeight="146.0" prefWidth="287.0">
          <children>
-             <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="205.0" layoutY="73.0" preserveRatio="false">
+             <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="185.0" layoutY="73.0" preserveRatio="false">
                  <Image url="@../images/icons/icon_card_count.png" />
              </ImageView>
-             <Label fx:id="myHandSize" alignment="CENTER" layoutX="233.0" layoutY="73.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+             <Label fx:id="myHandSize" alignment="CENTER" layoutX="213.0" layoutY="73.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" textFill="#b49326">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font></Label>
-            <HBox fx:id="myLife" layoutX="193.0" layoutY="14.0" prefHeight="40.0" prefWidth="80.0">
+            <HBox fx:id="myLife" layoutX="173.0" layoutY="14.0" prefHeight="40.0" prefWidth="80.0">
                 <children>
                     <ImageView fitHeight="40.0" fitWidth="40.0" preserveRatio="false">
                         <Image url="@../images/icons/icon_gem_on.png" />
@@ -54,14 +54,14 @@
          </children></Pane>
       <Pane layoutX="14.0" layoutY="157.0" prefHeight="146.0" prefWidth="287.0">
          <children>
-             <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="205.0" layoutY="33.0" preserveRatio="false">
+             <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="185.0" layoutY="33.0" preserveRatio="false">
                  <Image url="@../images/icons/icon_card_count.png" />
                 </ImageView>
-                <Label fx:id="opponentHandSize" alignment="CENTER" layoutX="233.0" layoutY="33.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+                <Label fx:id="opponentHandSize" alignment="CENTER" layoutX="213.0" layoutY="33.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" textFill="#b49326">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font></Label>
-            <HBox fx:id="opponentLife" layoutX="193.0" layoutY="92.0" prefHeight="40.0" prefWidth="80.0">
+            <HBox fx:id="opponentLife" layoutX="173.0" layoutY="92.0" prefHeight="40.0" prefWidth="80.0">
                <children>
                         <ImageView fitHeight="40.0" fitWidth="40.0" preserveRatio="false">
                             <Image url="@../images/icons/icon_gem_on.png" />
@@ -80,6 +80,12 @@
       <Label fx:id="rowPowerLabel4" alignment="CENTER" layoutX="360.0" layoutY="123.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
       <Label fx:id="rowPowerLabel5" alignment="CENTER" layoutX="360.0" layoutY="31.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
       <Label fx:id="myPower" alignment="CENTER" layoutX="301.0" layoutY="500.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <ImageView fx:id="meAhead" fitHeight="58.5" fitWidth="76.5" layoutX="283.0" layoutY="500.0" visible="false">
+          <Image url="@../images/icons/icon_high_score.png" />
+      </ImageView>
       <Label fx:id="opponentPower" alignment="CENTER" layoutX="301.0" layoutY="214.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+<ImageView fx:id="opponentAhead" fitHeight="58.5" fitWidth="76.5" layoutX="283.0" layoutY="214.0" visible="false">
+          <Image url="@../images/icons/icon_high_score.png" />
+        </ImageView>
    </children>
 </Pane>

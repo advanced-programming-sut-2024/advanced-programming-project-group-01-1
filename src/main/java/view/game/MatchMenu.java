@@ -70,6 +70,7 @@ public class MatchMenu extends Application implements Menuable {
 	public Pane opponentDeckPane;
 	public HBox myLife, opponentLife;
 	public Label myHandSize, opponentHandSize;
+	public ImageView meAhead, opponentAhead;
 
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
@@ -296,6 +297,8 @@ public class MatchMenu extends Application implements Menuable {
 		String[] handSizeInfo = handSize.split("\\s");
 		myHandSize.setText(handSizeInfo[0]);
 		opponentHandSize.setText(handSizeInfo[2]);
+		meAhead.setVisible(Integer.parseInt(myPower.getText()) > Integer.parseInt(opponentPower.getText()));
+		opponentAhead.setVisible(Integer.parseInt(myPower.getText()) < Integer.parseInt(opponentPower.getText()));
 	}
 
 	public void selectCard(MouseEvent event) {
