@@ -1,13 +1,17 @@
 package controller.game;
 
+import javafx.scene.layout.Pane;
 import model.Result;
 import model.card.Card;
 import model.card.special.spell.Buffer;
 import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Space;
+import model.user.User;
 import view.Appview;
 import view.MainMenu;
+import view.game.SelectPanel;
+import view.game.SelectionHandler;
 import view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
@@ -15,9 +19,18 @@ import java.util.Scanner;
 
 public class MatchMenuController {
 
+	private static boolean isAsking = false;
+	private static int cardsCount;
+	private static SelectPanel selectPanel;
+
 	public static Result vetoCard(int cardNumber) {
 		// TODO:
 		return null;
+	}
+
+	public static Result getUsernames() {
+		return new Result(Game.getCurrentGame().getCurrentUsername() + "\n" +
+				Game.getCurrentGame().getOpponentUsername() + "\n", true);
 	}
 
 	public static Result showHand(int number) {
@@ -175,28 +188,28 @@ public class MatchMenuController {
 		return new Result("Turn passed successfully", true);
 	}
 
-	public static Card askSpace(Space space, boolean onlyUnit) {
-		return askSpace(space, false, onlyUnit);
+	public static void askCards(ArrayList<Card> cards, boolean isRandom, SelectionHandler selectionHandler) {
+		if (cards.isEmpty()) return;
+		if (isRandom) {
+			int randomIndex = (int) (Math.random() * cards.size());
+			selectionHandler.handle(randomIndex);
+		} else {
+			isAsking = true;
+			cardsCount = cards.size();
+			StringBuilder cardNames = new StringBuilder();
+			for (Card card : cards)
+				cardNames.append(card.getName()).append("\n").append("KTKM").append("\n");
+			selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(),
+					cardNames.toString().split("\n"), 0, selectionHandler, false);
+		}
 	}
 
-	public static Card askSpace(Space space, boolean isRandom, boolean onlyUnit) {
-		ArrayList<Card> availableCards = new ArrayList<>();
-		for (Card card : space.getCards()) {
-			if (card instanceof Unit) {
-				if (!((Unit) card).isHero()) availableCards.add(card);
-			} else if (!onlyUnit) availableCards.add(card);
-		}
-		System.out.println("Asking Space " + availableCards.size());
-		if (availableCards.isEmpty()) return null;
-		if (isRandom) {
-			int randomIndex = (int) (Math.random() * availableCards.size());
-			return availableCards.get(randomIndex);
-		}
-		// TODO: make it work with graphics and terminal
-		Scanner scanner = new Scanner(System.in);
-		int index = scanner.nextInt();
-		if (index < 0 || index >= availableCards.size()) return null;
-		return availableCards.get(index);
+	public static Result selectCard(int index) {
+		if (!isAsking) return new Result("not asking", false);
+		if (index < 0 || index >= cardsCount) return new Result("out of bound", false);
+		selectPanel.selectCard(index);
+		isAsking = false;
+		return new Result("selected successfully", true);
 	}
 
 	public static void showSpace(Space tmp) {

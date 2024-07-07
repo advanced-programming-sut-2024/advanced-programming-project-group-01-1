@@ -80,6 +80,11 @@ public class SelectPanel {
         }
     }
 
+    public void selectCard(int index) {
+        root.getChildren().remove(selectPanelPane);
+        if (selectionHandler != null) selectionHandler.handle(index);
+    }
+
     private void selectCard(MouseEvent mouseEvent) {
         root.getChildren().remove(selectPanelPane);
         if (selectionHandler != null) selectionHandler.handle(ptr);

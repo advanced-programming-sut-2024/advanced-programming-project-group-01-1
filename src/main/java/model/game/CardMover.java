@@ -4,6 +4,7 @@ import controller.game.MatchMenuController;
 import model.card.Card;
 import model.card.unit.Unit;
 import model.game.space.Space;
+import view.game.SelectionHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,20 +33,13 @@ public class CardMover implements Serializable {
 		Space originSpace = Game.getCurrentGame().getSpaceById(originId);
 		Space destinationSpace = Game.getCurrentGame().getSpaceById(destinationId);
 		if (destinationSpace != null) {
-			ArrayList<Card> availableCards = new ArrayList<>();
-			for (Card card : originSpace.getCards()) {
-				if ((!(card instanceof Unit) || !((Unit) card).isHero()) || !ignoreHero)
-					availableCards.add(card);
-			}
+			ArrayList<Card> availableCards = originSpace.getCards(onlyUnit, ignoreHero);
 			int toBeMoved = (count == -1 || count > availableCards.size()) ? availableCards.size() : count;
 			for (int i = 0; i < toBeMoved; i++) {
-				Card card;
-				if (isRandom) {
-					int randomIndex = random.nextInt(availableCards.size());
-					card = availableCards.get(randomIndex);
-				} else card = MatchMenuController.askSpace(originSpace, onlyUnit);
-				card.updateSpace(destinationSpace);
-				availableCards.remove(card);
+				MatchMenuController.askCards(availableCards, isRandom, index -> {
+					availableCards.get(index).updateSpace(destinationSpace);
+					availableCards.remove(index);
+				});
 			}
 		} else show(originSpace);
 		System.out.println(destinationSpace.getCards().size() + "\n--------------");

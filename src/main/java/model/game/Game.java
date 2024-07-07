@@ -9,7 +9,9 @@ import model.game.space.Row;
 import model.game.space.Space;
 import model.leader.Leader;
 import model.user.User;
+import view.game.SelectionHandler;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
@@ -350,20 +352,22 @@ public class Game {
 	private void skelligeAbility() {
 		if (currentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
-				Unit unit = (Unit) MatchMenuController.askSpace(currentDiscardPile, true, true);
-				if (unit != null) {
+				ArrayList<Card> discardPile = currentDiscardPile.getCards(true, false);
+				MatchMenuController.askCards(discardPile, true, index -> {
+					Unit unit = (Unit) discardPile.get(index);
 					putRevived(unit, false);
 					currentDiscardPile.getCards().remove(unit);
-				}
+				});
 			}
 		}
 		if (opponentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
-				Unit unit = (Unit) MatchMenuController.askSpace(opponentDiscardPile, true,true);
-				if (unit != null) {
+				ArrayList<Card> discardPile = opponentDiscardPile.getCards(true, false);
+				MatchMenuController.askCards(discardPile, true, index -> {
+					Unit unit = (Unit) discardPile.get(index);
 					putRevived(unit, true);
 					opponentDiscardPile.getCards().remove(unit);
-				}
+				});
 			}
 		}
 	}

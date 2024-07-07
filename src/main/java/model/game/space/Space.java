@@ -31,6 +31,16 @@ public class Space {
 		cards.clear();
 	}
 
+	public ArrayList<Card> getCards(boolean onlyUnit, boolean ignoreHero) {
+		ArrayList<Card> cards = new ArrayList<>();
+		for (Card card : this.cards) {
+			if (card instanceof Unit) {
+				if (!((Unit) card).isHero() || !ignoreHero) cards.add(card);
+			} else if (!onlyUnit) cards.add(card);
+		}
+		return cards;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder space = new StringBuilder();

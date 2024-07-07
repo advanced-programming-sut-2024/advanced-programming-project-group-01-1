@@ -6,6 +6,9 @@ import model.card.ability.Ability;
 import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Row;
+import view.game.SelectionHandler;
+
+import java.util.ArrayList;
 
 public class Decoy extends Special {
 
@@ -22,10 +25,14 @@ public class Decoy extends Special {
 		if (row.getCards().size() == 0) {
 			throw new Exception("Row is empty");
 		}
-		Unit unit = (Unit) MatchMenuController.askSpace(row, true);
-		unit.pull();
-		unit.updateSpace(Game.getCurrentGame().getCurrentHand());
-		this.updateSpace(row);
+		ArrayList<Card> rowCards = row.getCards(true, true);
+		Decoy decoy = this;
+		MatchMenuController.askCards(rowCards, false, index -> {
+			Unit unit = (Unit) rowCards.get(index);
+			unit.pull();
+			unit.updateSpace(Game.getCurrentGame().getCurrentHand());
+			decoy.updateSpace(row);
+		});
 	}
 
 	@Override

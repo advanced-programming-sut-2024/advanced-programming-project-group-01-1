@@ -22,6 +22,7 @@ public enum GameMenusCommands {
     CHANGE_TURN("change turn"),
     START_GAME("start game"),
     VETO_CARD("veto card (?<cardNumber>\\d+)"),
+    SELECT_CARD("select card (?<cardNumber>\\d+)"),
     IN_HAND_DECK("in hand deck(?: (?<option>-option) (?<cardNumber>\\d+))?"),
     REMAINING_CARDS_TO_PLAY("remaining cards to play"),
     OUT_OF_PLAY_CARDS("out of play cards"),
