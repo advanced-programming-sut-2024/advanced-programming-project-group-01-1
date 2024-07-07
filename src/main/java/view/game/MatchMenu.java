@@ -268,7 +268,7 @@ public class MatchMenu extends Application implements Menuable {
 	}
 
 	public void updateLeader() {
-		String leaders = MatchMenuController.showLeadersForGraphics().getMessage();
+		String leaders = MatchMenuController.showLeadersForGraphic().getMessage();
 		String[] leadersInfo = leaders.split("\n------------------\n");
 		for (int i = 0; i < 2; i++){
 			String[] leaderInfo = leadersInfo[i].split("\n");
@@ -435,7 +435,7 @@ public class MatchMenu extends Application implements Menuable {
 	}
 
 	public void useLeader(int idx) {
-		MatchMenuController.useLeaderAbility();
+		Result result = MatchMenuController.useLeaderAbility();
 		updateScreen();
 	}
 

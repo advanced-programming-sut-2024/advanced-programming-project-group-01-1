@@ -153,6 +153,10 @@ public class MatchMenuController {
 		return new Result(Game.getCurrentGame().getCurrentLeader().toString(), true);
 	}
 
+	public static Result showLeadersForGraphic() {
+		return new Result(Game.getCurrentGame().getCurrentLeader().toString() + "\n" + "unique code: " + Game.getCurrentGame().getCurrentLeader().toSuperString() + "\n------------------\n" + Game.getCurrentGame().getOpponentLeader().toString() + "\n" + "unique code: " + Game.getCurrentGame().getOpponentLeader().toSuperString(), true);
+	}
+
 	public static Result useLeaderAbility() {
 		try {
 			Game.getCurrentGame().useLeaderAbility();
