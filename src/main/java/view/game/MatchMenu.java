@@ -59,6 +59,12 @@ public class MatchMenu extends Application implements Menuable {
 	public Label rowPowerLabel3;
 	public Label rowPowerLabel4;
 	public Label rowPowerLabel5;
+	public ImageView weatherEffectRow0;
+	public ImageView weatherEffectRow1;
+	public ImageView weatherEffectRow2;
+	public ImageView weatherEffectRow3;
+	public ImageView weatherEffectRow4;
+	public ImageView weatherEffectRow5;
 	public Label myPower;
 	public Label opponentPower;
 	public Pane myLeaderPane;
@@ -78,6 +84,7 @@ public class MatchMenu extends Application implements Menuable {
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
 	public Label[] rowPowerLabels;
+	public ImageView[] weatherEffectPanes;
 	public Pane selectedCard;
 	public ArrayList<Pane> selectedPanes = new ArrayList<>();
 
@@ -105,6 +112,7 @@ public class MatchMenu extends Application implements Menuable {
 		rowPanes = new Pane[]{rowPane0, rowPane1, rowPane2, rowPane3, rowPane4, rowPane5};
 		rowBufferPanes = new Pane[]{rowBuffer0, rowBuffer1, rowBuffer2, rowBuffer3, rowBuffer4, rowBuffer5};
 		rowPowerLabels = new Label[]{rowPowerLabel0, rowPowerLabel1, rowPowerLabel2, rowPowerLabel3, rowPowerLabel4, rowPowerLabel5};
+		weatherEffectPanes = new ImageView[]{weatherEffectRow0, weatherEffectRow1, weatherEffectRow2, weatherEffectRow3, weatherEffectRow4, weatherEffectRow5};
 		for (Pane pane : rowPanes) {
 			pane.setOnMouseClicked(this::showSpace);
 		}
@@ -176,23 +184,27 @@ public class MatchMenu extends Application implements Menuable {
 
 	public void updateRows() {
 		for (int i = 0; i < 6; i++) {
+			System.out.println(MatchMenuController.isRowDebuffed(i));
 			Result result = MatchMenuController.showRowForGraphic(i);
-			if (result.getMessage().isEmpty()){
+			if (result.getMessage().isEmpty()) {
 				updateSpace(rowPanes[i], new String[]{}, null);
 				updateSpace(rowBufferPanes[i], new String[]{}, null);
-				continue;
 			}
-			System.out.println("Row " + i + ": " + result.getMessage());
-			String[] cardsInfo = result.getMessage().split("\n------------------\n");
-			if (cardsInfo.length >= 1 && cardsInfo[0].startsWith("Buffer: ")) {
-				String cardName = cardsInfo[0].substring(8);
-				updateSpace(rowBufferPanes[i], new String[]{cardsInfo[0]}, null);
-				String[] newCardsInfo = new String[cardsInfo.length - 1];
-				System.arraycopy(cardsInfo, 1, newCardsInfo, 0, cardsInfo.length - 1);
-				updateSpace(rowPanes[i], newCardsInfo, null);
-			} else {
-				updateSpace(rowBufferPanes[i], new String[]{}, null);
-				updateSpace(rowPanes[i], cardsInfo, null);
+			else {
+				String[] cardsInfo = result.getMessage().split("\n------------------\n");
+				if (cardsInfo.length >= 1 && cardsInfo[0].startsWith("Buffer: ")) {
+					String cardName = cardsInfo[0].substring(8);
+					updateSpace(rowBufferPanes[i], new String[]{cardsInfo[0]}, null);
+					String[] newCardsInfo = new String[cardsInfo.length - 1];
+					System.arraycopy(cardsInfo, 1, newCardsInfo, 0, cardsInfo.length - 1);
+					updateSpace(rowPanes[i], newCardsInfo, null);
+				} else {
+					updateSpace(rowBufferPanes[i], new String[]{}, null);
+					updateSpace(rowPanes[i], cardsInfo, null);
+				}
+			}
+			if (MatchMenuController.isRowDebuffed(i)){
+				rowPanes[i].getChildren().add(weatherEffectPanes[i]);
 			}
 		}
 	}
@@ -308,6 +320,10 @@ public class MatchMenu extends Application implements Menuable {
 		opponentFactionNameField.setText(factionsInfo[2].substring(9));
 		myFactionField.setImage(new Image(this.getClass().getResource("/images/icons/deck_shield_" + factionsInfo[0].substring(9) + ".png").toString()));
 		opponentFactionField.setImage(new Image(this.getClass().getResource("/images/icons/deck_shield_" + factionsInfo[2].substring(9) + ".png").toString()));
+		String usernames = MatchMenuController.getUsernames().getMessage();
+		String[] usernamesInfo = usernames.split("\n");
+		myUsernameField.setText(usernamesInfo[0]);
+		opponentUsernameField.setText(usernamesInfo[1]);
 	}
 
 	public void selectCard(MouseEvent event) {
@@ -410,7 +426,13 @@ public class MatchMenu extends Application implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = GameMenusCommands.VETO_CARD.getMatcher(input)) != null) {
+		if (MatchMenuController.isAsking()) {
+			if ((matcher = GameMenusCommands.SELECT_CARD.getMatcher(input)) != null) {
+				result = selectCard(matcher);
+			} else {
+				result = new Result("Invalid command", false);
+			}
+		} else if ((matcher = GameMenusCommands.VETO_CARD.getMatcher(input)) != null) {
 			result = vetoCard(matcher);
 		} else if ((matcher = GameMenusCommands.IN_HAND_DECK.getMatcher(input)) != null) {
 			result = showHand(matcher);
@@ -444,7 +466,7 @@ public class MatchMenu extends Application implements Menuable {
 			result = MatchMenuController.passTurn();
 		} else if ((matcher = GameMenusCommands.SHOW_HAND.getMatcher(input)) != null) {
 			result = MatchMenuController.showCurrentHand();
-		} else {
+		}  else {
 			result = new Result("Invalid command", false);
 		}
 		if (result != null) {
@@ -481,5 +503,10 @@ public class MatchMenu extends Application implements Menuable {
 	private Result showTotalScoreOfRow(Matcher matcher) {
 		int rowNumber = Integer.parseInt(matcher.group("rowNumber"));
 		return MatchMenuController.showRowPower(rowNumber);
+	}
+
+	private Result selectCard(Matcher matcher) {
+		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
+		return MatchMenuController.selectCard(cardNumber);
 	}
 }

@@ -23,6 +23,14 @@ public class MatchMenuController {
 	private static int cardsCount;
 	private static SelectPanel selectPanel;
 
+	public static boolean isAsking() {
+		return isAsking;
+	}
+
+	public static boolean isRowDebuffed(int rowNumber) {
+		return Game.getCurrentGame().getRow(rowNumber).isDebuffed();
+	}
+
 	public static Result vetoCard(int cardNumber) {
 		// TODO:
 		return null;

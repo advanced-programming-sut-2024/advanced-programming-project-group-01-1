@@ -13,16 +13,58 @@
          </image>
       </ImageView>
       <Pane fx:id="handPane" layoutX="410.0" layoutY="598.0" prefHeight="92.0" prefWidth="667.0" />
-      <Pane fx:id="rowPane0" layoutX="505.0" layoutY="492.0" prefHeight="92.0" prefWidth="574.0" />
-      <Pane fx:id="rowPane1" layoutX="505.0" layoutY="394.0" prefHeight="92.0" prefWidth="574.0" />
-      <Pane fx:id="rowPane2" layoutX="505.0" layoutY="302.0" prefHeight="92.0" prefWidth="574.0" />
-      <Pane fx:id="rowPane3" layoutX="505.0" layoutY="195.0" prefHeight="92.0" prefWidth="574.0" />
-      <Pane fx:id="rowPane4" layoutX="505.0" layoutY="97.0" prefHeight="92.0" prefWidth="574.0" />
-      <Pane fx:id="rowPane5" layoutX="505.0" layoutY="5.0" prefHeight="92.0" prefWidth="574.0" />
+      <Pane fx:id="rowPane0" layoutX="505.0" layoutY="492.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow0" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" layoutY="4.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_rain.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane1" layoutX="505.0" layoutY="394.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow1" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_fog.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane2" layoutX="505.0" layoutY="302.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow2" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_frost.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane3" layoutX="505.0" layoutY="195.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow3" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_frost.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane4" layoutX="505.0" layoutY="97.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow4" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" layoutY="3.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_fog.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane5" layoutX="505.0" layoutY="5.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow5" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_rain.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
       <Pane fx:id="rowBuffer0" layoutX="405.0" layoutY="494.0" prefHeight="92.0" prefWidth="92.0" />
       <Pane fx:id="rowBuffer1" layoutX="405.0" layoutY="394.0" prefHeight="92.0" prefWidth="92.0" />
       <Pane fx:id="rowBuffer2" layoutX="405.0" layoutY="303.0" prefHeight="92.0" prefWidth="92.0" />
-      <Pane fx:id="rowBuffer3" layoutX="405.0" layoutY="197.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer3" layoutX="405.0" layoutY="197.0" prefHeight="92.0" prefWidth="80.0" />
       <Pane fx:id="rowBuffer4" layoutX="405.0" layoutY="97.0" prefHeight="92.0" prefWidth="92.0" />
       <Pane fx:id="rowBuffer5" layoutX="405.0" layoutY="5.0" prefHeight="92.0" prefWidth="92.0" />
       <Pane fx:id="myLeaderPane" layoutX="102.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
