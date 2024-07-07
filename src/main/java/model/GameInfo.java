@@ -12,17 +12,22 @@ public class GameInfo implements Serializable {
 	private final Date date;
 	private final ArrayList<Integer> opponentScores, myScores;
 	private final int winnerId;
+	private final String result;
 
 	public GameInfo(User opponent, ArrayList<Integer> opponentScores, ArrayList<Integer> myScores, User winner) {
 		this.opponentId = opponent.getId();
 		this.date = new Date();
 		this.opponentScores = opponentScores;
 		this.myScores = myScores;
-		this.winnerId = winner.getId();
+		if (winner != null) this.winnerId = winner.getId();
+		else this.winnerId = -1;
+		if (this.winnerId == -1) this.result = "Draw";
+		else if (this.winnerId == opponentId) this.result = "Lose";
+		else this.result = "Win";
 	}
 
-	public int getOpponentId() {
-		return opponentId;
+	public String getOpponentUsername() {
+		return User.getUserById(this.opponentId).getUsername();
 	}
 
 	public Date getDate() {

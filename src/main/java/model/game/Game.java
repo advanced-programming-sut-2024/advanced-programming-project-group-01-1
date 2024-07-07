@@ -1,6 +1,7 @@
 package model.game;
 
 import controller.game.MatchMenuController;
+import model.GameInfo;
 import model.card.Card;
 import model.card.unit.Ranged;
 import model.card.unit.Siege;
@@ -25,6 +26,7 @@ public class Game {
 	private static Game currentGame;
 
 
+	ArrayList<Integer> currentScores = new ArrayList<>(), opponentScores = new ArrayList<>();
 	User current, opponent;
 	int roundNumber = 1;
 	Row[] rows = new Row[6];
@@ -36,7 +38,7 @@ public class Game {
 	Faction currentFaction, opponentFaction;
 	boolean hasOpponentPassed;
 	Leader currentLeader, opponentLeader;
-	private boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
+	boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
 
 	private Game(User player1, User player2) {
 		this.current = player1;
@@ -307,6 +309,8 @@ public class Game {
 	}
 
 	public void endRound() {
+		currentScores.add(getCurrentPower());
+		opponentScores.add(getOpponentPower());
 		roundNumber++;
 		int roundResult = getRoundResult();
 		if (roundResult <= 0) currentLife--;
@@ -406,19 +410,26 @@ public class Game {
 	}
 
 	private void endGame() {
+		if (!current.equals(User.getLoggedInUser())) changeTurn();
 		MatchMenuController.endGame();
 		double currentElo = current.getElo(), opponentElo = opponent.getElo();
 		if (currentLife == 0 && opponentLife == 0) {
 			current.setElo(User.calculateElo(currentElo, opponentElo, 0));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 0));
+			current.getHistory().add(new GameInfo(opponent, opponentScores, currentScores, null));
+			opponent.getHistory().add(new GameInfo(current, currentScores, opponentScores, null));
 			// Draw
 		} else if (currentLife == 0) {
 			current.setElo(User.calculateElo(currentElo, opponentElo, -1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 1));
+			current.getHistory().add(new GameInfo(opponent, opponentScores, currentScores, opponent));
+			opponent.getHistory().add(new GameInfo(current, currentScores, opponentScores, opponent));
 			// Lose
 		} else {
 			current.setElo(User.calculateElo(currentElo, opponentElo, 1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, -1));
+			current.getHistory().add(new GameInfo(opponent, opponentScores, currentScores, current));
+			opponent.getHistory().add(new GameInfo(current, currentScores, opponentScores, current));
 			// Win
 		}
 	}
