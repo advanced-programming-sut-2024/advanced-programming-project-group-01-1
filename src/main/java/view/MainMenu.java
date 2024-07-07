@@ -1,6 +1,7 @@
 package view;
 
 import controller.MainMenuController;
+import controller.UserMenusController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,9 +62,7 @@ public class MainMenu extends Application implements Menuable {
 	}
 
 	public void leaderboard(MouseEvent mouseEvent) {
-		Result result = new Result("coming soon!!!", true);
-		AlertMaker.makeAlert("leaderboard", result);
-		//TODO: implement leaderboard
+		Result result = UserMenusController.goToRankingMenu();
 	}
 
 	public void tv(MouseEvent mouseEvent) {

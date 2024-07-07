@@ -21,7 +21,7 @@ public class User implements Serializable {
 	private Question question;
 	private Deck deck;
 	private final ArrayList<GameInfo> history;
-	private double elo;
+	private double elo = 1000;
 
 	public User(String username, String nickname, String password, String email, Question question) {
 		this.id = users.size() + 1;

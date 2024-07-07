@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="40" fx:controller="view.user.RankingMenuRowController">
+	<Label fx:id="rank" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 24; -fx-text-fill: orange" alignment="CENTER" layoutX="683.0" layoutY="15.0" prefHeight="80.0" prefWidth="66.0" stylesheets="@../CSS/textstyle.css" text="1" textAlignment="CENTER" />
+	<Label fx:id="username" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 24; -fx-text-fill: orange" alignment="CENTER" layoutX="683.0" layoutY="15.0" prefHeight="80.0" prefWidth="219.0" stylesheets="@../CSS/textstyle.css" text="username" textAlignment="CENTER" />
+	<Label fx:id="rating" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 24; -fx-text-fill: orange" alignment="CENTER" layoutX="683.0" layoutY="15.0" prefHeight="80.0" prefWidth="92.0" stylesheets="@../CSS/textstyle.css" text="rating" textAlignment="CENTER" />
+</HBox>

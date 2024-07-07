@@ -9,6 +9,7 @@ import view.Appview;
 import view.MainMenu;
 import view.user.InfoMenu;
 import view.user.ProfileMenu;
+import view.user.RankingMenu;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,11 @@ public class UserMenusController {
 		return new Result(userInfo.toString(), true);
 	}
 
+	public static Result goToRankingMenu() {
+		Appview.setMenu(new RankingMenu());
+		return new Result("Ranking Menu", true);
+	}
+
 	public static Result showGameHistory(int number) {
 		ArrayList<GameInfo> history = User.getLoggedInUser().getHistory();
 		StringBuilder gameHistory = new StringBuilder();
@@ -70,6 +76,7 @@ public class UserMenusController {
 	public static Result exit() {
 		if (Appview.getMenu() instanceof InfoMenu) Appview.setMenu(new ProfileMenu());
 		else if (Appview.getMenu() instanceof ProfileMenu) Appview.setMenu(new MainMenu());
+		else if (Appview.getMenu() instanceof RankingMenu) Appview.setMenu(new MainMenu());
 		return new Result("Exited successfully", true);
 	}
 
@@ -96,4 +103,26 @@ public class UserMenusController {
 		if (!newPassword.equals("")) User.getLoggedInUser().setPassword(newPassword);
 		return new Result("Your data updated successfully", true);
 	}
+
+	public static Result getPage(int pageNumber) {
+		String page = "";
+		ArrayList<User> sortedUsers = User.getUsers();
+		sortedUsers.sort((o1, o2) -> {
+			if (o1.getRank() == o2.getRank()) return o1.getUsername().compareTo(o2.getUsername());
+			return o1.getRank() - o2.getRank();
+		});
+		int start = (pageNumber - 1) * 10 + 1, end = Math.min(pageNumber * 10, sortedUsers.size());
+		for (int i = start; i <= end; i++) {
+			User user = User.getUsers().get(i - 1);
+			System.out.println(user.getElo());
+			page += user.getRank() + " " + user.getUsername() + " " + (int) user.getElo() + "\n";
+		}
+		return new Result(page, true);
+	}
+
+	public static Result getPageCount() {
+		int pageCount = (User.getUsers().size() + 9) / 10;
+		return new Result(String.valueOf(pageCount), true);
+	}
+
 }
