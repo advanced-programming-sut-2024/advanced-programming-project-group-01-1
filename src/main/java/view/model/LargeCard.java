@@ -15,7 +15,6 @@ public class LargeCard extends Rectangle {
     public LargeCard(String name, String description) {
         super(Constants.LARGE_CARD_WIDTH.getValue(), Constants.LARGE_CARD_HEIGHT.getValue());
         ImagePattern imagePattern;
-        System.out.println("Loading image: " + name + ".jpg");
         imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/largecards/" + name + ".jpg")));
         this.setFill(imagePattern);
         this.name = name;

@@ -1,21 +1,19 @@
 package controller.game;
 
+import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import model.Result;
 import model.card.Card;
 import model.card.special.spell.Buffer;
-import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Space;
-import model.user.User;
 import view.Appview;
-import view.MainMenu;
+import view.game.MatchMenu;
 import view.game.SelectPanel;
 import view.game.SelectionHandler;
 import view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MatchMenuController {
 
@@ -37,8 +35,7 @@ public class MatchMenuController {
 	}
 
 	public static Result getUsernames() {
-		return new Result(Game.getCurrentGame().getCurrentUsername() + "\n" +
-				Game.getCurrentGame().getOpponentUsername() + "\n", true);
+		return new Result(Game.getCurrentGame().getCurrentUsername() + "\n" + Game.getCurrentGame().getOpponentUsername() + "\n", true);
 	}
 
 	public static Result showHand(int number) {
@@ -63,13 +60,11 @@ public class MatchMenuController {
 	}
 
 	public static Result remainingInDecksForGraphic() {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()) + "\n" +
-				Game.getCurrentGame().getOpponentDeck().getCards().size(), true);
+		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()) + "\n" + Game.getCurrentGame().getOpponentDeck().getCards().size(), true);
 	}
 
 	public static Result showDiscordPiles() {
-		return new Result("Current Discard Pile:\n" + Game.getCurrentGame().getCurrentDiscardPile() +
-				"Opponent Discard Pile:\n" + Game.getCurrentGame().getOpponentDiscardPile(), true);
+		return new Result("Current Discard Pile:\n" + Game.getCurrentGame().getCurrentDiscardPile() + "Opponent Discard Pile:\n" + Game.getCurrentGame().getOpponentDiscardPile(), true);
 	}
 
 	public static Result showDiscardPilesForGraphic() {
@@ -111,8 +106,7 @@ public class MatchMenuController {
 	}
 
 	public static Result showWeatherSystem() {
-		return new Result(Game.getCurrentGame().getCurrentWeatherSystem() + "\n" +
-				Game.getCurrentGame().getOpponentWeatherSystem(), true);
+		return new Result(Game.getCurrentGame().getCurrentWeatherSystem() + "\n" + Game.getCurrentGame().getOpponentWeatherSystem(), true);
 	}
 
 	public static Result showWeatherSystemForGraphic() {
@@ -153,25 +147,19 @@ public class MatchMenuController {
 	}
 
 	public static Result showFactionsForGraphic() {
-		return new Result(Game.getCurrentGame().getCurrentFaction() + "\n" +
-				Game.getCurrentGame().getOpponentFaction(), true);
+		return new Result(Game.getCurrentGame().getCurrentFaction() + "\n" + Game.getCurrentGame().getOpponentFaction(), true);
 	}
 
 	public static Result showPlayersInfo() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrent().getUsername() + " " +
-				Game.getCurrentGame().getCurrentFaction() + "\n" +
-				"Opponent: " + Game.getCurrentGame().getOpponent().getUsername() + " " +
-				Game.getCurrentGame().getOpponentFaction(), true);
+		return new Result("Current: " + Game.getCurrentGame().getCurrent().getUsername() + " " + Game.getCurrentGame().getCurrentFaction() + "\n" + "Opponent: " + Game.getCurrentGame().getOpponent().getUsername() + " " + Game.getCurrentGame().getOpponentFaction(), true);
 	}
 
 	public static Result showPlayersLives() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrentLife() + "\n" +
-				"Opponent: " + Game.getCurrentGame().getOpponentLife(), true);
+		return new Result("Current: " + Game.getCurrentGame().getCurrentLife() + "\n" + "Opponent: " + Game.getCurrentGame().getOpponentLife(), true);
 	}
 
 	public static Result showHandSize() {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size() +
-				" - " + Game.getCurrentGame().getOpponentNumberOfCardsInHand()), true);
+		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size() + " - " + Game.getCurrentGame().getOpponentNumberOfCardsInHand()), true);
 	}
 
 	public static Result showCurrentHand() {
@@ -183,8 +171,7 @@ public class MatchMenuController {
 	}
 
 	public static Result showTotalPower() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrentPower() + "\n" +
-				"Opponent: " + Game.getCurrentGame().getOpponentPower(), true);
+		return new Result("Current: " + Game.getCurrentGame().getCurrentPower() + "\n" + "Opponent: " + Game.getCurrentGame().getOpponentPower(), true);
 	}
 
 	public static Result showRowPower(int rowNumber) {
@@ -201,14 +188,17 @@ public class MatchMenuController {
 		if (isRandom) {
 			int randomIndex = (int) (Math.random() * cards.size());
 			selectionHandler.handle(randomIndex);
+			Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
 		} else {
 			isAsking = true;
 			cardsCount = cards.size();
 			StringBuilder cardNames = new StringBuilder();
 			for (Card card : cards)
 				cardNames.append(card.getName()).append("\n").append("KTKM").append("\n");
-			selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(),
-					cardNames.toString().split("\n"), 0, selectionHandler, false);
+			selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(), cardNames.toString().split("\n"), 0, index -> {
+				selectionHandler.handle(index);
+				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
+			}, false);
 		}
 	}
 

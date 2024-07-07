@@ -2,6 +2,7 @@ package view.game;
 
 import controller.game.MatchMenuController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -125,6 +126,7 @@ public class MatchMenu extends Application implements Menuable {
 		//myLeaderPane.setOnMouseClicked(this::showSpace);
 		//opponentLeaderPane.setOnMouseClicked(this::showSpace);
 		updateScreen();
+		Appview.setMenuOnMatchMenu(this);
 	}
 
 	public void updateScreen() {
@@ -138,10 +140,8 @@ public class MatchMenu extends Application implements Menuable {
 	}
 
 	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> eventHandler) {
-		System.out.println("cardsInfo: " + cardsInfo.length);
 		space.getChildren().clear();
 		for (int i = 0; i < cardsInfo.length; i++) {
-			System.out.println("Card " + i + ": " + cardsInfo[i]);
 			SmallCard smallCard;
 			String[] cardInfo = cardsInfo[i].split("\n");
 			String cardName = cardInfo[0];
@@ -184,7 +184,6 @@ public class MatchMenu extends Application implements Menuable {
 
 	public void updateRows() {
 		for (int i = 0; i < 6; i++) {
-			System.out.println(MatchMenuController.isRowDebuffed(i));
 			Result result = MatchMenuController.showRowForGraphic(i);
 			if (result.getMessage().isEmpty()) {
 				updateSpace(rowPanes[i], new String[]{}, null);
@@ -224,7 +223,6 @@ public class MatchMenu extends Application implements Menuable {
 		String[] cardsInfo = result.getMessage().split("\n------------------\n");
 		int idx = 0;
 		for (int i = 0; i < cardsInfo.length; i++) {
-			System.out.println("Card " + i + ": " + cardsInfo[i]);
 			if (cardsInfo[i].startsWith("Current Discard Pile:\n")) {
 				cardsInfo[i] = cardsInfo[i].substring(22);
 			}
@@ -472,6 +470,7 @@ public class MatchMenu extends Application implements Menuable {
 		if (result != null) {
 			System.out.println(result);
 		}
+		Platform.runLater(this::updateScreen);
 	}
 
 	private Result vetoCard(Matcher matcher) {

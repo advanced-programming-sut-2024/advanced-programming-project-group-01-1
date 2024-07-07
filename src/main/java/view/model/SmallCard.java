@@ -54,7 +54,7 @@ public class SmallCard extends Pane {
         }
         if (iconNames.get(name) != null) {
             ImageView icon = new ImageView(new Image(SmallCard.class.getResourceAsStream("/images/icons/" + iconNames.get(name) + ".png")));
-            System.out.println("Loading image: " + iconNames.get(name) + ".png");
+          //  System.out.println("Loading image: " + iconNames.get(name) + ".png");
             icon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue() / 2);
             icon.setFitHeight(Constants.SMALL_CARD_WIDTH.getValue() / 2);
             icon.setLayoutX(0);

@@ -32,7 +32,9 @@ public class Decoy extends Special {
 			unit.pull();
 			unit.updateSpace(Game.getCurrentGame().getCurrentHand());
 			decoy.updateSpace(row);
+			Game.getCurrentGame().changeTurn();
 		});
+		Game.getCurrentGame().changeTurn();
 	}
 
 	@Override

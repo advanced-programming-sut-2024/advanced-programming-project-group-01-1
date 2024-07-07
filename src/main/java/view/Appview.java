@@ -2,6 +2,7 @@ package view;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import view.game.MatchMenu;
 
 public class Appview {
 
@@ -11,6 +12,10 @@ public class Appview {
 
 	public static Menuable getMenu() {
 		return menu;
+	}
+
+	public static void setMenuOnMatchMenu(MatchMenu menu) {
+		Appview.menu = menu;
 	}
 
 	public static void setMenu(Menuable menu) {

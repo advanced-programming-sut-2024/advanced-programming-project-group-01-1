@@ -21,7 +21,6 @@ public class PreviewCard extends Pane {
         Rectangle picture = new Rectangle(Constants.PREVIEW_CARD_WIDTH.getValue(), Constants.PREVIEW_CARD_HEIGHT.getValue());
         ImagePattern imagePattern = imagePatterns.get(name);
         if (imagePattern == null) {
-            System.out.println("Loading image: " + name + ".jpg");
             imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/largecards/" + name + ".jpg")));
             imagePatterns.put(name, imagePattern);
         }

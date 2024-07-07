@@ -51,7 +51,7 @@ public class SmallUnit extends SmallCard {
 
         if (ability.equals("None")) return;
         ImageView abilityIcon = new ImageView();
-        System.out.println("loading ability: " + ability.toLowerCase()  + ".png");
+       // System.out.println("loading ability: " + ability.toLowerCase()  + ".png");
         abilityIcon.setImage(new Image(SmallCard.class.getResourceAsStream("/images/icons/card_ability_" + ability.toLowerCase() + ".png")));
         abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue() / 4);
         abilityIcon.setFitHeight(Constants.SMALL_CARD_WIDTH.getValue() / 4);

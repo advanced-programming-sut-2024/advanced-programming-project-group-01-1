@@ -13,10 +13,13 @@ public enum Medic implements Ability {
 	@Override
 	public void act(Card card) {
 		ArrayList<Card> discardPile = Game.getCurrentGame().getCurrentDiscardPile().getCards(true, true);
+		if (discardPile.isEmpty()) return;
 		MatchMenuController.askCards(discardPile, Game.getCurrentGame().isMedicRandom(), index -> {
 			Unit unit = (Unit) discardPile.get(index);
 			Game.getCurrentGame().getCurrentDiscardPile().getCards().remove(unit);
 			Game.getCurrentGame().putRevived(unit, false);
+			Game.getCurrentGame().changeTurn();
 		});
+		Game.getCurrentGame().changeTurn();
 	}
 }

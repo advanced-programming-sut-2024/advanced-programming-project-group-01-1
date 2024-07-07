@@ -315,7 +315,6 @@ public class Game {
 			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false, false).move();
 		else if (roundResult == -1 && opponentFaction.equals(Faction.NORTHERN_REALMS))
 			new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 1, false, false).move();
-		if (roundNumber == 3) skelligeAbility();
 		Unit currentUnit = currentFaction.equals(Faction.MONSTERS) ? keepUnit(true) : null;
 		Unit opponentUnit = opponentFaction.equals(Faction.MONSTERS) ? keepUnit(false) : null;
 		for (int i = 2; i >= 0; i--) {
@@ -337,6 +336,7 @@ public class Game {
 			hasOpponentPassed = false;
 			changeTurn();
 		}
+		if (roundNumber == 3) skelligeAbility();
 	}
 
 	public void putRevived(Unit unit, boolean isOpponent) {
@@ -350,12 +350,15 @@ public class Game {
 	}
 
 	private void skelligeAbility() {
+		System.out.println("skellige Ability");
 		if (currentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
 				ArrayList<Card> discardPile = currentDiscardPile.getCards(true, false);
 				MatchMenuController.askCards(discardPile, true, index -> {
 					Unit unit = (Unit) discardPile.get(index);
+					System.out.println("wtf : " + unit.getName() + "\n" + unit);
 					putRevived(unit, false);
+					System.out.println("aha :::::::::::::: " + (unit.getSpace() == getCurrentHand()));
 					currentDiscardPile.getCards().remove(unit);
 				});
 			}
@@ -365,7 +368,9 @@ public class Game {
 				ArrayList<Card> discardPile = opponentDiscardPile.getCards(true, false);
 				MatchMenuController.askCards(discardPile, true, index -> {
 					Unit unit = (Unit) discardPile.get(index);
+					System.out.println("wtf : " + unit.getName() + "\n" + unit);
 					putRevived(unit, true);
+					System.out.println("aha :::::::::::::: " + unit.getSpace().getClass().getSimpleName());
 					opponentDiscardPile.getCards().remove(unit);
 				});
 			}
