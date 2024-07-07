@@ -184,9 +184,7 @@ public class ClientUserMenusController {
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
 					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
+				} catch (InterruptedException ignored) {}
 				javafx.application.Platform.runLater(menu::updateFriendsList);
 			}
 		});

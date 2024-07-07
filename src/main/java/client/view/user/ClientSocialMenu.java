@@ -6,6 +6,7 @@ import client.view.AlertMaker;
 import client.view.ClientAppview;
 import client.view.ClientMainMenu;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -213,4 +214,7 @@ public class ClientSocialMenu extends Application implements Menuable {
 		}
 	}
 
+	public void exit(ActionEvent actionEvent) {
+		ClientUserMenusController.exit();
+	}
 }

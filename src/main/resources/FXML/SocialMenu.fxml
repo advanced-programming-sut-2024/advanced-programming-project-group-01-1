@@ -32,5 +32,6 @@
 			<Button id="ipad-dark-grey" layoutX="608.0" layoutY="334.0" mnemonicParsing="false" onAction="#sendRequest" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="send request" />
 
 		</VBox>
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="14.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" onAction="#exit"/>
 	</children>
 </Pane>
