@@ -7,6 +7,9 @@ import client.view.Constants;
 import client.view.Menuable;
 import client.view.game.SelectPanel;
 import client.view.model.PreviewCard;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import message.GameMenusCommands;
 import message.Result;
 
@@ -52,6 +56,8 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	public Label specialField;
 	public Label heroField;
 	public Button ready;
+	private Rectangle waiting;
+	private Timeline circulation;
 
 	@Override
 	public void start(Stage stage) {
@@ -392,9 +398,18 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	public void ready(MouseEvent mouseEvent) {
 		if (ready.getText().equals("ready")) {
 			if (ClientPreMatchMenusController.getReady().isSuccessful()) {
-				for (Node child : root.getChildren()) {
+				for (Node child : root.getChildren())
 					child.setDisable(true);
-				}
+				waiting = new Rectangle(100, 100);
+				waiting.setFill(new ImagePattern(new Image(ClientLobbyMenu.class.getResourceAsStream("/images/load.png"))));
+				circulation = new Timeline(new KeyFrame(Duration.millis(30), actionEvent -> {
+					waiting.setRotate(waiting.getRotate() + 10);
+				}));
+				circulation.setCycleCount(-1);
+				circulation.play();
+				root.getChildren().add(waiting);
+				waiting.setX(Constants.SCREEN_WIDTH.getValue() / 2 - 50);
+				waiting.setY(Constants.SCREEN_HEIGHT.getValue() / 2 - 50);
 				factionIconField.setOpacity(0.5);
 				leaderField.setOpacity(0.5);
 				ready.setDisable(false);
@@ -402,9 +417,10 @@ public class ClientLobbyMenu extends Application implements Menuable {
 			}
 		} else {
 			if (ClientPreMatchMenusController.cancelReady().isSuccessful()) {
-				for (Node child : root.getChildren()) {
+				for (Node child : root.getChildren())
 					child.setDisable(false);
-				}
+				root.getChildren().remove(waiting);
+				circulation.stop();
 				factionIconField.setOpacity(1);
 				leaderField.setOpacity(1);
 				ready.setText("ready");
