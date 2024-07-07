@@ -18,14 +18,20 @@ public class SelectPanel {
     ArrayList<LargeCard> cards = new ArrayList<>();
     int ptr = 0;
     SelectionHandler selectionHandler;
-    Rectangle backButton;
-    public SelectPanel(Pane root, String[] cards, int ptr, SelectionHandler selectionHandler) {
+    Rectangle backButton = null;
+    public SelectPanel(Pane root, String[] cards, int ptr, SelectionHandler selectionHandler, boolean wantBackButton) {
         this.root = root;
         this.selectionHandler = selectionHandler;
         this.ptr = ptr;
         selectPanelPane = new Pane();
         selectPanelPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
         selectPanelPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+        if (wantBackButton) {
+            backButton = new Rectangle(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+            backButton.setStyle("-fx-fill: transparent;");
+            backButton.setOnMouseClicked(event -> root.getChildren().remove(selectPanelPane));
+        }
+        else backButton = null;
         backButton = new Rectangle(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
         backButton.setStyle("-fx-fill: transparent;");
         backButton.setOnMouseClicked(event -> root.getChildren().remove(selectPanelPane));

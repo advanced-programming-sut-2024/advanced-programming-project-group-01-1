@@ -71,6 +71,9 @@ public class MatchMenu extends Application implements Menuable {
 	public HBox myLife, opponentLife;
 	public Label myHandSize, opponentHandSize;
 	public ImageView meAhead, opponentAhead;
+	public ImageView myFactionField, opponentFactionField;
+	public Label myUsernameField, opponentUsernameField;
+	public Label myFactionNameField, opponentFactionNameField;
 
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
@@ -299,6 +302,12 @@ public class MatchMenu extends Application implements Menuable {
 		opponentHandSize.setText(handSizeInfo[2]);
 		meAhead.setVisible(Integer.parseInt(myPower.getText()) > Integer.parseInt(opponentPower.getText()));
 		opponentAhead.setVisible(Integer.parseInt(myPower.getText()) < Integer.parseInt(opponentPower.getText()));
+		String factions = MatchMenuController.showFactionsForGraphic().getMessage();
+		String[] factionsInfo = factions.split("\n");
+		myFactionNameField.setText(factionsInfo[0].substring(9));
+		opponentFactionNameField.setText(factionsInfo[2].substring(9));
+		myFactionField.setImage(new Image(this.getClass().getResource("/images/icons/deck_shield_" + factionsInfo[0].substring(9) + ".png").toString()));
+		opponentFactionField.setImage(new Image(this.getClass().getResource("/images/icons/deck_shield_" + factionsInfo[2].substring(9) + ".png").toString()));
 	}
 
 	public void selectCard(MouseEvent event) {
@@ -385,7 +394,7 @@ public class MatchMenu extends Application implements Menuable {
 			cardsInfo[i*2] = card.getName();
 			cardsInfo[i*2+1] = card.getDescription();
 		}
-		SelectPanel selectPanel = new SelectPanel(root, cardsInfo, 0, null);
+		SelectPanel selectPanel = new SelectPanel(root, cardsInfo, 0, null, true);
 	}
 
 	public void passTurn(MouseEvent mouseEvent) {

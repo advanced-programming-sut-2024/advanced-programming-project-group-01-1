@@ -32,7 +32,7 @@
       <Pane fx:id="opponentDeckPane" layoutX="1231.0" layoutY="51.0" prefHeight="92.0" prefWidth="67.0" />
       <Pane fx:id="myPilePane" layoutX="1105.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
       <Pane fx:id="myDeckPane" layoutX="1231.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
-      <Pane layoutX="14.0" layoutY="440.0" prefHeight="146.0" prefWidth="287.0">
+      <Pane layoutX="14.0" layoutY="440.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
          <children>
              <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="185.0" layoutY="73.0" preserveRatio="false">
                  <Image url="@../images/icons/icon_card_count.png" />
@@ -51,8 +51,28 @@
                     </ImageView>
                 </children>
             </HBox>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="13.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/profile.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/icon_player_border.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="myFactionField" fitHeight="50.0" fitWidth="50.0" layoutX="13.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="myUsernameField" layoutX="71.0" layoutY="29.0" prefHeight="50.0" prefWidth="100.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="myFactionNameField" layoutX="71.0" layoutY="88.0" prefHeight="50.0" prefWidth="100.0" text="Label" textFill="#b49326">
+               <font>
+                  <Font size="11.0" />
+               </font></Label>
          </children></Pane>
-      <Pane layoutX="14.0" layoutY="157.0" prefHeight="146.0" prefWidth="287.0">
+      <Pane layoutX="14.0" layoutY="157.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
          <children>
              <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="185.0" layoutY="33.0" preserveRatio="false">
                  <Image url="@../images/icons/icon_card_count.png" />
@@ -71,6 +91,26 @@
                         </ImageView>
                </children>
             </HBox>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="28.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/profile.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="24.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/icon_player_border.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="opponentFactionField" fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="opponentUsernameField" layoutX="71.0" layoutY="28.0" prefHeight="50.0" prefWidth="100.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="opponentFactionNameField" layoutX="71.0" layoutY="87.0" prefHeight="50.0" prefWidth="100.0" text="Nilfgaardian Empire" textFill="#b49326">
+               <font>
+                  <Font size="11.0" />
+               </font></Label>
          </children></Pane>
       <Button id="ipad-dark-grey" layoutX="158.0" layoutY="704.0" mnemonicParsing="false" onMouseClicked="#passTurn" prefHeight="57.0" prefWidth="43.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="pass" />
       <Label fx:id="rowPowerLabel0" alignment="CENTER" layoutX="360.0" layoutY="520.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
