@@ -47,11 +47,11 @@ public class CardMover implements Serializable {
 				card.updateSpace(destinationSpace);
 				availableCards.remove(card);
 			}
-		} else show(originSpace, destinationSpace);
+		} else show(originSpace);
 		System.out.println(destinationSpace.getCards().size() + "\n--------------");
 	}
 
-	private void show(Space originSpace, Space destinationSpace){
+	private void show(Space originSpace){
 		ArrayList<Card> cardsToBeShown = new ArrayList<>();
 		boolean[] shown = new boolean[originSpace.getCards().size()];
 		for (int i = 0; i < count; i++) {

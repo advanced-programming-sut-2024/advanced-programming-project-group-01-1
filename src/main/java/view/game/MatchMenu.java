@@ -9,7 +9,10 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Result;
@@ -65,6 +68,8 @@ public class MatchMenu extends Application implements Menuable {
 	public Pane opponentPilePane;
 	public Pane myDeckPane;
 	public Pane opponentDeckPane;
+	public HBox myLife;
+	public HBox opponentLife;
 
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
@@ -271,6 +276,22 @@ public class MatchMenu extends Application implements Menuable {
 		}
 		opponentPower.setText(String.valueOf(power));
 		opponentPower.setStyle("-fx-font-size: 20");
+		String life = MatchMenuController.showPlayersLives().getMessage();
+		String[] lifeInfo = life.split("\\s");
+		int myLifeCount = Integer.parseInt(lifeInfo[1]);
+		int opponentLifeCount = Integer.parseInt(lifeInfo[3]);
+		int count = 0;
+		for (Node node: myLife.getChildren()) {
+			((ImageView) node).setImage(new Image(this.getClass().getResource("/images/icons/icon_gem_" +
+					(count < myLifeCount ? "on" : "off") + ".png").toString()));
+			count++;
+		}
+		count = 0;
+		for (Node node: opponentLife.getChildren()) {
+			((ImageView) node).setImage(new Image(this.getClass().getResource("/images/icons/icon_gem_" +
+					(count < opponentLifeCount ? "on" : "off") + ".png").toString()));
+			count++;
+		}
 	}
 
 	public void selectCard(MouseEvent event) {

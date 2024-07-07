@@ -8,6 +8,7 @@ import model.card.unit.Ranged;
 import model.card.unit.Siege;
 import model.card.unit.Unit;
 import model.game.Game;
+import model.game.space.Row;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -44,10 +45,17 @@ public enum Scorch implements Ability {
 			}
 		}
 		if (sumOfPower < 10 && row != -1) return;
-		ArrayList<Unit> toBeKilled = new ArrayList<>();
-		for (Unit unit : units) if (unit.getPower() == maxPower)
-			toBeKilled.add(unit);
-		for (Unit unit : toBeKilled) unit.pull();
+		ArrayList<Unit> mineToBeKilled = new ArrayList<>(), enemyToBeKilled = new ArrayList<>();
+		for (Unit unit : units) if (unit.getPower() == maxPower) {
+			int i = Game.getCurrentGame().getRowNumber((Row) unit.getSpace());
+			if (i < 3) mineToBeKilled.add(unit);
+			else enemyToBeKilled.add(unit);
+		}
+		for (Unit unit : mineToBeKilled) unit.pull();
+		for (Unit unit : enemyToBeKilled) {
+			unit.pull();
+			unit.updateSpace(Game.getCurrentGame().getOpponentDiscardPile());
+		}
 	}
 
 }
