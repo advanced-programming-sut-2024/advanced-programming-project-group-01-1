@@ -68,8 +68,8 @@ public class MatchMenu extends Application implements Menuable {
 	public Pane opponentPilePane;
 	public Pane myDeckPane;
 	public Pane opponentDeckPane;
-	public HBox myLife;
-	public HBox opponentLife;
+	public HBox myLife, opponentLife;
+	public Label myHandSize, opponentHandSize;
 
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
@@ -292,6 +292,10 @@ public class MatchMenu extends Application implements Menuable {
 					(count < opponentLifeCount ? "on" : "off") + ".png").toString()));
 			count++;
 		}
+		String handSize = MatchMenuController.showHandSize().getMessage();
+		String[] handSizeInfo = handSize.split("\\s");
+		myHandSize.setText(handSizeInfo[0]);
+		opponentHandSize.setText(handSizeInfo[2]);
 	}
 
 	public void selectCard(MouseEvent event) {

@@ -149,7 +149,8 @@ public class MatchMenuController {
 	}
 
 	public static Result showHandSize() {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size()), true);
+		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size() +
+				" - " + Game.getCurrentGame().getOpponentNumberOfCardsInHand()), true);
 	}
 
 	public static Result showCurrentHand() {
