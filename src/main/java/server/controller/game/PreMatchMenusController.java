@@ -10,8 +10,8 @@ import server.model.leader.Leader;
 import server.model.user.Deck;
 import server.model.user.User;
 import server.view.MainMenu;
+import server.view.game.MatchMenu;
 import server.view.game.prematch.LobbyMenu;
-import server.view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
 
@@ -24,15 +24,14 @@ public class PreMatchMenusController {
 		User opponent = User.getUserByUsername(opponentUsername);
 		if (opponent == null) return new Result("User not found", false);
 		if (opponent.equals(client.getIdentity())) return new Result("You cannot play with yourself", false);
-		if (((MatchFinderMenu) client.getMenu()).isWaiting())
-			return new Result("You cannot send two requests simultaneously", false);
-		if (opponent.getRequestedOpponent() == client.getIdentity()) {
+		if (client.isWaiting()) return new Result("You cannot send two requests simultaneously", false);
+		if (opponent.getChallengedUser() == client.getIdentity()) {
 			if (handleMatchRequest(client, opponentUsername, true).isSuccessful())
-				return new Result("Request sent", true);
+				return new Result("Go to Lobby", true);
 		}
-		client.getIdentity().setRequestedOpponent(opponent);
+		client.getIdentity().setChallengedUser(opponent);
 		opponent.getMatchRequests().add(client.getIdentity());
-		((MatchFinderMenu) client.getMenu()).setWaiting(true);
+		client.setWaiting(true);
 		return new Result("Request sent", true);
 	}
 
@@ -51,7 +50,7 @@ public class PreMatchMenusController {
 			return new Result("No request from this user", false);
 		client.getIdentity().getMatchRequests().remove(sender);
 		if (accept) {
-			client.getIdentity().setAcceptedOpponent(sender);
+			client.getIdentity().setChallengedUser(sender);
 			client.setMenu(new LobbyMenu());
 			return new Result("Request accepted", true);
 		} else return new Result("Request rejected", true);
@@ -59,21 +58,22 @@ public class PreMatchMenusController {
 
 
 	public static Result checkRequest(Client client) {
-		if (!((MatchFinderMenu) client.getMenu()).isWaiting()) return new Result("You were not waiting", false);
-		if (client.getIdentity() == client.getIdentity().getRequestedOpponent().getAcceptedOpponent()) {
+		if (!client.isWaiting()) return new Result("You were not waiting", false);
+		if (client.getIdentity() == client.getIdentity().getChallengedUser().getChallengedUser()) {
+			client.setWaiting(false);
 			client.setMenu(new LobbyMenu());
 			return new Result("You are accepted", true);
 		}
-		if (!client.getIdentity().getRequestedOpponent().getMatchRequests().contains(client.getIdentity()))
+		if (!client.getIdentity().getChallengedUser().getMatchRequests().contains(client.getIdentity()))
 			return new Result("You are rejected", true);
 		return new Result("Still wait", false);
 	}
 
 	public static Result stopWait(Client client) {
-		if (!((MatchFinderMenu) client.getMenu()).isWaiting()) return new Result("You were not waiting", false);
-		client.getIdentity().getRequestedOpponent().getMatchRequests().remove(client.getIdentity());
-		client.getIdentity().setRequestedOpponent(null);
-		((MatchFinderMenu) client.getMenu()).setWaiting(false);
+		if (!client.isWaiting()) return new Result("You were not waiting", false);
+		client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
+		client.getIdentity().setChallengedUser(null);
+		client.setWaiting(false);
 		return new Result("stopped successfully", true);
 	}
 
@@ -191,8 +191,6 @@ public class PreMatchMenusController {
 	public static Result addToDeck(Client client, String cardName, int count) {
 		if (count < 1) return new Result("Invalid Count", false);
 		Card card = CardCreator.getCard(cardName);
-		System.out.println("haaa? : " + cardName + " " + count + " ::: " +
-				client.getIdentity().getDeck().getAvailableCount(card));
 		if (client.getIdentity().getDeck().getAvailableCount(card) < count)
 			return new Result("Not Enough Cards Available", false);
 		for (int i = 0; i < count; i++)
@@ -241,5 +239,38 @@ public class PreMatchMenusController {
 			if (user != client.getIdentity()) usernames.append(user.getUsername()).append("\n");
 		}
 		return new Result(usernames.toString(), true);
+	}
+
+
+	public static Result isDeckValid(Client client) {
+		if (client.getIdentity().getDeck().isValid()) return new Result("Valid", true);
+		return new Result("Invalid", false);
+	}
+
+	public static Result getReady(Client client) {
+		if (!isDeckValid(client).isSuccessful()) return new Result("Deck is not ready", false);
+		client.setWaiting(true);
+		if (Client.getClient(client.getIdentity().getChallengedUser()).isWaiting()) {
+			client.setWaiting(true);
+			client.setMenu(new MatchMenu());
+			return new Result("game started", true);
+		}
+		return new Result("wait for your opponent", true);
+	}
+
+	public static Result cancelReady(Client client) {
+		if (!client.isWaiting()) return new Result("You were not waiting", false);
+		client.setWaiting(false);
+		return new Result("canceled successfully", true);
+	}
+
+	public static Result checkOpponentReady(Client client) {
+		if (!client.isWaiting()) return new Result("You are not ready", false);
+		if (!Client.getClient(client.getIdentity().getChallengedUser()).isWaiting())
+			return new Result("Opponent is not ready", false);
+		client.setWaiting(false);
+		Client.getClient(client.getIdentity().getChallengedUser()).setWaiting(false);
+		client.setMenu(new MatchMenu());
+		return new Result("Opponent is ready", true);
 	}
 }

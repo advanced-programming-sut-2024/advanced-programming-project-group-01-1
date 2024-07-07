@@ -11,13 +11,11 @@ import java.util.regex.Matcher;
 
 public class MatchFinderMenu implements Menuable {
 
-	boolean isWaiting = false;
-
 	@Override
 	public Result run(Client client, String input) {
 		Matcher matcher;
 		Result result;
-		if (isWaiting) {
+		if (client.isWaiting()) {
 			if (GameMenusCommands.STOP_WAIT.getMatcher(input) != null)
 				result = PreMatchMenusController.stopWait(client);
 			else if (GameMenusCommands.CHECK_REQUEST.getMatcher(input) != null)
@@ -52,13 +50,5 @@ public class MatchFinderMenu implements Menuable {
 		return PreMatchMenusController.handleMatchRequest(client, senderUsername, accept);
 	}
 
-
-	public boolean isWaiting() {
-		return isWaiting;
-	}
-
-	public void setWaiting(boolean waiting) {
-		isWaiting = waiting;
-	}
 
 }

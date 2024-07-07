@@ -10,6 +10,7 @@ import client.view.model.PreviewCard;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,6 +51,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	public Label unitField;
 	public Label specialField;
 	public Label heroField;
+	public Button ready;
 
 	@Override
 	public void start(Stage stage) {
@@ -81,6 +83,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		updateLeader();
 		updateFaction();
 		updateStats();
+		ready.setDisable(!ClientPreMatchMenusController.isDeckValid().isSuccessful());
 	}
 
 	private void updateStats() {
@@ -134,7 +137,6 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	}
 
 	public void addToDeck(MouseEvent mouseEvent) {
-		System.out.println("add to deck");
 		PreviewCard largeCard = (PreviewCard) mouseEvent.getSource();
 		Result result = ClientPreMatchMenusController.addToDeck(largeCard.getName(), 1);
 		updateScreen();
@@ -388,9 +390,26 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	}
 
 	public void ready(MouseEvent mouseEvent) {
-		Result result = ClientPreMatchMenusController.changeTurn();
-		AlertMaker.makeAlert("ready", result);
-		updateScreen();
+		if (ready.getText().equals("ready")) {
+			if (ClientPreMatchMenusController.getReady().isSuccessful()) {
+				for (Node child : root.getChildren()) {
+					child.setDisable(true);
+				}
+				factionIconField.setOpacity(0.5);
+				leaderField.setOpacity(0.5);
+				ready.setDisable(false);
+				ready.setText("Back to Lobby");
+			}
+		} else {
+			if (ClientPreMatchMenusController.cancelReady().isSuccessful()) {
+				for (Node child : root.getChildren()) {
+					child.setDisable(false);
+				}
+				factionIconField.setOpacity(1);
+				leaderField.setOpacity(1);
+				ready.setText("ready");
+			}
+		}
 	}
 
 	@Override

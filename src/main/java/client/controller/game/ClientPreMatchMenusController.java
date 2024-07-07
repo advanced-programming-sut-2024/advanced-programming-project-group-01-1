@@ -4,6 +4,7 @@ import client.main.TCPClient;
 import client.view.AlertMaker;
 import client.view.ClientAppview;
 import client.view.ClientMainMenu;
+import client.view.game.ClientMatchMenu;
 import client.view.game.prematch.ClientLobbyMenu;
 import client.view.game.prematch.ClientMatchFinderMenu;
 import javafx.application.Platform;
@@ -23,6 +24,10 @@ public class ClientPreMatchMenusController {
 		command = command.replace("(?<opponent>\\S+)", opponentUsername);
 		Result result = TCPClient.send(command);
 		if (result != null && result.isSuccessful()) {
+			if (result.getMessage().equals("Go to Lobby")) {
+				Platform.runLater(() -> ClientAppview.setMenu(new ClientLobbyMenu()));
+				return result;
+			}
 			new Thread(() -> {
 				while (true) {
 					try {
@@ -158,9 +163,7 @@ public class ClientPreMatchMenusController {
 		String command = GameMenusCommands.ADD_TO_DECK.getPattern();
 		command = command.replace("(?<cardName>.+)", cardName);
 		command = command.replace("(?<count>\\d+)", String.valueOf(count));
-		Result result =  TCPClient.send(command);
-		System.out.println(cardName + " " + count + " :: " + result);
-		return result;
+		return TCPClient.send(command);
 	}
 
 	public static Result deleteFromDeck(int cardNumber, int count) {
@@ -216,4 +219,42 @@ public class ClientPreMatchMenusController {
 		return TCPClient.send(command);
 	}
 
+	public static Result isDeckValid() {
+		String command = GameMenusCommands.IS_DECK_VALID.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result getReady() {
+		String command = GameMenusCommands.READY.getPattern();
+		Result result = TCPClient.send(command);
+		if (result != null && result.isSuccessful()) {
+			if (result.getMessage().equals("game started")) {
+				Platform.runLater(() -> ClientAppview.setMenu(new ClientMatchMenu()));
+				return result;
+			}
+			new Thread(() -> {
+				while (true) {
+					if (!isWaiting().isSuccessful()) break;
+					try {
+						Result check = checkOpponentReady();
+						if (check.isSuccessful()) Platform.runLater(() -> ClientAppview.setMenu(new ClientMatchMenu()));
+						Thread.sleep(234);
+					} catch (Exception e) {
+						break;
+					}
+				}
+			}).start();
+		}
+		return result;
+	}
+
+	public static Result cancelReady() {
+		String command = GameMenusCommands.CANCEL_READY.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result checkOpponentReady() {
+		String command = GameMenusCommands.CHECK_OPPONENT_READY.getPattern();
+		return TCPClient.send(command);
+	}
 }

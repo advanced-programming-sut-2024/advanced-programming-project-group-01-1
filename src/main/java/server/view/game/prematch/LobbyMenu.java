@@ -15,6 +15,16 @@ public class LobbyMenu implements Menuable {
 	public Result run(Client client, String input) {
 		Matcher matcher;
 		Result result;
+		if (client.isWaiting()) {
+			if (GameMenusCommands.IS_WAITING.getMatcher(input) != null)
+				result = new Result("still waiting", true);
+			else if (GameMenusCommands.CHECK_OPPONENT_READY.getMatcher(input) != null)
+				result = PreMatchMenusController.checkOpponentReady(client);
+			else if (GameMenusCommands.CANCEL_READY.getMatcher(input) != null)
+				result = PreMatchMenusController.cancelReady(client);
+			else result = new Result("Invalid command", false);
+			return result;
+		}
 		if (GameMenusCommands.SHOW_FACTIONS.getMatcher(input) != null)
 			result = PreMatchMenusController.showFactions(client);
 		else if ((matcher = GameMenusCommands.SELECT_FACTION.getMatcher(input)) != null)
@@ -47,6 +57,12 @@ public class LobbyMenu implements Menuable {
 			result = PreMatchMenusController.showNowFactionToGraphics(client);
 		else if (GameMenusCommands.SHOW_LEADER_GRAPHIC.getMatcher(input) != null)
 			result = PreMatchMenusController.showNowLeaderToGraphics(client);
+		else if (GameMenusCommands.IS_DECK_VALID.getMatcher(input) != null)
+			result = PreMatchMenusController.isDeckValid(client);
+		else if (GameMenusCommands.READY.getMatcher(input) != null)
+			result = PreMatchMenusController.getReady(client);
+		else if (GameMenusCommands.IS_WAITING.getMatcher(input) != null)
+			result = new Result("not waiting", false);
 		else if (GameMenusCommands.START_GAME.getMatcher(input) != null)
 			result = PreMatchMenusController.startGame(client);
 		else result = new Result("Invalid command", false);

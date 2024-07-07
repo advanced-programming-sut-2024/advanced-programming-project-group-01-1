@@ -14,6 +14,7 @@ public class Client {
 	private final String token;
 	private Menuable Menu;
 	private User identity;
+	private boolean isWaiting;
 
 	public Client() {
 		StringBuilder tmp = new StringBuilder();
@@ -21,6 +22,7 @@ public class Client {
 		token = tmp.toString();
 		Menu = new LoginMenu();
 		identity = null;
+		isWaiting = false;
 		clients.put(token, this);
 	}
 
@@ -28,13 +30,19 @@ public class Client {
 		return clients.get(token);
 	}
 
+	public static Client getClient(User user) {
+		for (Client client : clients.values()) {
+			if (client.getIdentity() == user) return client;
+		}
+		return null;
+	}
+
 	public static void remove(Client client) {
 		if (client.getIdentity() != null) {
-			if (client.getIdentity().getRequestedOpponent() != null) {
-				client.getIdentity().getRequestedOpponent().getMatchRequests().remove(client.getIdentity());
-				client.getIdentity().setRequestedOpponent(null);
+			if (client.getIdentity().getChallengedUser() != null) {
+				client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
+				client.getIdentity().setChallengedUser(null);
 			}
-			client.getIdentity().setAcceptedOpponent(null);
 		}
 		clients.remove(client.getToken());
 	}
@@ -59,4 +67,11 @@ public class Client {
 		return identity;
 	}
 
+	public boolean isWaiting() {
+		return isWaiting;
+	}
+
+	public void setWaiting(boolean waiting) {
+		isWaiting = waiting;
+	}
 }

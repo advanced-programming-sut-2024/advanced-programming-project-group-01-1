@@ -28,7 +28,6 @@ public class ClientRegisterMenusController {
 		command = command.replace("(?<questionNumber>\\d+)", String.valueOf(questionNumber));
 		command = command.replace("(?<answer>\\S+)", answer);
 		command = command.replace("(?<answerConfirm>\\S+)", answerConfirm);
-		System.out.println(command);
 		Result result = TCPClient.send(command);
 		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientLoginMenu());
 		return result;

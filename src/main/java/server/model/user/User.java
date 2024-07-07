@@ -25,7 +25,7 @@ public class User implements Serializable {
 	private final ArrayList<GameInfo> history = new ArrayList<>();
 	private final ArrayList<User> sentRequests = new ArrayList<>(), receivedRequests = new ArrayList<>();
 	private final ArrayList<User> matchRequests = new ArrayList<>();
-	private User requestedOpponent, acceptedOpponent;
+	private User challengedUser;
 	private double elo;
 
 	public User(String username, String nickname, String password, String email, Question question) {
@@ -262,20 +262,12 @@ public class User implements Serializable {
 		return matchRequests;
 	}
 
-	public User getRequestedOpponent() {
-		return requestedOpponent;
+	public User getChallengedUser() {
+		return challengedUser;
 	}
 
-	public void setRequestedOpponent(User requestedOpponent) {
-		this.requestedOpponent = requestedOpponent;
-	}
-
-	public User getAcceptedOpponent() {
-		return acceptedOpponent;
-	}
-
-	public void setAcceptedOpponent(User acceptedOpponent) {
-		this.acceptedOpponent = acceptedOpponent;
+	public void setChallengedUser(User challengedUser) {
+		this.challengedUser = challengedUser;
 	}
 
 	public void addSentRequest(User user) {

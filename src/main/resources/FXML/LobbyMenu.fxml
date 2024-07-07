@@ -19,7 +19,7 @@
          </padding>
       </ScrollPane>
       <ScrollPane fx:id="inDeckCardPane" layoutX="866.0" prefHeight="768.0" prefWidth="500.0" stylesheets="@../CSS/scrollpanestyle.css"/>
-      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="690.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="ready" onMouseClicked="#ready"/>
+      <Button fx:id="ready" id="ipad-dark-grey" layoutX="608.0" layoutY="690.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="ready" onMouseClicked="#ready"/>
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="628.0" mnemonicParsing="false" onMouseClicked="#saveDeck" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="save deck" />
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="565.0" mnemonicParsing="false" onMouseClicked="#loadDeck" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="load deck" />
       <Rectangle fx:id="leaderField" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" height="265.0" layoutX="613.0" layoutY="125.0" onMouseClicked="#changeLeader" stroke="BLACK" strokeType="INSIDE" width="140.0" />
