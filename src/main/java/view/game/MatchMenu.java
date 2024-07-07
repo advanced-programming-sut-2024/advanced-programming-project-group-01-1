@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -123,8 +122,8 @@ public class MatchMenu extends Application implements Menuable {
 		weatherPane.setOnMouseClicked(this::showSpace);
 		myPilePane.setOnMouseClicked(this::showSpace);
 		opponentPilePane.setOnMouseClicked(this::showSpace);
-		//myLeaderPane.setOnMouseClicked(this::showSpace);
-		//opponentLeaderPane.setOnMouseClicked(this::showSpace);
+		myLeaderPane.setOnMouseClicked(this::showLeader);
+		opponentLeaderPane.setOnMouseClicked(this::showSpace);
 		updateScreen();
 		Appview.setMenuOnMatchMenu(this);
 	}
@@ -135,7 +134,7 @@ public class MatchMenu extends Application implements Menuable {
 		updateWeather();
 		updateDiscardPiles();
 		updateDecks();
-		//updateLeader();
+		updateLeader();
 		updateInfo();
 	}
 
@@ -255,15 +254,27 @@ public class MatchMenu extends Application implements Menuable {
 		result = MatchMenuController.showFactionsForGraphic();
 		String[] factionsInfo = result.getMessage().split("\n");
 		String[] myDeckInfo = new String[Integer.parseInt(cardsInfo[0])];
+		String[] userNames = MatchMenuController.getUsernames().getMessage().split("\n");
 		for (int i = 0; i < myDeckInfo.length; i++) {
-			myDeckInfo[i] = factionsInfo[0].substring(9) + '\n' + "type: faction\nAbility: none\n" + "unique code: my" + i;
+			myDeckInfo[i] = factionsInfo[0].substring(9) + '\n' + "type: faction\nAbility: none\n" + "unique code: " + userNames[0] + "@" + i;
 		}
 		String[] opponentDeckInfo = new String[Integer.parseInt(cardsInfo[1])];
 		for (int i = 0; i < opponentDeckInfo.length; i++) {
-			opponentDeckInfo[i] = factionsInfo[2].substring(9) + '\n' + "type: faction\nAbility: none\n" + "unique code: opponent" + i;
+			opponentDeckInfo[i] = factionsInfo[2].substring(9) + '\n' + "type: faction\nAbility: none\n" + "unique code: " + userNames[1] + "@" + i;
 		}
 		updateSpace(myDeckPane, myDeckInfo, null);
 		updateSpace(opponentDeckPane, opponentDeckInfo, null);
+	}
+
+	public void updateLeader() {
+		String leaders = MatchMenuController.showLeadersForGraphics().getMessage();
+		String[] leadersInfo = leaders.split("\n------------------\n");
+		for (int i = 0; i < 2; i++){
+			String[] leaderInfo = leadersInfo[i].split("\n");
+			leadersInfo[i] = leaderInfo[0].substring(8) + '\n' + "type: leader\nAbility: " + leaderInfo[1] + '\n' + "unique code: " + leaderInfo[2];
+		}
+		updateSpace(myLeaderPane, new String[]{leadersInfo[0]}, null);
+		updateSpace(opponentLeaderPane, new String[]{leadersInfo[1]}, null);
 	}
 
 	public void updateInfo() {
@@ -409,6 +420,22 @@ public class MatchMenu extends Application implements Menuable {
 			cardsInfo[i*2+1] = card.getDescription();
 		}
 		SelectPanel selectPanel = new SelectPanel(root, cardsInfo, 0, null, true);
+	}
+
+	public void showLeader(MouseEvent mouseEvent) {
+		clearSelectedCard();
+		Pane pane = (Pane) mouseEvent.getSource();
+		SmallCard card = (SmallCard) pane.getChildren().get(0);
+		String[] cardsInfo = new String[2];
+		cardsInfo[0] = card.getName();
+		cardsInfo[1] = card.getDescription();
+
+		SelectPanel selectPanel = new SelectPanel(root, cardsInfo, 0, this::useLeader, true);
+	}
+
+	public void useLeader(int idx) {
+		MatchMenuController.useLeaderAbility();
+		updateScreen();
 	}
 
 	public void passTurn(MouseEvent mouseEvent) {

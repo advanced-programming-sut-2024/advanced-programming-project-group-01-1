@@ -49,7 +49,7 @@ public class SmallCard extends Pane {
         picture.setPreserveRatio(false);
         this.getChildren().add(picture);
 
-        if (type.equals("faction")){
+        if (type.equals("faction") || type.equals("leader")){
             return;
         }
         if (iconNames.get(name) != null) {
