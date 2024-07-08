@@ -71,7 +71,6 @@ public class Row extends Space {
 	public void clear(Space discardPile, Unit stayingUnit) {
 		if (buffer != null) {
 			buffer.pull();
-			buffer.updateSpace(discardPile);
 			buffer = null;
 		}
 		super.clear(discardPile, stayingUnit);
