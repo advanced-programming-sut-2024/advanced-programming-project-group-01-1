@@ -12,12 +12,15 @@ public class GameInfo implements Serializable {
 	private final Date date;
 	private final ArrayList<Integer> opponentScores, myScores;
 	private final int winnerId;
+	private final int myRoundScore, opponentRoundScore;
 	private final String result;
 
-	public GameInfo(User opponent, ArrayList<Integer> opponentScores, ArrayList<Integer> myScores, User winner) {
+	public GameInfo(User opponent, int myLife, int opponentLife, ArrayList<Integer> opponentScores, ArrayList<Integer> myScores, User winner) {
 		this.opponentId = opponent.getId();
 		this.date = new Date();
 		this.opponentScores = opponentScores;
+		myRoundScore = 2 - myLife;
+		opponentRoundScore = 2 - opponentLife;
 		this.myScores = myScores;
 		if (winner != null) this.winnerId = winner.getId();
 		else this.winnerId = -1;
@@ -42,12 +45,12 @@ public class GameInfo implements Serializable {
 		return new ArrayList<>(this.myScores);
 	}
 
-	public int getOpponentFinalScore() {
-		return this.opponentScores.get(0) + this.opponentScores.get(1) + this.opponentScores.get(2);
+	public int getOpponentRoundScore() {
+		return opponentRoundScore;
 	}
 
-	public int getMyFinalScore() {
-		return this.myScores.get(0) + this.myScores.get(1) + this.myScores.get(2);
+	public int getMyRoundScore() {
+		return myRoundScore;
 	}
 
 	public int getWinnerId() {
@@ -60,8 +63,8 @@ public class GameInfo implements Serializable {
 				"Date: " + this.date + "\n" +
 				"Opponent Scores: " + this.opponentScores + "\n" +
 				"My Scores: " + this.myScores + "\n" +
-				"Opponent Final Score: " + this.getOpponentFinalScore() + "\n" +
-				"My Final Score: " + this.getMyFinalScore() + "\n" +
+				"My Round Score: " + this.getMyRoundScore() + "\n" +
+				"Opponent Round Score: " + this.getOpponentRoundScore() + "\n" +
 				"Winner: " + User.getUserById(this.winnerId).getNickname();
 	}
 }

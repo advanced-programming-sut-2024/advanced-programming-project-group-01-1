@@ -416,20 +416,20 @@ public class Game {
 		if (currentLife == 0 && opponentLife == 0) {
 			current.setElo(User.calculateElo(currentElo, opponentElo, 0));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 0));
-			current.getHistory().add(new GameInfo(opponent, opponentScores, currentScores, null));
-			opponent.getHistory().add(new GameInfo(current, currentScores, opponentScores, null));
+			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, null));
+			opponent.getHistory().add(new GameInfo(current, currentLife, opponentLife, currentScores, opponentScores, null));
 			// Draw
 		} else if (currentLife == 0) {
 			current.setElo(User.calculateElo(currentElo, opponentElo, -1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 1));
-			current.getHistory().add(new GameInfo(opponent, opponentScores, currentScores, opponent));
-			opponent.getHistory().add(new GameInfo(current, currentScores, opponentScores, opponent));
+			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, opponent));
+			opponent.getHistory().add(new GameInfo(current, currentLife, opponentLife, currentScores, opponentScores, opponent));
 			// Lose
 		} else {
 			current.setElo(User.calculateElo(currentElo, opponentElo, 1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, -1));
-			current.getHistory().add(new GameInfo(opponent, opponentScores, currentScores, current));
-			opponent.getHistory().add(new GameInfo(current, currentScores, opponentScores, current));
+			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, current));
+			opponent.getHistory().add(new GameInfo(current, currentLife, opponentLife, currentScores, opponentScores, current));
 			// Win
 		}
 	}

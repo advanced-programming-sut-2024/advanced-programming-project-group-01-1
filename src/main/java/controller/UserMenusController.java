@@ -7,6 +7,7 @@ import model.Result;
 import model.user.User;
 import view.Appview;
 import view.MainMenu;
+import view.user.HistoryMenu;
 import view.user.InfoMenu;
 import view.user.ProfileMenu;
 import view.user.RankingMenu;
@@ -61,13 +62,19 @@ public class UserMenusController {
 
 	public static Result goToRankingMenu() {
 		Appview.setMenu(new RankingMenu());
-		return new Result("Ranking Menu", true);
+		return new Result("Entering Ranking Menu", true);
+	}
+
+	public static Result goToHistoryMenu() {
+		Appview.setMenu(new HistoryMenu());
+		return new Result("Entering History Menu", true);
 	}
 
 	public static Result showGameHistory(int number) {
 		ArrayList<GameInfo> history = User.getLoggedInUser().getHistory();
 		StringBuilder gameHistory = new StringBuilder();
-		for (int i = 0; i < number; i++) {
+		int start = Math.max(0, history.size() - number), end = history.size();
+		for (int i = end - 1; i >= start; i--) {
 			gameHistory.append(history.get(i).toString()).append("\n");
 		}
 		return new Result(gameHistory.toString(), true);
@@ -77,6 +84,7 @@ public class UserMenusController {
 		if (Appview.getMenu() instanceof InfoMenu) Appview.setMenu(new ProfileMenu());
 		else if (Appview.getMenu() instanceof ProfileMenu) Appview.setMenu(new MainMenu());
 		else if (Appview.getMenu() instanceof RankingMenu) Appview.setMenu(new MainMenu());
+		else if (Appview.getMenu() instanceof HistoryMenu) Appview.setMenu(new InfoMenu());
 		return new Result("Exited successfully", true);
 	}
 

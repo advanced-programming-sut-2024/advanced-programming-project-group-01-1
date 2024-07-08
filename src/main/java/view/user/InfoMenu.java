@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Result;
@@ -71,6 +72,7 @@ public class InfoMenu implements Menuable {
 		if ((matcher = UserMenusCommands.GAME_HISTORY.getMatcher(input)) != null) result = showGameHistory(matcher);
 		else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
 		else if (UserMenusCommands.EXIT.getMatcher(input) != null) result = exit();
+		else if (UserMenusCommands.HISTORY.getMatcher(input) != null) result = goToHistoryMenu();
 		else result = new Result("Invalid command", false);
 		System.out.println(result);
 	}
@@ -87,6 +89,14 @@ public class InfoMenu implements Menuable {
 	@FXML
 	private Result exit() {
 		return UserMenusController.exit();
+	}
+
+	public Result goToHistoryMenu() {
+		return UserMenusController.goToHistoryMenu();
+	}
+
+	public void goToHistoryMenu(MouseEvent mouseEvent) {
+		goToHistoryMenu();
 	}
 
 }

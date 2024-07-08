@@ -10,6 +10,7 @@ public enum UserMenusCommands {
     CHANGE_PASSWORD("change password -p (?<newPassword>\\S+) -o (?<oldPassword>\\S+)"),
     ENTER_USER_INFO("menu enter user info menu"),
     SHOW_CURRENT_MENU("show current menu"),
+    HISTORY("menu enter history menu"),
     GAME_HISTORY("game history (-n (?<numberOfGames>\\d+))?"),
     NEXT_PAGE("next page"),
     PREVIOUS_PAGE("previous page"),

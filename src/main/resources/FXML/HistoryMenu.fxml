@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.user.HistoryMenu">
+	<ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+		<image>
+			<Image url="@../images/backgrounds/ProfileMenu.jpg" />
+		</image>
+	</ImageView>
+
+	<Button id="ipad-dark-grey" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#exit" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
+   <TextField id="ipad-dark-grey" layoutX="568.0" layoutY="14.0" stylesheets="@../CSS/textfieldstyle.css" />
+   <Button id="ipad-dark-grey" layoutX="643.0" layoutY="81.0" mnemonicParsing="false" onMouseClicked="#exit" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="show" />
+</Pane>
