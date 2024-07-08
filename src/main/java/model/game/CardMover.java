@@ -39,7 +39,6 @@ public class CardMover implements Serializable {
 						originSpace.getCards(onlyUnit, ignoreHero).get(index).updateSpace(destinationSpace), false, 0);
 			}
 		} else show(originSpace);
-		System.out.println(destinationSpace.getCards().size() + "\n--------------");
 	}
 
 	private void show(Space originSpace) {
@@ -61,8 +60,10 @@ public class CardMover implements Serializable {
 				}
 			}
 		}
+		System.out.println("baba bikhikhi");
 		Space tmp = new Space(cardsToBeShown);
-		MatchMenuController.showSpace(tmp);
+		new Asker(tmp, false, false, false, index -> {}, true, 1);
+		System.out.println("kir too koonet");
 	}
 
 }

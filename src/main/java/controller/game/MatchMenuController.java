@@ -9,7 +9,6 @@ import model.game.CardMover;
 import model.game.Game;
 import model.game.space.Space;
 import view.Appview;
-import view.game.SelectionHandler;
 import view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ public class MatchMenuController {
 	}
 
 	public static void handleVeto() {
+		if (!Game.getCurrentGame().getCurrentLeader().isManual()) Game.getCurrentGame().getCurrentLeader().act();
 		final Space hand = Game.getCurrentGame().getCurrentHand();
 		new Asker(hand, false, false, false, index -> {
 			if (index != -1) {
@@ -36,8 +36,14 @@ public class MatchMenuController {
 				new Asker(hand, false, false, false, index1 -> {
 					if (index1 != -1) vetoCard(hand.getCards().get(index1));
 					Game.getCurrentGame().changeTurn();
+					if (!Game.getCurrentGame().getCurrentLeader().isManual())
+						Game.getCurrentGame().getCurrentLeader().act();
 				}, true, index, true);
-			} else Game.getCurrentGame().changeTurn();
+			} else {
+				Game.getCurrentGame().changeTurn();
+				if (!Game.getCurrentGame().getCurrentLeader().isManual())
+					Game.getCurrentGame().getCurrentLeader().act();
+			}
 		}, true, 0);
 		final Space hand1 = Game.getCurrentGame().getSpaceById(Game.OPPONENT_HAND);
 		new Asker(hand1, false, false, false, index -> {
@@ -253,8 +259,7 @@ public class MatchMenuController {
 	}
 
 	public static Result cheatClearRow(int rowNumber) {
-		Game.getCurrentGame().getRow(rowNumber).clear(rowNumber < 3 ? Game.getCurrentGame().getCurrentDiscardPile() :
-				Game.getCurrentGame().getOpponentDiscardPile(), null);
+		Game.getCurrentGame().getRow(rowNumber).clear(rowNumber < 3 ? Game.getCurrentGame().getCurrentDiscardPile() : Game.getCurrentGame().getOpponentDiscardPile(), null);
 		return new Result("Row cleared", true);
 	}
 

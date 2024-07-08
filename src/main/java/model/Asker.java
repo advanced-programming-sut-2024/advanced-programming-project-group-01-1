@@ -36,7 +36,7 @@ public class Asker implements Runnable {
 		this.ptr = ptr;
 		this.isFast = false;
 		askers.add(this);
-		Platform.runLater(this);
+		this.run();
 	}
 
 	public Asker(Space space, boolean onlyUnit, boolean ignoreHero, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr, boolean isFast) {
@@ -59,7 +59,7 @@ public class Asker implements Runnable {
 			}
 		}
 		if (!added) askers.add(this);
-		Platform.runLater(this);
+		this.run();
 	}
 
 	public static boolean isAsking() {
@@ -81,7 +81,7 @@ public class Asker implements Runnable {
 	@Override
 	public void run() {
 		if (running != null || askers.indexOf(this) != 0) {
-			if (isRandom && isFast){
+			if (isRandom && isFast) {
 				cards = space.getCards(onlyUnit, ignoreHero);
 				int randomIndex = (int) (Math.random() * cards.size());
 				selectionHandler.handle(randomIndex);
@@ -106,17 +106,19 @@ public class Asker implements Runnable {
 			StringBuilder cardNames = new StringBuilder();
 			for (Card card : cards)
 				cardNames.append(card.getName()).append("\n").append(card.getDescription()).append("\n");
-			selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(), cardNames.toString().split("\n"), ptr, index -> {
-				selectionHandler.handle(index);
-				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-				running = null;
-				if (!askers.isEmpty()) askers.get(0).run();
-			}, isOptional);
-			if (isOptional) selectPanel.getBackButton().setOnMouseClicked(event -> {
-				selectPanel.selectCard(-1);
-				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-				running = null;
-				if (!askers.isEmpty()) askers.get(0).run();
+			Platform.runLater(() -> {
+				selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(), cardNames.toString().split("\n"), ptr, index -> {
+					selectionHandler.handle(index);
+					Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
+					running = null;
+					if (!askers.isEmpty()) askers.get(0).run();
+				}, isOptional);
+				if (isOptional) selectPanel.getBackButton().setOnMouseClicked(event -> {
+					selectPanel.selectCard(-1);
+					Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
+					running = null;
+					if (!askers.isEmpty()) askers.get(0).run();
+				});
 			});
 		}
 	}
