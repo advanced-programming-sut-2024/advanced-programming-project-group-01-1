@@ -430,8 +430,6 @@ public class MatchMenu extends Application implements Menuable {
 			} else {
 				result = new Result("Invalid command", false);
 			}
-		} else if ((matcher = GameMenusCommands.VETO_CARD.getMatcher(input)) != null) {
-			result = vetoCard(matcher);
 		} else if ((matcher = GameMenusCommands.IN_HAND_DECK.getMatcher(input)) != null) {
 			result = showHand(matcher);
 		} else if ((matcher = GameMenusCommands.REMAINING_CARDS_TO_PLAY.getMatcher(input)) != null) {
@@ -471,11 +469,6 @@ public class MatchMenu extends Application implements Menuable {
 			System.out.println(result);
 		}
 		Platform.runLater(this::updateScreen);
-	}
-
-	private Result vetoCard(Matcher matcher) {
-		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
-		return MatchMenuController.vetoCard(cardNumber);
 	}
 
 	private Result showHand(Matcher matcher) {

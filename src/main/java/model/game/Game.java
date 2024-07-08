@@ -331,12 +331,12 @@ public class Game {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if (roundNumber == 3) skelligeAbility();
 		if (currentLife == 0 || opponentLife == 0) endGame();
 		else {
 			hasOpponentPassed = false;
 			changeTurn();
 		}
-		if (roundNumber == 3) skelligeAbility();
 	}
 
 	public void putRevived(Unit unit, boolean isOpponent) {
@@ -350,17 +350,14 @@ public class Game {
 	}
 
 	private void skelligeAbility() {
-		System.out.println("skellige Ability");
 		if (currentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
 				ArrayList<Card> discardPile = currentDiscardPile.getCards(true, false);
 				MatchMenuController.askCards(discardPile, true, index -> {
 					Unit unit = (Unit) discardPile.get(index);
-					System.out.println("wtf : " + unit.getName() + "\n" + unit);
 					putRevived(unit, false);
-					System.out.println("aha :::::::::::::: " + (unit.getSpace() == getCurrentHand()));
 					currentDiscardPile.getCards().remove(unit);
-				});
+				}, false, 0);
 			}
 		}
 		if (opponentFaction.equals(Faction.SKELLIGE)) {
@@ -368,11 +365,9 @@ public class Game {
 				ArrayList<Card> discardPile = opponentDiscardPile.getCards(true, false);
 				MatchMenuController.askCards(discardPile, true, index -> {
 					Unit unit = (Unit) discardPile.get(index);
-					System.out.println("wtf : " + unit.getName() + "\n" + unit);
 					putRevived(unit, true);
-					System.out.println("aha :::::::::::::: " + unit.getSpace().getClass().getSimpleName());
 					opponentDiscardPile.getCards().remove(unit);
-				});
+				}, false, 0);
 			}
 		}
 	}

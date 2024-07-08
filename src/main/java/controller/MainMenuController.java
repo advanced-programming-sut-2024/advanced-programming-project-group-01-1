@@ -10,6 +10,8 @@ import view.user.ProfileMenu;
 public class MainMenuController {
 
 	public static Result logout() {
+		User.setLoggedInUser(null);
+		JsonController.saveLoggedInUser();
 		Appview.setMenu(new LoginMenu());
 		return new Result("Logged out successfully", true);
 	}

@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import model.Result;
 import model.card.Card;
 import model.card.special.spell.Buffer;
+import model.game.CardMover;
 import model.game.Game;
 import model.game.space.Space;
 import view.Appview;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 public class MatchMenuController {
 
+	private static final ArrayList<SelectPanel> selectPanels = new ArrayList<>();
 	private static boolean isAsking = false;
 	private static int cardsCount;
 	private static SelectPanel selectPanel;
@@ -29,9 +31,30 @@ public class MatchMenuController {
 		return Game.getCurrentGame().getRow(rowNumber).isDebuffed();
 	}
 
-	public static Result vetoCard(int cardNumber) {
-		// TODO:
-		return null;
+	private static void vetoCard(Card card) {
+		Game.getCurrentGame().getCurrentHand().getCards().remove(card);
+		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 1, false, false).move();
+		Game.getCurrentGame().getCurrentDeck().getCards().add(card);
+	}
+
+	public static void handleVeto() {
+		ArrayList<Card> hand = Game.getCurrentGame().getCurrentHand().getCards();
+		askCards(hand, false, index -> {
+			vetoCard(hand.get(index));
+			askCards(hand, false, index1 -> {
+				vetoCard(hand.get(index1));
+				Game.getCurrentGame().changeTurn();
+				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
+				ArrayList<Card> hand1 = Game.getCurrentGame().getCurrentHand().getCards();
+				askCards(hand1, false, index2 -> {
+					vetoCard(hand1.get(index2));
+					askCards(hand1, false, index3 -> {
+						vetoCard(hand1.get(index3));
+						Game.getCurrentGame().changeTurn();
+					}, true, index2);
+				}, true, 0);
+			}, true, index);
+		}, true, 0);
 	}
 
 	public static Result getUsernames() {
@@ -183,7 +206,7 @@ public class MatchMenuController {
 		return new Result("Turn passed successfully", true);
 	}
 
-	public static void askCards(ArrayList<Card> cards, boolean isRandom, SelectionHandler selectionHandler) {
+	public static void askCards(ArrayList<Card> cards, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr) {
 		if (cards.isEmpty()) return;
 		if (isRandom) {
 			int randomIndex = (int) (Math.random() * cards.size());
@@ -195,19 +218,20 @@ public class MatchMenuController {
 			StringBuilder cardNames = new StringBuilder();
 			for (Card card : cards)
 				cardNames.append(card.getName()).append("\n").append("KTKM").append("\n");
-			selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(), cardNames.toString().split("\n"), 0, index -> {
+			selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(), cardNames.toString().split("\n"), ptr, index -> {
 				selectionHandler.handle(index);
 				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-			}, false);
+			}, isOptional);
 		}
 	}
 
 	public static Result selectCard(int index) {
 		if (!isAsking) return new Result("not asking", false);
-		if (index < 0 || index >= cardsCount) return new Result("out of bound", false);
-		selectPanel.selectCard(index);
-		isAsking = false;
-		return new Result("selected successfully", true);
+		if (index < cardsCount && selectPanel.selectCard(index)) {
+			isAsking = false;
+			selectPanel = null;
+			return new Result("selected successfully", true);
+		} else return new Result("out of bound", false);
 	}
 
 	public static void showSpace(Space tmp) {

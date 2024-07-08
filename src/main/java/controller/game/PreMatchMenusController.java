@@ -2,6 +2,7 @@ package controller.game;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.application.Platform;
 import javafx.util.Pair;
 import main.CardCreator;
 import model.Result;
@@ -244,6 +245,7 @@ public class PreMatchMenusController {
 	public static Result startGame() {
 		Appview.setMenu(new MatchMenu());
 		Game.createGame(User.getLoggedInUser(), opponent);
+		Platform.runLater(MatchMenuController::handleVeto);
 		return new Result("Game Started Successfully", true);
 	}
 

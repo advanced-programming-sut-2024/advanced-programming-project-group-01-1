@@ -1,5 +1,6 @@
 package controller.sign;
 
+import controller.JsonController;
 import controller.enums.Validation;
 import main.Main;
 import model.Result;
@@ -19,6 +20,7 @@ public class LoginMenusController {
 		if (user == null) return new Result("Username doesn't exist", false);
 		if (!user.getPassword().equals(password)) return new Result("Password is incorrect", false);
 		User.setLoggedInUser(user);
+		if (stayLoggedIn) JsonController.saveLoggedInUser();
 		Appview.setMenu(new MainMenu());
 		return new Result("Login successful", true);
 	}

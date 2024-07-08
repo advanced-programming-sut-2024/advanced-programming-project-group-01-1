@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class JsonController {
 	private static final String USERS_FILE = "/data/users.json";
+	private static final String LOGGED_IN_USER = "/data/loggedInUser.json";
 
 	public static void save() {
 		saveUsers();
@@ -24,8 +25,30 @@ public class JsonController {
 		}
 	}
 
+	public static void saveLoggedInUser() {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(
+					Paths.get(JsonController.class.getResource(LOGGED_IN_USER).toURI()).toString()));
+			oos.writeObject(User.getLoggedInUser());
+			oos.close();
+		} catch (Exception ignored) {
+		}
+	}
+
 	public static void load() {
 		loadUsers();
+	}
+
+	public static User loadLoggedInUser() {
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
+					Paths.get(JsonController.class.getResource(LOGGED_IN_USER).toURI()).toString()));
+			User user = (User) ois.readObject();
+			ois.close();
+			return user;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public static void loadUsers() {

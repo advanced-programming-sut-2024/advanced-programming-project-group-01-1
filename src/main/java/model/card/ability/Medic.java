@@ -19,7 +19,7 @@ public enum Medic implements Ability {
 			Game.getCurrentGame().getCurrentDiscardPile().getCards().remove(unit);
 			Game.getCurrentGame().putRevived(unit, false);
 			Game.getCurrentGame().changeTurn();
-		});
+		}, false, 0);
 		Game.getCurrentGame().changeTurn();
 	}
 }

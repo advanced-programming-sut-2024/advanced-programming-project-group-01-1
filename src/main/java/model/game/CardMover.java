@@ -39,7 +39,7 @@ public class CardMover implements Serializable {
 				MatchMenuController.askCards(availableCards, isRandom, index -> {
 					availableCards.get(index).updateSpace(destinationSpace);
 					availableCards.remove(index);
-				});
+				}, false, 0);
 			}
 		} else show(originSpace);
 		System.out.println(destinationSpace.getCards().size() + "\n--------------");
