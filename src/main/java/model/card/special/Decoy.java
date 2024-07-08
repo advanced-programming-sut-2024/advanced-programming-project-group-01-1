@@ -1,6 +1,7 @@
 package model.card.special;
 
 import controller.game.MatchMenuController;
+import model.Asker;
 import model.card.Card;
 import model.card.ability.Ability;
 import model.card.unit.Unit;
@@ -21,14 +22,13 @@ public class Decoy extends Special {
 		if (rowNumber < 0 || rowNumber > 2) {
 			throw new Exception("Invalid row number");
 		}
-		Row row = Game.getCurrentGame().getRow(rowNumber);
+		final Row row = Game.getCurrentGame().getRow(rowNumber);
 		if (row.getCards().size() == 0) {
 			throw new Exception("Row is empty");
 		}
-		ArrayList<Card> rowCards = row.getCards(true, true);
 		Decoy decoy = this;
-		MatchMenuController.askCards(rowCards, false, index -> {
-			Unit unit = (Unit) rowCards.get(index);
+		new Asker(row, true, true, false, index -> {
+			Unit unit = (Unit) row.getCards(true, true).get(index);
 			unit.pull();
 			unit.updateSpace(Game.getCurrentGame().getCurrentHand());
 			decoy.updateSpace(row);

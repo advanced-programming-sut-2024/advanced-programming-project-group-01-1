@@ -3,6 +3,7 @@ package model;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import model.card.Card;
+import model.game.space.Space;
 import view.Appview;
 import view.game.MatchMenu;
 import view.game.SelectPanel;
@@ -14,16 +15,21 @@ public class Asker implements Runnable {
 
 	private static final ArrayList<Asker> askers = new ArrayList<>();
 	private static Asker running;
-	private final ArrayList<Card> cards;
+	private final Space space;
+	private final boolean onlyUnit;
+	private final boolean ignoreHero;
+	private ArrayList<Card> cards;
 	private final boolean isRandom;
 	private final SelectionHandler selectionHandler;
 	private final boolean isOptional;
 	private final int ptr;
 	private SelectPanel selectPanel;
-	private boolean isFast;
+	private final boolean isFast;
 
-	public Asker(ArrayList<Card> cards, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr) {
-		this.cards = cards;
+	public Asker(Space space, boolean onlyUnit, boolean ignoreHero, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr) {
+		this.space = space;
+		this.onlyUnit = onlyUnit;
+		this.ignoreHero = ignoreHero;
 		this.isRandom = isRandom;
 		this.selectionHandler = selectionHandler;
 		this.isOptional = isOptional;
@@ -33,8 +39,10 @@ public class Asker implements Runnable {
 		this.run();
 	}
 
-	public Asker(ArrayList<Card> cards, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr, boolean isFast) {
-		this.cards = cards;
+	public Asker(Space space, boolean onlyUnit, boolean ignoreHero, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr, boolean isFast) {
+		this.space = space;
+		this.onlyUnit = onlyUnit;
+		this.ignoreHero = ignoreHero;
 		this.isRandom = isRandom;
 		this.selectionHandler = selectionHandler;
 		this.isOptional = isOptional;
@@ -72,6 +80,7 @@ public class Asker implements Runnable {
 	public void run() {
 		if (running != null || askers.indexOf(this) != 0) {
 			if (isRandom && isFast){
+				cards = space.getCards(onlyUnit, ignoreHero);
 				int randomIndex = (int) (Math.random() * cards.size());
 				selectionHandler.handle(randomIndex);
 				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
@@ -81,6 +90,7 @@ public class Asker implements Runnable {
 		}
 		askers.remove(this);
 		running = this;
+		cards = space.getCards(onlyUnit, ignoreHero);
 		if (cards.isEmpty()) {
 			running = null;
 			if (!askers.isEmpty()) askers.get(0).run();

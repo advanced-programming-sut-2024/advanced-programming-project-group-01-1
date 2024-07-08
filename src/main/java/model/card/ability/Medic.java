@@ -1,9 +1,11 @@
 package model.card.ability;
 
 import controller.game.MatchMenuController;
+import model.Asker;
 import model.card.Card;
 import model.card.unit.Unit;
 import model.game.Game;
+import model.game.space.Space;
 
 import java.util.ArrayList;
 
@@ -12,10 +14,10 @@ public enum Medic implements Ability {
 
 	@Override
 	public void act(Card card) {
-		ArrayList<Card> discardPile = Game.getCurrentGame().getCurrentDiscardPile().getCards(true, true);
-		if (discardPile.isEmpty()) return;
-		MatchMenuController.askCards(discardPile, Game.getCurrentGame().isMedicRandom(), index -> {
-			Unit unit = (Unit) discardPile.get(index);
+		final Space discardPile = Game.getCurrentGame().getCurrentDiscardPile();
+		if (discardPile.getCards().isEmpty()) return; // true , true
+		new Asker(discardPile, true, true, Game.getCurrentGame().isMedicRandom(), index -> {
+			Unit unit = (Unit) discardPile.getCards(true, true).get(index);
 			Game.getCurrentGame().putRevived(unit, false);
 			Game.getCurrentGame().changeTurn();
 		}, false, 0);

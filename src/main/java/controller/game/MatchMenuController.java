@@ -21,7 +21,7 @@ public class MatchMenuController {
 	}
 
 	private static void vetoCard(Card card) {
-		new Asker(Game.getCurrentGame().getCurrentDeck().getCards(), true, index -> {
+		new Asker(Game.getCurrentGame().getCurrentDeck(), false, false, true, index -> {
 			Card card1 = Game.getCurrentGame().getCurrentDeck().getCards().get(index);
 			card1.updateSpace(Game.getCurrentGame().getCurrentHand());
 		}, false, 0, true);
@@ -29,22 +29,22 @@ public class MatchMenuController {
 	}
 
 	public static void handleVeto() {
-		ArrayList<Card> hand = Game.getCurrentGame().getCurrentHand().getCards();
-		askCards(hand, false, index -> {
+		final Space hand = Game.getCurrentGame().getCurrentHand();
+		new Asker(hand, false, false, false, index -> {
 			if (index != -1) {
-				vetoCard(hand.get(index));
-				new Asker(hand, false, index1 -> {
-					if (index1 != -1) vetoCard(hand.get(index1));
+				vetoCard(hand.getCards().get(index));
+				new Asker(hand, false, false, false, index1 -> {
+					if (index1 != -1) vetoCard(hand.getCards().get(index1));
 					Game.getCurrentGame().changeTurn();
 				}, true, index, true);
 			} else Game.getCurrentGame().changeTurn();
 		}, true, 0);
-		ArrayList<Card> hand1 = Game.getCurrentGame().getSpaceById(Game.OPPONENT_HAND).getCards();
-		askCards(hand1, false, index -> {
+		final Space hand1 = Game.getCurrentGame().getSpaceById(Game.OPPONENT_HAND);
+		new Asker(hand1, false, false, false, index -> {
 			if (index != -1) {
-				vetoCard(hand1.get(index));
-				new Asker(hand1, false, index1 -> {
-					if (index1 != -1) vetoCard(hand1.get(index1));
+				vetoCard(hand1.getCards().get(index));
+				new Asker(hand1, false, false, false, index1 -> {
+					if (index1 != -1) vetoCard(hand1.getCards().get(index1));
 					Game.getCurrentGame().changeTurn();
 				}, true, index, true);
 			} else Game.getCurrentGame().changeTurn();
@@ -210,10 +210,6 @@ public class MatchMenuController {
 	public static Result passTurn() {
 		Game.getCurrentGame().passTurn();
 		return new Result("Turn passed successfully", true);
-	}
-
-	public static void askCards(ArrayList<Card> cards, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr) {
-		new Asker(cards, isRandom, selectionHandler, isOptional, ptr);
 	}
 
 	public static Result selectCard(int index) {

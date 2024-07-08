@@ -1,6 +1,7 @@
 package model.game;
 
 import controller.game.MatchMenuController;
+import model.Asker;
 import model.GameInfo;
 import model.card.Card;
 import model.card.unit.Ranged;
@@ -379,18 +380,18 @@ public class Game {
 	private void skelligeAbility() {
 		if (currentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
-				ArrayList<Card> discardPile = currentDiscardPile.getCards(true, false);
-				MatchMenuController.askCards(discardPile, true, index -> {
-					Unit unit = (Unit) discardPile.get(index);
+				final Space discardPile = currentDiscardPile;
+				new Asker(discardPile, true, false,true, index -> {
+					Unit unit = (Unit) discardPile.getCards(true, false).get(index);
 					putRevived(unit, false);
 				}, false, 0);
 			}
 		}
 		if (opponentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
-				ArrayList<Card> discardPile = opponentDiscardPile.getCards(true, false);
-				MatchMenuController.askCards(discardPile, true, index -> {
-					Unit unit = (Unit) discardPile.get(index);
+				final Space discardPile = opponentDiscardPile;
+				new Asker(discardPile, true, false, true, index -> {
+					Unit unit = (Unit) discardPile.getCards(true, false).get(index);
 					putRevived(unit, true);
 				}, false, 0);
 			}
