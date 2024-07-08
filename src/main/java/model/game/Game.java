@@ -383,7 +383,6 @@ public class Game {
 				MatchMenuController.askCards(discardPile, true, index -> {
 					Unit unit = (Unit) discardPile.get(index);
 					putRevived(unit, false);
-					currentDiscardPile.getCards().remove(unit);
 				}, false, 0);
 			}
 		}
@@ -393,7 +392,6 @@ public class Game {
 				MatchMenuController.askCards(discardPile, true, index -> {
 					Unit unit = (Unit) discardPile.get(index);
 					putRevived(unit, true);
-					opponentDiscardPile.getCards().remove(unit);
 				}, false, 0);
 			}
 		}

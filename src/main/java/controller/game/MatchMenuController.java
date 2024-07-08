@@ -21,13 +21,11 @@ public class MatchMenuController {
 	}
 
 	private static void vetoCard(Card card) {
-		Game.getCurrentGame().getCurrentHand().getCards().remove(card);
 		new Asker(Game.getCurrentGame().getCurrentDeck().getCards(), true, index -> {
 			Card card1 = Game.getCurrentGame().getCurrentDeck().getCards().get(index);
-			Game.getCurrentGame().getCurrentDeck().getCards().remove(card1);
-			Game.getCurrentGame().getCurrentHand().getCards().add(card1);
+			card1.updateSpace(Game.getCurrentGame().getCurrentHand());
 		}, false, 0, true);
-		Game.getCurrentGame().getCurrentDeck().getCards().add(card);
+		card.updateSpace(Game.getCurrentGame().getCurrentDeck());
 	}
 
 	public static void handleVeto() {

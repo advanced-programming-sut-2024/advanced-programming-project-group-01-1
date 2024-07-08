@@ -16,7 +16,6 @@ public enum Medic implements Ability {
 		if (discardPile.isEmpty()) return;
 		MatchMenuController.askCards(discardPile, Game.getCurrentGame().isMedicRandom(), index -> {
 			Unit unit = (Unit) discardPile.get(index);
-			Game.getCurrentGame().getCurrentDiscardPile().getCards().remove(unit);
 			Game.getCurrentGame().putRevived(unit, false);
 			Game.getCurrentGame().changeTurn();
 		}, false, 0);
