@@ -15,6 +15,7 @@ public class Buffer extends Spell {
 
 	@Override
 	public void updateSpace(Space space) {
+		if (this.space instanceof Row) ((Row) this.space).setBuffer(null);
 		if (!(space instanceof Row)) super.updateSpace(space);
 		else {
 			this.space.getCards().remove(this);

@@ -3,6 +3,7 @@ package model.card.ability;
 import model.card.Card;
 import model.card.unit.*;
 import model.game.Game;
+import model.game.space.Row;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,9 @@ public enum Muster implements Ability {
 		for (Card aliveCard : aliveCards) {
 			if (!(aliveCard instanceof Unit)) continue;
 			Unit unit = (Unit) aliveCard;
+			if (unit.getSpace() instanceof Row) continue;
 			if (unit.getMusterName().startsWith(musterName)) {
+				System.out.println(unit.toSuperString() + " " + unit.getName());
 				try {
 					if (unit instanceof Melee) unit.put(2);
 					else if (unit instanceof Ranged) unit.put(1);
