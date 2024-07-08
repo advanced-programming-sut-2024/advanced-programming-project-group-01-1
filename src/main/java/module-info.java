@@ -35,6 +35,7 @@ module w {
 	exports model.game;
 	exports model.game.space;
 	exports model.leader;
+	exports view.game;
 
 	exports main;
 	//opens other packages to gson and jackson

@@ -43,12 +43,8 @@ public class SelectPanel {
         updatePanel();
     }
 
-    public SelectionHandler getSelectionHandler() {
-        return selectionHandler;
-    }
-
-    public void setSelectionHandler(SelectionHandler selectionHandler) {
-        this.selectionHandler = selectionHandler;
+    public Rectangle getBackButton() {
+        return backButton;
     }
 
     private void updatePanel() {
@@ -91,7 +87,7 @@ public class SelectPanel {
     public boolean selectCard(int index) {
         if(index < (backButton == null ? 0 : -1)) return false;
         root.getChildren().remove(selectPanelPane);
-        if (index != -1 && selectionHandler != null) selectionHandler.handle(index);
+        if (selectionHandler != null) selectionHandler.handle(index);
         return true;
     }
 

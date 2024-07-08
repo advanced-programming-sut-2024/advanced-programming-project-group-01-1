@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Asker;
 import model.Result;
 import view.Appview;
 import view.Menuable;
@@ -451,7 +452,7 @@ public class MatchMenu extends Application implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if (MatchMenuController.isAsking()) {
+		if (Asker.isAsking()) {
 			if ((matcher = GameMenusCommands.SELECT_CARD.getMatcher(input)) != null) {
 				result = selectCard(matcher);
 			} else {

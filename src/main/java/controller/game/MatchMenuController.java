@@ -1,7 +1,7 @@
 package controller.game;
 
 import javafx.application.Platform;
-import javafx.scene.layout.Pane;
+import model.Asker;
 import model.Result;
 import model.card.Card;
 import model.card.special.spell.Buffer;
@@ -10,22 +10,12 @@ import model.game.Game;
 import model.game.space.Space;
 import view.Appview;
 import view.game.MatchMenu;
-import view.game.SelectPanel;
 import view.game.SelectionHandler;
 import view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
 
 public class MatchMenuController {
-
-	private static final ArrayList<SelectPanel> selectPanels = new ArrayList<>();
-	private static boolean isAsking = false;
-	private static int cardsCount;
-	private static SelectPanel selectPanel;
-
-	public static boolean isAsking() {
-		return isAsking;
-	}
 
 	public static boolean isRowDebuffed(int rowNumber) {
 		return Game.getCurrentGame().getRow(rowNumber).isDebuffed();
@@ -40,20 +30,23 @@ public class MatchMenuController {
 	public static void handleVeto() {
 		ArrayList<Card> hand = Game.getCurrentGame().getCurrentHand().getCards();
 		askCards(hand, false, index -> {
-			vetoCard(hand.get(index));
-			askCards(hand, false, index1 -> {
-				vetoCard(hand.get(index1));
-				Game.getCurrentGame().changeTurn();
-				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-				ArrayList<Card> hand1 = Game.getCurrentGame().getCurrentHand().getCards();
-				askCards(hand1, false, index2 -> {
-					vetoCard(hand1.get(index2));
-					askCards(hand1, false, index3 -> {
-						vetoCard(hand1.get(index3));
-						Game.getCurrentGame().changeTurn();
-					}, true, index2);
-				}, true, 0);
-			}, true, index);
+			if (index != -1) {
+				vetoCard(hand.get(index));
+				new Asker(hand, false, index1 -> {
+					if (index1 != -1) vetoCard(hand.get(index1));
+					Game.getCurrentGame().changeTurn();
+				}, true, index, 0);
+			} else Game.getCurrentGame().changeTurn();
+		}, true, 0);
+		ArrayList<Card> hand1 = Game.getCurrentGame().getSpaceById(Game.OPPONENT_HAND).getCards();
+		askCards(hand1, false, index -> {
+			if (index != -1) {
+				vetoCard(hand1.get(index));
+				new Asker(hand1, false, index1 -> {
+					if (index1 != -1) vetoCard(hand1.get(index1));
+					Game.getCurrentGame().changeTurn();
+				}, true, index, 0);
+			} else Game.getCurrentGame().changeTurn();
 		}, true, 0);
 	}
 
@@ -207,31 +200,12 @@ public class MatchMenuController {
 	}
 
 	public static void askCards(ArrayList<Card> cards, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr) {
-		if (cards.isEmpty()) return;
-		if (isRandom) {
-			int randomIndex = (int) (Math.random() * cards.size());
-			selectionHandler.handle(randomIndex);
-			Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-		} else {
-			isAsking = true;
-			cardsCount = cards.size();
-			StringBuilder cardNames = new StringBuilder();
-			for (Card card : cards)
-				cardNames.append(card.getName()).append("\n").append("KTKM").append("\n");
-			selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(), cardNames.toString().split("\n"), ptr, index -> {
-				selectionHandler.handle(index);
-				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-			}, isOptional);
-		}
+		new Asker(cards, isRandom, selectionHandler, isOptional, ptr);
 	}
 
 	public static Result selectCard(int index) {
-		if (!isAsking) return new Result("not asking", false);
-		if (index < cardsCount && selectPanel.selectCard(index)) {
-			isAsking = false;
-			selectPanel = null;
-			return new Result("selected successfully", true);
-		} else return new Result("out of bound", false);
+		if (Asker.select(index)) return new Result("success", true);
+		return new Result("failure", false);
 	}
 
 	public static void showSpace(Space tmp) {
