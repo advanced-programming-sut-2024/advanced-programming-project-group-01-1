@@ -20,6 +20,7 @@ public class Deck implements Serializable {
 	private final ArrayList<Card> cards, availableCards;
 	private int specialCount = 0;
 	private int unitCount = 0;
+	private boolean preferFirst = true;
 
 	public Deck(Faction faction) {
 		this.faction = faction;
@@ -70,6 +71,14 @@ public class Deck implements Serializable {
 
 	public Leader getLeader() {
 		return leader;
+	}
+
+	public void setPreferFirst(boolean preferFirst) {
+		this.preferFirst = preferFirst;
+	}
+
+	public boolean doesPreferFirst() {
+		return preferFirst;
 	}
 
 	public boolean setLeader(Leader leader) {

@@ -228,6 +228,12 @@ public class PreMatchMenusController {
 		return new Result(count > 1 ? "Cards" : "Card" + " Removed Successfully", true);
 	}
 
+	public static Result setPreferFirst(boolean preferFirst) {
+		User.getLoggedInUser().getDeck().setPreferFirst(preferFirst);
+		System.out.println(User.getLoggedInUser().getDeck().doesPreferFirst());
+		return new Result("Preferred First Set Successfully", true);
+	}
+
 	public static Result changeTurn() {
 		if (!User.getLoggedInUser().getDeck().isValid()) return new Result("Your Deck Is Invalid", false);
 		User temp = User.getLoggedInUser();

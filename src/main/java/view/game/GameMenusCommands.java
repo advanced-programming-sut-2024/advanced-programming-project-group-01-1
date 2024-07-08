@@ -37,6 +37,8 @@ public enum GameMenusCommands {
     SHOW_TURN_INFO("show turn info"),
     SHOW_TOTAL_SCORE("show total score"),
     SHOW_TOTAL_SCORE_OF_ROW("show total score of row (?<rowNumber>\\d+)"),
+    PREFER_FIRST("prefer first"),
+    PREFER_SECOND("prefer second"),
     CHEAT_MENU("cheat"),
     CHEAT_DEBUFF_ROW("debuff row (?<rowNumber>(0|1|2|3|4|5))"),
     CHEAT_CLEAR_ROW("clear row (?<rowNumber>(0|1|2|3|4|5))"),

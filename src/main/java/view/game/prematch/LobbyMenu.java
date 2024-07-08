@@ -2,6 +2,7 @@ package view.game.prematch;
 
 import controller.game.PreMatchMenusController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Result;
+import model.game.Game;
+import model.user.User;
 import view.AlertMaker;
 import view.Appview;
 import view.Constants;
@@ -57,6 +60,8 @@ public class LobbyMenu extends Application implements Menuable {
 	public Label unitField;
 	public Label specialField;
 	public Label heroField;
+	public Button firstButton;
+	public Button secondButton;
 
 	@Override
 	public void start(Stage stage) {
@@ -89,6 +94,7 @@ public class LobbyMenu extends Application implements Menuable {
 		updateLeader();
 		updateFaction();
 		updateStats();
+		updateButtons();
 	}
 
 	private void updateStats() {
@@ -184,6 +190,12 @@ public class LobbyMenu extends Application implements Menuable {
 		ImagePattern imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/icons/" + "deck_shield_" + factionName + ".png")));
 		factionIconField.setFill(imagePattern);
 		factionNameField.setText(factionName);
+	}
+
+	public void updateButtons() {
+		boolean preferFirst = User.getLoggedInUser().getDeck().doesPreferFirst();
+		firstButton.setDisable(preferFirst);
+		secondButton.setDisable(!preferFirst);
 	}
 
 	public void removeFromDeck(MouseEvent mouseEvent) {
@@ -441,6 +453,16 @@ public class LobbyMenu extends Application implements Menuable {
 		updateScreen();
 	}
 
+	public void setFirst(MouseEvent mouseEvent) {
+		PreMatchMenusController.setPreferFirst(true);
+		updateButtons();
+	}
+
+	public void setSecond(MouseEvent mouseEvent) {
+		PreMatchMenusController.setPreferFirst(false);
+		updateButtons();
+	}
+
 
 	/*
 	 * Terminal version of the LobbyMenu
@@ -480,12 +502,17 @@ public class LobbyMenu extends Application implements Menuable {
 			result = PreMatchMenusController.changeTurn();
 		} else if ((matcher = GameMenusCommands.START_GAME.getMatcher(input)) != null) {
 			result = PreMatchMenusController.startGame();
+		} else if (GameMenusCommands.PREFER_FIRST.getMatcher(input) != null) {
+			result = preferFirst();
+		} else if (GameMenusCommands.PREFER_SECOND.getMatcher(input) != null) {
+			result = preferSecond();
 		} else {
 			result = new Result("Invalid command", false);
 		}
 		if (result != null) {
 			System.out.println(result);
 		}
+		Platform.runLater(() -> {updateScreen();});
 	}
 
 	private Result loadDeckWithName(Matcher matcher) {
@@ -533,6 +560,14 @@ public class LobbyMenu extends Application implements Menuable {
 		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
 		int count = Integer.parseInt(matcher.group("count"));
 		return PreMatchMenusController.deleteFromDeck(cardNumber, count);
+	}
+
+	private Result preferFirst() {
+		return PreMatchMenusController.setPreferFirst(true);
+	}
+
+	private Result preferSecond() {
+		return PreMatchMenusController.setPreferFirst(false);
 	}
 
 }

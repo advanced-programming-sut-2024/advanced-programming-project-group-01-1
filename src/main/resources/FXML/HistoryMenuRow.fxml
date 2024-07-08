@@ -6,12 +6,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" prefHeight="50" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.user.HistoryMenuRowController">
+<HBox alignment="CENTER_LEFT" prefHeight="50" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.user.HistoryMenuRowController">
 	<children>
-		<Label fx:id="opponent" alignment="CENTER" prefHeight="20.0" prefWidth="148.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" text="Opponent" />
+		<Label fx:id="opponent" alignment="CENTER" prefHeight="20.0" prefWidth="143.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" text="Opponent" />
 		<Label fx:id="result" alignment="CENTER" prefHeight="20.0" prefWidth="97.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" text="Result" />
 		<Label fx:id="roundScore" alignment="CENTER" prefHeight="20.0" prefWidth="66.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" text="Round Score" />
 		<VBox fx:id="roundScores" alignment="CENTER" prefHeight="50" prefWidth="56.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" />
-		<Label fx:id="date" alignment="CENTER" prefHeight="20.0" prefWidth="180.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" text="Date" />
+		<Label fx:id="date" alignment="CENTER" prefHeight="20.0" prefWidth="185.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" text="Date" />
 	</children>
 </HBox>

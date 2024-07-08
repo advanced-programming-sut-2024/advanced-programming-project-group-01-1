@@ -60,6 +60,13 @@ public class Game {
 
 	public static Game createGame(User player1, User player2) {
 		currentGame = new Game(player1, player2);
+		User decider;
+		if (currentGame.getCurrent().getDeck().getFaction().equals(Faction.SCOIATAEL) && !currentGame.getOpponent().getDeck().getFaction().equals(Faction.SCOIATAEL))
+			decider = currentGame.getCurrent();
+		else if (!currentGame.getCurrent().getDeck().getFaction().equals(Faction.SCOIATAEL) && currentGame.getOpponent().getDeck().getFaction().equals(Faction.SCOIATAEL))
+			decider = currentGame.getOpponent();
+		else decider = Math.random() >= 0.5 ? currentGame.getOpponent() : currentGame.getCurrent();
+		if (decider.equals(currentGame.getCurrent()) ^ decider.getDeck().doesPreferFirst()) currentGame.changeTurn();
 		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false, false).move();
 		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false, false).move();
 		if (currentGame.getCurrentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getCurrentLeader().act();

@@ -52,6 +52,10 @@ public class LoginMenusController {
 	}
 
 	public static Result exit() {
+		if (Appview.getMenu() instanceof ForgotPasswordMenu) {
+			Appview.setMenu(new LoginMenu());
+			return new Result("Exiting Forgot Password Menu", true);
+		}
 		System.exit(0);
 		return new Result("Exiting", true);
 	}
