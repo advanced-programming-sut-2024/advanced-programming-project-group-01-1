@@ -1,6 +1,8 @@
 package view.game;
 
 import controller.game.MatchMenuController;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -13,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
@@ -25,6 +26,7 @@ import model.game.Game;
 import view.Appview;
 import view.Constants;
 import view.Menuable;
+import view.animation.CardMoving;
 import view.model.SmallCard;
 import view.model.SmallUnit;
 
@@ -96,6 +98,7 @@ public class MatchMenu extends Application implements Menuable {
 	public Pane selectedCard;
 	public ArrayList<Pane> selectedPanes = new ArrayList<>();
 	private boolean isCheating = false;
+	public Pane unclickablePane = new Pane();
 
 	@Override
 	public void start(Stage stage) {
@@ -150,7 +153,7 @@ public class MatchMenu extends Application implements Menuable {
 		}
 	}
 
-	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> eventHandler) {
+	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> clickHandler) {
 		space.getChildren().clear();
 		for (int i = 0; i < cardsInfo.length; i++) {
 			SmallCard smallCard;
@@ -185,7 +188,7 @@ public class MatchMenu extends Application implements Menuable {
 				smallCard.setLayoutX(tmp);
 			}
 			smallCard.setLayoutY(0);
-			smallCard.setOnMouseClicked(eventHandler);
+			smallCard.setOnMouseClicked(clickHandler);
 			space.getChildren().add(smallCard);
 		}
 	}
@@ -204,6 +207,15 @@ public class MatchMenu extends Application implements Menuable {
 				SmallUnit unit = (SmallUnit) node;
 				unit.setCurrentPower(String.valueOf(unit.getPower()));
 			}
+			SmallCard card = (SmallCard) node;
+			card.setOnMouseEntered((e) -> {
+				SmallCard card1 = (SmallCard) e.getSource();
+				card1.setLayoutY(-10);
+			});
+			card.setOnMouseExited((e) -> {
+				SmallCard card1 = (SmallCard) e.getSource();
+				card1.setLayoutY(0);
+			});
 		}
 	}
 
@@ -442,6 +454,8 @@ public class MatchMenu extends Application implements Menuable {
 		clearSelectedCard();
 		SmallCard card = (SmallCard) event.getSource();
 		selectedCard = card;
+		selectedCard.setOnMouseEntered(null);
+		selectedCard.setOnMouseExited(null);
 		selectedCard.setLayoutY(-10);
 		selectedPanes = new ArrayList<>();
 		ArrayList<Pane> panes = new ArrayList<>();
@@ -466,7 +480,7 @@ public class MatchMenu extends Application implements Menuable {
 			}
 		} else if (card.getType().equals("Decoy")) {
 			for (int i = 0; i < 3; i++) {
-				if (rowPanes[i].getChildren().size() > 1 || rowPanes[i].getChildren().get(0) instanceof SmallUnit) {
+				if (rowPanes[i].getChildren().size() > 1 || (rowPanes[i].getChildren().isEmpty() && rowPanes[i].getChildren().get(0) instanceof SmallUnit)) {
 					panes.add(rowPanes[i]);
 				}
 			}
@@ -485,6 +499,14 @@ public class MatchMenu extends Application implements Menuable {
 	public void clearSelectedCard() {
 		if (selectedCard != null) {
 			selectedCard.setLayoutY(0);
+			selectedCard.setOnMouseEntered((e) -> {
+				SmallCard card = (SmallCard) e.getSource();
+				card.setLayoutY(-10);
+			});
+			selectedCard.setOnMouseExited((e) -> {
+				SmallCard card = (SmallCard) e.getSource();
+				card.setLayoutY(0);
+			});
 			selectedCard = null;
 			for (Pane pane : selectedPanes) {
 				pane.setOnMouseClicked(this::showSpace);
@@ -495,21 +517,35 @@ public class MatchMenu extends Application implements Menuable {
 	}
 
 	public void placeCard(MouseEvent event) {
+
 		SmallCard card = (SmallCard) selectedCard;
 		int idx = handPane.getChildren().indexOf(card);
 		Pane pane = (Pane) event.getSource();
-		int row = -1;
+		int tmp = -1;
 		for (int i = 0; i < 3; i++) {
 			if (rowPanes[i] == pane || rowBufferPanes[i] == pane) {
-				row = i;
+				tmp = i;
 				break;
 			}
 		}
 		clearSelectedCard();
-		System.out.println(idx + " " + row);
-		Result result = MatchMenuController.placeCard(idx, row);
-		System.out.println(result);
-		updateScreen();
+		int row = tmp;
+		unclickablePane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+		root.getChildren().add(unclickablePane);
+		unclickablePane.getChildren().add(card);
+		card.setLayoutX(handPane.getLayoutX() + card.getLayoutX());
+		card.setLayoutY(handPane.getLayoutY() + card.getLayoutY());
+		card.setOnMouseEntered(null);
+		card.setOnMouseExited(null);
+		Transition transition = new CardMoving(card, pane.getLayoutX() + (pane.getPrefWidth() - card.getPrefWidth()) / 2, pane.getLayoutY());
+		transition.setOnFinished(e -> {
+			root.getChildren().remove(unclickablePane);
+			System.out.println(idx + " " + row);
+			Result result = MatchMenuController.placeCard(idx, row);
+			System.out.println(result);
+			updateScreen();
+		});
+		transition.play();
 	}
 
 	public void showSpace(MouseEvent mouseEvent) {
