@@ -259,7 +259,7 @@ public class MatchMenuController {
 	}
 
 	public static Result cheatDebuffRow(int rowNumber) {
-		Card card = CardCreator.getCard(rowNumber == 0 ? "Bitting Frost" : rowNumber == 1 ? "Impenetrable Fog" : "Torrential Rain");
+		Card card = CardCreator.getCard(rowNumber == 2 ? "Biting Frost" : rowNumber == 1 ? "Impenetrable Fog" : "Torrential Rain");
 		card.setSpace(Game.getCurrentGame().getCurrentDeck());
 		try {
 			card.put(-1);
@@ -277,7 +277,8 @@ public class MatchMenuController {
 	public static Result cheatAddCard(String cardName) {
 		Card card = CardCreator.getCard(cardName);
 		if (card == null) return new Result("Card not found", false);
-		card.setSpace(Game.getCurrentGame().getCurrentHand());
+		card.setSpace(Game.getCurrentGame().getCurrentDeck());
+		card.updateSpace(Game.getCurrentGame().getCurrentHand());
 		return new Result("Card added to hand", true);
 	}
 

@@ -20,6 +20,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Asker;
 import model.Result;
+import model.game.Game;
 import view.Appview;
 import view.Constants;
 import view.Menuable;
@@ -298,16 +299,10 @@ public class MatchMenu extends Application implements Menuable {
 			rowPowerLabels[i].setText(String.valueOf(power));
 			rowPowerLabels[i].setStyle("-fx-font-size: 20");
 		}
-		int power = 0;
-		for (int i = 0; i < 3; i++) {
-			power += Integer.parseInt(rowPowerLabels[i].getText());
-		}
+		int power = Game.getCurrentGame().getCurrentPower();
 		myPower.setText(String.valueOf(power));
 		myPower.setStyle("-fx-font-size: 20");
-		power = 0;
-		for (int i = 3; i < 6; i++) {
-			power += Integer.parseInt(rowPowerLabels[i].getText());
-		}
+		power = Game.getCurrentGame().getOpponentPower();
 		opponentPower.setText(String.valueOf(power));
 		opponentPower.setStyle("-fx-font-size: 20");
 		String life = MatchMenuController.showPlayersLives().getMessage();
