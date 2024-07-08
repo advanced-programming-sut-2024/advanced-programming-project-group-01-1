@@ -14,4 +14,10 @@ public class Siege extends Unit {
 		super.put(rowNumber);
 	}
 
+	@Override
+	public String getDescription() {
+		if (ability != null) return super.getDescription();
+		return "Can be placed in the siege row.";
+	}
+
 }

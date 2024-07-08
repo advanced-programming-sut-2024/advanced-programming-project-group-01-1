@@ -28,4 +28,10 @@ public enum Horn implements Ability {
 			if (unit != card) unit.setHornCount(unit.getHornCount() - 1);
 		}
 	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Doubles the strength of all units on the row.";
+	}
+
 }

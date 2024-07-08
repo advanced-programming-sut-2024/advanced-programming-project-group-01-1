@@ -27,4 +27,9 @@ public enum Transformer implements Ability {
 		}
 	}
 
+	@Override
+	public String getDescription(Card card) {
+		return "Transforms into a different card when destroyed.";
+	}
+
 }

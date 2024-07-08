@@ -42,4 +42,9 @@ public class Decoy extends Special {
 		return new Decoy();
 	}
 
+	@Override
+	public String getDescription() {
+		return "Return a card on the battlefield to your hand.";
+	}
+
 }

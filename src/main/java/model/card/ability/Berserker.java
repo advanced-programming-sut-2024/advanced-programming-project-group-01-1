@@ -28,7 +28,8 @@ public enum Berserker implements Ability {
 	}
 
 	@Override
-	public void undo(Card card) {
-
+	public String getDescription(Card card) {
+		return "Transforms into Vildkaarl when Mardroeme is played on the same row.";
 	}
+
 }

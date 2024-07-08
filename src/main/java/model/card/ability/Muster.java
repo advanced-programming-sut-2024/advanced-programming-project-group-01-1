@@ -30,4 +30,9 @@ public enum Muster implements Ability {
 		}
 	}
 
+	@Override
+	public String getDescription(Card card) {
+		return "Summons all cards with the same name from the deck.";
+	}
+
 }

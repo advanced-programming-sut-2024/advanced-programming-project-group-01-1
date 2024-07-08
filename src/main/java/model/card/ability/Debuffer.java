@@ -27,6 +27,11 @@ public enum Debuffer implements Ability {
 		}
 	}
 
+	@Override
+	public String getDescription(Card card) {
+		return "Debuffs all units on the row.";
+	}
+
 	private void debuffRow(Row row) {
 		row.setDebuffed(true);
 		for (Card cardInRow : row.getCards()) {

@@ -93,7 +93,7 @@ public class Asker implements Runnable {
 		} else {
 			StringBuilder cardNames = new StringBuilder();
 			for (Card card : cards)
-				cardNames.append(card.getName()).append("\n").append("KTKM").append("\n");
+				cardNames.append(card.getName()).append("\n").append(card.getDescription()).append("\n");
 			selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(), cardNames.toString().split("\n"), ptr, index -> {
 				selectionHandler.handle(index);
 				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());

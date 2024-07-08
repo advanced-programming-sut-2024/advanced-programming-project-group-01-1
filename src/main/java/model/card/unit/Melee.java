@@ -15,4 +15,10 @@ public class Melee extends Agile {
 		super.put(rowNumber);
 	}
 
+	@Override
+	public String getDescription() {
+		if (ability != null) return super.getDescription();
+		return "Can be placed in the melee row.";
+	}
+
 }

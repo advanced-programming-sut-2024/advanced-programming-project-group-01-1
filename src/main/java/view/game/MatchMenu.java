@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import main.CardCreator;
 import model.Asker;
 import model.Result;
 import model.game.Game;
@@ -154,7 +155,7 @@ public class MatchMenu extends Application implements Menuable {
 			SmallCard smallCard;
 			String[] cardInfo = cardsInfo[i].split("\n");
 			String cardName = cardInfo[0];
-			String cardDescription = "KTKM";
+			String cardDescription = CardCreator.getCard(cardName).getDescription();
 			String type = cardInfo[1].substring(6);
 			String Ability = cardInfo[2].substring(9);
 			if (type.equals("Melee") || type.equals("Ranged") || type.equals("Siege") || type.equals("Agile")) {

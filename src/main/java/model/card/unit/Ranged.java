@@ -14,4 +14,10 @@ public class Ranged extends Agile {
 		super.put(rowNumber);
 	}
 
+	@Override
+	public String getDescription() {
+		if (ability != null) return super.getDescription();
+		return "Can be placed in the ranged row.";
+	}
+
 }

@@ -30,4 +30,10 @@ public enum MoralBooster implements Ability {
 			unit.setBoostCount(unit.getBoostCount() - 1);
 		}
 	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Increases the strength of all units on the row.";
+	}
+
 }

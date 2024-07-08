@@ -34,8 +34,9 @@ public enum Scorch implements Ability {
 			}
 		else {
 			for (int i = 0; i < 6; i++)
-				for (Card cardInRow : Game.getCurrentGame().getRow(i).getCards()) if (cardInRow instanceof Unit)
-					units.add((Unit) cardInRow);
+				for (Card cardInRow : Game.getCurrentGame().getRow(i).getCards())
+					if (cardInRow instanceof Unit)
+						units.add((Unit) cardInRow);
 		}
 		int maxPower = -1, sumOfPower = 0;
 		for (Unit unit : units) {
@@ -46,16 +47,30 @@ public enum Scorch implements Ability {
 		}
 		if (sumOfPower < 10 && row != -1) return;
 		ArrayList<Unit> mineToBeKilled = new ArrayList<>(), enemyToBeKilled = new ArrayList<>();
-		for (Unit unit : units) if (unit.getPower() == maxPower) {
-			int i = Game.getCurrentGame().getRowNumber((Row) unit.getSpace());
-			if (i < 3) mineToBeKilled.add(unit);
-			else enemyToBeKilled.add(unit);
-		}
+		for (Unit unit : units)
+			if (unit.getPower() == maxPower) {
+				int i = Game.getCurrentGame().getRowNumber((Row) unit.getSpace());
+				if (i < 3) mineToBeKilled.add(unit);
+				else enemyToBeKilled.add(unit);
+			}
 		for (Unit unit : mineToBeKilled) unit.pull();
 		for (Unit unit : enemyToBeKilled) {
 			unit.pull();
 			unit.updateSpace(Game.getCurrentGame().getOpponentDiscardPile());
 		}
+	}
+
+	@Override
+	public String getDescription(Card card) {
+		if (card instanceof InstantSpell || card.getName().equals("Clan Dimun Pirate"))
+			return "Kills the strongest non-hero unit(s) on the table.";
+		else if (card instanceof Melee)
+			return "Kills the strongest non-hero unit(s) on the enemy melee row if the total power is not less than 10.";
+		else if (card instanceof Ranged)
+			return "Kills the strongest non-hero unit(s) on the enemy ranged row if the total power is not less than 10.";
+		else if (card instanceof Siege)
+			return "Kills the strongest non-hero unit(s) on the enemy siege row if the total power is not less than 10.";
+		return "Kills the strongest non-hero unit(s) on the table.";
 	}
 
 }

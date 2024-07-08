@@ -22,4 +22,10 @@ public enum Medic implements Ability {
 		}, false, 0);
 		Game.getCurrentGame().changeTurn();
 	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Revives a unit.";
+	}
+
 }

@@ -30,4 +30,10 @@ public enum Mardroeme implements Ability {
 		if (card instanceof Spell) row.setBuffer(null);
 		row.setMardroeme(false);
 	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Transforms all Berserkers into Vildkaarl.";
+	}
+
 }

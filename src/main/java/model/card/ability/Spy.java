@@ -23,4 +23,9 @@ public enum Spy implements Ability {
 		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 2, false, false).move();
 	}
 
+	@Override
+	public String getDescription(Card card) {
+		return "Draws 2 cards from the your deck, but is put in enemy row.";
+	}
+
 }

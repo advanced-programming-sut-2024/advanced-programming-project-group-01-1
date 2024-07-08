@@ -33,4 +33,10 @@ public enum TightBond implements Ability {
 			}
 		((Unit) card).setMultiplier(1);
 	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Multiplies the strength of all units of the same name on the row.";
+	}
+
 }

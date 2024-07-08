@@ -17,4 +17,9 @@ public enum Cleanse implements Ability {
 		}
 	}
 
+	@Override
+	public String getDescription(Card card) {
+		return "Clears all weather effects.";
+	}
+
 }

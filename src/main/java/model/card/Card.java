@@ -69,6 +69,10 @@ public abstract class Card implements Cloneable, Serializable, Comparable<Card> 
 		return card;
 	}
 
+	public String getDescription() {
+		return ability.getDescription(this);
+	}
+
 	public String toSuperString() {
 		return super.toString();
 	}
