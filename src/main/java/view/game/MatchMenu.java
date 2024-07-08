@@ -155,9 +155,16 @@ public class MatchMenu extends Application implements Menuable {
 			SmallCard smallCard;
 			String[] cardInfo = cardsInfo[i].split("\n");
 			String cardName = cardInfo[0];
-			String cardDescription = CardCreator.getCard(cardName).getDescription();
 			String type = cardInfo[1].substring(6);
 			String Ability = cardInfo[2].substring(9);
+			String cardDescription;
+			if (type.equals("faction")) {
+				cardDescription = "KTKM";
+			} else if (type.equals("leader")) {
+				cardDescription = Ability;
+			} else {
+				cardDescription = CardCreator.getCard(cardName).getDescription();
+			}
 			if (type.equals("Melee") || type.equals("Ranged") || type.equals("Siege") || type.equals("Agile")) {
 				int power = Integer.parseInt(cardInfo[3].substring(7));
 				String currentPower = cardInfo[4].substring(15);
@@ -190,6 +197,12 @@ public class MatchMenu extends Application implements Menuable {
 		}
 		String[] cardsInfo = result.getMessage().split("\n------------------\n");
 		updateSpace(handPane, cardsInfo, this::selectCard);
+		for (Node node: handPane.getChildren()) {
+			if (node instanceof SmallUnit) {
+				SmallUnit unit = (SmallUnit) node;
+				unit.setCurrentPower(String.valueOf(unit.getPower()));
+			}
+		}
 	}
 
 	public void updateRows() {
@@ -437,11 +450,11 @@ public class MatchMenu extends Application implements Menuable {
 		}
 		else if (card.getType().equals("Buffer")) {
 			for (int i = 0; i < 3; i++) {
-				panes.add(rowBufferPanes[i]);
+				if (rowBufferPanes[i].getChildren().isEmpty()) panes.add(rowBufferPanes[i]);
 			}
 		} else if (card.getType().equals("Decoy")) {
 			for (int i = 0; i < 3; i++) {
-				if (rowPanes[i].getChildren().size() > 0) {
+				if (rowPanes[i].getChildren().size() > 1 || rowPanes[i].getChildren().get(0) instanceof SmallUnit) {
 					panes.add(rowPanes[i]);
 				}
 			}
@@ -488,14 +501,24 @@ public class MatchMenu extends Application implements Menuable {
 	public void showSpace(MouseEvent mouseEvent) {
 		clearSelectedCard();
 		Pane pane = (Pane) mouseEvent.getSource();
-		String[] cardsInfo = new String[pane.getChildren().size()*2];
+		String[] cardsInfo;
+		if (pane.getChildren().isEmpty()) {
+			return;
+		}
+		if (pane.getChildren().get(pane.getChildren().size() - 1) instanceof SmallCard) {
+			cardsInfo = new String[2 * pane.getChildren().size()];
+		} else {
+			cardsInfo = new String[2 * pane.getChildren().size() - 2];
+		}
 		if (cardsInfo.length == 0) {
 			return;
 		}
 		for (int i = 0; i < pane.getChildren().size(); i++) {
-			SmallCard card = (SmallCard) pane.getChildren().get(i);
-			cardsInfo[i*2] = card.getName();
-			cardsInfo[i*2+1] = card.getDescription();
+			if (pane.getChildren().get(i) instanceof SmallCard) {
+				SmallCard card = (SmallCard) pane.getChildren().get(i);
+				cardsInfo[i * 2] = card.getName();
+				cardsInfo[i * 2 + 1] = card.getDescription();
+			}
 		}
 		SelectPanel selectPanel = new SelectPanel(root, cardsInfo, 0, null, true);
 	}

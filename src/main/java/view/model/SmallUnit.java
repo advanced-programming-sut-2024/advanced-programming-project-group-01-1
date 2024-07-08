@@ -74,6 +74,10 @@ public class SmallUnit extends SmallCard {
         }
     }
 
+    public int getPower() {
+        return power;
+    }
+
     public int getCurrentPower() {
         return Integer.parseInt(powerField.getText());
     }
