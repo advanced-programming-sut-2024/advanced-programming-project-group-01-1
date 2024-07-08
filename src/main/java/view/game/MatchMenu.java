@@ -6,18 +6,22 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Asker;
 import model.Result;
 import view.Appview;
+import view.Constants;
 import view.Menuable;
 import view.model.SmallCard;
 import view.model.SmallUnit;
@@ -137,6 +141,9 @@ public class MatchMenu extends Application implements Menuable {
 		updateDecks();
 		updateLeader();
 		updateInfo();
+		if (MatchMenuController.isGameOver()) {
+			showEndGame();
+		}
 	}
 
 	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> eventHandler) {
@@ -336,6 +343,79 @@ public class MatchMenu extends Application implements Menuable {
 		opponentUsernameField.setText(usernamesInfo[1]);
 	}
 
+	public void showEndGame() {
+
+		Pane pane = new Pane();
+		pane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+		pane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.9);");
+		pane.setOnMouseClicked(event -> {
+			MatchMenuController.endGame();
+			updateScreen();
+		});
+
+		ImageView image;
+		if (MatchMenuController.isGameWin()) {
+			image = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/end_win.png")));
+		} else if (MatchMenuController.isGameDraw()) {
+			image = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/end_draw.png")));
+		} else {
+			image = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/end_lose.png")));
+		}
+		image.setFitWidth(300);
+		image.setFitHeight(200);
+		image.setLayoutX((Constants.SCREEN_WIDTH.getValue() - 300) / 2);
+		image.setLayoutY(0);
+		pane.getChildren().add(image);
+
+		Label[][] labels = new Label[3][4];
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 4; j++) {
+				labels[i][j] = new Label();
+				labels[i][j].setPrefSize(300, 100);
+				labels[i][j].setLayoutX((Constants.SCREEN_WIDTH.getValue() - 1200) / 2 + 300 * j);
+				labels[i][j].setLayoutY(200 + 100 * i);
+				labels[i][j].setAlignment(Pos.CENTER);
+				labels[i][j].setTextAlignment(TextAlignment.CENTER);
+				labels[i][j].getStylesheets().add(this.getClass().getResource("/css/textstyle.css").toExternalForm());
+				labels[i][j].setId("normal-text");
+				if (i == 0) {
+					if (j == 0) {
+						labels[i][j].setText("username");
+					} else {
+						labels[i][j].setText("round " + j);
+					}
+				} else if (j == 0) {
+					labels[i][j].setText(MatchMenuController.getUsernames().getMessage().split("\n")[i - 1]);
+				} else {
+					labels[i][j].setText("-");
+				}
+				pane.getChildren().add(labels[i][j]);
+			}
+		}
+
+		String result = MatchMenuController.getScores().getMessage();
+		String[] scores = result.split("\n");
+		for (int i = 0; i < scores.length; i += 2) {
+			int myScore = Integer.parseInt(scores[i]);
+			int opponentScore = Integer.parseInt(scores[i + 1]);
+			int round = i / 2 + 1;
+			labels[1][round].setText(String.valueOf(myScore));
+			labels[2][round].setText(String.valueOf(opponentScore));
+		}
+
+		Label label = new Label("Click to continue");
+		label.setPrefSize(Constants.SCREEN_WIDTH.getValue(), 100);
+		label.setLayoutX(0);
+		label.setLayoutY(Constants.SCREEN_HEIGHT.getValue() - 100);
+		label.setAlignment(Pos.CENTER);
+		label.setTextAlignment(TextAlignment.CENTER);
+		label.getStylesheets().add(this.getClass().getResource("/css/textstyle.css").toExternalForm());
+		label.setId("normal-text");
+		pane.getChildren().add(label);
+
+		root.getChildren().add(pane);
+	}
+
 	public void selectCard(MouseEvent event) {
 		clearSelectedCard();
 		SmallCard card = (SmallCard) event.getSource();
@@ -440,6 +520,7 @@ public class MatchMenu extends Application implements Menuable {
 	}
 
 	public void passTurn(MouseEvent mouseEvent) {
+		clearSelectedCard();
 		MatchMenuController.passTurn();
 		updateScreen();
 	}

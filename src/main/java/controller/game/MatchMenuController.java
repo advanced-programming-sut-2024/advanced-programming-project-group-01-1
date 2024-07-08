@@ -218,4 +218,26 @@ public class MatchMenuController {
 	public static void endGame() {
 		Appview.setMenu(new MatchFinderMenu());
 	}
+
+	public static boolean isGameOver() {
+		return Game.getCurrentGame().isGameOver();
+	}
+
+	public static boolean isGameWin() {
+		return Game.getCurrentGame().isGameWin();
+	}
+
+	public static boolean isGameDraw() {
+		return Game.getCurrentGame().isGameDraw();
+	}
+
+	public static Result getScores() {
+		ArrayList<Integer> scores = Game.getCurrentGame().getCurrentScores();
+		ArrayList<Integer> opponentScores = Game.getCurrentGame().getOpponentScores();
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < scores.size(); i++) {
+			result.append(scores.get(i)).append("\n").append(opponentScores.get(i)).append("\n");
+		}
+		return new Result(result.toString(), true);
+	}
 }

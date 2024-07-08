@@ -39,6 +39,7 @@ public class Game {
 	boolean hasOpponentPassed;
 	Leader currentLeader, opponentLeader;
 	boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
+	boolean gameEnded = false;
 
 	private Game(User player1, User player2) {
 		this.current = player1;
@@ -298,6 +299,9 @@ public class Game {
 		User tempUser = current;
 		current = opponent;
 		opponent = tempUser;
+		ArrayList<Integer> tempScores = currentScores;
+		currentScores = opponentScores;
+		opponentScores = tempScores;
 	}
 
 	public void passTurn() {
@@ -410,8 +414,10 @@ public class Game {
 	}
 
 	private void endGame() {
-		if (!current.equals(User.getLoggedInUser())) changeTurn();
-		MatchMenuController.endGame();
+		hasOpponentPassed = false;
+		if (!current.getUsername().equals(User.getLoggedInUser().getUsername())) changeTurn();
+		gameEnded = true;
+		//MatchMenuController.endGame();
 		double currentElo = current.getElo(), opponentElo = opponent.getElo();
 		if (currentLife == 0 && opponentLife == 0) {
 			current.setElo(User.calculateElo(currentElo, opponentElo, 0));
@@ -432,6 +438,26 @@ public class Game {
 			opponent.getHistory().add(new GameInfo(current, currentLife, opponentLife, currentScores, opponentScores, current));
 			// Win
 		}
+	}
+
+	public boolean isGameOver() {
+		return gameEnded;
+	}
+
+	public boolean isGameWin() {
+		return opponentLife == 0 && currentLife != 0;
+	}
+
+	public boolean isGameDraw() {
+		return opponentLife == 0 && currentLife == 0;
+	}
+
+	public ArrayList<Integer> getCurrentScores() {
+		return currentScores;
+	}
+
+	public ArrayList<Integer> getOpponentScores() {
+		return opponentScores;
 	}
 
 }
