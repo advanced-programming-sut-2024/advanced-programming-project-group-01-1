@@ -1,6 +1,5 @@
 package controller.game;
 
-import javafx.application.Platform;
 import main.CardCreator;
 import model.Asker;
 import model.Result;
@@ -10,7 +9,6 @@ import model.game.CardMover;
 import model.game.Game;
 import model.game.space.Space;
 import view.Appview;
-import view.game.MatchMenu;
 import view.game.SelectionHandler;
 import view.game.prematch.MatchFinderMenu;
 
@@ -160,6 +158,10 @@ public class MatchMenuController {
 
 	public static Result showLeadersForGraphic() {
 		return new Result(Game.getCurrentGame().getCurrentLeader().toString() + "\n" + "unique code: " + Game.getCurrentGame().getCurrentLeader().toSuperString() + "\n------------------\n" + Game.getCurrentGame().getOpponentLeader().toString() + "\n" + "unique code: " + Game.getCurrentGame().getOpponentLeader().toSuperString(), true);
+	}
+
+	public static Result isLeadersDisable() {
+		return new Result(Game.getCurrentGame().getCurrentLeader().isDisable() + "\n" + Game.getCurrentGame().getOpponentLeader().isDisable(), true);
 	}
 
 	public static Result useLeaderAbility() {

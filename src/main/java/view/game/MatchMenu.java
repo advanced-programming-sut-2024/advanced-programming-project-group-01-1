@@ -299,6 +299,13 @@ public class MatchMenu extends Application implements Menuable {
 		}
 		updateSpace(myLeaderPane, new String[]{leadersInfo[0]}, null);
 		updateSpace(opponentLeaderPane, new String[]{leadersInfo[1]}, null);
+		String[] leadersDisables = MatchMenuController.isLeadersDisable().getMessage().split("\n");
+		if (Boolean.parseBoolean(leadersDisables[0])) {
+			myLeaderPane.getChildren().get(0).setStyle("-fx-opacity: 0.5");
+		}
+		if (Boolean.parseBoolean(leadersDisables[1])) {
+			opponentLeaderPane.getChildren().get(0).setStyle("-fx-opacity: 0.5");
+		}
 	}
 
 	public void updateInfo() {
@@ -386,7 +393,7 @@ public class MatchMenu extends Application implements Menuable {
 				labels[i][j].setLayoutY(200 + 100 * i);
 				labels[i][j].setAlignment(Pos.CENTER);
 				labels[i][j].setTextAlignment(TextAlignment.CENTER);
-				labels[i][j].getStylesheets().add(this.getClass().getResource("/css/textstyle.css").toExternalForm());
+				labels[i][j].getStylesheets().add(this.getClass().getResource("/CSS/textstyle.css").toExternalForm());
 				labels[i][j].setId("normal-text");
 				if (i == 0) {
 					if (j == 0) {
@@ -419,7 +426,7 @@ public class MatchMenu extends Application implements Menuable {
 		label.setLayoutY(Constants.SCREEN_HEIGHT.getValue() - 100);
 		label.setAlignment(Pos.CENTER);
 		label.setTextAlignment(TextAlignment.CENTER);
-		label.getStylesheets().add(this.getClass().getResource("/css/textstyle.css").toExternalForm());
+		label.getStylesheets().add(this.getClass().getResource("/CSS/textstyle.css").toExternalForm());
 		label.setId("normal-text");
 		pane.getChildren().add(label);
 
