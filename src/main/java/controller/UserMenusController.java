@@ -50,7 +50,7 @@ public class UserMenusController {
 		StringBuilder userInfo = new StringBuilder();
 		userInfo.append("Username: ").append(user.getUsername()).append("\n");
 		userInfo.append("Nickname: ").append(user.getNickname()).append("\n");
-		userInfo.append("Max Score: ").append(user.getMaxScore()).append("\n");
+		userInfo.append("Max Score: ").append(user.getMaxElo()).append("\n");
 		userInfo.append("Rank: ").append(user.getRank()).append("\n");
 		userInfo.append("Number of played matches: ").append(user.getNumberOfPlayedMatches()).append("\n");
 		userInfo.append("Number of wins: ").append(user.getNumberOfWins()).append("\n");

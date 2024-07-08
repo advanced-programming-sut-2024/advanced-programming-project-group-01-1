@@ -20,7 +20,7 @@
             <Label id="normal-text" fx:id="nickname" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" />
         </HBox>
         <HBox>
-            <Label id="normal-text" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" text="max score" />
+            <Label id="normal-text" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" text="max rating" />
             <Label id="normal-text" fx:id="maxScore" alignment="CENTER" minWidth="177.5" stylesheets="@../CSS/textstyle.css" />
         </HBox>
         <HBox>

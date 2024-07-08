@@ -257,7 +257,7 @@ public class PreMatchMenusController {
 	public static ArrayList<String> getUsernames() {
 		ArrayList<String> usernames = new ArrayList<>();
 		for (User user : User.getUsers()) {
-			usernames.add(user.getUsername());
+			if (user != User.getLoggedInUser()) usernames.add(user.getUsername());
 		}
 		return usernames;
 	}

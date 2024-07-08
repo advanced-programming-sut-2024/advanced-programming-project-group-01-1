@@ -62,12 +62,8 @@ public class Game {
 		currentGame = new Game(player1, player2);
 		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false, false).move();
 		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false, false).move();
-//		currentGame.veto();
-		// TODO: fix veto
 		if (currentGame.getCurrentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getCurrentLeader().act();
 		else if (currentGame.getOpponentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getOpponentLeader().act();
-		if (!currentGame.getCurrentLeader().isDisable() && !currentGame.getCurrentLeader().isManual()) currentGame.getCurrentLeader().act();
-		if (!currentGame.getOpponentLeader().isDisable() && !currentGame.getOpponentLeader().isManual()) currentGame.getOpponentLeader().act();
 		return currentGame;
 	}
 
@@ -276,6 +272,7 @@ public class Game {
 			throw new Exception("Leader ability is disabled!");
 		}
 		currentLeader.act();
+		changeTurn();
 	}
 
 
@@ -442,19 +439,19 @@ public class Game {
 			current.setElo(User.calculateElo(currentElo, opponentElo, 0));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 0));
 			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, null));
-			opponent.getHistory().add(new GameInfo(current, currentLife, opponentLife, currentScores, opponentScores, null));
+			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, null));
 			// Draw
 		} else if (currentLife == 0) {
 			current.setElo(User.calculateElo(currentElo, opponentElo, -1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 1));
 			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, opponent));
-			opponent.getHistory().add(new GameInfo(current, currentLife, opponentLife, currentScores, opponentScores, opponent));
+			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, opponent));
 			// Lose
 		} else {
 			current.setElo(User.calculateElo(currentElo, opponentElo, 1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, -1));
 			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, current));
-			opponent.getHistory().add(new GameInfo(current, currentLife, opponentLife, currentScores, opponentScores, current));
+			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, current));
 			// Win
 		}
 	}

@@ -2,6 +2,8 @@ package model.leader;
 
 import model.card.Card;
 import model.card.unit.Agile;
+import model.card.unit.Melee;
+import model.card.unit.Ranged;
 import model.game.Game;
 
 import java.util.ArrayList;
@@ -16,7 +18,6 @@ public class AgileOptimizer extends Leader {
 	}
 
 	private int putAll(int mask) {
-		int powerSum = 0;
 		try {
 			for (int i = 0; i < agiles.size(); i++) {
 				if ((mask & (1 << i)) == 0) agiles.get(i).put(2);
@@ -25,9 +26,7 @@ public class AgileOptimizer extends Leader {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		for (Agile agile : agiles)
-			powerSum += agile.getPower();
-		return powerSum;
+		return Game.getCurrentGame().getCurrentPower();
 	}
 
 	private void pullAll() {
@@ -39,17 +38,13 @@ public class AgileOptimizer extends Leader {
 	public void act() {
 		agiles = new ArrayList<>();
 		for (Card card : Game.getCurrentGame().getRow(2).getCards()) {
-			if (card instanceof Agile) {
-				agiles.add((Agile) card);
-				card.pull();
-			}
+			if (card instanceof Agile && !(card instanceof Melee)) agiles.add((Agile) card);
 		}
 		for (Card card : Game.getCurrentGame().getRow(1).getCards()) {
-			if (card instanceof Agile) {
-				agiles.add((Agile) card);
-				card.pull();
-			}
+			if (card instanceof Agile && !(card instanceof Ranged)) agiles.add((Agile) card);
 		}
+		System.out.println(agiles);
+		pullAll();
 		int maxMask = 0, maxPowerSum = 0;
 		for (int mask = 0; mask < (1 << agiles.size()); mask++) {
 			int maskPowerSum = putAll(mask);

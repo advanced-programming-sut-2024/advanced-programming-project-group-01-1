@@ -62,7 +62,7 @@ public class GameInfo implements Serializable {
 	@Override
 	public String toString() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		return "Opponent: " + User.getUserById(this.opponentId).getNickname() + "\n" +
+		return "Opponent: " + User.getUserById(this.opponentId).getUsername() + "\n" +
 				"Date: " + dateFormat.format(this.date) + "\n" +
 				"My Scores: " + this.myScores + "\n" +
 				"Opponent Scores: " + this.opponentScores + "\n" +

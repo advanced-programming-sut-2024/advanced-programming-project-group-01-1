@@ -12,8 +12,8 @@
 	</ImageView>
 
 	<Button id="ipad-dark-grey" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#exit" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
-   <TextField fx:id="numberOfGames" id="ipad-dark-grey" layoutX="568.0" layoutY="14.0" stylesheets="@../CSS/textfieldstyle.css" />
+   <TextField id="ipad-dark-grey" fx:id="numberOfGames" layoutX="568.0" layoutY="14.0" stylesheets="@../CSS/textfieldstyle.css" />
    <Button id="ipad-dark-grey" layoutX="643.0" layoutY="81.0" mnemonicParsing="false" onMouseClicked="#gameHistory" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="show" />
-   <ListView fx:id="gamesList" layoutX="408.0" layoutY="155.0" prefHeight="404.0" prefWidth="575.0" stylesheets="@../CSS/listviewstyle.css">
+   <ListView fx:id="gamesList" layoutX="410.0" layoutY="153.0" prefHeight="404.0" prefWidth="616.0" stylesheets="@../CSS/listviewstyle.css">
    </ListView>
 </Pane>

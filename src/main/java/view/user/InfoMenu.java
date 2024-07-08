@@ -57,7 +57,7 @@ public class InfoMenu implements Menuable {
 	public void initialize() {
 		username.setText(User.getLoggedInUser().getUsername());
 		nickname.setText(User.getLoggedInUser().getNickname());
-		maxScore.setText(String.valueOf(User.getLoggedInUser().getMaxScore()));
+		maxScore.setText(String.valueOf(User.getLoggedInUser().getMaxElo()));
 		rank.setText(String.valueOf(User.getLoggedInUser().getRank()));
 		playedMatches.setText(String.valueOf(User.getLoggedInUser().getNumberOfPlayedMatches()));
 		wins.setText(String.valueOf(User.getLoggedInUser().getNumberOfWins()));

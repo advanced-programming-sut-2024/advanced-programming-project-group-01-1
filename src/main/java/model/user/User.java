@@ -21,7 +21,7 @@ public class User implements Serializable {
 	private Question question;
 	private Deck deck;
 	private final ArrayList<GameInfo> history;
-	private double elo = 1000;
+	private double elo = 1000, maxElo = 1000;
 
 	public User(String username, String nickname, String password, String email, Question question) {
 		this.id = users.size() + 1;
@@ -167,13 +167,8 @@ public class User implements Serializable {
 		return history;
 	}
 
-	public int getMaxScore() {
-		int maxScore = 0;
-//		for (GameInfo gameInfo : this.history) {
-//			int score = gameInfo.getMyFinalScore();
-//			if (score > maxScore) maxScore = score;
-//		}
-		return maxScore;
+	public int getMaxElo() {
+		return (int) maxElo;
 	}
 
 	public double getElo() {
@@ -182,6 +177,7 @@ public class User implements Serializable {
 
 	public void setElo(double elo) {
 		this.elo = elo;
+		maxElo = Double.max(elo, this.elo);
 	}
 
 	public int getRank() {
