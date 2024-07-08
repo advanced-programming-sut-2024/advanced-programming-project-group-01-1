@@ -23,7 +23,11 @@ public class MatchMenuController {
 
 	private static void vetoCard(Card card) {
 		Game.getCurrentGame().getCurrentHand().getCards().remove(card);
-		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 1, false, false).move();
+		new Asker(Game.getCurrentGame().getCurrentDeck().getCards(), true, index -> {
+			Card card1 = Game.getCurrentGame().getCurrentDeck().getCards().get(index);
+			Game.getCurrentGame().getCurrentDeck().getCards().remove(card1);
+			Game.getCurrentGame().getCurrentHand().getCards().add(card1);
+		}, false, 0, true);
 		Game.getCurrentGame().getCurrentDeck().getCards().add(card);
 	}
 
@@ -35,7 +39,7 @@ public class MatchMenuController {
 				new Asker(hand, false, index1 -> {
 					if (index1 != -1) vetoCard(hand.get(index1));
 					Game.getCurrentGame().changeTurn();
-				}, true, index, 0);
+				}, true, index, true);
 			} else Game.getCurrentGame().changeTurn();
 		}, true, 0);
 		ArrayList<Card> hand1 = Game.getCurrentGame().getSpaceById(Game.OPPONENT_HAND).getCards();
@@ -45,7 +49,7 @@ public class MatchMenuController {
 				new Asker(hand1, false, index1 -> {
 					if (index1 != -1) vetoCard(hand1.get(index1));
 					Game.getCurrentGame().changeTurn();
-				}, true, index, 0);
+				}, true, index, true);
 			} else Game.getCurrentGame().changeTurn();
 		}, true, 0);
 	}
