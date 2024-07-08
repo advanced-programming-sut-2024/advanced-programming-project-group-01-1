@@ -2,6 +2,8 @@ package model.leader;
 
 import main.CardCreator;
 import model.card.Card;
+import model.card.ability.Cleanse;
+import model.card.ability.Scorch;
 import model.card.special.spell.Buffer;
 import model.card.special.spell.Spell;
 import model.game.Game;
@@ -43,9 +45,16 @@ public class SpellLeader extends Leader {
 			spell = availableSpells.get(random.nextInt(availableSpells.size()));
 			spell.setSpace(Game.getCurrentGame().getCurrentHand());
 		}
-		try {
-			spell.put(spaceNumber);
-		} catch (Exception ignored) {
+		if (spell.getAbility() instanceof Scorch) ((Scorch) spell.getAbility()).killRow(spaceNumber);
+		else {
+			try {
+				spell.put(spaceNumber);
+				if (spell.getAbility() instanceof Cleanse) {
+					spell.getSpace().getCards().remove(spell);
+					spell.setSpace(null);
+				}
+			} catch (Exception ignored) {
+			}
 		}
 		super.act();
 	}

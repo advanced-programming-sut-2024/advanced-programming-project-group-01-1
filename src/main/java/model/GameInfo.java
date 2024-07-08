@@ -21,8 +21,8 @@ public class GameInfo implements Serializable {
 		this.opponentId = opponent.getId();
 		this.date = new Date();
 		this.opponentScores = opponentScores;
-		myRoundScore = 2 - myLife;
-		opponentRoundScore = 2 - opponentLife;
+		this.myRoundScore = 2 - opponentLife;
+		this.opponentRoundScore = 2 - myLife;
 		this.myScores = myScores;
 		if (winner != null) this.winnerId = winner.getId();
 		else this.winnerId = -1;

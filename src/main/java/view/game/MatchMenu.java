@@ -192,7 +192,7 @@ public class MatchMenu extends Application implements Menuable {
 
 	public void updateHand() {
 		Result result = MatchMenuController.showHandForGraphic();
-		System.out.println(result);
+//		System.out.println(result);
 		if (result.getMessage().isEmpty()){
 			updateSpace(handPane, new String[]{}, null);
 			return;
