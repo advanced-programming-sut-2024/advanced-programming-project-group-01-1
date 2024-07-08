@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import main.CardCreator;
 import model.Asker;
 import model.Result;
@@ -90,6 +91,7 @@ public class MatchMenu extends Application implements Menuable {
 	public Label myUsernameField, opponentUsernameField;
 	public Label myFactionNameField, opponentFactionNameField;
 	public Label myPassedField, opponentPassedField;
+	public Label myDeckNumber, opponentDeckNumber;
 
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
@@ -292,11 +294,13 @@ public class MatchMenu extends Application implements Menuable {
 		result = MatchMenuController.showFactionsForGraphic();
 		String[] factionsInfo = result.getMessage().split("\n");
 		String[] myDeckInfo = new String[Integer.parseInt(cardsInfo[0])];
+		myDeckNumber.setText(cardsInfo[0]);
 		String[] userNames = MatchMenuController.getUsernames().getMessage().split("\n");
 		for (int i = 0; i < myDeckInfo.length; i++) {
 			myDeckInfo[i] = factionsInfo[0].substring(9) + '\n' + "type: faction\nAbility: none\n" + "unique code: " + userNames[0] + "@" + i;
 		}
 		String[] opponentDeckInfo = new String[Integer.parseInt(cardsInfo[1])];
+		opponentDeckNumber.setText(cardsInfo[1]);
 		for (int i = 0; i < opponentDeckInfo.length; i++) {
 			opponentDeckInfo[i] = factionsInfo[2].substring(9) + '\n' + "type: faction\nAbility: none\n" + "unique code: " + userNames[1] + "@" + i;
 		}
@@ -539,11 +543,61 @@ public class MatchMenu extends Application implements Menuable {
 		card.setOnMouseExited(null);
 		Transition transition = new CardMoving(card, pane.getLayoutX() + (pane.getPrefWidth() - card.getPrefWidth()) / 2, pane.getLayoutY());
 		transition.setOnFinished(e -> {
-			root.getChildren().remove(unclickablePane);
-			System.out.println(idx + " " + row);
-			Result result = MatchMenuController.placeCard(idx, row);
-			System.out.println(result);
-			updateScreen();
+			ImageView abilityIcon = null;
+			System.out.println(card.getAbility());
+			switch (card.getAbility()){
+				case "TightBond":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_bond.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 74 / 90);
+					break;
+				case "Horn":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_horn.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 74 / 88);
+					break;
+				case "Medic":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_medic.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 86 / 90);
+					break;
+				case "MoralBooster":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_morale.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 71 / 90);
+					break;
+				case "Muster":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_muster.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 73 / 76);
+					break;
+				case "Spy":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_spy.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 67 / 90);
+					break;
+				default:
+					break;
+			}
+			if (abilityIcon == null) {
+				root.getChildren().remove(unclickablePane);
+				Result result = MatchMenuController.placeCard(idx, row);
+				updateScreen();
+			}
+			else {
+				unclickablePane.getChildren().add(abilityIcon);
+				abilityIcon.setLayoutX(card.getLayoutX());
+				abilityIcon.setLayoutY(card.getLayoutY() + ((card.getPrefHeight() - abilityIcon.getFitWidth()) / 2));
+				FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), abilityIcon);
+				fadeTransition.setFromValue(1);
+				fadeTransition.setToValue(0);
+				fadeTransition.setOnFinished(e1 -> {
+					root.getChildren().remove(unclickablePane);
+					Result result = MatchMenuController.placeCard(idx, row);
+					updateScreen();
+				});
+				fadeTransition.play();
+			}
 		});
 		transition.play();
 	}
