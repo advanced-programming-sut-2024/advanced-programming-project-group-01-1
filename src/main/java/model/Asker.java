@@ -102,6 +102,7 @@ public class Asker implements Runnable {
 			}, isOptional);
 			if (isOptional) selectPanel.getBackButton().setOnMouseClicked(event -> {
 				selectPanel.selectCard(-1);
+				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
 				running = null;
 				if (!askers.isEmpty()) askers.get(0).run();
 			});

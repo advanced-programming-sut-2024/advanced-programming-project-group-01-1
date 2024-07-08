@@ -32,9 +32,6 @@ public class SelectPanel {
             backButton.setOnMouseClicked(event -> root.getChildren().remove(selectPanelPane));
         }
         else backButton = null;
-        backButton = new Rectangle(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
-        backButton.setStyle("-fx-fill: transparent;");
-        backButton.setOnMouseClicked(event -> root.getChildren().remove(selectPanelPane));
         for (int i = 0; i < cards.length; i += 2) {
             LargeCard card = new LargeCard(cards[i], cards[i + 1]);
             this.cards.add(card);
@@ -49,7 +46,7 @@ public class SelectPanel {
 
     private void updatePanel() {
         selectPanelPane.getChildren().clear();
-        selectPanelPane.getChildren().add(backButton);
+        if (backButton != null) selectPanelPane.getChildren().add(backButton);
 		cards.get(ptr).setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - Constants.LARGE_CARD_WIDTH.getValue() / 2);
 		cards.get(ptr).setLayoutY(50);
 		cards.get(ptr).setStyle("-fx-opacity: 1");

@@ -115,8 +115,8 @@ public class LeaderCreator {
 				false, new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 1, false, false));
 		createMoverLeader(Faction.SKELLIGE, "Crach an Craite",
 				"Shuffles all cards from each player's graveyard back into their respective decks", true,
-				new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_DECK, false, -1, false, false),
-				new CardMover(Game.OPPONENT_DISCARD_PILE, Game.OPPONENT_DECK, false, -1, false, false));
+				new CardMover(Game.CURRENT_DISCARD_PILE, Game.CURRENT_DECK, true, -1, false, false),
+				new CardMover(Game.OPPONENT_DISCARD_PILE, Game.OPPONENT_DECK, true, -1, false, false));
 	}
 
 	private static void createPassiveLeaders() {
