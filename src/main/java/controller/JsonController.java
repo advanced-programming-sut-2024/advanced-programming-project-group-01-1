@@ -29,7 +29,8 @@ public class JsonController {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(
 					Paths.get(JsonController.class.getResource(LOGGED_IN_USER).toURI()).toString()));
-			oos.writeObject(User.getLoggedInUser());
+			if (User.getLoggedInUser() == null) oos.writeObject(null);
+			else oos.writeObject(User.getLoggedInUser().getId());
 			oos.close();
 		} catch (Exception ignored) {
 		}
@@ -43,7 +44,10 @@ public class JsonController {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
 					Paths.get(JsonController.class.getResource(LOGGED_IN_USER).toURI()).toString()));
-			User user = (User) ois.readObject();
+			Object obj = ois.readObject();
+			User user;
+			if (obj == null) user = null;
+			else user = User.getUserById((Integer) obj);
 			ois.close();
 			return user;
 		} catch (Exception e) {
