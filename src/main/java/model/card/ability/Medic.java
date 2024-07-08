@@ -15,7 +15,7 @@ public enum Medic implements Ability {
 	@Override
 	public void act(Card card) {
 		final Space discardPile = Game.getCurrentGame().getCurrentDiscardPile();
-		if (discardPile.getCards().isEmpty()) return; // true , true
+		if (discardPile.getCards(true, true).isEmpty()) return; // true , true
 		new Asker(discardPile, true, true, Game.getCurrentGame().isMedicRandom(), index -> {
 			Unit unit = (Unit) discardPile.getCards(true, true).get(index);
 			Game.getCurrentGame().putRevived(unit, false);

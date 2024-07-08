@@ -36,7 +36,7 @@ public class Asker implements Runnable {
 		this.ptr = ptr;
 		this.isFast = false;
 		askers.add(this);
-		this.run();
+		Platform.runLater(this);
 	}
 
 	public Asker(Space space, boolean onlyUnit, boolean ignoreHero, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr, boolean isFast) {
@@ -59,7 +59,7 @@ public class Asker implements Runnable {
 			}
 		}
 		if (!added) askers.add(this);
-		this.run();
+		Platform.runLater(this);
 	}
 
 	public static boolean isAsking() {
@@ -67,13 +67,15 @@ public class Asker implements Runnable {
 	}
 
 	public static boolean select(int index) {
-		if (askers.isEmpty()) return false;
-		return askers.get(0).selectCard(index);
+		if (running == null) return false;
+		return running.selectCard(index);
 	}
 
 	private boolean selectCard(int index) {
 		if (index < -1 || index >= cards.size()) return false;
-		return selectPanel.selectCard(index);
+		if (index == -1 && !isOptional) return false;
+		Platform.runLater(() -> selectPanel.selectCard(index));
+		return true;
 	}
 
 	@Override
