@@ -2,6 +2,7 @@ package model.leader;
 
 import main.CardCreator;
 import model.card.Card;
+import model.card.special.spell.Buffer;
 import model.card.special.spell.Spell;
 import model.game.Game;
 
@@ -25,6 +26,7 @@ public class SpellLeader extends Leader {
 
 	@Override
 	public void act() {
+		System.out.println("SpellLeader.act");
 		Spell spell;
 		ArrayList<Spell> availableSpells = new ArrayList<>();
 		if (useDeck) {
@@ -39,6 +41,7 @@ public class SpellLeader extends Leader {
 			for (String spellName : spellNames)
 				availableSpells.add((Spell) CardCreator.getCard(spellName));
 			spell = availableSpells.get(random.nextInt(availableSpells.size()));
+			spell.setSpace(Game.getCurrentGame().getCurrentHand());
 		}
 		try {
 			spell.put(spaceNumber);

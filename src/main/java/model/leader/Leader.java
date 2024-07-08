@@ -30,6 +30,10 @@ public abstract class Leader implements Serializable, Cloneable {
 		isDisable = true;
 	}
 
+	public void enable() {
+		isDisable = false;
+	}
+
 	public boolean isManual() {
 		return isManual;
 	}

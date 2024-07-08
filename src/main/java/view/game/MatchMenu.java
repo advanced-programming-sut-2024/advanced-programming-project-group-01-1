@@ -199,7 +199,7 @@ public class MatchMenu extends Application implements Menuable {
 			else {
 				String[] cardsInfo = result.getMessage().split("\n------------------\n");
 				if (cardsInfo.length >= 1 && cardsInfo[0].startsWith("Buffer: ")) {
-					String cardName = cardsInfo[0].substring(8);
+					cardsInfo[0] = cardsInfo[0].substring(8);
 					updateSpace(rowBufferPanes[i], new String[]{cardsInfo[0]}, null);
 					String[] newCardsInfo = new String[cardsInfo.length - 1];
 					System.arraycopy(cardsInfo, 1, newCardsInfo, 0, cardsInfo.length - 1);

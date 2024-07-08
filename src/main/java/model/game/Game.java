@@ -48,6 +48,8 @@ public class Game {
 		this.opponentFaction = player2.getDeck().getFaction();
 		this.currentLeader = player1.getDeck().getLeader();
 		this.opponentLeader = player2.getDeck().getLeader();
+		this.currentLeader.enable();
+		this.opponentLeader.enable();
 		for (int i = 0; i < 6; i++) rows[i] = new Row();
 		this.currentDeck = new Space(player1.getDeck().getCards());
 		this.opponentDeck = new Space(player2.getDeck().getCards());
