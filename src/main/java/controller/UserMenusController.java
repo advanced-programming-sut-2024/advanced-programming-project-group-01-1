@@ -75,7 +75,7 @@ public class UserMenusController {
 		StringBuilder gameHistory = new StringBuilder();
 		int start = Math.max(0, history.size() - number), end = history.size();
 		for (int i = end - 1; i >= start; i--) {
-			gameHistory.append(history.get(i).toString()).append("\n");
+			gameHistory.append(history.get(i).toString()).append("\n\n");
 		}
 		return new Result(gameHistory.toString(), true);
 	}

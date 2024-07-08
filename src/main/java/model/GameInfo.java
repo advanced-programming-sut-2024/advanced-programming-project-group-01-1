@@ -3,6 +3,8 @@ package model;
 import model.user.User;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -59,12 +61,13 @@ public class GameInfo implements Serializable {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		return "Opponent: " + User.getUserById(this.opponentId).getNickname() + "\n" +
-				"Date: " + this.date + "\n" +
-				"Opponent Scores: " + this.opponentScores + "\n" +
+				"Date: " + dateFormat.format(this.date) + "\n" +
 				"My Scores: " + this.myScores + "\n" +
+				"Opponent Scores: " + this.opponentScores + "\n" +
 				"My Round Score: " + this.getMyRoundScore() + "\n" +
 				"Opponent Round Score: " + this.getOpponentRoundScore() + "\n" +
-				"Winner: " + User.getUserById(this.winnerId).getNickname();
+				"Result: " + this.result;
 	}
 }

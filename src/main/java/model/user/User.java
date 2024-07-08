@@ -169,10 +169,10 @@ public class User implements Serializable {
 
 	public int getMaxScore() {
 		int maxScore = 0;
-		for (GameInfo gameInfo : this.history) {
-			int score = gameInfo.getMyFinalScore();
-			if (score > maxScore) maxScore = score;
-		}
+//		for (GameInfo gameInfo : this.history) {
+//			int score = gameInfo.getMyFinalScore();
+//			if (score > maxScore) maxScore = score;
+//		}
 		return maxScore;
 	}
 
