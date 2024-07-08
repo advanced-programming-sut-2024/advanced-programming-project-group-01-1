@@ -10,7 +10,6 @@ import model.game.space.Row;
 import model.game.space.Space;
 import model.leader.Leader;
 import model.user.User;
-import view.game.SelectionHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,6 +39,7 @@ public class Game {
 	Leader currentLeader, opponentLeader;
 	boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
 	boolean gameEnded = false;
+	int currentCheatPower = 0, opponentCheatPower = 0;
 
 	private Game(User player1, User player2) {
 		this.current = player1;
@@ -115,20 +115,28 @@ public class Game {
 		return currentLife;
 	}
 
+	public void setCurrentLife(int currentLife) {
+		this.currentLife = currentLife;
+	}
+
 	public int getOpponentLife() {
 		return opponentLife;
+	}
+
+	public void addCheatPower(int cheatPower) {
+		currentCheatPower += cheatPower;
 	}
 
 	public int getCurrentPower() {
 		int currentPower = 0;
 		for (int i = 0; i < 3; i++) currentPower += rows[i].getSumOfPowers();
-		return currentPower;
+		return currentPower + currentCheatPower;
 	}
 
 	public int getOpponentPower() {
 		int opponentPower = 0;
 		for (int i = 3; i < 6; i++) opponentPower += rows[i].getSumOfPowers();
-		return opponentPower;
+		return opponentPower + opponentCheatPower;
 	}
 
 	public int getRowPower(int rowNumber) {
@@ -292,6 +300,9 @@ public class Game {
 		int tempInt = currentLife;
 		currentLife = opponentLife;
 		opponentLife = tempInt;
+		tempInt = currentCheatPower;
+		currentCheatPower = opponentCheatPower;
+		opponentCheatPower = tempInt;
 		Faction tempFaction = currentFaction;
 		currentFaction = opponentFaction;
 		opponentFaction = tempFaction;
@@ -317,6 +328,8 @@ public class Game {
 	public void endRound() {
 		currentScores.add(getCurrentPower());
 		opponentScores.add(getOpponentPower());
+		currentCheatPower = 0;
+		opponentCheatPower = 0;
 		roundNumber++;
 		int roundResult = getRoundResult();
 		if (roundResult <= 0) currentLife--;

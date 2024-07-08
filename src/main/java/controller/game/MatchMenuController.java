@@ -1,6 +1,7 @@
 package controller.game;
 
 import javafx.application.Platform;
+import main.CardCreator;
 import model.Asker;
 import model.Result;
 import model.card.Card;
@@ -243,5 +244,50 @@ public class MatchMenuController {
 			result.append(scores.get(i)).append("\n").append(opponentScores.get(i)).append("\n");
 		}
 		return new Result(result.toString(), true);
+	}
+
+	public static Result cheatClearWeather() {
+		Game.getCurrentGame().getCurrentWeatherSystem().clear(Game.getCurrentGame().getCurrentDiscardPile(), null);
+		Game.getCurrentGame().getOpponentWeatherSystem().clear(Game.getCurrentGame().getOpponentDiscardPile(), null);
+		return new Result("Weather cleared", true);
+	}
+
+	public static Result cheatClearRow(int rowNumber) {
+		Game.getCurrentGame().getRow(rowNumber).clear(rowNumber < 3 ? Game.getCurrentGame().getCurrentDiscardPile() :
+				Game.getCurrentGame().getOpponentDiscardPile(), null);
+		return new Result("Row cleared", true);
+	}
+
+	public static Result cheatDebuffRow(int rowNumber) {
+		Card card = CardCreator.getCard(rowNumber == 0 ? "Bitting Frost" : rowNumber == 1 ? "Impenetrable Fog" : "Torrential Rain");
+		card.setSpace(Game.getCurrentGame().getCurrentDeck());
+		try {
+			card.put(-1);
+		} catch (Exception e) {
+			return new Result(e.getMessage(), false);
+		}
+		return new Result("Row debuffed", true);
+	}
+
+	public static Result cheatHeal() {
+		Game.getCurrentGame().setCurrentLife(2);
+		return new Result("Recovered Crystal", true);
+	}
+
+	public static Result cheatAddCard(String cardName) {
+		Card card = CardCreator.getCard(cardName);
+		if (card == null) return new Result("Card not found", false);
+		card.setSpace(Game.getCurrentGame().getCurrentHand());
+		return new Result("Card added to hand", true);
+	}
+
+	public static Result cheatMoveFromDeckToHand() {
+		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1, false, false).move();
+		return new Result("Card moved from deck to hand", true);
+	}
+
+	public static Result cheatAddPower(int power) {
+		Game.getCurrentGame().addCheatPower(power);
+		return new Result("Power added", true);
 	}
 }
