@@ -173,6 +173,10 @@ public class MatchMenuController {
 		}
 	}
 
+	public static Result passedState() {
+		return new Result(Game.getCurrentGame().hasPassed() + "\n" + Game.getCurrentGame().hasOpponentPassed(), true);
+	}
+
 	public static Result showFactionsForGraphic() {
 		return new Result(Game.getCurrentGame().getCurrentFaction() + "\n" + Game.getCurrentGame().getOpponentFaction(), true);
 	}

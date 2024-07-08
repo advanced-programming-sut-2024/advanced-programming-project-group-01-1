@@ -42,6 +42,7 @@ public class SmallCard extends Pane {
         this.description = description;
         this.type = type;
         this.ability = ability;
+        System.out.println("loading image: " + name + ".jpg");
         front = new Image(SmallCard.class.getResourceAsStream("/images/smallcards/" + name + ".jpg"));
         picture = new ImageView(front);
         picture.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());

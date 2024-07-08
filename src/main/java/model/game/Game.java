@@ -35,7 +35,7 @@ public class Game {
 	Space currentHand = new Space(), opponentHand = new Space();
 	int currentLife = 2, opponentLife = 2;
 	Faction currentFaction, opponentFaction;
-	boolean hasOpponentPassed;
+	boolean hasCurrentPassed = false, hasOpponentPassed = false;
 	Leader currentLeader, opponentLeader;
 	boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
 	boolean gameEnded = false;
@@ -315,13 +315,16 @@ public class Game {
 		ArrayList<Integer> tempScores = currentScores;
 		currentScores = opponentScores;
 		opponentScores = tempScores;
+		boolean tempPassed = hasCurrentPassed;
+		hasCurrentPassed = hasOpponentPassed;
+		hasOpponentPassed = tempPassed;
 	}
 
 	public void passTurn() {
 		if (hasOpponentPassed) endRound();
 		else {
+			hasCurrentPassed = true;
 			changeTurn();
-			hasOpponentPassed = true;
 		}
 	}
 
@@ -358,6 +361,7 @@ public class Game {
 		if (currentLife == 0 || opponentLife == 0) endGame();
 		else {
 			hasOpponentPassed = false;
+			hasCurrentPassed = false;
 			changeTurn();
 		}
 	}
@@ -430,6 +434,7 @@ public class Game {
 
 	private void endGame() {
 		hasOpponentPassed = false;
+		hasCurrentPassed = false;
 		if (!current.getUsername().equals(User.getLoggedInUser().getUsername())) changeTurn();
 		gameEnded = true;
 		//MatchMenuController.endGame();
@@ -473,6 +478,14 @@ public class Game {
 
 	public ArrayList<Integer> getOpponentScores() {
 		return opponentScores;
+	}
+
+	public boolean hasOpponentPassed() {
+		return hasOpponentPassed;
+	}
+
+	public boolean hasPassed() {
+		return hasCurrentPassed;
 	}
 
 }

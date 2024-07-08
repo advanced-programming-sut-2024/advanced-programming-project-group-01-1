@@ -169,5 +169,14 @@
 <ImageView fx:id="opponentAhead" fitHeight="58.5" fitWidth="76.5" layoutX="283.0" layoutY="214.0" visible="false">
           <Image url="@../images/icons/icon_high_score.png" />
         </ImageView>
+      <Label layoutX="219.0" layoutY="90.0" text="Passed" textFill="#b49326" fx:id="opponentPassedField">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
+      <Label layoutX="220.0" layoutY="629.0" text="Passed" textFill="#b49326" fx:id="myPassedField">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

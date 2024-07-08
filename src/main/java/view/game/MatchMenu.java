@@ -87,6 +87,7 @@ public class MatchMenu extends Application implements Menuable {
 	public ImageView myFactionField, opponentFactionField;
 	public Label myUsernameField, opponentUsernameField;
 	public Label myFactionNameField, opponentFactionNameField;
+	public Label myPassedField, opponentPassedField;
 
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
@@ -191,6 +192,7 @@ public class MatchMenu extends Application implements Menuable {
 
 	public void updateHand() {
 		Result result = MatchMenuController.showHandForGraphic();
+		System.out.println(result);
 		if (result.getMessage().isEmpty()){
 			updateSpace(handPane, new String[]{}, null);
 			return;
@@ -358,6 +360,9 @@ public class MatchMenu extends Application implements Menuable {
 		String[] usernamesInfo = usernames.split("\n");
 		myUsernameField.setText(usernamesInfo[0]);
 		opponentUsernameField.setText(usernamesInfo[1]);
+		String[] passedInfo = MatchMenuController.passedState().getMessage().split("\n");
+		myPassedField.setVisible(Boolean.parseBoolean(passedInfo[0]));
+		opponentPassedField.setVisible(Boolean.parseBoolean(passedInfo[1]));
 	}
 
 	public void showEndGame() {
@@ -501,7 +506,9 @@ public class MatchMenu extends Application implements Menuable {
 			}
 		}
 		clearSelectedCard();
-		MatchMenuController.placeCard(idx, row);
+		System.out.println(idx + " " + row);
+		Result result = MatchMenuController.placeCard(idx, row);
+		System.out.println(result);
 		updateScreen();
 	}
 
