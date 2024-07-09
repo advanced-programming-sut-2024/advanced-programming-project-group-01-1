@@ -11,6 +11,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -55,6 +56,8 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	public Label unitField;
 	public Label specialField;
 	public Label heroField;
+	public Button firstButton;
+	public Button secondButton;
 	public Button ready;
 	private Rectangle waiting;
 	private Timeline circulation;
@@ -89,6 +92,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		updateLeader();
 		updateFaction();
 		updateStats();
+		updateButtons();
 		ready.setDisable(!ClientPreMatchMenusController.isDeckValid().isSuccessful());
 	}
 
@@ -163,6 +167,12 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		ImagePattern imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/icons/" + "deck_shield_" + factionName + ".png")));
 		factionIconField.setFill(imagePattern);
 		factionNameField.setText(factionName);
+	}
+
+	private void updateButtons() {
+		boolean preferFirst = ClientPreMatchMenusController.getPreference().getMessage().equals("First");
+		firstButton.setDisable(preferFirst);
+		secondButton.setDisable(!preferFirst);
 	}
 
 	public void removeFromDeck(MouseEvent mouseEvent) {
@@ -395,6 +405,16 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		updateScreen();
 	}
 
+	public void setFirst(MouseEvent mouseEvent) {
+		ClientPreMatchMenusController.preferFirst();
+		updateButtons();
+	}
+
+	public void setSecond(MouseEvent mouseEvent) {
+		ClientPreMatchMenusController.preferSecond();
+		updateButtons();
+	}
+
 	public void ready(MouseEvent mouseEvent) {
 		if (ready.getText().equals("ready")) {
 			if (ClientPreMatchMenusController.getReady().isSuccessful()) {
@@ -460,7 +480,14 @@ public class ClientLobbyMenu extends Application implements Menuable {
 			result = ClientPreMatchMenusController.changeTurn();
 		else if (GameMenusCommands.START_GAME.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.startGame();
+		else if (GameMenusCommands.PREFER_FIRST.getMatcher(input) != null)
+			result = ClientPreMatchMenusController.preferFirst();
+		else if (GameMenusCommands.PREFER_SECOND.getMatcher(input) != null)
+			result = ClientPreMatchMenusController.preferSecond();
+		else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(input) != null)
+			result = ClientPreMatchMenusController.exit();
 		else result = new Result("Invalid command", false);
+		Platform.runLater(() -> {updateScreen();});
 		return result;
 	}
 

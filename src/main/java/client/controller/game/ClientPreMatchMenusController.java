@@ -257,4 +257,19 @@ public class ClientPreMatchMenusController {
 		String command = GameMenusCommands.CHECK_OPPONENT_READY.getPattern();
 		return TCPClient.send(command);
 	}
+
+	public static Result preferFirst() {
+		String command = GameMenusCommands.PREFER_FIRST.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result preferSecond() {
+		String command = GameMenusCommands.PREFER_SECOND.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result getPreference() {
+		String command = GameMenusCommands.GET_PREFERRED_TURN.getPattern();
+		return TCPClient.send(command);
+	}
 }

@@ -9,6 +9,7 @@ import server.model.user.User;
 import server.view.MainMenu;
 import server.view.user.InfoMenu;
 import server.view.user.ProfileMenu;
+import server.view.user.RankingMenu;
 import server.view.user.SocialMenu;
 
 import java.util.ArrayList;
@@ -94,6 +95,7 @@ public class UserMenusController {
 		if (client.getMenu() instanceof InfoMenu) client.setMenu(new ProfileMenu());
 		else if (client.getMenu() instanceof ProfileMenu) client.setMenu(new MainMenu());
 		else if (client.getMenu() instanceof SocialMenu) client.setMenu(new MainMenu());
+		else if (client.getMenu() instanceof RankingMenu) client.setMenu(new MainMenu());
 		return new Result("Exited successfully", true);
 	}
 
@@ -304,6 +306,30 @@ public class UserMenusController {
 				playersInfo.append(user.getUsername()).append("\n");
 			}
 			return new Result(playersInfo.toString(), true);
+		}
+	}
+
+	public static Result getPage(Client client, int pageNumber) {
+		synchronized (User.getUsers()) {
+			String page = "";
+			ArrayList<User> sortedUsers = User.getUsers();
+			sortedUsers.sort((o1, o2) -> {
+				if (o1.getRank() == o2.getRank()) return o1.getUsername().compareTo(o2.getUsername());
+				return o1.getRank() - o2.getRank();
+			});
+			int start = (pageNumber - 1) * 10 + 1, end = Math.min(pageNumber * 10, sortedUsers.size());
+			for (int i = start; i <= end; i++) {
+				User user = User.getUsers().get(i - 1);
+				page += user.getRank() + " " + user.getUsername() + " " + (int) user.getElo() + "\n";
+			}
+			return new Result(page, true);
+		}
+	}
+
+	public static Result getPageCount(Client client) {
+		synchronized (User.getUsers()) {
+			int pageCount = (User.getUsers().size() + 9) / 10;
+			return new Result(String.valueOf(pageCount), true);
 		}
 	}
 }

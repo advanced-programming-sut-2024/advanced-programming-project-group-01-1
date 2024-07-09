@@ -63,6 +63,12 @@ public class LobbyMenu implements Menuable {
 			result = new Result("not waiting", false);
 		else if (GameMenusCommands.START_GAME.getMatcher(input) != null)
 			result = PreMatchMenusController.startGame(client);
+		else if (GameMenusCommands.PREFER_FIRST.getMatcher(input) != null)
+			result = PreMatchMenusController.setPreferFirst(client, true);
+		else if (GameMenusCommands.PREFER_SECOND.getMatcher(input) != null)
+			result = PreMatchMenusController.setPreferFirst(client, false);
+		else if (GameMenusCommands.GET_PREFERRED_TURN.getMatcher(input) != null)
+			result = PreMatchMenusController.getPreference(client);
 		else result = new Result("Invalid command", false);
 		return result;
 	}

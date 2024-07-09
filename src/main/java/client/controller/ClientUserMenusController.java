@@ -3,10 +3,7 @@ package client.controller;
 import client.main.TCPClient;
 import client.view.ClientAppview;
 import client.view.ClientMainMenu;
-import client.view.user.ClientHistoryMenu;
-import client.view.user.ClientInfoMenu;
-import client.view.user.ClientProfileMenu;
-import client.view.user.ClientSocialMenu;
+import client.view.user.*;
 import message.Result;
 import message.UserMenusCommands;
 
@@ -17,6 +14,13 @@ import java.util.Objects;
 public class ClientUserMenusController {
 
 	public static Thread friendListUpdater;
+
+	public static Result goToHistoryMenu() {
+		String command = UserMenusCommands.GO_TO_HISTORY_MENU.getPattern();
+		Result result = TCPClient.send(command);
+		ClientAppview.setMenu(new ClientHistoryMenu());
+		return result;
+	}
 
 	public static Result changeUsername(String newUsername) {
 		String command = UserMenusCommands.CHANGE_USERNAME.getPattern();
@@ -66,6 +70,7 @@ public class ClientUserMenusController {
 			ClientAppview.setMenu(new ClientMainMenu());
 			stopUpdating();
 		} else if (ClientAppview.getMenu() instanceof ClientHistoryMenu) ClientAppview.setMenu(new ClientProfileMenu());
+		else if (ClientAppview.getMenu() instanceof ClientRankingMenu) ClientAppview.setMenu(new ClientMainMenu());
 		return result;
 	}
 
@@ -197,10 +202,15 @@ public class ClientUserMenusController {
 		friendListUpdater = null;
 	}
 
-	public static Result goToHistoryMenu() {
-		String command = UserMenusCommands.GO_TO_HISTORY_MENU.getPattern();
-		Result result = TCPClient.send(command);
-		ClientAppview.setMenu(new ClientHistoryMenu());
-		return result;
+	public static Result getPage(int page) {
+		String command = UserMenusCommands.SHOW_PAGE_INFO.getPattern();
+		command = command.replace("(?<pageNumber>\\d+)", String.valueOf(page));
+		return TCPClient.send(command);
 	}
+
+	public static Result getPageCount() {
+		String command = UserMenusCommands.GET_PAGE_COUNT.getPattern();
+		return TCPClient.send(command);
+	}
+
 }

@@ -263,4 +263,15 @@ public class PreMatchMenusController {
 		client.setMenu(new MatchMenu());
 		return new Result("Opponent is ready", true);
 	}
+
+	public static Result setPreferFirst(Client client, boolean preferFirst) {
+		client.getIdentity().getDeck().setPreferFirst(preferFirst);
+		System.out.println(client.getIdentity().getDeck().doesPreferFirst());
+		return new Result("Preferred First Set Successfully", true);
+	}
+
+	public static Result getPreference(Client client) {
+		return new Result(client.getIdentity().getDeck().doesPreferFirst() ? "First" : "Second", true);
+	}
+
 }

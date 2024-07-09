@@ -63,9 +63,7 @@ public class ClientMainMenu extends Application implements Menuable {
 	}
 
 	public void leaderboard(MouseEvent mouseEvent) {
-		Result result = new Result("coming soon!!!", true);
-		AlertMaker.makeAlert("leaderboard", result);
-		//TODO: implement leaderboard
+		Result result = goToLeaderboardMenu();
 	}
 
 	public void tv(MouseEvent mouseEvent) {
@@ -85,6 +83,7 @@ public class ClientMainMenu extends Application implements Menuable {
 		if (MainMenuCommands.ENTER_GAME_MENU.getMatcher(input) != null) result = goToMatchFinderMenu();
 		else if (MainMenuCommands.ENTER_PROFILE_MENU.getMatcher(input) != null) result = goToProfileMenu();
 		else if (MainMenuCommands.ENTER_SOCIAL_MENU.getMatcher(input) != null) result = goToSocialMenu();
+		else if (MainMenuCommands.ENTER_LEADERBOARD_MENU.getMatcher(input) != null) result = goToLeaderboardMenu();
 		else if (MainMenuCommands.LOGOUT.getMatcher(input) != null) result = ClientMainMenuController.logout();
 		else if (MainMenuCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
 		else if (MainMenuCommands.GET_LOGGED_IN_USERNAME.getMatcher(input) != null) result = new Result(getLoggedInUsername(), true);

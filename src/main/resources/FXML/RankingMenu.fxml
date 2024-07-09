@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.user.ClientRankingMenu">
+	<children>
+		<ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
+			<image>
+				<Image url="@../images/backgrounds/RankingMenu.jpg" />
+			</image>
+		</ImageView>
+		<Button id="ipad-dark-grey" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
+		<Label id="title-text" alignment="CENTER" layoutX="627.0" layoutY="8.0" prefHeight="113.0" prefWidth="274.0" stylesheets="@../CSS/textstyle.css" text="leaderboard" textAlignment="CENTER" />
+		<VBox fx:id="rankingRows" layoutX="957.0" layoutY="105.0" prefHeight="400.0" prefWidth="384.0" />
+		<HBox alignment="CENTER" layoutX="957.0" layoutY="50.0" prefHeight="50.0" prefWidth="384.0">
+			<Label id="title-text" alignment="CENTER" layoutX="683.0" layoutY="15.0" prefHeight="80.0" prefWidth="66.0" style="-fx-font-size: 24;" stylesheets="@../CSS/textstyle.css" text="rank" textAlignment="CENTER" />
+			<Label id="title-text" alignment="CENTER" layoutX="683.0" layoutY="15.0" prefHeight="80.0" prefWidth="219.0" style="-fx-font-size: 24;" stylesheets="@../CSS/textstyle.css" text="username" textAlignment="CENTER" />
+			<Label id="title-text" alignment="CENTER" layoutX="683.0" layoutY="15.0" prefHeight="80.0" prefWidth="92.0" style="-fx-font-size: 24;" stylesheets="@../CSS/textstyle.css" text="rating" textAlignment="CENTER" />
+
+		</HBox>
+		<Button id="ipad-dark-grey" fx:id="previousPageButton" layoutX="957.0" layoutY="544.0" mnemonicParsing="false" onAction="#previousPage" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="prev" />
+		<Button id="ipad-dark-grey" fx:id="nextPageButton" layoutX="1191.0" layoutY="544.0" mnemonicParsing="false" onAction="#nextPage" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="next" />
+		<Label fx:id="pageCountDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="1119.0" layoutY="545.0" prefHeight="50.0" prefWidth="59.0" style="-fx-text-fill: orangered" text="1/1">
+			<font>
+				<Font size="18.0" />
+			</font></Label>
+
+	</children>
+</Pane>

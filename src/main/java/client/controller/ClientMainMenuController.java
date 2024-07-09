@@ -5,6 +5,7 @@ import client.view.ClientAppview;
 import client.view.game.prematch.ClientMatchFinderMenu;
 import client.view.sign.login.ClientLoginMenu;
 import client.view.user.ClientProfileMenu;
+import client.view.user.ClientRankingMenu;
 import client.view.user.ClientSocialMenu;
 import message.MainMenuCommands;
 import message.Result;
@@ -38,6 +39,13 @@ public class ClientMainMenuController {
 		String command = MainMenuCommands.ENTER_SOCIAL_MENU.getPattern();
 		Result result = TCPClient.send(command);
 		ClientAppview.setMenu(new ClientSocialMenu());
+		return result;
+	}
+
+	public static Result goToLeaderboardMenu() {
+		String command = MainMenuCommands.ENTER_LEADERBOARD_MENU.getPattern();
+		Result result = TCPClient.send(command);
+		ClientAppview.setMenu(new ClientRankingMenu());
 		return result;
 	}
 

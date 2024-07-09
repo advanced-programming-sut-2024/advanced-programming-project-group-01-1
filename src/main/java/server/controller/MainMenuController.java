@@ -6,6 +6,7 @@ import server.model.user.User;
 import server.view.game.prematch.MatchFinderMenu;
 import server.view.sign.login.LoginMenu;
 import server.view.user.ProfileMenu;
+import server.view.user.RankingMenu;
 import server.view.user.SocialMenu;
 
 public class MainMenuController {
@@ -31,6 +32,11 @@ public class MainMenuController {
 		System.out.println("go fuck yourself network");
 		client.setMenu(new SocialMenu());
 		return new Result("Entered Social Menu", true);
+	}
+
+	public static Result goToRankingMenu(Client client) {
+		client.setMenu(new RankingMenu());
+		return new Result("Entered Leaderboard Menu", true);
 	}
 
 	public static Result showCurrentMenu() {

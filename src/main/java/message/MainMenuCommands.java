@@ -7,6 +7,7 @@ public enum MainMenuCommands {
 	ENTER_GAME_MENU("menu enter game menu"),
 	ENTER_PROFILE_MENU("menu enter profile menu"),
 	ENTER_SOCIAL_MENU("menu enter social menu"),
+	ENTER_LEADERBOARD_MENU("menu enter leaderboard menu"),
 	GET_LOGGED_IN_USERNAME("get logged in username"),
 	SHOW_CURRENT_MENU("show current menu"),
 	LOGOUT("user logout");
