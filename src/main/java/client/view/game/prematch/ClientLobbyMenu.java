@@ -205,7 +205,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 				break;
 			}
 		}
-		new SelectPanel(root, leaders, ptr, this::selectLeaderByGraphic);
+		new SelectPanel(root, leaders, ptr, this::selectLeaderByGraphic, true);
 	}
 
 	public void selectLeaderByGraphic(int idx) {
@@ -230,7 +230,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 				break;
 			}
 		}
-		new SelectPanel(root, factions, ptr, this::selectFactionByGraphic);
+		new SelectPanel(root, factions, ptr, this::selectFactionByGraphic, true);
 	}
 
 	public void selectFactionByGraphic(int idx) {
