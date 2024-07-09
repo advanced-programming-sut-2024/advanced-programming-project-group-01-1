@@ -7,12 +7,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Result;
 import view.Appview;
@@ -58,6 +61,12 @@ public class RankingMenu extends Application implements Menuable {
 		}
 		Scene scene = new Scene(root);
 		Image cursorImage = new Image(getClass().getResourceAsStream("/images/icons/cursor.png"));
+		ImageView imageView = new ImageView(cursorImage);
+		imageView.setFitWidth(25);
+		imageView.setFitHeight(25);
+		SnapshotParameters parameters = new SnapshotParameters();
+		parameters.setFill(Color.TRANSPARENT);
+		cursorImage = imageView.snapshot(parameters, null);
 		Cursor cursor = new ImageCursor(cursorImage);
 		scene.setCursor(cursor);
 		stage.setScene(scene);
