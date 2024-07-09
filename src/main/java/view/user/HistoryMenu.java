@@ -38,7 +38,9 @@ public class HistoryMenu extends Application implements Menuable {
 	public void start(Stage stage) {
 		Appview.setStage(stage);
 		URL url = getClass().getResource("/FXML/HistoryMenu.fxml");
-		if (url == null){System.out.println("Couldn't find file: FXML/HistoryMenu.fxml");return;
+		if (url == null){
+			System.out.println("Couldn't find file: FXML/HistoryMenu.fxml");
+			return;
 		}
 		Pane root = null;
 		try {root = FXMLLoader.load(url);
@@ -72,10 +74,8 @@ public class HistoryMenu extends Application implements Menuable {
 		String histories = result.getMessage();
 		String[] history = histories.split("\n\n");
 		gamesList.getItems().clear();
-		for (String gameDetails : history) {
-			System.out.println(gameDetails);
+		for (String gameDetails : history)
 			gamesList.getItems().add(rowCreator(gameDetails));
-		}
 		return new Result("Showing game history", true);
 	}
 

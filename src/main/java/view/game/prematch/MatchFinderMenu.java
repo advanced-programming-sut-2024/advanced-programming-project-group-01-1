@@ -71,7 +71,6 @@ public class MatchFinderMenu extends Application implements Menuable {
 	}
 
 	public void startGame(MouseEvent mouseEvent) {
-		//get selected user from list
 		String opponent = (String) suggestUsersList.getSelectionModel().getSelectedItem();
 		Result result = PreMatchMenusController.createGame(opponent);
 		AlertMaker.makeAlert("Game created", result);

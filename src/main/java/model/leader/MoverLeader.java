@@ -13,14 +13,8 @@ public class MoverLeader extends Leader {
 
 	@Override
 	public void act() {
-		System.out.println("wtf disable :: " + this.isDisable);
-		for (CardMover cardMover : cardMovers) {
-			System.out.println("kir");
-			cardMover.move();
-			System.out.println("nakir");
-		}
+		for (CardMover cardMover : cardMovers) cardMover.move();
 		super.act();
-		System.out.println("fuck disable :: " + this.isDisable);
 	}
 
 	@Override

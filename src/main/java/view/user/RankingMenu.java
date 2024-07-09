@@ -46,10 +46,7 @@ public class RankingMenu extends Application implements Menuable {
 	public void start(Stage stage) {
 		Appview.setStage(stage);
 		URL url = getClass().getResource("/FXML/RankingMenu.fxml");
-		if (url == null){
-			System.out.println("Couldn't find file: FXML/RankingMenu.fxml");
-			return;
-		}
+		if (url == null) return;
 		Pane root = null;
 		try {
 			root = javafx.fxml.FXMLLoader.load(url);
@@ -75,7 +72,7 @@ public class RankingMenu extends Application implements Menuable {
 		} else {
 			result = new Result("Invalid command", false);
 		}
-		System.out.println(result.getMessage());
+		System.out.println(result);
 	}
 
 	@FXML
@@ -104,7 +101,6 @@ public class RankingMenu extends Application implements Menuable {
 	private void loadPage() {
 		rankingRows.getChildren().clear();
 		String pageDetails = UserMenusController.getPage(page).getMessage();
-		System.out.println(pageDetails);
 		String[] pageDetailsArray = pageDetails.split("\n");
 		for (String pageDetail : pageDetailsArray) {
 			String[] pageDetailArray = pageDetail.split(" ");

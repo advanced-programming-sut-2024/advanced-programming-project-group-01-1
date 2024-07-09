@@ -122,7 +122,6 @@ public class UserMenusController {
 		int start = (pageNumber - 1) * 10 + 1, end = Math.min(pageNumber * 10, sortedUsers.size());
 		for (int i = start; i <= end; i++) {
 			User user = User.getUsers().get(i - 1);
-			System.out.println(user.getElo());
 			page += user.getRank() + " " + user.getUsername() + " " + (int) user.getElo() + "\n";
 		}
 		return new Result(page, true);

@@ -323,6 +323,7 @@ public class Game {
 		boolean tempPassed = hasCurrentPassed;
 		hasCurrentPassed = hasOpponentPassed;
 		hasOpponentPassed = tempPassed;
+		if (currentHand.getCards().isEmpty() && currentLeader.isDisable()) passTurn();
 	}
 
 	public void passTurn() {
@@ -440,26 +441,25 @@ public class Game {
 		hasCurrentPassed = false;
 		if (!current.getUsername().equals(User.getLoggedInUser().getUsername())) changeTurn();
 		gameEnded = true;
-		//MatchMenuController.endGame();
 		double currentElo = current.getElo(), opponentElo = opponent.getElo();
 		if (currentLife == 0 && opponentLife == 0) {
+			// Draw
 			current.setElo(User.calculateElo(currentElo, opponentElo, 0));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 0));
 			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, null));
 			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, null));
-			// Draw
 		} else if (currentLife == 0) {
+			// Lose
 			current.setElo(User.calculateElo(currentElo, opponentElo, -1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 1));
 			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, opponent));
 			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, opponent));
-			// Lose
 		} else {
+			// Win
 			current.setElo(User.calculateElo(currentElo, opponentElo, 1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, -1));
 			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, current));
 			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, current));
-			// Win
 		}
 	}
 

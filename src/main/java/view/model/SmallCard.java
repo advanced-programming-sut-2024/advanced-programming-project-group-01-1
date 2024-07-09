@@ -42,7 +42,6 @@ public class SmallCard extends Pane {
         this.description = description;
         this.type = type;
         this.ability = ability;
-        System.out.println("loading image: " + name + ".jpg");
         front = new Image(SmallCard.class.getResourceAsStream("/images/smallcards/" + name + ".jpg"));
         picture = new ImageView(front);
         picture.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
@@ -50,12 +49,9 @@ public class SmallCard extends Pane {
         picture.setPreserveRatio(false);
         this.getChildren().add(picture);
 
-        if (type.equals("faction") || type.equals("leader")){
-            return;
-        }
+        if (type.equals("faction") || type.equals("leader")) return;
         if (iconNames.get(name) != null) {
             ImageView icon = new ImageView(new Image(SmallCard.class.getResourceAsStream("/images/icons/" + iconNames.get(name) + ".png")));
-          //  System.out.println("Loading image: " + iconNames.get(name) + ".png");
             icon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue() / 2);
             icon.setFitHeight(Constants.SMALL_CARD_WIDTH.getValue() / 2);
             icon.setLayoutX(0);

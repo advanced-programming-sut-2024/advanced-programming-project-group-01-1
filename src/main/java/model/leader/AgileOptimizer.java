@@ -43,7 +43,6 @@ public class AgileOptimizer extends Leader {
 		for (Card card : Game.getCurrentGame().getRow(1).getCards()) {
 			if (card instanceof Agile && !(card instanceof Ranged)) agiles.add((Agile) card);
 		}
-		System.out.println(agiles);
 		pullAll();
 		int maxMask = 0, maxPowerSum = 0;
 		for (int mask = 0; mask < (1 << agiles.size()); mask++) {

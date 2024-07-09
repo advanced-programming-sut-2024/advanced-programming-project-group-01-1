@@ -28,7 +28,6 @@ public class SpellLeader extends Leader {
 
 	@Override
 	public void act() {
-		System.out.println("SpellLeader.act");
 		Spell spell;
 		ArrayList<Spell> availableSpells = new ArrayList<>();
 		if (useDeck) {

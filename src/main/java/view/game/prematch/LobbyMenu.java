@@ -132,14 +132,12 @@ public class LobbyMenu extends Application implements Menuable {
 				row++;
 			}
 		}
-		//hide the scroll bar
 		gridPane.setVgap(20);
 		gridPane.setHgap(20);
 		collectionCardPane.setContent(gridPane);
 	}
 
 	public void addToDeck(MouseEvent mouseEvent) {
-		System.out.println("add to deck");
 		PreviewCard largeCard = (PreviewCard) mouseEvent.getSource();
 		Result result = PreMatchMenusController.addToDeck(largeCard.getName(), 1);
 		updateScreen();
@@ -178,7 +176,6 @@ public class LobbyMenu extends Application implements Menuable {
 	private void updateLeader() {
 		Result result = PreMatchMenusController.showNowLeaderToGraphics();
 		String leaderName = result.getMessage();
-		System.out.println(leaderName);
 		ImagePattern imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/largecards/" + leaderName + ".jpg")));
 		leaderField.setFill(imagePattern);
 	}
@@ -186,7 +183,6 @@ public class LobbyMenu extends Application implements Menuable {
 	private void updateFaction() {
 		Result result = PreMatchMenusController.showNowFactionToGraphics();
 		String factionName = result.getMessage();
-		System.out.println(factionName);
 		ImagePattern imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/icons/" + "deck_shield_" + factionName + ".png")));
 		factionIconField.setFill(imagePattern);
 		factionNameField.setText(factionName);
@@ -315,8 +311,6 @@ public class LobbyMenu extends Application implements Menuable {
 		saveDeckByNameTextField.setLayoutY(saveDeckLabel.getLayoutY() + 70);
 		saveDeckByNameTextField.setPromptText("Enter deck name");
 
-		//saveDeckLabel.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
-
 		saveDeckByNameButton = new Button("Save by name");
 		String buttonCSS = getClass().getResource("/CSS/buttonstyle.css").toExternalForm();
 		saveDeckByNameButton.getStylesheets().add(buttonCSS);
@@ -399,8 +393,6 @@ public class LobbyMenu extends Application implements Menuable {
 		loadDeckByNameTextField.setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - 150);
 		loadDeckByNameTextField.setLayoutY(loadDeckLabel.getLayoutY() + 70);
 		loadDeckByNameTextField.setPromptText("Enter deck name");
-
-		//loadDeckLabel.setStyle("-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18");
 
 		loadDeckByNameButton = new Button("Load by name");
 		String buttonCSS = getClass().getResource("/CSS/buttonstyle.css").toExternalForm();

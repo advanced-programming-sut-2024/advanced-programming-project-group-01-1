@@ -16,7 +16,6 @@ public enum Berserker implements Ability {
 		if (!((Row) card.getSpace()).hasMardroeme()) return;
 		card.pull();
 		String transformedName = "Transformed " + card.getName().replace("Berserker", "Vildkaarl");
-		System.out.println(transformedName);
 		Card transformedCard = CardCreator.getCard(transformedName);
 		transformedCard.setSpace(Game.getCurrentGame().getCurrentDeck());
 		try {

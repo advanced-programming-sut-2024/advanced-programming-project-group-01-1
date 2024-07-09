@@ -68,7 +68,6 @@ public class MainMenu extends Application implements Menuable {
 	public void tv(MouseEvent mouseEvent) {
 		Result result = new Result("coming soon!!!", true);
 		AlertMaker.makeAlert("GoGo TV", result);
-		//TODO: implement GoGo TV
 	}
 
 	public void logout(MouseEvent mouseEvent) {

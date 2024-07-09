@@ -29,9 +29,6 @@ public class NameFixer {
                     }
                 }
                 boolean ok = file.renameTo(new File(path + "/" + newName));
-                if (!ok) {
-                    System.out.println("Error renaming file: " + name);
-                }
             }
         }
     }
@@ -56,9 +53,6 @@ public class NameFixer {
                     }
                 }
                 boolean ok = file.renameTo(new File(path + "/" + newName));
-                if (!ok) {
-                    System.out.println("Error renaming file: " + name);
-                }
             }
         }
     }

@@ -21,7 +21,6 @@ public enum Muster implements Ability {
 			Unit unit = (Unit) aliveCard;
 			if (unit.getSpace() instanceof Row) continue;
 			if (unit.getMusterName().startsWith(musterName)) {
-				System.out.println(unit.toSuperString() + " " + unit.getName());
 				try {
 					if (unit instanceof Melee) unit.put(2);
 					else if (unit instanceof Ranged) unit.put(1);

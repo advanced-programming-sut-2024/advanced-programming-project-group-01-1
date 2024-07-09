@@ -60,10 +60,8 @@ public class CardMover implements Serializable {
 				}
 			}
 		}
-		System.out.println("baba bikhikhi");
 		Space tmp = new Space(cardsToBeShown);
 		new Asker(tmp, false, false, false, index -> {}, true, 1);
-		System.out.println("kir too koonet");
 	}
 
 }

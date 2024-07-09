@@ -34,7 +34,6 @@ public class PreviewCard extends Pane {
         this.name = name;
         this.count = count;
         Label countLabel = new Label(String.valueOf(count));
-        //set color of count label to black
         countLabel.setStyle("-fx-text-fill: black");
         countLabel.setLayoutX(countIcon.getLayoutX() + Constants.PREVIEW_COUNT_ICON_WIDTH.getValue());
         countLabel.setLayoutY(countIcon.getLayoutY() + Constants.PREVIEW_COUNT_ICON_HEIGHT.getValue() / 4);

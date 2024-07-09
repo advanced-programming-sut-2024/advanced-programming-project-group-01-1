@@ -130,28 +130,6 @@ public class PreMatchMenusController {
 		return new Result(message.toString(), true);
 	}
 
-//	public static void main(String[] args) {
-//		Deck test = new Deck(Faction.MONSTERS);
-//		test.setLeader(test.getAvailableLeaders().get(3));
-//		test.add(CardCreator.getCard("Leshen"));
-//		test.add(CardCreator.getCard("Skellige Storm"));
-//		test.add(CardCreator.getCard("Gaunter O'Dimm"));
-//		test.add(CardCreator.getCard("Gaunter O'Dimm; Darkness"));
-//		test.add(CardCreator.getCard("Gaunter O'Dimm; Darkness"));
-//		test.add(CardCreator.getCard("Gaunter O'Dimm; Darkness"));
-//		test.add(CardCreator.getCard("Geralt of Rivia"));
-//		test.add(CardCreator.getCard("Arachas"));
-//		test.add(CardCreator.getCard("Cow"));
-//		User user = new User("test", "test", "test", "test", null);
-//		user.setDeck(test);
-//		User.setLoggedInUser(user);
-//		saveDeckByAddress("/C:/Users/S2/Desktop/test.json");
-//		User user2 = new User("test2", "test2", "test2", "test2", null);
-//		User.setLoggedInUser(user2);
-//		loadDeckByAddress("/C:/Users/S2/Desktop/test.json");
-//		System.out.println(User.getLoggedInUser().getDeck().getHeroCount());
-//	}
-
 	public static Result saveDeckByAddress(String address) {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(address));
@@ -230,7 +208,6 @@ public class PreMatchMenusController {
 
 	public static Result setPreferFirst(boolean preferFirst) {
 		User.getLoggedInUser().getDeck().setPreferFirst(preferFirst);
-		System.out.println(User.getLoggedInUser().getDeck().doesPreferFirst());
 		return new Result("Preferred First Set Successfully", true);
 	}
 

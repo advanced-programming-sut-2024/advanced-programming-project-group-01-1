@@ -197,7 +197,6 @@ public class MatchMenu extends Application implements Menuable {
 
 	public void updateHand() {
 		Result result = MatchMenuController.showHandForGraphic();
-//		System.out.println(result);
 		if (result.getMessage().isEmpty()){
 			updateSpace(handPane, new String[]{}, null);
 			return;
@@ -494,7 +493,6 @@ public class MatchMenu extends Application implements Menuable {
 		}
 		for (Pane pane : panes) {
 			pane.setOnMouseClicked(this::placeCard);
-			//make the background transparent green
 			pane.setStyle("-fx-background-color: rgba(0, 255, 0, 0.2);");
 			selectedPanes.add(pane);
 		}
@@ -544,7 +542,6 @@ public class MatchMenu extends Application implements Menuable {
 		Transition transition = new CardMoving(card, pane.getLayoutX() + (pane.getPrefWidth() - card.getPrefWidth()) / 2, pane.getLayoutY());
 		transition.setOnFinished(e -> {
 			ImageView abilityIcon = null;
-			System.out.println(card.getAbility());
 			switch (card.getAbility()){
 				case "TightBond":
 					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_bond.png")));

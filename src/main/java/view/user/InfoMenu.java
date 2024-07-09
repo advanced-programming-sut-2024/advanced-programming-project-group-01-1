@@ -38,7 +38,7 @@ public class InfoMenu implements Menuable {
 	public void start(Stage stage) {
 		Appview.setStage(stage);
 		URL url = getClass().getResource("/FXML/InfoMenu.fxml");
-		if (url == null){
+		if (url == null) {
 			System.out.println("Couldn't find file: FXML/InfoMenu.fxml");
 			return;
 		}
