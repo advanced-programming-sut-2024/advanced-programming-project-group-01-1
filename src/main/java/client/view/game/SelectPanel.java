@@ -3,9 +3,9 @@ package client.view.game;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import client.view.Constants;
-import client.view.model.LargeCard;
-import message.SelectionHandler;
+import javafx.scene.shape.Rectangle;
+import view.Constants;
+import view.model.LargeCard;
 
 import java.util.ArrayList;
 
@@ -13,16 +13,22 @@ public class SelectPanel {
 
     Pane root, selectPanelPane;
     ArrayList<LargeCard> cards = new ArrayList<>();
-    int ptr;
+    int ptr = 0;
     SelectionHandler selectionHandler;
-
-    public SelectPanel(Pane root, String[] cards, int ptr, SelectionHandler selectionHandler) {
+    Rectangle backButton = null;
+    public SelectPanel(Pane root, String[] cards, int ptr, SelectionHandler selectionHandler, boolean wantBackButton) {
         this.root = root;
         this.selectionHandler = selectionHandler;
         this.ptr = ptr;
         selectPanelPane = new Pane();
         selectPanelPane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
         selectPanelPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+        if (wantBackButton) {
+            backButton = new Rectangle(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+            backButton.setStyle("-fx-fill: transparent;");
+            backButton.setOnMouseClicked(event -> root.getChildren().remove(selectPanelPane));
+        }
+        else backButton = null;
         for (int i = 0; i < cards.length; i += 2) {
             LargeCard card = new LargeCard(cards[i], cards[i + 1]);
             this.cards.add(card);
@@ -31,8 +37,13 @@ public class SelectPanel {
         updatePanel();
     }
 
+    public Rectangle getBackButton() {
+        return backButton;
+    }
+
     private void updatePanel() {
         selectPanelPane.getChildren().clear();
+        if (backButton != null) selectPanelPane.getChildren().add(backButton);
 		cards.get(ptr).setLayoutX(Constants.SCREEN_WIDTH.getValue() / 2 - Constants.LARGE_CARD_WIDTH.getValue() / 2);
 		cards.get(ptr).setLayoutY(50);
 		cards.get(ptr).setStyle("-fx-opacity: 1");
@@ -67,9 +78,16 @@ public class SelectPanel {
         }
     }
 
+    public boolean selectCard(int index) {
+        if(index < (backButton == null ? 0 : -1)) return false;
+        root.getChildren().remove(selectPanelPane);
+        if (selectionHandler != null) selectionHandler.handle(index);
+        return true;
+    }
+
     private void selectCard(MouseEvent mouseEvent) {
         root.getChildren().remove(selectPanelPane);
-        selectionHandler.handle(ptr);
+        if (selectionHandler != null) selectionHandler.handle(ptr);
     }
 
     private void previousCard(MouseEvent mouseEvent) {

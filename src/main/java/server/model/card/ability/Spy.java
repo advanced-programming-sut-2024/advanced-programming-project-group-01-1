@@ -17,7 +17,7 @@ public enum Spy implements Ability {
 		unit.setHornCount(enemyRow.getHornCount());
 		unit.setBoostCount(enemyRow.getBoostCount());
 		unit.setDebuff(enemyRow.isDebuffed());
-		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 2, false, false).move();
+		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, true, 2, false, false).move(card.getGame().getCurrent());
 	}
 
 	@Override

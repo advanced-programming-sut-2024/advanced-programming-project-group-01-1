@@ -169,6 +169,10 @@ public class Game {
 		return currentHand;
 	}
 
+	public Space getOpponentHand() {
+		return opponentHand;
+	}
+
 	public Space getCurrentDiscardPile() {
 		return currentDiscardPile;
 	}

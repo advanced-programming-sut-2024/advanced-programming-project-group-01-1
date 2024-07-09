@@ -214,7 +214,7 @@ public class PreMatchMenusController {
 	}
 
 	public static Result startGame(Client client) {
-		Game.createGame(client, client.getIdentity(), opponent);
+		Game.createGame(client.getIdentity(), opponent);
 		return new Result("Game Started Successfully", true);
 	}
 

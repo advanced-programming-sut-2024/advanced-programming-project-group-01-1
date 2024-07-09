@@ -54,7 +54,16 @@ public enum GameMenusCommands {
     SHOW_LEADER_GRAPHIC("show current leader for graphic"),
     SHOW_FACTION_GRAPHIC("show current faction for graphic"),
     PASS_ROUND("pass round"),
-    EXIT_MATCH_FINDER("menu exit");
+    EXIT_MATCH_FINDER("menu exit"),
+    CREATE_GAME("create game -p2 (?<opponent>\\S+)"),
+    SHOW_HAND("show hand"),
+    SELECT_CARD("select card (?<cardNumber>(-)?\\d+)"),
+
+    CHEAT_MENU("cheat"),
+    CHEAT_DEBUFF_ROW("debuff row (?<rowNumber>(0|1|2|3|4|5))"),
+    CHEAT_CLEAR_ROW("clear row (?<rowNumber>(0|1|2|3|4|5))"),
+    CHEAT_ADD_CARD("add card (?<cardName>.+)"),
+    CHEAT_ADD_POWER("add power (?<power>\\d+)");
 
     private final Pattern pattern;
 
