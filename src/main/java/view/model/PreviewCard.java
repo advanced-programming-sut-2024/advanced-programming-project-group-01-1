@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class PreviewCard extends Pane {
 
-    private static HashMap<String, ImagePattern> imagePatterns = new HashMap<>();
+    private static final HashMap<String, ImagePattern> imagePatterns = new HashMap<>();
 
     private final String name;
     private final int count;

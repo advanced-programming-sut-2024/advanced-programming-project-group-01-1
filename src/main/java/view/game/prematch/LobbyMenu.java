@@ -19,23 +19,18 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Result;
-import model.game.Game;
-import model.user.User;
 import view.AlertMaker;
 import view.Appview;
 import view.Constants;
 import view.Menuable;
 import view.game.GameMenusCommands;
 import view.game.SelectPanel;
-import view.model.LargeCard;
 import view.model.PreviewCard;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
-
-import static javafx.application.Application.launch;
 
 
 public class LobbyMenu extends Application implements Menuable {
@@ -189,7 +184,7 @@ public class LobbyMenu extends Application implements Menuable {
 	}
 
 	public void updateButtons() {
-		boolean preferFirst = User.getLoggedInUser().getDeck().doesPreferFirst();
+		boolean preferFirst = PreMatchMenusController.doesPreferFirst().isSuccessful();
 		firstButton.setDisable(preferFirst);
 		secondButton.setDisable(!preferFirst);
 	}

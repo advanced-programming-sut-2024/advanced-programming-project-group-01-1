@@ -1,6 +1,5 @@
 package model.game;
 
-import controller.game.MatchMenuController;
 import model.Asker;
 import model.card.Card;
 import model.game.space.Space;

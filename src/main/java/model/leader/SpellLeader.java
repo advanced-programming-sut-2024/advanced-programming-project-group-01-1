@@ -4,7 +4,6 @@ import main.CardCreator;
 import model.card.Card;
 import model.card.ability.Cleanse;
 import model.card.ability.Scorch;
-import model.card.special.spell.Buffer;
 import model.card.special.spell.Spell;
 import model.game.Game;
 

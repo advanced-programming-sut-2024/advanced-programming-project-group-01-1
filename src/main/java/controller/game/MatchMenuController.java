@@ -218,12 +218,34 @@ public class MatchMenuController {
 		return new Result("Turn passed successfully", true);
 	}
 
+	public static Result isAsking() {
+		if (Asker.isAsking()) return new Result("asking", true);
+		return new Result("not asking", false);
+	}
+
+	public static Result getAskerCards() {
+		if (!Asker.isAsking()) return new Result("not asking", false);
+		StringBuilder cards = new StringBuilder();
+		for (Card card : Asker.getRunning().getCards()) {
+			cards.append(card.getName()).append("\n").append(card.getDescription()).append("\n");
+		}
+		return new Result(cards.toString(), true);
+	}
+
+	public static Result getAskerPtr() {
+		if (!Asker.isAsking()) return new Result("not asking", false);
+		return new Result(String.valueOf(Asker.getRunning().getPtr()), true);
+	}
+
+	public static Result isAskerOptional() {
+		if (!Asker.isAsking()) return new Result("not asking", false);
+		if (Asker.getRunning().isOptional()) return new Result("optional", true);
+		return new Result("not optional", false);
+	}
+
 	public static Result selectCard(int index) {
 		if (Asker.select(index)) return new Result("success", true);
 		return new Result("failure", false);
-	}
-
-	public static void showSpace(Space tmp) {
 	}
 
 	public static void endGame() {
@@ -240,6 +262,12 @@ public class MatchMenuController {
 
 	public static boolean isGameDraw() {
 		return Game.getCurrentGame().isGameDraw();
+	}
+
+	public static Result getPowers() {
+		String powers = Game.getCurrentGame().getCurrentPower() + "\n"
+				+ Game.getCurrentGame().getOpponentPower() + "\n";
+		return new Result(powers, true);
 	}
 
 	public static Result getScores() {

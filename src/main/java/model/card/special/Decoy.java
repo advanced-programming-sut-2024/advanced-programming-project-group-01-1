@@ -1,15 +1,10 @@
 package model.card.special;
 
-import controller.game.MatchMenuController;
 import model.Asker;
 import model.card.Card;
-import model.card.ability.Ability;
 import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Row;
-import view.game.SelectionHandler;
-
-import java.util.ArrayList;
 
 public class Decoy extends Special {
 

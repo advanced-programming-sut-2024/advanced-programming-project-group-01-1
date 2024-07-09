@@ -2,15 +2,11 @@ package view.sign.login;
 
 import controller.sign.LoginMenusController;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.Result;
 import view.AlertMaker;
@@ -20,8 +16,6 @@ import view.Menuable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
-
-import static javafx.application.Application.launch;
 
 public class SetPasswordMenu extends Application implements Menuable {
 

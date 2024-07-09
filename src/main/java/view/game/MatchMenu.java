@@ -21,9 +21,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.CardCreator;
-import model.Asker;
 import model.Result;
-import model.game.Game;
 import view.Appview;
 import view.Constants;
 import view.Menuable;
@@ -34,8 +32,6 @@ import view.model.SmallUnit;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
-
-import static javafx.application.Application.launch;
 
 
 public class MatchMenu extends Application implements Menuable {
@@ -150,6 +146,22 @@ public class MatchMenu extends Application implements Menuable {
 		updateDecks();
 		updateLeader();
 		updateInfo();
+		System.out.println("fuck :: " + MatchMenuController.isAsking().isSuccessful());
+		if (MatchMenuController.isAsking().isSuccessful()) {
+			String[] cards = MatchMenuController.getAskerCards().getMessage().split("\n");
+			int ptr = Integer.parseInt(MatchMenuController.getAskerPtr().getMessage());
+			SelectionHandler selectionHandler = index -> {
+				MatchMenuController.selectCard(index);
+				updateScreen();
+			};
+			boolean isOptional = MatchMenuController.isAskerOptional().isSuccessful();
+			SelectPanel selectPanel = new SelectPanel(root, cards, ptr, selectionHandler, isOptional);
+			if (isOptional) {
+				selectPanel.getBackButton().setOnMouseClicked(event -> {
+					selectPanel.selectCard(-1);
+				});
+			}
+		}
 		if (MatchMenuController.isGameOver()) {
 			showEndGame();
 		}
@@ -337,11 +349,11 @@ public class MatchMenu extends Application implements Menuable {
 			rowPowerLabels[i].setText(String.valueOf(power));
 			rowPowerLabels[i].setStyle("-fx-font-size: 20");
 		}
-		int power = Game.getCurrentGame().getCurrentPower();
-		myPower.setText(String.valueOf(power));
+		String power = MatchMenuController.getPowers().getMessage().split("\n")[0];
+		myPower.setText(power);
 		myPower.setStyle("-fx-font-size: 20");
-		power = Game.getCurrentGame().getOpponentPower();
-		opponentPower.setText(String.valueOf(power));
+		power = MatchMenuController.getPowers().getMessage().split("\n")[1];
+		opponentPower.setText(power);
 		opponentPower.setStyle("-fx-font-size: 20");
 		String life = MatchMenuController.showPlayersLives().getMessage();
 		String[] lifeInfo = life.split("\\s");
@@ -682,7 +694,7 @@ public class MatchMenu extends Application implements Menuable {
 				result = new Result("Invalid command", false);
 			}
 		} else {
-			if (Asker.isAsking()) {
+			if (MatchMenuController.isAsking().isSuccessful()) {
 				if ((matcher = GameMenusCommands.SELECT_CARD.getMatcher(input)) != null) {
 					result = selectCard(matcher);
 				} else {

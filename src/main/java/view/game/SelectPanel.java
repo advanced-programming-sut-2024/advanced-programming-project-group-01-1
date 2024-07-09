@@ -9,9 +9,6 @@ import view.model.LargeCard;
 
 import java.util.ArrayList;
 
-
-
-
 public class SelectPanel {
 
     Pane root, selectPanelPane;

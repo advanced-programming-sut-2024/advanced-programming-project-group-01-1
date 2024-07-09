@@ -5,8 +5,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import view.Constants;
 
-import java.util.HashMap;
-
 public class LargeCard extends Rectangle {
 
     private final String name;

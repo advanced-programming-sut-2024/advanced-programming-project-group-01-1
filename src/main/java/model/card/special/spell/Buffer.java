@@ -2,7 +2,6 @@ package model.card.special.spell;
 
 import model.card.Card;
 import model.card.ability.Ability;
-import model.card.ability.Debuffer;
 import model.game.Game;
 import model.game.space.Row;
 import model.game.space.Space;

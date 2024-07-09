@@ -1,13 +1,10 @@
 package model.card.ability;
 
-import controller.game.MatchMenuController;
 import model.Asker;
 import model.card.Card;
 import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Space;
-
-import java.util.ArrayList;
 
 public enum Medic implements Ability {
 	INSTANCE;

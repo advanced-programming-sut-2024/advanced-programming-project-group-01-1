@@ -5,8 +5,9 @@ import model.game.Faction;
 import model.game.Game;
 import model.leader.*;
 
-import java.io.*;
-import java.nio.file.Paths;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class LeaderCreator {
 

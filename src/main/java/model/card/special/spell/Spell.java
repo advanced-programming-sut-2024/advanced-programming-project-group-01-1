@@ -1,6 +1,5 @@
 package model.card.special.spell;
 
-import model.card.Card;
 import model.card.ability.Ability;
 import model.card.special.Special;
 

@@ -1,7 +1,6 @@
 package model.card;
 
 import model.card.ability.Ability;
-import model.card.ability.Debuffer;
 import model.card.special.Decoy;
 import model.card.special.spell.Buffer;
 import model.card.special.spell.InstantSpell;
@@ -11,6 +10,7 @@ import model.game.Game;
 import model.game.space.Space;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public abstract class Card implements Cloneable, Serializable, Comparable<Card> {
 	protected final String name;
@@ -48,6 +48,7 @@ public abstract class Card implements Cloneable, Serializable, Comparable<Card> 
 		this.space.getCards().remove(this);
 		this.space = space;
 		this.space.getCards().add(this);
+		space.getCards().sort(Comparator.reverseOrder());
 	}
 
 	@Override

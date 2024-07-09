@@ -6,9 +6,6 @@ import model.game.CardMover;
 import model.game.Game;
 import model.game.space.Row;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public enum Spy implements Ability {
 	INSTANCE;
 

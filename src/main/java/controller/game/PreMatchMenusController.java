@@ -1,9 +1,6 @@
 package controller.game;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import javafx.application.Platform;
-import javafx.util.Pair;
 import main.CardCreator;
 import model.Result;
 import model.card.Card;
@@ -34,6 +31,10 @@ public class PreMatchMenusController {
 		return new Result("Entering Lobby", true);
 	}
 
+	public static Result doesPreferFirst() {
+		if (User.getLoggedInUser().getDeck().doesPreferFirst()) return new Result("does", true);
+		return new Result("doesn't", false);
+	}
 	public static Result showFactions() {
 		StringBuilder message = new StringBuilder();
 		for (Faction faction : Faction.values()) {
@@ -226,9 +227,9 @@ public class PreMatchMenusController {
 	}
 
 	public static Result startGame() {
-		Appview.setMenu(new MatchMenu());
 		Game.createGame(User.getLoggedInUser(), opponent);
 		Platform.runLater(MatchMenuController::handleVeto);
+		Appview.setMenu(new MatchMenu());
 		return new Result("Game Started Successfully", true);
 	}
 

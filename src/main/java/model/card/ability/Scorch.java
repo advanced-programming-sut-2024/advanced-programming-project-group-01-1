@@ -2,7 +2,6 @@ package model.card.ability;
 
 import model.card.Card;
 import model.card.special.spell.InstantSpell;
-import model.card.special.spell.Spell;
 import model.card.unit.Melee;
 import model.card.unit.Ranged;
 import model.card.unit.Siege;
@@ -10,7 +9,6 @@ import model.card.unit.Unit;
 import model.game.Game;
 import model.game.space.Row;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public enum Scorch implements Ability {

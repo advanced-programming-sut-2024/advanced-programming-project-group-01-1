@@ -1,12 +1,7 @@
 package model;
 
-import javafx.application.Platform;
-import javafx.scene.layout.Pane;
 import model.card.Card;
 import model.game.space.Space;
-import view.Appview;
-import view.game.MatchMenu;
-import view.game.SelectPanel;
 import view.game.SelectionHandler;
 
 import java.util.ArrayList;
@@ -23,7 +18,6 @@ public class Asker implements Runnable {
 	private final SelectionHandler selectionHandler;
 	private final boolean isOptional;
 	private final int ptr;
-	private SelectPanel selectPanel;
 	private final boolean isFast;
 
 	public Asker(Space space, boolean onlyUnit, boolean ignoreHero, boolean isRandom, SelectionHandler selectionHandler, boolean isOptional, int ptr) {
@@ -62,8 +56,23 @@ public class Asker implements Runnable {
 		this.run();
 	}
 
+	private Asker(Asker asker, SelectionHandler selectionHandler) {
+		this.space = asker.space;
+		this.onlyUnit = asker.onlyUnit;
+		this.ignoreHero = asker.ignoreHero;
+		this.isRandom = asker.isRandom;
+		this.selectionHandler = selectionHandler;
+		this.isOptional = asker.isOptional;
+		this.ptr = asker.ptr;
+		this.isFast = asker.isFast;
+	}
+
 	public static boolean isAsking() {
 		return running != null;
+	}
+
+	public static Asker getRunning() {
+		return running;
 	}
 
 	public static boolean select(int index) {
@@ -71,10 +80,30 @@ public class Asker implements Runnable {
 		return running.selectCard(index);
 	}
 
+	public Space getSpace() {
+		return space;
+	}
+
+	public ArrayList<Card> getCards() {
+		return cards = space.getCards(onlyUnit, ignoreHero);
+	}
+
+	public boolean isRandom() {
+		return isRandom;
+	}
+
+	public boolean isOptional() {
+		return isOptional;
+	}
+
+	public int getPtr() {
+		return ptr;
+	}
+
 	private boolean selectCard(int index) {
 		if (index < -1 || index >= cards.size()) return false;
 		if (index == -1 && !isOptional) return false;
-		Platform.runLater(() -> selectPanel.selectCard(index));
+		selectionHandler.handle(index);
 		return true;
 	}
 
@@ -85,40 +114,24 @@ public class Asker implements Runnable {
 				cards = space.getCards(onlyUnit, ignoreHero);
 				int randomIndex = (int) (Math.random() * cards.size());
 				selectionHandler.handle(randomIndex);
-				Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
 				askers.remove(this);
 			}
 			return;
 		}
 		askers.remove(this);
-		running = this;
 		cards = space.getCards(onlyUnit, ignoreHero);
 		if (cards.isEmpty()) {
-			running = null;
 			if (!askers.isEmpty()) askers.get(0).run();
 		} else if (isRandom) {
 			int randomIndex = (int) (Math.random() * cards.size());
 			selectionHandler.handle(randomIndex);
-			Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-			running = null;
 			if (!askers.isEmpty()) askers.get(0).run();
 		} else {
-			StringBuilder cardNames = new StringBuilder();
-			for (Card card : cards)
-				cardNames.append(card.getName()).append("\n").append(card.getDescription()).append("\n");
-			Platform.runLater(() -> {
-				selectPanel = new SelectPanel((Pane) Appview.getStage().getScene().getRoot(), cardNames.toString().split("\n"), ptr, index -> {
-					selectionHandler.handle(index);
-					Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-					running = null;
-					if (!askers.isEmpty()) askers.get(0).run();
-				}, isOptional);
-				if (isOptional) selectPanel.getBackButton().setOnMouseClicked(event -> {
-					selectPanel.selectCard(-1);
-					Platform.runLater(() -> ((MatchMenu) Appview.getMenu()).updateScreen());
-					running = null;
-					if (!askers.isEmpty()) askers.get(0).run();
-				});
+			final SelectionHandler selectionHandler = this.selectionHandler;
+			running = new Asker(this, index -> {
+				selectionHandler.handle(index);
+				running = null;
+				if (!askers.isEmpty()) askers.get(0).run();
 			});
 		}
 	}
