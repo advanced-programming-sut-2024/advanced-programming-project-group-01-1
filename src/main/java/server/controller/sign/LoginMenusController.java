@@ -1,7 +1,5 @@
 package server.controller.sign;
 
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
 import message.Result;
 import server.controller.enums.Validation;
 import server.model.Client;
@@ -13,11 +11,8 @@ import server.view.sign.login.LoginMenu;
 import server.view.sign.login.SetPasswordMenu;
 import server.view.sign.register.RegisterMenu;
 
-import jakarta.mail.*;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Random;
 
 public class LoginMenusController {
@@ -32,45 +27,31 @@ public class LoginMenusController {
 			System.out.println(User.getOnlineUsers().size());
 			if (User.getOnlineUsers().contains(user)) return new Result("User is already online", false);
 			if (!user.getPassword().equals(password)) return new Result("Password is incorrect", false);
-			User.getOnlineUsers().add(user);
 			client.setIdentity(user);
+			if (!user.isEmailVerified()) {
+				while(true) {
+					if (RegisterMenusController.sendEmailVerifier(user, client.getToken()))
+						break;
+				}
+				return new Result("You haven't confirm your email yet\n" +
+						"A new Confirmation Email sent to you", false);
+			}
+			User.getOnlineUsers().add(user);
 			client.setMenu(new AuthenticationMenu());
 			return new Result("Enter authentication code to login", true);
 		}
 	}
 
-	public static Result sendEmail(Client client) {
-		/*final String username = "gopasttenseofgo@gmail.com";
-		final String password = "icwx uork uhlz ltfj ";
-		Properties properties = new Properties();
-		properties.put("mail.smtp.host", "smtp.gmail.com");
-		properties.put("mail.smtp.port", "587");
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.starttls.enable", "true");
-		Session session = Session.getInstance(properties, new Authenticator() {
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
-			}
-		});
-		try {
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("gopasttenseofgo@gmail.com"));
-			message.setRecipient(Message.RecipientType.TO, new InternetAddress(client.getIdentity().getEmail()));
-			message.setSubject("Authentication Code");
-			StringBuilder code = new StringBuilder();
-			for (int i = 0;i < 6; i++) {
-				code.append(random.nextInt(10));
-			}
+	public static Result handle2FA(Client client) {
+		StringBuilder code = new StringBuilder();
+		for (int i = 0;i < 6; i++) {
+			code.append(random.nextInt(10));
+		}
+		if (EmailController.sendEmail(client.getIdentity().getEmail(), "Authentication Code", code.toString(), false)) {
 			loggingInClients.put(client, code.toString());
-			message.setText(code.toString());
-			Transport.send(message);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Result("email not sent", false);
-		}*/
-		loggingInClients.put(client, "123456");
-		return new Result("email sent", true);
+			return new Result("email sent", true);
+		}
+		return new Result("email not sent", false);
 	}
 
 

@@ -14,7 +14,7 @@ public class AuthenticationMenu implements Menuable {
 	public Result run(Client client, String command) {
 		Matcher matcher;
 		Result result;
-		if (LoginMenusCommands.SEND_EMAIL.getMatcher(command) != null) result = LoginMenusController.sendEmail(client);
+		if (LoginMenusCommands.SEND_EMAIL.getMatcher(command) != null) result = LoginMenusController.handle2FA(client);
 		else if ((matcher = LoginMenusCommands.CHECK_CODE.getMatcher(command)) != null) result = checkCode(client, matcher);
 		else if (LoginMenusCommands.SHOW_CURRENT_MENU.getMatcher(command) != null) result = new Result("Authentication Menu", true);
 		else if (LoginMenusCommands.EXIT.getMatcher(command) != null) result = LoginMenusController.exit(client);

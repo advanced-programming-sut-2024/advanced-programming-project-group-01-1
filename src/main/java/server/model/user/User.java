@@ -18,6 +18,7 @@ public class User implements Serializable {
 	private String nickname;
 	private String password;
 	private String email;
+	private boolean isEmailVerified = false;
 	private Question question;
 	private Deck deck;
 	private Game currentGame;
@@ -144,6 +145,14 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean isEmailVerified() {
+		return isEmailVerified;
+	}
+
+	public void setEmailVerified(boolean emailVerified) {
+		isEmailVerified = emailVerified;
 	}
 
 	public Question getQuestion() {

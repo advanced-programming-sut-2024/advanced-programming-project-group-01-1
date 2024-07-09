@@ -1,6 +1,7 @@
 package server.main;
 
 import server.controller.JsonController;
+import server.controller.sign.EmailController;
 
 import java.io.IOException;
 
@@ -10,6 +11,7 @@ public class ServerMain {
 		JsonController.load();
 		ServerWorker.setupServer(2357, 5);
 		try {
+			EmailController.runVerifier();
 			ServerWorker.listen();
 		} catch (IOException e) {
 			e.printStackTrace();

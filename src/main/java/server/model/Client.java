@@ -19,8 +19,10 @@ public class Client {
 
 	public Client() {
 		StringBuilder tmp = new StringBuilder();
-		while (clients.containsKey(tmp.toString())) tmp.append((char) random.nextInt(128));
+		for (int i = 0; i < 5 || clients.containsKey(tmp.toString()); i++)
+			tmp.append((char) (random.nextInt(26) + (random.nextBoolean() ? 'A' : 'a')));
 		token = tmp.toString();
+		System.out.println("baba bikhial " + token);
 		Menu = new LoginMenu();
 		identity = null;
 		isWaiting = false;

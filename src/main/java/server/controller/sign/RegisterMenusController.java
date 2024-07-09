@@ -9,7 +9,12 @@ import server.model.user.User;
 import server.view.sign.login.LoginMenu;
 import server.view.sign.register.PickQuestionMenu;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterMenusController {
+
+	private static final Map<String, User> verifiers = new HashMap<>();
 
 	public static Result register(Client client, String username, String password, String passwordConfirm, String nickname, String email) {
 		synchronized (User.getUsers()) {
@@ -37,9 +42,30 @@ public class RegisterMenusController {
 			else {
 				client.getIdentity().setQuestion(new Question(Question.questions[questionNumber], answer));
 				client.setMenu(new LoginMenu());
-				return new Result("Question picked successfully", true);
+				while (true) {
+					if (sendEmailVerifier(client.getIdentity(), client.getToken()))
+						break;
+				}
+				return new Result("Confirmation link is sent to your Email", true);
 			}
 		}
+	}
+
+	public static boolean sendEmailVerifier(User user, String token) {
+		verifiers.put(token, user);
+		String subject = "Email Verification";
+		String verificationLink = "http://localhost:8080/verify?token=" + token;
+		String body = "Hello dear " + user.getUsername() +
+				"\n<a href=\"" + verificationLink + "\">Click to verify your Email</a>";
+		return EmailController.sendEmail(user.getEmail(), subject, body, true);
+	}
+
+	public static boolean verify(String token) {
+		if (verifiers.containsKey(token)){
+			verifiers.get(token).setEmailVerified(true);
+			return true;
+		}
+		return false;
 	}
 
 	public static Result exit(Client client) {

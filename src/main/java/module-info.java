@@ -45,4 +45,5 @@ module w {
 	//opens java.util to com.google.gson, com.fasterxml.jackson.databind;
 	requires com.google.gson;
 	requires jakarta.mail;
+	requires jdk.httpserver;
 }
