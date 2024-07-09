@@ -56,7 +56,7 @@ public class ClientSocialMenu extends Application implements Menuable {
 				}
 			}
 		});
-		ClientUserMenusController.startUpdatingFriendlist(this);
+		ClientUserMenusController.startUpdatingFriendList(this);
 	}
 
 
