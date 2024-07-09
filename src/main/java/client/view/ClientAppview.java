@@ -34,4 +34,8 @@ public class ClientAppview {
 	public static String getMenuName() {
 		return menu.getClass().getSimpleName();
 	}
+
+	public static void setMenuOnMatchMenu(Menuable menu) {
+		ClientAppview.menu = menu;
+	}
 }

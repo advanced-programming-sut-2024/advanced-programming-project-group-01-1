@@ -58,6 +58,7 @@ public enum GameMenusCommands {
     SHOW_FACTION_GRAPHIC("show current faction for graphic"),
     SHOW_WEATHER_GRAPHIC("show weather for graphic"),
     GET_USERNAMES("get usernames"),
+    GET_DESCRIPTION("get description (?<cardName>.+)"),
     PASSED_STATE("passed state"),
     IS_LEADERS_DISABLE("is leaders disable"),
     IS_GAME_OVER("is game over"),

@@ -1,6 +1,7 @@
 package client.view.game;
 
 import client.controller.game.ClientMatchMenuController;
+import client.view.ClientAppview;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.application.Application;
@@ -20,14 +21,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import client.main.CardCreator;
 import message.Result;
-import client.view.ClientAppview;
 import client.view.Constants;
 import client.view.Menuable;
 import client.view.animation.CardMoving;
 import client.view.model.SmallCard;
 import client.view.model.SmallUnit;
+import message.SelectionHandler;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 
 	@Override
 	public void start(Stage stage) {
-		Appview.setStage(stage);
+		ClientAppview.setStage(stage);
 		URL url = getClass().getResource("/FXML/MatchMenu.fxml");
 		if (url == null){
 			System.out.println("Couldn't find file: FXML/MatchMenu.fxml");
@@ -135,7 +135,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		myLeaderPane.setOnMouseClicked(this::showLeader);
 		opponentLeaderPane.setOnMouseClicked(this::showSpace);
 		updateScreen();
-		Appview.setMenuOnMatchMenu(this);
+		ClientAppview.setMenuOnMatchMenu(this);
 	}
 
 	public void updateScreen() {
@@ -146,15 +146,15 @@ public class ClientMatchMenu extends Application implements Menuable {
 		updateDecks();
 		updateLeader();
 		updateInfo();
-		System.out.println("fuck :: " + MatchMenuController.isAsking().isSuccessful());
-		if (MatchMenuController.isAsking().isSuccessful()) {
-			String[] cards = MatchMenuController.getAskerCards().getMessage().split("\n");
-			int ptr = Integer.parseInt(MatchMenuController.getAskerPtr().getMessage());
+		System.out.println("fuck :: " + ClientMatchMenuController.isAsking().isSuccessful());
+		if (ClientMatchMenuController.isAsking().isSuccessful()) {
+			String[] cards = ClientMatchMenuController.getAskerCards().getMessage().split("\n");
+			int ptr = Integer.parseInt(ClientMatchMenuController.getAskerPtr().getMessage());
 			SelectionHandler selectionHandler = index -> {
-				MatchMenuController.selectCard(index);
+				ClientMatchMenuController.selectCard(index);
 				updateScreen();
 			};
-			boolean isOptional = MatchMenuController.isAskerOptional().isSuccessful();
+			boolean isOptional = ClientMatchMenuController.isAskerOptional().isSuccessful();
 			SelectPanel selectPanel = new SelectPanel(root, cards, ptr, selectionHandler, isOptional);
 			if (isOptional) {
 				selectPanel.getBackButton().setOnMouseClicked(event -> {
@@ -162,7 +162,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 				});
 			}
 		}
-		if (MatchMenuController.isGameOver()) {
+		if (ClientMatchMenuController.isGameOver()) {
 			showEndGame();
 		}
 	}
@@ -181,7 +181,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 			} else if (type.equals("leader")) {
 				cardDescription = Ability;
 			} else {
-				cardDescription = CardCreator.getCard(cardName).getDescription();
+				cardDescription = ClientMatchMenuController.getDescription(cardName);
 			}
 			if (type.equals("Melee") || type.equals("Ranged") || type.equals("Siege") || type.equals("Agile")) {
 				int power = Integer.parseInt(cardInfo[3].substring(7));
@@ -208,7 +208,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void updateHand() {
-		Result result = MatchMenuController.showHandForGraphic();
+		Result result = ClientMatchMenuController.showHandForGraphic();
 		if (result.getMessage().isEmpty()){
 			updateSpace(handPane, new String[]{}, null);
 			return;
@@ -234,7 +234,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 
 	public void updateRows() {
 		for (int i = 0; i < 6; i++) {
-			Result result = MatchMenuController.showRowForGraphic(i);
+			Result result = ClientMatchMenuController.showRowForGraphic(i);
 			if (result.getMessage().isEmpty()) {
 				updateSpace(rowPanes[i], new String[]{}, null);
 				updateSpace(rowBufferPanes[i], new String[]{}, null);
@@ -252,14 +252,14 @@ public class ClientMatchMenu extends Application implements Menuable {
 					updateSpace(rowPanes[i], cardsInfo, null);
 				}
 			}
-			if (MatchMenuController.isRowDebuffed(i)){
+			if (ClientMatchMenuController.isRowDebuffed(i)){
 				rowPanes[i].getChildren().add(weatherEffectPanes[i]);
 			}
 		}
 	}
 
 	public void updateWeather() {
-		Result result = MatchMenuController.showWeatherSystemForGraphic();
+		Result result = ClientMatchMenuController.showWeatherSystemForGraphic();
 		if (result.getMessage().isEmpty()){
 			updateSpace(weatherPane, new String[]{}, null);
 			return;
@@ -269,7 +269,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void updateDiscardPiles() {
-		Result result = MatchMenuController.showDiscardPilesForGraphic();
+		Result result = ClientMatchMenuController.showDiscardPilesForGraphic();
 		String[] cardsInfo = result.getMessage().split("\n------------------\n");
 		int idx = 0;
 		for (int i = 0; i < cardsInfo.length; i++) {
@@ -300,13 +300,13 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void updateDecks() {
-		Result result = MatchMenuController.remainingInDecksForGraphic();
+		Result result = ClientMatchMenuController.remainingInDecksForGraphic();
 		String[] cardsInfo = result.getMessage().split("\n");
-		result = MatchMenuController.showFactionsForGraphic();
+		result = ClientMatchMenuController.showFactionsForGraphic();
 		String[] factionsInfo = result.getMessage().split("\n");
 		String[] myDeckInfo = new String[Integer.parseInt(cardsInfo[0])];
 		myDeckNumber.setText(cardsInfo[0]);
-		String[] userNames = MatchMenuController.getUsernames().getMessage().split("\n");
+		String[] userNames = ClientMatchMenuController.getUsernames().getMessage().split("\n");
 		for (int i = 0; i < myDeckInfo.length; i++) {
 			myDeckInfo[i] = factionsInfo[0].substring(9) + '\n' + "type: faction\nAbility: none\n" + "unique code: " + userNames[0] + "@" + i;
 		}
@@ -320,7 +320,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void updateLeader() {
-		String leaders = MatchMenuController.showLeadersForGraphic().getMessage();
+		String leaders = ClientMatchMenuController.showLeadersForGraphic().getMessage();
 		String[] leadersInfo = leaders.split("\n------------------\n");
 		for (int i = 0; i < 2; i++){
 			String[] leaderInfo = leadersInfo[i].split("\n");
@@ -328,7 +328,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 		updateSpace(myLeaderPane, new String[]{leadersInfo[0]}, null);
 		updateSpace(opponentLeaderPane, new String[]{leadersInfo[1]}, null);
-		String[] leadersDisables = MatchMenuController.isLeadersDisable().getMessage().split("\n");
+		String[] leadersDisables = ClientMatchMenuController.isLeadersDisable().getMessage().split("\n");
 		if (Boolean.parseBoolean(leadersDisables[0])) {
 			myLeaderPane.getChildren().get(0).setStyle("-fx-opacity: 0.5");
 		}
@@ -349,13 +349,13 @@ public class ClientMatchMenu extends Application implements Menuable {
 			rowPowerLabels[i].setText(String.valueOf(power));
 			rowPowerLabels[i].setStyle("-fx-font-size: 20");
 		}
-		String power = MatchMenuController.getPowers().getMessage().split("\n")[0];
+		String power = ClientMatchMenuController.getPowers().getMessage().split("\n")[0];
 		myPower.setText(power);
 		myPower.setStyle("-fx-font-size: 20");
-		power = MatchMenuController.getPowers().getMessage().split("\n")[1];
+		power = ClientMatchMenuController.getPowers().getMessage().split("\n")[1];
 		opponentPower.setText(power);
 		opponentPower.setStyle("-fx-font-size: 20");
-		String life = MatchMenuController.showPlayersLives().getMessage();
+		String life = ClientMatchMenuController.showPlayersLives().getMessage();
 		String[] lifeInfo = life.split("\\s");
 		int myLifeCount = Integer.parseInt(lifeInfo[1]);
 		int opponentLifeCount = Integer.parseInt(lifeInfo[3]);
@@ -371,23 +371,23 @@ public class ClientMatchMenu extends Application implements Menuable {
 					(count < opponentLifeCount ? "on" : "off") + ".png").toString()));
 			count++;
 		}
-		String handSize = MatchMenuController.showHandSize().getMessage();
+		String handSize = ClientMatchMenuController.showHandSize().getMessage();
 		String[] handSizeInfo = handSize.split("\\s");
 		myHandSize.setText(handSizeInfo[0]);
 		opponentHandSize.setText(handSizeInfo[2]);
 		meAhead.setVisible(Integer.parseInt(myPower.getText()) > Integer.parseInt(opponentPower.getText()));
 		opponentAhead.setVisible(Integer.parseInt(myPower.getText()) < Integer.parseInt(opponentPower.getText()));
-		String factions = MatchMenuController.showFactionsForGraphic().getMessage();
+		String factions = ClientMatchMenuController.showFactionsForGraphic().getMessage();
 		String[] factionsInfo = factions.split("\n");
 		myFactionNameField.setText(factionsInfo[0].substring(9));
 		opponentFactionNameField.setText(factionsInfo[2].substring(9));
 		myFactionField.setImage(new Image(this.getClass().getResource("/images/icons/deck_shield_" + factionsInfo[0].substring(9) + ".png").toString()));
 		opponentFactionField.setImage(new Image(this.getClass().getResource("/images/icons/deck_shield_" + factionsInfo[2].substring(9) + ".png").toString()));
-		String usernames = MatchMenuController.getUsernames().getMessage();
+		String usernames = ClientMatchMenuController.getUsernames().getMessage();
 		String[] usernamesInfo = usernames.split("\n");
 		myUsernameField.setText(usernamesInfo[0]);
 		opponentUsernameField.setText(usernamesInfo[1]);
-		String[] passedInfo = MatchMenuController.passedState().getMessage().split("\n");
+		String[] passedInfo = ClientMatchMenuController.passedState().getMessage().split("\n");
 		myPassedField.setVisible(Boolean.parseBoolean(passedInfo[0]));
 		opponentPassedField.setVisible(Boolean.parseBoolean(passedInfo[1]));
 	}
@@ -398,14 +398,14 @@ public class ClientMatchMenu extends Application implements Menuable {
 		pane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
 		pane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.9);");
 		pane.setOnMouseClicked(event -> {
-			MatchMenuController.endGame();
+			ClientMatchMenuController.endGame();
 			updateScreen();
 		});
 
 		ImageView image;
-		if (MatchMenuController.isGameWin()) {
+		if (ClientMatchMenuController.isGameWin()) {
 			image = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/end_win.png")));
-		} else if (MatchMenuController.isGameDraw()) {
+		} else if (ClientMatchMenuController.isGameDraw()) {
 			image = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/end_draw.png")));
 		} else {
 			image = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/end_lose.png")));
@@ -434,7 +434,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 						labels[i][j].setText("round " + j);
 					}
 				} else if (j == 0) {
-					labels[i][j].setText(MatchMenuController.getUsernames().getMessage().split("\n")[i - 1]);
+					labels[i][j].setText(ClientMatchMenuController.getUsernames().getMessage().split("\n")[i - 1]);
 				} else {
 					labels[i][j].setText("-");
 				}
@@ -442,7 +442,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 			}
 		}
 
-		String result = MatchMenuController.getScores().getMessage();
+		String result = ClientMatchMenuController.getScores().getMessage();
 		String[] scores = result.split("\n");
 		for (int i = 0; i < scores.length; i += 2) {
 			int myScore = Integer.parseInt(scores[i]);
@@ -590,7 +590,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 			}
 			if (abilityIcon == null) {
 				root.getChildren().remove(unclickablePane);
-				Result result = MatchMenuController.placeCard(idx, row);
+				Result result = ClientMatchMenuController.placeCard(idx, row);
 				updateScreen();
 			}
 			else {
@@ -602,7 +602,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 				fadeTransition.setToValue(0);
 				fadeTransition.setOnFinished(e1 -> {
 					root.getChildren().remove(unclickablePane);
-					Result result = MatchMenuController.placeCard(idx, row);
+					Result result = ClientMatchMenuController.placeCard(idx, row);
 					updateScreen();
 				});
 				fadeTransition.play();
@@ -648,13 +648,13 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void useLeader(int idx) {
-		Result result = MatchMenuController.useLeaderAbility();
+		Result result = ClientMatchMenuController.useLeaderAbility();
 		updateScreen();
 	}
 
 	public void passTurn(MouseEvent mouseEvent) {
 		clearSelectedCard();
-		MatchMenuController.passTurn();
+		ClientMatchMenuController.passTurn();
 		updateScreen();
 	}
 
@@ -671,30 +671,30 @@ public class ClientMatchMenu extends Application implements Menuable {
 				isCheating = false;
 				result = new Result("Cheat menu deactivated", true);
 			} else if (input.equals("clear weather")) {
-				result = MatchMenuController.cheatClearWeather();
+				result = ClientMatchMenuController.cheatClearWeather();
 			} else if (input.equals("recover crystal")) {
-				result = MatchMenuController.cheatHeal();
+				result = ClientMatchMenuController.cheatHeal();
 			} else if (input.equals("move from deck to hand")) {
-				result = MatchMenuController.cheatMoveFromDeckToHand();
+				result = ClientMatchMenuController.cheatMoveFromDeckToHand();
 			} else if ((matcher = GameMenusCommands.CHEAT_ADD_POWER.getMatcher(input)) != null) {
 				int power = Integer.parseInt(matcher.group("power"));
-				result = MatchMenuController.cheatAddPower(power);
+				result = ClientMatchMenuController.cheatAddPower(power);
 			} else if ((matcher = GameMenusCommands.CHEAT_ADD_CARD.getMatcher(input)) != null) {
 				String cardName = matcher.group("cardName");
-				result = MatchMenuController.cheatAddCard(cardName);
+				result = ClientMatchMenuController.cheatAddCard(cardName);
 			} else if ((matcher = GameMenusCommands.CHEAT_DEBUFF_ROW.getMatcher(input)) != null) {
 				int rowNumber = Integer.parseInt(matcher.group("rowNumber"));
-				result = MatchMenuController.cheatDebuffRow(rowNumber);
+				result = ClientMatchMenuController.cheatDebuffRow(rowNumber);
 			} else if ((matcher = GameMenusCommands.CHEAT_CLEAR_ROW.getMatcher(input)) != null) {
 				int rowNumber = Integer.parseInt(matcher.group("rowNumber"));
-				result = MatchMenuController.cheatClearRow(rowNumber);
+				result = ClientMatchMenuController.cheatClearRow(rowNumber);
 			} else if (input.equals("show current menu")) {
 				result = new Result("cheat menu", true);
 			} else {
 				result = new Result("Invalid command", false);
 			}
 		} else {
-			if (MatchMenuController.isAsking().isSuccessful()) {
+			if (ClientMatchMenuController.isAsking().isSuccessful()) {
 				if ((matcher = GameMenusCommands.SELECT_CARD.getMatcher(input)) != null) {
 					result = selectCard(matcher);
 				} else {
@@ -703,35 +703,35 @@ public class ClientMatchMenu extends Application implements Menuable {
 			} else if ((matcher = GameMenusCommands.IN_HAND_DECK.getMatcher(input)) != null) {
 				result = showHand(matcher);
 			} else if ((matcher = GameMenusCommands.REMAINING_CARDS_TO_PLAY.getMatcher(input)) != null) {
-				result = MatchMenuController.remainingInDeck();
+				result = ClientMatchMenuController.remainingInDeck();
 			} else if ((matcher = GameMenusCommands.OUT_OF_PLAY_CARDS.getMatcher(input)) != null) {
-				result = MatchMenuController.showDiscordPiles();
+				result = ClientMatchMenuController.showDiscordPiles();
 			} else if ((matcher = GameMenusCommands.CARDS_IN_ROW.getMatcher(input)) != null) {
 				result = showRow(matcher);
 			} else if ((matcher = GameMenusCommands.SPELLS_IN_PLAY.getMatcher(input)) != null) {
-				result = MatchMenuController.showWeatherSystem();
+				result = ClientMatchMenuController.showWeatherSystem();
 			} else if ((matcher = GameMenusCommands.PLACE_CARD.getMatcher(input)) != null) {
 				result = placeCard(matcher);
 			} else if ((matcher = GameMenusCommands.SHOW_COMMANDER.getMatcher(input)) != null) {
-				result = MatchMenuController.showLeader();
+				result = ClientMatchMenuController.showLeader();
 			} else if ((matcher = GameMenusCommands.COMMANDER_POWER_PLAY.getMatcher(input)) != null) {
-				result = MatchMenuController.useLeaderAbility();
+				result = ClientMatchMenuController.useLeaderAbility();
 			} else if ((matcher = GameMenusCommands.SHOW_PLAYERS_INFO.getMatcher(input)) != null) {
-				result = MatchMenuController.showPlayersInfo();
+				result = ClientMatchMenuController.showPlayersInfo();
 			} else if ((matcher = GameMenusCommands.SHOW_PLAYERS_LIVES.getMatcher(input)) != null) {
-				result = MatchMenuController.showPlayersLives();
+				result = ClientMatchMenuController.showPlayersLives();
 			} else if ((matcher = GameMenusCommands.SHOW_NUMBER_OF_CARDS_IN_HAND.getMatcher(input)) != null) {
-				result = MatchMenuController.showHandSize();
+				result = ClientMatchMenuController.showHandSize();
 			} else if ((matcher = GameMenusCommands.SHOW_TURN_INFO.getMatcher(input)) != null) {
-				result = MatchMenuController.showTurnInfo();
+				result = ClientMatchMenuController.showTurnInfo();
 			} else if ((matcher = GameMenusCommands.SHOW_TOTAL_SCORE.getMatcher(input)) != null) {
-				result = MatchMenuController.showTotalPower();
+				result = ClientMatchMenuController.showTotalPower();
 			} else if ((matcher = GameMenusCommands.SHOW_TOTAL_SCORE_OF_ROW.getMatcher(input)) != null) {
 				result = showTotalScoreOfRow(matcher);
 			} else if ((matcher = GameMenusCommands.PASS_ROUND.getMatcher(input)) != null) {
-				result = MatchMenuController.passTurn();
+				result = ClientMatchMenuController.passTurn();
 			} else if ((matcher = GameMenusCommands.SHOW_HAND.getMatcher(input)) != null) {
-				result = MatchMenuController.showCurrentHand();
+				result = ClientMatchMenuController.showCurrentHand();
 			} else if (GameMenusCommands.CHEAT_MENU.getMatcher(input) != null) {
 				isCheating = true;
 				result = new Result("Cheat menu activated", true);
@@ -749,30 +749,30 @@ public class ClientMatchMenu extends Application implements Menuable {
 		boolean option = matcher.group("option") != null;
 		if (option) {
 			int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
-			return MatchMenuController.showHand(cardNumber);
+			return ClientMatchMenuController.showHand(cardNumber);
 		} else {
-			return MatchMenuController.showHand(-1);
+			return ClientMatchMenuController.showHand(-1);
 		}
 	}
 
 	private Result showRow(Matcher matcher) {
 		int rowNumber = Integer.parseInt(matcher.group("rowNumber"));
-		return MatchMenuController.showRow(rowNumber);
+		return ClientMatchMenuController.showRow(rowNumber);
 	}
 
 	private Result placeCard(Matcher matcher) {
 		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
 		int rowNumber = matcher.group("rowNumber") != null ? Integer.parseInt(matcher.group("rowNumber")) : -1;
-		return MatchMenuController.placeCard(cardNumber, rowNumber);
+		return ClientMatchMenuController.placeCard(cardNumber, rowNumber);
 	}
 
 	private Result showTotalScoreOfRow(Matcher matcher) {
 		int rowNumber = Integer.parseInt(matcher.group("rowNumber"));
-		return MatchMenuController.showRowPower(rowNumber);
+		return ClientMatchMenuController.showRowPower(rowNumber);
 	}
 
 	private Result selectCard(Matcher matcher) {
 		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
-		return MatchMenuController.selectCard(cardNumber);
+		return ClientMatchMenuController.selectCard(cardNumber);
 	}
 }
