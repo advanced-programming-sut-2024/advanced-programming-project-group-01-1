@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import message.GameMenusCommands;
 import message.Result;
 import client.view.Constants;
 import client.view.Menuable;
@@ -181,7 +182,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 			} else if (type.equals("leader")) {
 				cardDescription = Ability;
 			} else {
-				cardDescription = ClientMatchMenuController.getDescription(cardName);
+				cardDescription = ClientMatchMenuController.getDescription(cardName).getMessage();
 			}
 			if (type.equals("Melee") || type.equals("Ranged") || type.equals("Siege") || type.equals("Agile")) {
 				int power = Integer.parseInt(cardInfo[3].substring(7));
@@ -663,7 +664,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	 */
 
 	@Override
-	public void run(String input) {
+	public Result run(String input) {
 		Result result = null;
 		Matcher matcher;
 		if (isCheating) {
@@ -739,10 +740,8 @@ public class ClientMatchMenu extends Application implements Menuable {
 				result = new Result("Invalid command", false);
 			}
 		}
-		if (result != null) {
-			System.out.println(result);
-		}
 		Platform.runLater(this::updateScreen);
+		return result;
 	}
 
 	private Result showHand(Matcher matcher) {

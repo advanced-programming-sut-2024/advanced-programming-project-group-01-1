@@ -210,6 +210,12 @@ public class ClientMatchMenuController {
 		return TCPClient.send(command);
 	}
 
+	public static Result getDescription(String cardName) {
+		String command = GameMenusCommands.GET_DESCRIPTION.getPattern();
+		command = command.replace("(?<cardName>.+)", cardName);
+		return TCPClient.send(command);
+	}
+
 	public static Result cheatClearWeather() {
 		String command = GameMenusCommands.CHEAT_CLEAR_WEATHER.getPattern();
 		return TCPClient.send(command);
