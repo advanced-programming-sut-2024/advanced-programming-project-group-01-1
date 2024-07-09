@@ -1,6 +1,11 @@
 package controller.game;
 
+import client.main.TCPClient;
+import client.view.ClientAppview;
+import client.view.game.prematch.ClientMatchFinderMenu;
 import main.CardCreator;
+import message.GameMenusCommands;
+import message.Result;
 import model.Asker;
 import model.Result;
 import model.card.Card;
@@ -8,320 +13,252 @@ import model.card.special.spell.Buffer;
 import model.game.CardMover;
 import model.game.Game;
 import model.game.space.Space;
+import server.model.game.Game;
 import view.Appview;
 import view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
 
-public class MatchMenuController {
+public class ClientMatchMenuController {
 
 	public static boolean isRowDebuffed(int rowNumber) {
-		return Game.getCurrentGame().getRow(rowNumber).isDebuffed();
-	}
-
-	private static void vetoCard(Card card) {
-		new Asker(Game.getCurrentGame().getCurrentDeck(), false, false, true, index -> {
-			Card card1 = Game.getCurrentGame().getCurrentDeck().getCards().get(index);
-			card1.updateSpace(Game.getCurrentGame().getCurrentHand());
-		}, false, 0, true);
-		card.updateSpace(Game.getCurrentGame().getCurrentDeck());
-	}
-
-	public static void handleVeto() {
-		if (!Game.getCurrentGame().getCurrentLeader().isManual()) Game.getCurrentGame().getCurrentLeader().act();
-		final Space hand = Game.getCurrentGame().getCurrentHand();
-		new Asker(hand, false, false, false, index -> {
-			if (index != -1) {
-				vetoCard(hand.getCards().get(index));
-				new Asker(hand, false, false, false, index1 -> {
-					if (index1 != -1) vetoCard(hand.getCards().get(index1));
-					Game.getCurrentGame().changeTurn();
-					if (!Game.getCurrentGame().getCurrentLeader().isManual())
-						Game.getCurrentGame().getCurrentLeader().act();
-				}, true, index, true);
-			} else {
-				Game.getCurrentGame().changeTurn();
-				if (!Game.getCurrentGame().getCurrentLeader().isManual())
-					Game.getCurrentGame().getCurrentLeader().act();
-			}
-		}, true, 0);
-		final Space hand1 = Game.getCurrentGame().getSpaceById(Game.OPPONENT_HAND);
-		new Asker(hand1, false, false, false, index -> {
-			if (index != -1) {
-				vetoCard(hand1.getCards().get(index));
-				new Asker(hand1, false, false, false, index1 -> {
-					if (index1 != -1) vetoCard(hand1.getCards().get(index1));
-					Game.getCurrentGame().changeTurn();
-				}, true, index, true);
-			} else Game.getCurrentGame().changeTurn();
-		}, true, 0);
+		String command = GameMenusCommands.IS_ROW_DEBUFFED.getPattern();
+		command = command.replace("(?<rowNumber>\\d+)", String.valueOf(rowNumber));
+		return TCPClient.send(command).isSuccessful();
 	}
 
 	public static Result getUsernames() {
-		return new Result(Game.getCurrentGame().getCurrentUsername() + "\n" + Game.getCurrentGame().getOpponentUsername() + "\n", true);
+		String command = GameMenusCommands.GET_USERNAMES.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showHand(int number) {
-		StringBuilder hand = new StringBuilder();
-		if (number >= 0) hand.append(Game.getCurrentGame().getCurrentHand().getCards().get(number).toString());
-		else hand.append(Game.getCurrentGame().getCurrentHand().toString());
-		return new Result(hand.toString(), true);
+		String command = GameMenusCommands.IN_HAND_DECK.getPattern();
+		command = command.replace("(?<option>-option)", "");
+		command = command.replace("(?<cardNumber>\\d+)", String.valueOf(number));
+		return TCPClient.send(command);
 	}
 
 	public static Result showHandForGraphic() {
-		StringBuilder hand = new StringBuilder();
-		for (Card card : Game.getCurrentGame().getCurrentHand().getCards()) {
-			hand.append(card.toString()).append("\n");
-			hand.append("unique code: ").append(card.toSuperString());
-			hand.append("\n------------------\n");
-		}
-		return new Result(hand.toString(), true);
+		String command = GameMenusCommands.SHOW_CARDS_GRAPHIC.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result remainingInDeck() {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()), true);
+		String command = GameMenusCommands.REMAINING_CARDS_TO_PLAY.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result remainingInDecksForGraphic() {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentDeck().getCards().size()) + "\n" + Game.getCurrentGame().getOpponentDeck().getCards().size(), true);
+		String command = GameMenusCommands.SHOW_DECK_GRAPHIC.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showDiscordPiles() {
-		return new Result("Current Discard Pile:\n" + Game.getCurrentGame().getCurrentDiscardPile() + "Opponent Discard Pile:\n" + Game.getCurrentGame().getOpponentDiscardPile(), true);
+		String command = GameMenusCommands.OUT_OF_PLAY_CARDS.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showDiscardPilesForGraphic() {
-		StringBuilder discardPiles = new StringBuilder();
-		discardPiles.append("Current Discard Pile:\n");
-		for (Card card : Game.getCurrentGame().getCurrentDiscardPile().getCards()) {
-			discardPiles.append(card.toString()).append("\n");
-			discardPiles.append("unique code: ").append(card.toSuperString());
-			discardPiles.append("\n------------------\n");
-		}
-		discardPiles.append("\n------------------\n");
-		discardPiles.append("Opponent Discard Pile:\n");
-		for (Card card : Game.getCurrentGame().getOpponentDiscardPile().getCards()) {
-			discardPiles.append(card.toString()).append("\n");
-			discardPiles.append("unique code: ").append(card.toSuperString());
-			discardPiles.append("\n------------------\n");
-		}
-		return new Result(discardPiles.toString(), true);
+		String command = GameMenusCommands.SHOW_PILE_GRAPHIC.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showRow(int rowNumber) {
-		return new Result(Game.getCurrentGame().getRow(rowNumber).toString(), true);
+		String command = GameMenusCommands.CARDS_IN_ROW.getPattern();
+		command = command.replace("(?<rowNumber>(0|1|2|3|4|5))", String.valueOf(rowNumber));
+		return TCPClient.send(command);
 	}
 
 	public static Result showRowForGraphic(int rowNumber) {
-		StringBuilder row = new StringBuilder();
-		Buffer buffer = Game.getCurrentGame().getRow(rowNumber).getBuffer();
-		if (buffer != null) {
-			row.append("Buffer: ").append(buffer.toString()).append("\n");
-			row.append("unique code: ").append(buffer.toSuperString());
-			row.append("\n------------------\n");
-		}
-		for (Card card : Game.getCurrentGame().getRow(rowNumber).getCards()) {
-			row.append(card.toString()).append("\n");
-			row.append("unique code: ").append(card.toSuperString());
-			row.append("\n------------------\n");
-		}
-		return new Result(row.toString(), true);
+		String command = GameMenusCommands.SHOW_ROW_GRAPHIC.getPattern();
+		command = command.replace("(?<rowNumber>\\d+)", String.valueOf(rowNumber));
+		return TCPClient.send(command);
 	}
 
 	public static Result showWeatherSystem() {
-		return new Result(Game.getCurrentGame().getCurrentWeatherSystem() + "\n" + Game.getCurrentGame().getOpponentWeatherSystem(), true);
+		String command = GameMenusCommands.SPELLS_IN_PLAY.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showWeatherSystemForGraphic() {
-		StringBuilder weather = new StringBuilder();
-		for (Card card : Game.getCurrentGame().getCurrentWeatherSystem().getCards()) {
-			weather.append(card.toString()).append("\n");
-			weather.append("unique code: ").append(card.toSuperString());
-			weather.append("\n------------------\n");
-		}
-		for (Card card : Game.getCurrentGame().getOpponentWeatherSystem().getCards()) {
-			weather.append(card.toString()).append("\n");
-			weather.append("unique code: ").append(card.toSuperString());
-			weather.append("\n------------------\n");
-		}
-		return new Result(weather.toString(), true);
+		String command = GameMenusCommands.SHOW_WEATHER_GRAPHIC.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result placeCard(int cardNumber, int rowNumber) {
-		try {
-			Game.getCurrentGame().placeCard(Game.getCurrentGame().getCurrentHand().getCards().get(cardNumber), rowNumber);
-			return new Result("Card placed successfully", true);
-		} catch (Exception e) {
-			return new Result(e.getMessage(), false);
-		}
+		String command = GameMenusCommands.PLACE_CARD.getPattern();
+		command = command.replace("(?<cardNumber>\\d+)", String.valueOf(cardNumber));
+		command = command.replace("(?<rowNumber>\\d+)", String.valueOf(rowNumber));
+		return TCPClient.send(command);
 	}
 
 	public static Result showLeader() {
-		return new Result(Game.getCurrentGame().getCurrentLeader().toString(), true);
+		String command = GameMenusCommands.SHOW_COMMANDER.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showLeadersForGraphic() {
-		return new Result(Game.getCurrentGame().getCurrentLeader().toString() + "\n" + "unique code: " + Game.getCurrentGame().getCurrentLeader().toSuperString() + "\n------------------\n" + Game.getCurrentGame().getOpponentLeader().toString() + "\n" + "unique code: " + Game.getCurrentGame().getOpponentLeader().toSuperString(), true);
+		String command = GameMenusCommands.SHOW_LEADER_GRAPHIC.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result isLeadersDisable() {
-		return new Result(Game.getCurrentGame().getCurrentLeader().isDisable() + "\n" + Game.getCurrentGame().getOpponentLeader().isDisable(), true);
+		String command = GameMenusCommands.IS_LEADERS_DISABLE.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result useLeaderAbility() {
-		try {
-			Game.getCurrentGame().useLeaderAbility();
-			return new Result("Leader ability played successfully", true);
-		} catch (Exception e) {
-			return new Result(e.getMessage(), false);
-		}
+		String command = GameMenusCommands.COMMANDER_POWER_PLAY.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result passedState() {
-		return new Result(Game.getCurrentGame().hasPassed() + "\n" + Game.getCurrentGame().hasOpponentPassed(), true);
+		String command = GameMenusCommands.PASSED_STATE.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showFactionsForGraphic() {
-		return new Result(Game.getCurrentGame().getCurrentFaction() + "\n" + Game.getCurrentGame().getOpponentFaction(), true);
+		String command = GameMenusCommands.SHOW_FACTION_GRAPHIC.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showPlayersInfo() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrent().getUsername() + " " + Game.getCurrentGame().getCurrentFaction() + "\n" + "Opponent: " + Game.getCurrentGame().getOpponent().getUsername() + " " + Game.getCurrentGame().getOpponentFaction(), true);
+		String command = GameMenusCommands.SHOW_PLAYERS_INFO.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showPlayersLives() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrentLife() + "\n" + "Opponent: " + Game.getCurrentGame().getOpponentLife(), true);
+		String command = GameMenusCommands.SHOW_PLAYERS_LIVES.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showHandSize() {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size() + " - " + Game.getCurrentGame().getOpponentNumberOfCardsInHand()), true);
+		String command = GameMenusCommands.SHOW_NUMBER_OF_CARDS_IN_HAND.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showCurrentHand() {
-		return new Result(Game.getCurrentGame().getCurrentHand().toString(), true);
+		String command = GameMenusCommands.SHOW_CURRENT_HAND.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showTurnInfo() {
-		return new Result(Game.getCurrentGame().getCurrent().getUsername(), true);
+		String command = GameMenusCommands.SHOW_TURN_INFO.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showTotalPower() {
-		return new Result("Current: " + Game.getCurrentGame().getCurrentPower() + "\n" + "Opponent: " + Game.getCurrentGame().getOpponentPower(), true);
+		String command = GameMenusCommands.SHOW_TOTAL_SCORE.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result showRowPower(int rowNumber) {
-		return new Result(String.valueOf(Game.getCurrentGame().getRow(rowNumber).getSumOfPowers()), true);
+		String command = GameMenusCommands.SHOW_TOTAL_SCORE_OF_ROW.getPattern();
+		command = command.replace("(?<rowNumber>\\d+)", String.valueOf(rowNumber));
+		return TCPClient.send(command);
 	}
 
 	public static Result passTurn() {
-		Game.getCurrentGame().passTurn();
-		return new Result("Turn passed successfully", true);
+		String command = GameMenusCommands.PASS_ROUND.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result isAsking() {
-		if (Asker.isAsking()) return new Result("asking", true);
-		return new Result("not asking", false);
+		String command = GameMenusCommands.IS_ASKING.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result getAskerCards() {
-		if (!Asker.isAsking()) return new Result("not asking", false);
-		StringBuilder cards = new StringBuilder();
-		for (Card card : Asker.getRunning().getCards()) {
-			cards.append(card.getName()).append("\n").append(card.getDescription()).append("\n");
-		}
-		return new Result(cards.toString(), true);
+		String command = GameMenusCommands.GET_ASKER_CARDS.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result getAskerPtr() {
-		if (!Asker.isAsking()) return new Result("not asking", false);
-		return new Result(String.valueOf(Asker.getRunning().getPtr()), true);
+		String command = GameMenusCommands.GET_ASKER_PTR.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result isAskerOptional() {
-		if (!Asker.isAsking()) return new Result("not asking", false);
-		if (Asker.getRunning().isOptional()) return new Result("optional", true);
-		return new Result("not optional", false);
+		String command = GameMenusCommands.IS_ASKER_OPTIONAL.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result selectCard(int index) {
-		if (Asker.select(index)) return new Result("success", true);
-		return new Result("failure", false);
+		String command = GameMenusCommands.ASKER_SELECT_CARD.getPattern();
+		command = command.replace("(?<cardNumber>\\d+)", String.valueOf(index));
+		return TCPClient.send(command);
 	}
 
 	public static void endGame() {
-		Appview.setMenu(new MatchFinderMenu());
+		String command = GameMenusCommands.END_GAME.getPattern();
+		Result result = TCPClient.send(command);
+		if (result.isSuccessful()) {
+			ClientAppview.setMenu(new ClientMatchFinderMenu());
+		}
 	}
 
 	public static boolean isGameOver() {
-		return Game.getCurrentGame().isGameOver();
+		String command = GameMenusCommands.IS_GAME_OVER.getPattern();
+		return TCPClient.send(command).isSuccessful();
 	}
 
 	public static boolean isGameWin() {
-		return Game.getCurrentGame().isGameWin();
+		String command = GameMenusCommands.IS_GAME_WIN.getPattern();
+		return TCPClient.send(command).isSuccessful();
 	}
 
 	public static boolean isGameDraw() {
-		return Game.getCurrentGame().isGameDraw();
+		String command = GameMenusCommands.IS_GAME_DRAW.getPattern();
+		return TCPClient.send(command).isSuccessful();
 	}
 
 	public static Result getPowers() {
-		String powers = Game.getCurrentGame().getCurrentPower() + "\n"
-				+ Game.getCurrentGame().getOpponentPower() + "\n";
-		return new Result(powers, true);
+		String command = GameMenusCommands.GET_POWERS.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result getScores() {
-		ArrayList<Integer> scores = Game.getCurrentGame().getCurrentScores();
-		ArrayList<Integer> opponentScores = Game.getCurrentGame().getOpponentScores();
-		StringBuilder result = new StringBuilder();
-		for (int i = 0; i < scores.size(); i++) {
-			result.append(scores.get(i)).append("\n").append(opponentScores.get(i)).append("\n");
-		}
-		return new Result(result.toString(), true);
+		String command = GameMenusCommands.GET_SCORES.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result cheatClearWeather() {
-		Game.getCurrentGame().getCurrentWeatherSystem().clear(Game.getCurrentGame().getCurrentDiscardPile(), null);
-		Game.getCurrentGame().getOpponentWeatherSystem().clear(Game.getCurrentGame().getOpponentDiscardPile(), null);
-		return new Result("Weather cleared", true);
+		String command = GameMenusCommands.CHEAT_CLEAR_WEATHER.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result cheatClearRow(int rowNumber) {
-		Game.getCurrentGame().getRow(rowNumber).clear(rowNumber < 3 ? Game.getCurrentGame().getCurrentDiscardPile() : Game.getCurrentGame().getOpponentDiscardPile(), null);
-		return new Result("Row cleared", true);
+		String command = GameMenusCommands.CHEAT_CLEAR_ROW.getPattern();
+		command = command.replace("(?<rowNumber>(0|1|2|3|4|5))", String.valueOf(rowNumber));
+		return TCPClient.send(command);
 	}
 
 	public static Result cheatDebuffRow(int rowNumber) {
-		Card card = CardCreator.getCard(rowNumber == 2 ? "Biting Frost" : rowNumber == 1 ? "Impenetrable Fog" : "Torrential Rain");
-		card.setSpace(Game.getCurrentGame().getCurrentDeck());
-		try {
-			card.put(-1);
-		} catch (Exception e) {
-			return new Result(e.getMessage(), false);
-		}
-		return new Result("Row debuffed", true);
+		String command = GameMenusCommands.CHEAT_DEBUFF_ROW.getPattern();
+		command = command.replace("(?<rowNumber>(0|1|2|3|4|5))", String.valueOf(rowNumber));
+        return TCPClient.send(command);
 	}
 
 	public static Result cheatHeal() {
-		Game.getCurrentGame().setCurrentLife(2);
-		return new Result("Recovered Crystal", true);
+		String command = GameMenusCommands.CHEAT_HEAL.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result cheatAddCard(String cardName) {
-		Card card = CardCreator.getCard(cardName);
-		if (card == null) return new Result("Card not found", false);
-		card.setSpace(Game.getCurrentGame().getCurrentDeck());
-		card.updateSpace(Game.getCurrentGame().getCurrentHand());
-		return new Result("Card added to hand", true);
+		String command = GameMenusCommands.CHEAT_ADD_CARD.getPattern();
+		command = command.replace("(?<cardName>.+)", cardName);
+        return TCPClient.send(command);
 	}
 
 	public static Result cheatMoveFromDeckToHand() {
-		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1, false, false).move();
-		return new Result("Card moved from deck to hand", true);
+		String command = GameMenusCommands.CHEAT_MOVE_FROM_DECK.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result cheatAddPower(int power) {
-		Game.getCurrentGame().addCheatPower(power);
-		return new Result("Power added", true);
+		String command = GameMenusCommands.CHEAT_ADD_POWER.getPattern();
+		command = command.replace("(?<power>\\d+)", String.valueOf(power));
+        return TCPClient.send(command);
 	}
 }
