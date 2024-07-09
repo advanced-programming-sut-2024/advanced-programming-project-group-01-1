@@ -1,7 +1,7 @@
 package server.model.game;
 
-import server.controller.game.MatchMenuController;
-import server.model.Client;
+import server.model.Asker;
+import server.model.GameInfo;
 import server.model.card.Card;
 import server.model.card.unit.Ranged;
 import server.model.card.unit.Siege;
@@ -22,9 +22,9 @@ public class Game {
 	public static final int CURRENT_DECK = 6, OPPONENT_DECK = 9;
 	public static final int CURRENT_HAND = 7, OPPONENT_HAND = 10;
 	public static final int CURRENT_DISCARD_PILE = 8, OPPONENT_DISCARD_PILE = 11;
-	private static final ArrayList<Game> activeGames = new ArrayList<>();
 
 
+	ArrayList<Integer> currentScores = new ArrayList<>(), opponentScores = new ArrayList<>();
 	User current, opponent;
 	int roundNumber = 1;
 	Row[] rows = new Row[6];
@@ -34,9 +34,11 @@ public class Game {
 	Space currentHand = new Space(), opponentHand = new Space();
 	int currentLife = 2, opponentLife = 2;
 	Faction currentFaction, opponentFaction;
-	boolean hasOpponentPassed;
+	boolean hasCurrentPassed = false, hasOpponentPassed = false;
 	Leader currentLeader, opponentLeader;
-	private boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
+	boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
+	boolean gameEnded = false;
+	int currentCheatPower = 0, opponentCheatPower = 0;
 
 	private Game(User player1, User player2) {
 		this.current = player1;
@@ -45,6 +47,8 @@ public class Game {
 		this.opponentFaction = player2.getDeck().getFaction();
 		this.currentLeader = player1.getDeck().getLeader();
 		this.opponentLeader = player2.getDeck().getLeader();
+		this.currentLeader.enable();
+		this.opponentLeader.enable();
 		for (int i = 0; i < 6; i++) rows[i] = new Row();
 		this.currentDeck = new Space(player1.getDeck().getCards());
 		this.opponentDeck = new Space(player2.getDeck().getCards());
@@ -52,21 +56,35 @@ public class Game {
 		for (Card card : this.opponentDeck.getCards()) card.setSpace(opponentDeck);
 	}
 
-	public static Game createGame(Client client, User player1, User player2) {
+	public static Game createGame(User player1, User player2) {
 		Game currentGame = new Game(player1, player2);
-		client.getIdentity().setCurrentGame(currentGame);
-		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false, false).move(client);
-		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false, false).move(client);
-//		currentGame.veto();
-		// TODO: fix veto
-		if (currentGame.getCurrentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard"))
-			currentGame.getCurrentLeader().act(client);
-		else if (currentGame.getOpponentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard"))
-			currentGame.getOpponentLeader().act(client);
-		if (!currentGame.getCurrentLeader().isDisable() && !currentGame.getCurrentLeader().isManual())
-			currentGame.getCurrentLeader().act(client);
-		if (!currentGame.getOpponentLeader().isDisable() && !currentGame.getOpponentLeader().isManual())
-			currentGame.getOpponentLeader().act(client);
+		player1.setCurrentGame(currentGame);
+		player2.setCurrentGame(currentGame);
+		currentGame.currentLeader.setGame(currentGame);
+		currentGame.currentDeck.setGame(currentGame);
+		for (Card card : currentGame.currentDeck.getCards())
+			card.setGame(currentGame);
+		currentGame.currentHand.setGame(currentGame);
+		currentGame.currentWeatherSystem.setGame(currentGame);
+		currentGame.currentDiscardPile.setGame(currentGame);
+		currentGame.opponentLeader.setGame(currentGame);
+		currentGame.opponentDeck.setGame(currentGame);
+		for (Card card : currentGame.opponentDeck.getCards())
+			card.setGame(currentGame);
+		currentGame.opponentHand.setGame(currentGame);
+		currentGame.opponentWeatherSystem.setGame(currentGame);
+		currentGame.opponentDiscardPile.setGame(currentGame);
+		User decider;
+		if (currentGame.getCurrent().getDeck().getFaction().equals(Faction.SCOIATAEL) && !currentGame.getOpponent().getDeck().getFaction().equals(Faction.SCOIATAEL))
+			decider = currentGame.getCurrent();
+		else if (!currentGame.getCurrent().getDeck().getFaction().equals(Faction.SCOIATAEL) && currentGame.getOpponent().getDeck().getFaction().equals(Faction.SCOIATAEL))
+			decider = currentGame.getOpponent();
+		else decider = Math.random() >= 0.5 ? currentGame.getOpponent() : currentGame.getCurrent();
+		if (decider.equals(currentGame.getCurrent()) ^ decider.getDeck().doesPreferFirst()) currentGame.changeTurn();
+		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false, false).move(currentGame.current);
+		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false, false).move(currentGame.opponent);
+		if (currentGame.getCurrentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getCurrentLeader().act();
+		else if (currentGame.getOpponentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getOpponentLeader().act();
 		return currentGame;
 	}
 
@@ -111,28 +129,40 @@ public class Game {
 		return currentLife;
 	}
 
+	public void setCurrentLife(int currentLife) {
+		this.currentLife = currentLife;
+	}
+
 	public int getOpponentLife() {
 		return opponentLife;
 	}
 
-	public int getCurrentPower(Client client) {
+	public void addCheatPower(int cheatPower) {
+		currentCheatPower += cheatPower;
+	}
+
+	public int getCurrentPower() {
 		int currentPower = 0;
-		for (int i = 0; i < 3; i++) currentPower += rows[i].getSumOfPowers(client);
-		return currentPower;
+		for (int i = 0; i < 3; i++) currentPower += rows[i].getSumOfPowers();
+		return currentPower + currentCheatPower;
 	}
 
-	public int getOpponentPower(Client client) {
+	public int getOpponentPower() {
 		int opponentPower = 0;
-		for (int i = 3; i < 6; i++) opponentPower += rows[i].getSumOfPowers(client);
-		return opponentPower;
+		for (int i = 3; i < 6; i++) opponentPower += rows[i].getSumOfPowers();
+		return opponentPower + opponentCheatPower;
 	}
 
-	public int getRowPower(Client client, int rowNumber) {
-		return rows[rowNumber].getSumOfPowers(client);
+	public int getRowPower(int rowNumber) {
+		return rows[rowNumber].getSumOfPowers();
 	}
 
 	public Space getCurrentDeck() {
 		return currentDeck;
+	}
+
+	public Space getOpponentDeck() {
+		return opponentDeck;
 	}
 
 	public Space getCurrentHand() {
@@ -236,26 +266,23 @@ public class Game {
 		isMedicRandom = true;
 	}
 
-	public void veto() {
-
-	}
-
-	public void placeCard(Client client, Card card, int spaceId) throws Exception {
+	public void placeCard(Card card, int spaceId) throws Exception {
 		if (spaceId >= 3) throw new Exception("Can't place card for enemy");
 		try {
-			card.put(client, spaceId);
+			card.put(spaceId);
 			changeTurn();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void useLeaderAbility(Client client) throws Exception {
+	public void useLeaderAbility() throws Exception {
 		if (currentLeader.isDisable()) {
 			if (!currentLeader.isManual()) throw new Exception("Leader ability is not manual!");
 			throw new Exception("Leader ability is disabled!");
 		}
-		currentLeader.act(client);
+		currentLeader.act();
+		changeTurn();
 	}
 
 
@@ -281,6 +308,9 @@ public class Game {
 		int tempInt = currentLife;
 		currentLife = opponentLife;
 		opponentLife = tempInt;
+		tempInt = currentCheatPower;
+		currentCheatPower = opponentCheatPower;
+		opponentCheatPower = tempInt;
 		Faction tempFaction = currentFaction;
 		currentFaction = opponentFaction;
 		opponentFaction = tempFaction;
@@ -290,82 +320,94 @@ public class Game {
 		User tempUser = current;
 		current = opponent;
 		opponent = tempUser;
+		ArrayList<Integer> tempScores = currentScores;
+		currentScores = opponentScores;
+		opponentScores = tempScores;
+		boolean tempPassed = hasCurrentPassed;
+		hasCurrentPassed = hasOpponentPassed;
+		hasOpponentPassed = tempPassed;
+		if (currentHand.getCards().isEmpty() && currentLeader.isDisable()) passTurn();
 	}
 
-	public void passTurn(Client client) {
-		if (hasOpponentPassed) endRound(client);
+	public void passTurn() {
+		if (hasOpponentPassed) endRound();
 		else {
+			hasCurrentPassed = true;
 			changeTurn();
-			hasOpponentPassed = true;
 		}
 	}
 
-	public void endRound(Client client) {
+	public void endRound() {
+		currentScores.add(getCurrentPower());
+		opponentScores.add(getOpponentPower());
+		currentCheatPower = 0;
+		opponentCheatPower = 0;
 		roundNumber++;
-		int roundResult = getRoundResult(client);
+		int roundResult = getRoundResult();
 		if (roundResult <= 0) currentLife--;
 		if (roundResult >= 0) opponentLife--;
 		if (roundResult == 1 && currentFaction.equals(Faction.NORTHERN_REALMS))
-			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false, false).move(client);
+			new CardMover(CURRENT_DECK, CURRENT_HAND, true, 1, false, false).move(current);
 		else if (roundResult == -1 && opponentFaction.equals(Faction.NORTHERN_REALMS))
-			new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 1, false, false).move(client);
-		if (roundNumber == 3) skelligeAbility(client);
+			new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 1, false, false).move(opponent);
 		Unit currentUnit = currentFaction.equals(Faction.MONSTERS) ? keepUnit(true) : null;
 		Unit opponentUnit = opponentFaction.equals(Faction.MONSTERS) ? keepUnit(false) : null;
 		for (int i = 2; i >= 0; i--) {
 			try {
-				rows[i].clear(client, currentDiscardPile, currentUnit);
-				rows[5 - i].clear(client, opponentDiscardPile, opponentUnit);
+				rows[i].clear(currentDiscardPile, currentUnit);
+				rows[5 - i].clear(opponentDiscardPile, opponentUnit);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		try {
-			currentWeatherSystem.clear(client, currentDiscardPile, null);
-			opponentWeatherSystem.clear(client, opponentDiscardPile, null);
+			currentWeatherSystem.clear(currentDiscardPile, null);
+			opponentWeatherSystem.clear(opponentDiscardPile, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if (roundNumber == 3) skelligeAbility();
 		if (currentLife == 0 || opponentLife == 0) endGame();
 		else {
 			hasOpponentPassed = false;
+			hasCurrentPassed = false;
 			changeTurn();
 		}
 	}
 
-	public void putRevived(Client client, Unit unit, boolean isOpponent) {
+	public void putRevived(Unit unit, boolean isOpponent) {
 		try {
-			if (unit instanceof Siege) unit.put(client, isOpponent ? 5 - Game.SIEGE_ROW_NUMBER : Game.SIEGE_ROW_NUMBER);
-			else if (unit instanceof Ranged) unit.put(client, isOpponent ? 5 - Game.RANGED_ROW_NUMBER : Game.RANGED_ROW_NUMBER);
-			else unit.put(client, isOpponent ? 5 - Game.MELEE_ROW_NUMBER : Game.MELEE_ROW_NUMBER);
+			if (unit instanceof Siege) unit.put(isOpponent ? 5 - Game.SIEGE_ROW_NUMBER : Game.SIEGE_ROW_NUMBER);
+			else if (unit instanceof Ranged) unit.put(isOpponent ? 5 - Game.RANGED_ROW_NUMBER : Game.RANGED_ROW_NUMBER);
+			else unit.put(isOpponent ? 5 - Game.MELEE_ROW_NUMBER : Game.MELEE_ROW_NUMBER);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void skelligeAbility(Client client) {
+	private void skelligeAbility() {
 		if (currentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
-				Unit unit = (Unit) MatchMenuController.askSpace(currentDiscardPile, true, true);
-				if (unit != null) {
-					putRevived(client, unit, false);
-					currentDiscardPile.getCards().remove(unit);
-				}
+				final Space discardPile = currentDiscardPile;
+				new Asker(current, discardPile, true, false,true, index -> {
+					Unit unit = (Unit) discardPile.getCards(true, false).get(index);
+					putRevived(unit, false);
+				}, false, 0);
 			}
 		}
 		if (opponentFaction.equals(Faction.SKELLIGE)) {
 			for (int i = 0; i < 2; i++) {
-				Unit unit = (Unit) MatchMenuController.askSpace(opponentDiscardPile, true, true);
-				if (unit != null) {
-					putRevived(client, unit, true);
-					opponentDiscardPile.getCards().remove(unit);
-				}
+				final Space discardPile = opponentDiscardPile;
+				new Asker(opponent, discardPile, true, false, true, index -> {
+					Unit unit = (Unit) discardPile.getCards(true, false).get(index);
+					putRevived(unit, true);
+				}, false, 0);
 			}
 		}
 	}
 
-	private int getRoundResult(Client client) {
-		int currentPower = getCurrentPower(client), opponentPower = getOpponentPower(client);
+	private int getRoundResult() {
+		int currentPower = getCurrentPower(), opponentPower = getOpponentPower();
 		int roundResult; // -1 for lose, 0 for draw, 1 for win
 		if (currentPower < opponentPower) roundResult = -1;
 		else if (currentPower > opponentPower) roundResult = 1;
@@ -398,21 +440,57 @@ public class Game {
 	}
 
 	private void endGame() {
+		hasOpponentPassed = false;
+		hasCurrentPassed = false;
+		gameEnded = true;
 		double currentElo = current.getElo(), opponentElo = opponent.getElo();
 		if (currentLife == 0 && opponentLife == 0) {
+			// Draw
 			current.setElo(User.calculateElo(currentElo, opponentElo, 0));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 0));
-			// Draw
+			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, null));
+			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, null));
 		} else if (currentLife == 0) {
+			// Lose
 			current.setElo(User.calculateElo(currentElo, opponentElo, -1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, 1));
-			// Lose
+			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, opponent));
+			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, opponent));
 		} else {
+			// Win
 			current.setElo(User.calculateElo(currentElo, opponentElo, 1));
 			opponent.setElo(User.calculateElo(opponentElo, currentElo, -1));
-			// Win
+			current.getHistory().add(new GameInfo(opponent, currentLife, opponentLife, opponentScores, currentScores, current));
+			opponent.getHistory().add(new GameInfo(current, opponentLife, currentLife, currentScores, opponentScores, current));
 		}
-		activeGames.remove(this);
+	}
+
+	public boolean isGameOver() {
+		return gameEnded;
+	}
+
+	public boolean isGameWin() {
+		return opponentLife == 0 && currentLife != 0;
+	}
+
+	public boolean isGameDraw() {
+		return opponentLife == 0 && currentLife == 0;
+	}
+
+	public ArrayList<Integer> getCurrentScores() {
+		return currentScores;
+	}
+
+	public ArrayList<Integer> getOpponentScores() {
+		return opponentScores;
+	}
+
+	public boolean hasOpponentPassed() {
+		return hasOpponentPassed;
+	}
+
+	public boolean hasPassed() {
+		return hasCurrentPassed;
 	}
 
 }

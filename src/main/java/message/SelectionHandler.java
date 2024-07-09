@@ -1,4 +1,4 @@
-package client.view.game;
+package message;
 
 @FunctionalInterface
 public interface SelectionHandler {

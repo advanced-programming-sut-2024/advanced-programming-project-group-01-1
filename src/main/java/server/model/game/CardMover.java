@@ -1,10 +1,9 @@
 package server.model.game;
 
-import server.controller.game.MatchMenuController;
-import server.model.Client;
+import server.model.Asker;
 import server.model.card.Card;
-import server.model.card.unit.Unit;
 import server.model.game.space.Space;
+import server.model.user.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class CardMover implements Serializable {
 	private final boolean onlyUnit;
 	private final boolean ignoreHero;
 
-	public CardMover(int originId, int destinationId, boolean isRandom, int count, boolean onlyUnit, boolean ignoreHero){
+	public CardMover(int originId, int destinationId, boolean isRandom, int count, boolean onlyUnit, boolean ignoreHero) {
 		this.originId = originId;
 		this.destinationId = destinationId;
 		this.isRandom = isRandom;
@@ -29,30 +28,20 @@ public class CardMover implements Serializable {
 		random = new Random();
 	}
 
-	public void move(Client client) {
-		Space originSpace = client.getIdentity().getCurrentGame().getSpaceById(originId);
-		Space destinationSpace = client.getIdentity().getCurrentGame().getSpaceById(destinationId);
+	public void move(User player) {
+		Space originSpace = player.getCurrentGame().getSpaceById(originId);
+		Space destinationSpace = player.getCurrentGame().getSpaceById(destinationId);
 		if (destinationSpace != null) {
-			ArrayList<Card> availableCards = new ArrayList<>();
-			for (Card card : originSpace.getCards()) {
-				if ((!(card instanceof Unit) || !((Unit) card).isHero()) || !ignoreHero)
-					availableCards.add(card);
-			}
+			ArrayList<Card> availableCards = originSpace.getCards(onlyUnit, ignoreHero);
 			int toBeMoved = (count == -1 || count > availableCards.size()) ? availableCards.size() : count;
 			for (int i = 0; i < toBeMoved; i++) {
-				Card card;
-				if (isRandom) {
-					int randomIndex = random.nextInt(availableCards.size());
-					card = availableCards.get(randomIndex);
-				} else card = MatchMenuController.askSpace(originSpace, onlyUnit);
-				card.updateSpace(destinationSpace);
-				availableCards.remove(card);
+				new Asker(player, originSpace, onlyUnit, ignoreHero, isRandom, index ->
+						originSpace.getCards(onlyUnit, ignoreHero).get(index).updateSpace(destinationSpace), false, 0);
 			}
-		} else show(originSpace, destinationSpace);
-		System.out.println(destinationSpace.getCards().size() + "\n--------------");
+		} else show(player, originSpace);
 	}
 
-	private void show(Space originSpace, Space destinationSpace){
+	private void show(User player, Space originSpace) {
 		ArrayList<Card> cardsToBeShown = new ArrayList<>();
 		boolean[] shown = new boolean[originSpace.getCards().size()];
 		for (int i = 0; i < count; i++) {
@@ -72,7 +61,7 @@ public class CardMover implements Serializable {
 			}
 		}
 		Space tmp = new Space(cardsToBeShown);
-		MatchMenuController.showSpace(tmp);
+		new Asker(player, tmp, false, false, false, index -> {}, true, 1);
 	}
 
 }

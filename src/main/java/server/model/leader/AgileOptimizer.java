@@ -1,8 +1,9 @@
 package server.model.leader;
 
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Agile;
+import server.model.card.unit.Melee;
+import server.model.card.unit.Ranged;
 import server.model.game.Game;
 
 import java.util.ArrayList;
@@ -16,52 +17,44 @@ public class AgileOptimizer extends Leader {
 		"Move agile units to whichever row maximizes their strength (don't move unit already in optimal row",true);
 	}
 
-	private int putAll(Client client, int mask) {
-		int powerSum = 0;
+	private int putAll(int mask) {
 		try {
 			for (int i = 0; i < agiles.size(); i++) {
-				if ((mask & (1 << i)) == 0) agiles.get(i).put(client, 2);
-				else agiles.get(i).put(client, 1);
+				if ((mask & (1 << i)) == 0) agiles.get(i).put(2);
+				else agiles.get(i).put(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		for (Agile agile : agiles)
-			powerSum += agile.getPower(client);
-		return powerSum;
+		return this.game.getCurrentPower();
 	}
 
-	private void pullAll(Client client) {
+	private void pullAll() {
 		for (Agile agile : agiles)
-			agile.pull(client);
+			agile.pull();
 	}
 
 	@Override
-	public void act(Client client) {
+	public void act() {
 		agiles = new ArrayList<>();
-		for (Card card : client.getIdentity().getCurrentGame().getRow(2).getCards()) {
-			if (card instanceof Agile) {
-				agiles.add((Agile) card);
-				card.pull(client);
-			}
+		for (Card card : this.game.getRow(2).getCards()) {
+			if (card instanceof Agile && !(card instanceof Melee)) agiles.add((Agile) card);
 		}
-		for (Card card : client.getIdentity().getCurrentGame().getRow(1).getCards()) {
-			if (card instanceof Agile) {
-				agiles.add((Agile) card);
-				card.pull(client);
-			}
+		for (Card card : this.game.getRow(1).getCards()) {
+			if (card instanceof Agile && !(card instanceof Ranged)) agiles.add((Agile) card);
 		}
+		pullAll();
 		int maxMask = 0, maxPowerSum = 0;
 		for (int mask = 0; mask < (1 << agiles.size()); mask++) {
-			int maskPowerSum = putAll(client, mask);
+			int maskPowerSum = putAll(mask);
 			if (maskPowerSum > maxPowerSum) {
 				maxMask = mask;
 				maxPowerSum = maskPowerSum;
 			}
-			pullAll(client);
+			pullAll();
 		}
-		putAll(client, maxMask);
-		super.act(client);
+		putAll(maxMask);
+		super.act();
 	}
 
 	@Override

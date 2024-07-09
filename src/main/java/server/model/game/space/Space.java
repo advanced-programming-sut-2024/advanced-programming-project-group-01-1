@@ -1,14 +1,15 @@
 package server.model.game.space;
 
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
+import server.model.game.Game;
 
 import java.util.ArrayList;
 
 public class Space {
 
 	ArrayList<Card> cards;
+	transient Game game;
 
 	public Space() {
 		cards = new ArrayList<>();
@@ -22,14 +23,32 @@ public class Space {
 		return cards;
 	}
 
-	public void clear(Client client, Space discardPile, Unit stayingUnit) {
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	public void clear(Space discardPile, Unit stayingUnit) {
 		ArrayList<Card> cards = new ArrayList<>(this.cards);
 		for (Card card : cards) {
 			if(card == stayingUnit) continue;
-			card.pull(client);
+			card.pull();
 			card.updateSpace(discardPile);
 		}
 		cards.clear();
+	}
+
+	public ArrayList<Card> getCards(boolean onlyUnit, boolean ignoreHero) {
+		ArrayList<Card> cards = new ArrayList<>();
+		for (Card card : this.cards) {
+			if (card instanceof Unit) {
+				if (!((Unit) card).isHero() || !ignoreHero) cards.add(card);
+			} else if (!onlyUnit) cards.add(card);
+		}
+		return cards;
 	}
 
 	@Override

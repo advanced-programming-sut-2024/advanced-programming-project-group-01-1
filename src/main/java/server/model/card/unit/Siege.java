@@ -1,6 +1,5 @@
 package server.model.card.unit;
 
-import server.model.Client;
 import server.model.card.ability.Ability;
 
 public class Siege extends Unit {
@@ -10,9 +9,15 @@ public class Siege extends Unit {
 	}
 
 	@Override
-	public void put(Client client, int rowNumber) throws Exception {
+	public void put(int rowNumber) throws Exception {
 		if (rowNumber != 0 && rowNumber != 5) throw new Exception("Invalid row number");
-		super.put(client, rowNumber);
+		super.put(rowNumber);
+	}
+
+	@Override
+	public String getDescription() {
+		if (ability != null) return super.getDescription();
+		return "Can be placed in the siege row.";
 	}
 
 }

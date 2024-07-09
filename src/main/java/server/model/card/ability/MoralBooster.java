@@ -1,6 +1,5 @@
 package server.model.card.ability;
 
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 import server.model.game.space.Row;
@@ -9,7 +8,7 @@ public enum MoralBooster implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Client client, Card card) {
+	public void act(Card card) {
 		Row row = (Row) card.getSpace();
 		row.setBoostCount(row.getBoostCount() + 1);
 		for (Card cardInRow : row.getCards()) {
@@ -21,7 +20,7 @@ public enum MoralBooster implements Ability {
 	}
 
 	@Override
-	public void undo(Client client, Card card) {
+	public void undo(Card card) {
 		Row row = (Row) card.getSpace();
 		row.setBoostCount(row.getBoostCount() - 1);
 		for (Card cardInRow : row.getCards()) {
@@ -31,4 +30,10 @@ public enum MoralBooster implements Ability {
 			unit.setBoostCount(unit.getBoostCount() - 1);
 		}
 	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Increases the strength of all units on the row.";
+	}
+
 }

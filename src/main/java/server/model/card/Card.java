@@ -1,6 +1,5 @@
 package server.model.card;
 
-import server.model.Client;
 import server.model.card.ability.Ability;
 import server.model.card.special.Decoy;
 import server.model.card.special.spell.Buffer;
@@ -11,11 +10,13 @@ import server.model.game.Game;
 import server.model.game.space.Space;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public abstract class Card implements Cloneable, Serializable, Comparable<Card> {
 	protected final String name;
 	protected final Ability ability;
-	protected Space space = null;
+	protected transient Space space = null;
+	protected transient Game game;
 
 	public Card(String name, Ability ability) {
 		this.name = name;
@@ -44,22 +45,31 @@ public abstract class Card implements Cloneable, Serializable, Comparable<Card> 
 		this.space = space;
 	}
 
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
 	public void updateSpace(Space space) {
 		this.space.getCards().remove(this);
 		this.space = space;
 		this.space.getCards().add(this);
+		space.getCards().sort(Comparator.reverseOrder());
 	}
 
 	@Override
 	public abstract Card clone();
 
-	public void put(Client client, int rowNumber) throws Exception {
+	public void put(int rowNumber) throws Exception {
 
 	}
 
-	public void pull(Client client) {
-		if (this.ability != null) this.ability.undo(client, this);
-		this.updateSpace(client.getIdentity().getCurrentGame().getCurrentDiscardPile());
+	public void pull() {
+		if (this.ability != null) this.ability.undo(this);
+		this.updateSpace(game.getCurrentDiscardPile());
 	}
 
 	@Override
@@ -67,6 +77,10 @@ public abstract class Card implements Cloneable, Serializable, Comparable<Card> 
 		String card = this.name + "\nType: " + this.getClass().getSimpleName();
 		card += "\nAbility: " + (ability == null ? "None" : this.ability.getClass().getSimpleName());
 		return card;
+	}
+
+	public String getDescription() {
+		return ability.getDescription(this);
 	}
 
 	public String toSuperString() {

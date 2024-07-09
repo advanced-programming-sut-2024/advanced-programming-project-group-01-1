@@ -1,8 +1,9 @@
 package server.model.leader;
 
 import server.main.CardCreator;
-import server.model.Client;
 import server.model.card.Card;
+import server.model.card.ability.Cleanse;
+import server.model.card.ability.Scorch;
 import server.model.card.special.spell.Spell;
 import server.model.game.Game;
 
@@ -25,27 +26,35 @@ public class SpellLeader extends Leader {
 	}
 
 	@Override
-	public void act(Client client) {
+	public void act() {
 		Spell spell;
 		ArrayList<Spell> availableSpells = new ArrayList<>();
 		if (useDeck) {
-			for (Card card : client.getIdentity().getCurrentGame().getCurrentDeck().getCards()) {
+			for (Card card : this.game.getCurrentDeck().getCards()) {
 				for (String spellName : spellNames) {
 					if (card.getName().equals(spellName)) availableSpells.add((Spell) card);
 				}
 			}
 			spell = availableSpells.get(random.nextInt(availableSpells.size()));
-			client.getIdentity().getCurrentGame().getCurrentDeck().getCards().remove(spell);
+			this.game.getCurrentDeck().getCards().remove(spell);
 		} else {
 			for (String spellName : spellNames)
 				availableSpells.add((Spell) CardCreator.getCard(spellName));
 			spell = availableSpells.get(random.nextInt(availableSpells.size()));
+			spell.setSpace(this.game.getCurrentHand());
 		}
-		try {
-			spell.put(client, spaceNumber);
-		} catch (Exception ignored) {
+		if (spell.getAbility() instanceof Scorch) ((Scorch) spell.getAbility()).killRow(this.game, spaceNumber);
+		else {
+			try {
+				spell.put(spaceNumber);
+				if (spell.getAbility() instanceof Cleanse) {
+					spell.getSpace().getCards().remove(spell);
+					spell.setSpace(null);
+				}
+			} catch (Exception ignored) {
+			}
 		}
-		super.act(client);
+		super.act();
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package server.model.card.ability;
 
 import server.main.CardCreator;
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Melee;
 import server.model.card.unit.Ranged;
@@ -12,19 +11,23 @@ public enum Berserker implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Client client, Card card) {
+	public void act(Card card) {
 		if (!((Row) card.getSpace()).hasMardroeme()) return;
-		card.pull(client);
+		card.pull();
 		String transformedName = "Transformed " + card.getName().replace("Berserker", "Vildkaarl");
-		System.out.println(transformedName);
 		Card transformedCard = CardCreator.getCard(transformedName);
-		transformedCard.setSpace(client.getIdentity().getCurrentGame().getCurrentDeck());
+		transformedCard.setSpace(card.getGame().getCurrentDeck());
 		try {
-			if (card instanceof Melee) transformedCard.put(client, 2);
-			else if (card instanceof Ranged) transformedCard.put(client, 1);
+			if (card instanceof Melee) transformedCard.put(2);
+			else if (card instanceof Ranged) transformedCard.put(1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Transforms into Vildkaarl when Mardroeme is played on the same row.";
 	}
 
 }

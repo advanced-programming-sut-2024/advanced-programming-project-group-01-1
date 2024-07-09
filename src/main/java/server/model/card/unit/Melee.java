@@ -1,6 +1,5 @@
 package server.model.card.unit;
 
-import server.model.Client;
 import server.model.card.ability.Ability;
 
 public class Melee extends Agile {
@@ -10,9 +9,15 @@ public class Melee extends Agile {
 	}
 
 	@Override
-	public void put(Client client, int rowNumber) throws Exception {
+	public void put(int rowNumber) throws Exception {
 		if (rowNumber != 2 && rowNumber != 3) throw new Exception("Invalid row number");
-		super.put(client, rowNumber);
+		super.put(rowNumber);
+	}
+
+	@Override
+	public String getDescription() {
+		if (ability != null) return super.getDescription();
+		return "Can be placed in the melee row.";
 	}
 
 }

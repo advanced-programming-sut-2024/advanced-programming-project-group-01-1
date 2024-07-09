@@ -1,6 +1,5 @@
 package server.model.game.space;
 
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.ability.Horn;
 import server.model.card.ability.Mardroeme;
@@ -16,11 +15,11 @@ public class Row extends Space {
 	boolean hasMardroeme = false;
 	boolean isDebuffed = false;
 
-	public int getSumOfPowers(Client client) {
+	public int getSumOfPowers() {
 		int sumOfPowers = 0;
 		for (Card card : this.cards) {
 			if (card instanceof Decoy) continue;
-			sumOfPowers += ((Unit) card).getPower(client);
+			sumOfPowers += ((Unit) card).getPower();
 		}
 		return sumOfPowers;
 	}
@@ -69,13 +68,12 @@ public class Row extends Space {
 		return isDebuffed;
 	}
 
-	public void clear(Client client, Space discardPile, Unit stayingUnit) {
+	public void clear(Space discardPile, Unit stayingUnit) {
 		if (buffer != null) {
-			buffer.pull(client);
-			buffer.updateSpace(discardPile);
+			buffer.pull();
 			buffer = null;
 		}
-		super.clear(client, discardPile, stayingUnit);
+		super.clear(discardPile, stayingUnit);
 	}
 
 	@Override

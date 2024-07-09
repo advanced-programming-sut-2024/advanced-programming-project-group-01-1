@@ -1,6 +1,5 @@
 package server.model.card.unit;
 
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.ability.Ability;
 import server.model.card.ability.Spy;
@@ -69,14 +68,15 @@ public abstract class Unit extends Card {
 		return basePower;
 	}
 
-	public int getPower(Client client) {
-		if (this.isHero) return this.basePower;
+	public int getPower() {
+		if (this.game == null) return this.basePower;
+		if (isHero) return this.basePower;
 		int power = this.basePower;
-		if (this.debuff) power = client.getIdentity().getCurrentGame().isDebuffWeakened() ? power / 2 : 1;
+		if (this.debuff) power = this.game.isDebuffWeakened() ? power / 2 : Integer.min(1, this.basePower);
 		power *= this.multiplier;
 		power += this.boostCount;
 		if (this.hornCount > 0) power *= 2;
-		if (ability instanceof Spy && client.getIdentity().getCurrentGame().isSpyPowerDoubled()) power *= 2;
+		if (ability instanceof Spy && this.game.isSpyPowerDoubled()) power *= 2;
 		return power;
 	}
 
@@ -86,22 +86,22 @@ public abstract class Unit extends Card {
 	}
 
 	@Override
-	public void put(Client client,int rowNumber) throws Exception {
-		Row row = client.getIdentity().getCurrentGame().getRow(rowNumber);
+	public void put(int rowNumber) throws Exception {
+		Row row = this.game.getRow(rowNumber);
 		this.updateSpace(row);
 		this.hornCount = row.getHornCount();
 		this.boostCount = row.getBoostCount();
 		this.debuff = row.isDebuffed();
-		if (this.ability != null) this.ability.act(client, this);
+		if (this.ability != null) this.ability.act(this);
 	}
 
 	@Override
-	public void pull(Client client) {
+	public void pull() {
 		if (space == null) return;
 		this.hornCount = 0;
 		this.boostCount = 0;
 		this.debuff = false;
-		super.pull(client);
+		super.pull();
 	}
 
 	@Override
@@ -116,8 +116,8 @@ public abstract class Unit extends Card {
 
 	@Override
 	public String toString() {
-		String unit = super.toString() + "\nPower: " + this.basePower;
-		if (this.isHero) unit = "\033[1;33m" + unit + "\033[0m";
+		String unit = super.toString() + "\nPower: " + this.basePower + "\nCurrent Power: " + this.getPower();
+		if (this.isHero) unit += "\nHero";
 		return unit;
 	}
 }

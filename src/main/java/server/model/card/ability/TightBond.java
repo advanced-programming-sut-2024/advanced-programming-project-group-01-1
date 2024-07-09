@@ -1,6 +1,5 @@
 package server.model.card.ability;
 
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 import server.model.game.space.Row;
@@ -9,7 +8,7 @@ public enum TightBond implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Client client, Card card) {
+	public void act(Card card) {
 		Row row = (Row) card.getSpace();
 		int groupPopulation = 0;
 		for (Card cardInRow : row.getCards())
@@ -22,7 +21,7 @@ public enum TightBond implements Ability {
 	}
 
 	@Override
-	public void undo(Client client, Card card) {
+	public void undo(Card card) {
 		Row row = (Row) card.getSpace();
 		int groupPopulation = 0;
 		for (Card cardInRow : row.getCards())
@@ -34,4 +33,10 @@ public enum TightBond implements Ability {
 			}
 		((Unit) card).setMultiplier(1);
 	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Multiplies the strength of all units of the same name on the row.";
+	}
+
 }

@@ -11,7 +11,6 @@ module w {
 	opens client.view.sign.register to javafx.fxml, javafx.graphics;
 	opens client.view.user to javafx.fxml, javafx.graphics;
 
-	opens message to com.google.gson;
 	// open models to gson and jackson
 	opens server.model to com.google.gson, com.fasterxml.jackson.databind;
 	opens server.model.user to com.google.gson, com.fasterxml.jackson.databind;
@@ -40,6 +39,7 @@ module w {
 	exports server.main;
 	exports server.view;
 	exports message;
+	opens message to com.google.gson, javafx.fxml, javafx.graphics;
 
 	//opens other packages to gson and jackson
 	//opens java.util to com.google.gson, com.fasterxml.jackson.databind;

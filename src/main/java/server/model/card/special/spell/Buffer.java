@@ -1,6 +1,5 @@
 package server.model.card.special.spell;
 
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.ability.Ability;
 import server.model.game.Game;
@@ -15,6 +14,7 @@ public class Buffer extends Spell {
 
 	@Override
 	public void updateSpace(Space space) {
+		if (this.space instanceof Row) ((Row) this.space).setBuffer(null);
 		if (!(space instanceof Row)) super.updateSpace(space);
 		else {
 			this.space.getCards().remove(this);
@@ -25,12 +25,12 @@ public class Buffer extends Spell {
 	}
 
 	@Override
-	public void put(Client client, int rowNumber) throws Exception {
+	public void put(int rowNumber) throws Exception {
 		if (rowNumber < 0 || rowNumber > 2) throw new Exception("Buffer can only be put in a friendly row");
-		Row row = client.getIdentity().getCurrentGame().getRow(rowNumber);
+		Row row = this.game.getRow(rowNumber);
 		if (row.getBuffer() != null) throw new Exception("Buffer already exists in this row");
 		this.updateSpace(row);
-		this.ability.act(client, this);
+		this.ability.act(this);
 	}
 
 	@Override

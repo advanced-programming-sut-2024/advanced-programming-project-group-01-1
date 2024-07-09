@@ -1,6 +1,5 @@
 package server.model.card.ability;
 
-import server.model.Client;
 import server.model.card.Card;
 import server.model.card.special.spell.Buffer;
 import server.model.card.special.spell.Spell;
@@ -13,7 +12,7 @@ public enum Mardroeme implements Ability {
 	INSTANCE;
 
 	@Override
-	public void act(Client client, Card card) {
+	public void act(Card card) {
 		Row row = (Row) card.getSpace();
 		if (card instanceof Spell) row.setBuffer((Buffer) card);
 		row.setMardroeme(true);
@@ -22,13 +21,18 @@ public enum Mardroeme implements Ability {
 			Ability cardAbility = cardInRow.getAbility();
 			if (cardAbility instanceof Berserker) berserkerUnits.add((Unit) cardInRow);
 		}
-		for (Unit berserkerUnit : berserkerUnits) Berserker.INSTANCE.act(client, berserkerUnit);
+		for (Unit berserkerUnit : berserkerUnits) Berserker.INSTANCE.act(berserkerUnit);
 	}
 
 	@Override
-	public void undo(Client client, Card card) {
+	public void undo(Card card) {
 		Row row = (Row) card.getSpace();
-		if (card instanceof Spell) row.setBuffer(null);
 		row.setMardroeme(false);
 	}
+
+	@Override
+	public String getDescription(Card card) {
+		return "Transforms all Berserkers into Vildkaarl.";
+	}
+
 }
