@@ -19,7 +19,7 @@ public class ClientLoginMenusController {
 		String command = LoginMenusCommands.LOGIN.getPattern();
 		command = command.replace("(?<username>\\S+)", username);
 		command = command.replace("(?<password>\\S+)", password);
-		command = command.replace("(?<stayLoggedIn> -stay-logged-in)?", (stayLoggedIn ? "-stay-logged-in" : ""));
+		command = command.replace("(?<stayLoggedIn> -stay-logged-in)?", (stayLoggedIn ? " -stay-logged-in" : ""));
 		Result result = TCPClient.send(command);
 		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientAuthenticationMenu());
 		return result;

@@ -65,6 +65,7 @@ public enum GameMenusCommands {
     IS_GAME_WIN("is game win"),
     IS_GAME_DRAW("is game draw"),
     IS_ROW_DEBUFFED("is row debuffed (?<rowNumber>\\d+)"),
+    IS_MY_TURN("is my turn"),
     GET_POWERS("get powers"),
     GET_SCORES("get scores"),
     PASS_ROUND("pass round"),

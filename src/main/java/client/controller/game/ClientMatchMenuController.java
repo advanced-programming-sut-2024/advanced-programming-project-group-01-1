@@ -205,6 +205,11 @@ public class ClientMatchMenuController {
 		return TCPClient.send(command).isSuccessful();
 	}
 
+	public static boolean isMyTurn() {
+		String command = GameMenusCommands.IS_MY_TURN.getPattern();
+		return TCPClient.send(command).isSuccessful();
+	}
+
 	public static Result getPowers() {
 		String command = GameMenusCommands.GET_POWERS.getPattern();
 		return TCPClient.send(command);

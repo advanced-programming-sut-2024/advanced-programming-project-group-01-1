@@ -74,7 +74,7 @@
       <Pane fx:id="opponentDeckPane" layoutX="1231.0" layoutY="51.0" prefHeight="92.0" prefWidth="67.0" />
       <Pane fx:id="myPilePane" layoutX="1105.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
       <Pane fx:id="myDeckPane" layoutX="1231.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
-      <Pane layoutX="14.0" layoutY="440.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+      <Pane fx:id="myInfoPane" layoutX="14.0" layoutY="440.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
          <children>
             <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="185.0" layoutY="73.0" preserveRatio="false">
                <Image url="@../images/icons/icon_card_count.png" />
@@ -114,7 +114,7 @@
                   <Font size="11.0" />
                </font></Label>
          </children></Pane>
-      <Pane layoutX="14.0" layoutY="157.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+      <Pane fx:id="opponentInfoPane" layoutX="14.0" layoutY="157.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
          <children>
             <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="185.0" layoutY="33.0" preserveRatio="false">
                <Image url="@../images/icons/icon_card_count.png" />

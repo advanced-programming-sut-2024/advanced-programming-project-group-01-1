@@ -89,7 +89,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public Label myFactionNameField, opponentFactionNameField;
 	public Label myPassedField, opponentPassedField;
 	public Label myDeckNumber, opponentDeckNumber;
-
+	public Pane myInfoPane, opponentInfoPane;
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
 	public Label[] rowPowerLabels;
@@ -390,6 +390,14 @@ public class ClientMatchMenu extends Application implements Menuable {
 		String[] passedInfo = ClientMatchMenuController.passedState().getMessage().split("\n");
 		myPassedField.setVisible(Boolean.parseBoolean(passedInfo[0]));
 		opponentPassedField.setVisible(Boolean.parseBoolean(passedInfo[1]));
+		boolean result = ClientMatchMenuController.isMyTurn();
+		if (result) {
+			myInfoPane.setStyle("-fx-background-color: rgba(0, 255, 0, 0.2);");
+			opponentInfoPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+		} else {
+			myInfoPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
+			opponentInfoPane.setStyle("-fx-background-color: rgba(0, 255, 0, 0.2);");
+		}
 	}
 
 	public void showEndGame() {

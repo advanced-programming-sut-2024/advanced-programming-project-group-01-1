@@ -199,6 +199,7 @@ public class ClientUserMenusController {
 				javafx.application.Platform.runLater(menu::updateFriendsList);
 			}
 		});
+		friendListUpdater.setDaemon(true);
 		friendListUpdater.start();
 	}
 
@@ -219,6 +220,7 @@ public class ClientUserMenusController {
 				javafx.application.Platform.runLater(menu::updateScreen);
 			}
 		});
+		leaderboardUpdater.setDaemon(true);
 		leaderboardUpdater.start();
 	}
 
