@@ -4,9 +4,12 @@ import controller.sign.LoginMenusController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -48,6 +51,9 @@ public class ForgotPasswordMenu extends Application implements Menuable {
 			throw new RuntimeException(e);
 		}
 		Scene scene = new Scene(root);
+		Image cursorImage = new Image(getClass().getResourceAsStream("/images/icons/cursor.png"));
+		Cursor cursor = new ImageCursor(cursorImage);
+		scene.setCursor(cursor);
 		stage.setScene(scene);
 		stage.show();
 	}

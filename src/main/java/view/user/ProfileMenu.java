@@ -1,12 +1,16 @@
 package view.user;
 
 import controller.UserMenusController;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -22,7 +26,7 @@ import java.util.regex.Matcher;
 
 import static javafx.application.Application.launch;
 
-public class ProfileMenu implements Menuable {
+public class ProfileMenu extends Application implements Menuable {
 	public TextField usernameField;
 	public TextField nicknameField;
 	public TextField emailField;
@@ -50,6 +54,9 @@ public class ProfileMenu implements Menuable {
 			throw new RuntimeException(e);
 		}
 		Scene scene = new Scene(root);
+		Image cursorImage = new Image(getClass().getResourceAsStream("/images/icons/cursor.png"));
+		Cursor cursor = new ImageCursor(cursorImage);
+		scene.setCursor(cursor);
 		Platform.runLater(root::requestFocus);
 		stage.setScene(scene);
 		stage.show();

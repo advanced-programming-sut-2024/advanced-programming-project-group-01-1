@@ -42,8 +42,8 @@ public class JsonController {
 
 	public static User loadLoggedInUser() {
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
-					Paths.get(JsonController.class.getResource(LOGGED_IN_USER).toURI()).toString()));
+			InputStream is = JsonController.class.getResourceAsStream(LOGGED_IN_USER);
+			ObjectInputStream ois = new ObjectInputStream(is);
 			Object obj = ois.readObject();
 			User user;
 			if (obj == null) user = null;
@@ -58,8 +58,8 @@ public class JsonController {
 	public static void loadUsers() {
 		ArrayList<User> users;
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
-					Paths.get(JsonController.class.getResource(USERS_FILE).toURI()).toString()));
+			InputStream is = JsonController.class.getResourceAsStream(USERS_FILE);
+			ObjectInputStream ois = new ObjectInputStream(is);
 			try {
 				users = (ArrayList<User>) ois.readObject();
 			} catch (EOFException e) {

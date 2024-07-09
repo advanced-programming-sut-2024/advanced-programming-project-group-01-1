@@ -3,6 +3,8 @@ module w {
 	requires javafx.fxml;
 	requires javafx.media;
 
+	opens main to javafx.fxml, javafx.graphics;
+
 	//opens views to javafx.fxml;
 	opens view to javafx.fxml, javafx.graphics;
 	opens view.game to javafx.fxml, javafx.graphics;

@@ -9,6 +9,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -113,6 +115,9 @@ public class MatchMenu extends Application implements Menuable {
 			throw new RuntimeException(e);
 		}
 		Scene scene = new Scene(root);
+		Image cursorImage = new Image(getClass().getResourceAsStream("/images/icons/cursor.png"));
+		Cursor cursor = new ImageCursor(cursorImage);
+		scene.setCursor(cursor);
 		stage.setScene(scene);
 		stage.show();
 	}

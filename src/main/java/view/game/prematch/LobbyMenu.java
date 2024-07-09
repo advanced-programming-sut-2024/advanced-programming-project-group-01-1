@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -74,6 +76,9 @@ public class LobbyMenu extends Application implements Menuable {
 			e.printStackTrace();
 		}
 		Scene scene = new Scene(root);
+		Image cursorImage = new Image(getClass().getResourceAsStream("/images/icons/cursor.png"));
+		Cursor cursor = new ImageCursor(cursorImage);
+		scene.setCursor(cursor);
 		stage.setScene(scene);
 		stage.show();
 	}
