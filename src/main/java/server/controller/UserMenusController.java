@@ -12,6 +12,7 @@ import server.view.user.ProfileMenu;
 import server.view.user.SocialMenu;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 public class UserMenusController {
 
@@ -56,13 +57,18 @@ public class UserMenusController {
 	}
 
 
+	public static Result goToHistoryMenu(Client client, Matcher matcher) {
+		client.setMenu(new InfoMenu());
+		return new Result("History Menu", true);
+	}
+
 	public static Result goToInfoMenu(Client client) {
 		synchronized (client.getIdentity()) {
 			User user = client.getIdentity();
 			StringBuilder userInfo = new StringBuilder();
 			userInfo.append("Username: ").append(user.getUsername()).append("\n");
 			userInfo.append("Nickname: ").append(user.getNickname()).append("\n");
-			userInfo.append("Max Score: ").append(user.getMaxScore()).append("\n");
+			userInfo.append("Max Rating: ").append(user.getMaxElo()).append("\n");
 			userInfo.append("Rank: ").append(user.getRank()).append("\n");
 			userInfo.append("Number of played matches: ").append(user.getNumberOfPlayedMatches()).append("\n");
 			userInfo.append("Number of wins: ").append(user.getNumberOfWins()).append("\n");
@@ -135,9 +141,9 @@ public class UserMenusController {
 		}
 	}
 
-	public static Result getMaxScore(Client client) {
+	public static Result getMaxRating(Client client) {
 		synchronized (client.getIdentity()) {
-			return new Result(String.valueOf(client.getIdentity().getMaxScore()), true);
+			return new Result(String.valueOf(client.getIdentity().getMaxElo()), true);
 		}
 	}
 
@@ -300,5 +306,4 @@ public class UserMenusController {
 			return new Result(playersInfo.toString(), true);
 		}
 	}
-
 }

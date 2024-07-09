@@ -3,6 +3,7 @@ package client.controller;
 import client.main.TCPClient;
 import client.view.ClientAppview;
 import client.view.ClientMainMenu;
+import client.view.user.ClientHistoryMenu;
 import client.view.user.ClientInfoMenu;
 import client.view.user.ClientProfileMenu;
 import client.view.user.ClientSocialMenu;
@@ -52,7 +53,7 @@ public class ClientUserMenusController {
 
 	public static Result showGameHistory(int number) {
 		String command = UserMenusCommands.GAME_HISTORY.getPattern();
-		command = command.replace("( -n (?<numberOfGames>\\d+))?", number == -1 ? "" : String.valueOf(number));
+		command = command.replace("( -n (?<numberOfGames>\\d+))?", number == 0 ? "" : String.valueOf(number));
 		return TCPClient.send(command);
 	}
 
@@ -64,7 +65,7 @@ public class ClientUserMenusController {
 		else if (ClientAppview.getMenu() instanceof ClientSocialMenu) {
 			ClientAppview.setMenu(new ClientMainMenu());
 			stopUpdating();
-		}
+		} else if (ClientAppview.getMenu() instanceof ClientHistoryMenu) ClientAppview.setMenu(new ClientProfileMenu());
 		return result;
 	}
 
@@ -94,8 +95,8 @@ public class ClientUserMenusController {
 		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
 	}
 
-	public static String getMaxScore() {
-		String command = UserMenusCommands.GET_MAX_SCORE.getPattern();
+	public static String getMaxRating() {
+		String command = UserMenusCommands.GET_MAX_RATING.getPattern();
 		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
 	}
 
@@ -196,4 +197,10 @@ public class ClientUserMenusController {
 		friendListUpdater = null;
 	}
 
+	public static Result goToHistoryMenu() {
+		String command = UserMenusCommands.GO_TO_HISTORY_MENU.getPattern();
+		Result result = TCPClient.send(command);
+		ClientAppview.setMenu(new ClientHistoryMenu());
+		return result;
+	}
 }

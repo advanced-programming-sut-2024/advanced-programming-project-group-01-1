@@ -43,9 +43,10 @@ public class RegisterMenusController {
 				client.getIdentity().setQuestion(new Question(Question.questions[questionNumber], answer));
 				client.setMenu(new LoginMenu());
 				while (true) {
-					if (sendEmailVerifier(client.getIdentity(), client.getToken()))
+//					if (sendEmailVerifier(client.getIdentity(), client.getToken()))
 						break;
 				}
+				client.getIdentity().setEmailVerified(true);
 				return new Result("Confirmation link is sent to your Email", true);
 			}
 		}

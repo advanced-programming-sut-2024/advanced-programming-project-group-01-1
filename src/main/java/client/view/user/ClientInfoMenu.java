@@ -6,12 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import message.Result;
 import client.view.ClientAppview;
 import client.view.Menuable;
 import message.UserMenusCommands;
+import server.controller.UserMenusController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -57,7 +59,7 @@ public class ClientInfoMenu extends Application implements Menuable {
 	public void initialize() {
 		username.setText(ClientUserMenusController.getUsername());
 		nickname.setText(ClientUserMenusController.getNickname());
-		maxScore.setText(ClientUserMenusController.getMaxScore());
+		maxScore.setText(ClientUserMenusController.getMaxRating());
 		rank.setText(ClientUserMenusController.getRank());
 		playedMatches.setText(ClientUserMenusController.getNumberOfPlayedMatches());
 		wins.setText(ClientUserMenusController.getNumberOfWins());
@@ -69,7 +71,7 @@ public class ClientInfoMenu extends Application implements Menuable {
 	public Result run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = UserMenusCommands.GAME_HISTORY.getMatcher(input)) != null) result = showGameHistory(matcher);
+		if (UserMenusCommands.GO_TO_HISTORY_MENU.getMatcher(input) != null) result = goToHistoryMenu();
 		else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
 		else if (UserMenusCommands.EXIT.getMatcher(input) != null) result = exit();
 		else result = new Result("Invalid command", false);
@@ -88,6 +90,11 @@ public class ClientInfoMenu extends Application implements Menuable {
 	@FXML
 	private Result exit() {
 		return ClientUserMenusController.exit();
+	}
+
+	@FXML
+	private Result goToHistoryMenu() {
+		return ClientUserMenusController.goToHistoryMenu();
 	}
 
 }

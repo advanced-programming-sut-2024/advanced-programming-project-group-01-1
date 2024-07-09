@@ -18,8 +18,8 @@ public class InfoMenu implements Menuable {
 			result = UserMenusController.getUsername(client);
 		else if (UserMenusCommands.GET_NICKNAME.getMatcher(command) != null)
 			result = UserMenusController.getNickname(client);
-		else if (UserMenusCommands.GET_MAX_SCORE.getMatcher(command) != null)
-			result = UserMenusController.getMaxScore(client);
+		else if (UserMenusCommands.GET_MAX_RATING.getMatcher(command) != null)
+			result = UserMenusController.getMaxRating(client);
 		else if (UserMenusCommands.GET_RANK.getMatcher(command) != null) result = UserMenusController.getRank(client);
 		else if (UserMenusCommands.GET_PLAYED_MATCHES.getMatcher(command) != null)
 			result = UserMenusController.getNumberOfPlayedMatches(client);
@@ -29,8 +29,8 @@ public class InfoMenu implements Menuable {
 			result = UserMenusController.getNumberOfDraws(client);
 		else if (UserMenusCommands.GET_LOSSES.getMatcher(command) != null)
 			result = UserMenusController.getNumberOfLosses(client);
-		else if ((matcher = UserMenusCommands.GAME_HISTORY.getMatcher(command)) != null)
-			result = showGameHistory(client, matcher);
+		else if ((matcher = UserMenusCommands.GO_TO_HISTORY_MENU.getMatcher(command)) != null)
+			result = UserMenusController.goToHistoryMenu(client, matcher);
 		else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(command) != null) result = showCurrentMenu();
 		else if (UserMenusCommands.EXIT.getMatcher(command) != null) result = exit(client);
 		else result = new Result("Invalid command", false);
