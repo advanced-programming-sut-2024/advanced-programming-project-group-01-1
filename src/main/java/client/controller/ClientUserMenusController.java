@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class ClientUserMenusController {
 
-	public static Thread friendListUpdater;
+	public static Thread friendListUpdater, leaderboardUpdater;
 
 	public static Result goToHistoryMenu() {
 		String command = UserMenusCommands.GO_TO_HISTORY_MENU.getPattern();
@@ -68,7 +68,7 @@ public class ClientUserMenusController {
 		else if (ClientAppview.getMenu() instanceof ClientProfileMenu) ClientAppview.setMenu(new ClientMainMenu());
 		else if (ClientAppview.getMenu() instanceof ClientSocialMenu) {
 			ClientAppview.setMenu(new ClientMainMenu());
-			stopUpdating();
+			stopUpdatingFriendList();
 		} else if (ClientAppview.getMenu() instanceof ClientHistoryMenu) ClientAppview.setMenu(new ClientProfileMenu());
 		else if (ClientAppview.getMenu() instanceof ClientRankingMenu) ClientAppview.setMenu(new ClientMainMenu());
 		return result;
@@ -184,8 +184,8 @@ public class ClientUserMenusController {
 		return new ArrayList<>(Arrays.asList(players));
 	}
 
-	public static void startUpdating(ClientSocialMenu menu) {
-		if (friendListUpdater != null) stopUpdating();
+	public static void startUpdatingFriendlist(ClientSocialMenu menu) {
+		if (friendListUpdater != null) stopUpdatingFriendList();
 		friendListUpdater = new Thread(() -> {
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
@@ -197,9 +197,27 @@ public class ClientUserMenusController {
 		friendListUpdater.start();
 	}
 
-	private static void stopUpdating() {
+	private static void stopUpdatingFriendList() {
 		friendListUpdater.interrupt();
 		friendListUpdater = null;
+	}
+
+	public static void startUpdatingLeaderboard(ClientRankingMenu menu) {
+		if (leaderboardUpdater != null) stopUpdatingLeaderboard();
+		leaderboardUpdater = new Thread(() -> {
+			while (!Thread.currentThread().isInterrupted()) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException ignored) {}
+				javafx.application.Platform.runLater(menu::updateScreen);
+			}
+		});
+		leaderboardUpdater.start();
+	}
+
+	private static void stopUpdatingLeaderboard() {
+		leaderboardUpdater.interrupt();
+		leaderboardUpdater = null;
 	}
 
 	public static Result getPage(int page) {

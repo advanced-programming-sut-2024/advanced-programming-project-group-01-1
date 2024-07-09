@@ -18,6 +18,8 @@ public class RankingMenu implements Menuable {
 			result = UserMenusController.getPage(client, Integer.parseInt(matcher.group("pageNumber")));
 		} else if (UserMenusCommands.GET_PAGE_COUNT.getMatcher(command) != null) {
 			result = UserMenusController.getPageCount(client);
+		} else if ((matcher = UserMenusCommands.CHECK_ONLINE.getMatcher(command)) != null) {
+			result = UserMenusController.getOnlineStatus(matcher.group("username"));
 		} else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(command) != null) {
 			result = new Result("Ranking Menu", true);
 		} else if (UserMenusCommands.EXIT.getMatcher(command) != null) {

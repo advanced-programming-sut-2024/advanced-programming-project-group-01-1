@@ -4,7 +4,6 @@ import client.controller.ClientUserMenusController;
 import client.controller.game.ClientPreMatchMenusController;
 import client.view.AlertMaker;
 import client.view.ClientAppview;
-import client.view.ClientMainMenu;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,7 +56,7 @@ public class ClientSocialMenu extends Application implements Menuable {
 				}
 			}
 		});
-		ClientUserMenusController.startUpdating(this);
+		ClientUserMenusController.startUpdatingFriendlist(this);
 	}
 
 

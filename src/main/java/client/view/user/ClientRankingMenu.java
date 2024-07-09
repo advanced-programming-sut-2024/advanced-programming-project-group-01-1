@@ -39,8 +39,8 @@ public class ClientRankingMenu extends Application implements Menuable {
 
 	@FXML
 	public void initialize() {
-		loadPage();
-		updateButtons();
+		updateScreen();
+		ClientUserMenusController.startUpdatingLeaderboard(this);
 	}
 
 	@Override
@@ -99,6 +99,11 @@ public class ClientRankingMenu extends Application implements Menuable {
 		return new Result("Page changed successfully", true);
 	}
 
+	public void updateScreen() {
+		loadPage();
+		updateButtons();
+	}
+
 	private void loadPage() {
 		rankingRows.getChildren().clear();
 		String pageDetails = ClientUserMenusController.getPage(page).getMessage();
@@ -116,6 +121,7 @@ public class ClientRankingMenu extends Application implements Menuable {
 			controller.setRank(Integer.parseInt(pageDetailArray[0]));
 			controller.setUsername(pageDetailArray[1]);
 			controller.setRating(Integer.parseInt(pageDetailArray[2]));
+			controller.setOnline(pageDetailArray[3].equals("Online") ? true : false);
 			rankingRows.getChildren().add(rankingMenuRow);
 		}
 	}

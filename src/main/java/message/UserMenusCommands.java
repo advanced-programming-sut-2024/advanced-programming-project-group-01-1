@@ -27,6 +27,7 @@ public enum UserMenusCommands {
     PREVIOUS_PAGE("previous page"),
     SHOW_PAGE_INFO("show page info -n (?<pageNumber>\\d+)"),
     GET_PAGE_COUNT("get page count"),
+    CHECK_ONLINE("check online (?<username>.*)"),
     SHOW_FRIENDS("show friends"),
     SHOW_RECEIVED_FRIEND_REQUESTS("show received friend requests"),
     SHOW_SENT_FRIEND_REQUESTS("show sent friend requests"),

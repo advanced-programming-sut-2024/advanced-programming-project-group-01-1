@@ -320,7 +320,8 @@ public class UserMenusController {
 			int start = (pageNumber - 1) * 10 + 1, end = Math.min(pageNumber * 10, sortedUsers.size());
 			for (int i = start; i <= end; i++) {
 				User user = User.getUsers().get(i - 1);
-				page += user.getRank() + " " + user.getUsername() + " " + (int) user.getElo() + "\n";
+				page += user.getRank() + " " + user.getUsername() + " "
+						+ (int) user.getElo() + " " + getOnlineStatus(user.getUsername()).getMessage() + "\n";
 			}
 			return new Result(page, true);
 		}
@@ -330,6 +331,23 @@ public class UserMenusController {
 		synchronized (User.getUsers()) {
 			int pageCount = (User.getUsers().size() + 9) / 10;
 			return new Result(String.valueOf(pageCount), true);
+		}
+	}
+
+	public static Result getOnlineStatus(String username) {
+		User user;
+		synchronized (User.getUsers()) {
+			user = User.getUserByUsername(username);
+			if (user == null) {
+				return new Result("User not found", false);
+			}
+		}
+		synchronized (User.getOnlineUsers()) {
+			if (User.getOnlineUsers().contains(user)) {
+				return new Result("Online", true);
+			} else {
+				return new Result("Offline", true);
+			}
 		}
 	}
 }
