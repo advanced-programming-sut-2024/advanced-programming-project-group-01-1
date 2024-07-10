@@ -31,6 +31,7 @@ import client.view.model.SmallCard;
 import client.view.model.SmallUnit;
 import message.SelectionHandler;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -105,7 +106,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	private String opponentLastMove;
 	Thread updater, onlineStatus;
 
-	ArrayList<Transition> moveAnimations = new ArrayList<>();
+	ArrayList<Transition> animations = new ArrayList<>();
 
 	@Override
 	public void start(Stage stage) {
@@ -233,7 +234,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 			if (node instanceof SmallCard) {
 				node.setLayoutX(node.getParent().getLayoutX() + node.getLayoutX());
 				node.setLayoutY(node.getParent().getLayoutY() + node.getLayoutY());
-				root.getChildren().add(node);
+				space.getChildren().remove(node);
 			}
 		}
 	}
@@ -650,13 +651,11 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 		clearSelectedCard();
 		int row = tmp;
-		unclickablePane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
-		root.getChildren().add(unclickablePane);
-		unclickablePane.getChildren().add(card);
 		card.setLayoutX(handPane.getLayoutX() + card.getLayoutX());
 		card.setLayoutY(handPane.getLayoutY() + card.getLayoutY());
 		card.setOnMouseEntered(null);
 		card.setOnMouseExited(null);
+		unclickablePane.getChildren().add(card);
 		Transition transition = new CardMoving(card, pane.getLayoutX() + (pane.getPrefWidth() - card.getPrefWidth()) / 2, pane.getLayoutY());
 		putAnimation(card, pane.getLayoutX() + (pane.getPrefWidth() - card.getPrefWidth()) / 2, pane.getLayoutY(), true, idx, row);
 	}
@@ -739,8 +738,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 			updateScreen();
 			return;
 		}
-		unclickablePane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
-		root.getChildren().add(unclickablePane);
 		String[] cardsInfo = opponentMove.split("\n");
 		int row = Integer.parseInt(cardsInfo[0]);
 
@@ -753,7 +750,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 		SmallCard card = getSmallCard(cardInfo.toString());
 		if (card.getType().equals("leader")) {
 			//TODO: fix this
-			root.getChildren().remove(unclickablePane);
 			updateScreen();
 			return;
 		}
@@ -777,6 +773,11 @@ public class ClientMatchMenu extends Application implements Menuable {
 
 	public void putAnimation(SmallCard card, double x, double y, boolean callPlace, int idx, int row) {
 		Transition transition = new CardMoving(card, x, y);
+		if (animations.isEmpty()) {
+			unclickablePane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+			root.getChildren().add(unclickablePane);
+		}
+		animations.add(transition);
 		transition.setOnFinished(e -> {
 			ImageView abilityIcon = null;
 			switch (card.getAbility()){
@@ -814,7 +815,10 @@ public class ClientMatchMenu extends Application implements Menuable {
 					break;
 			}
 			if (abilityIcon == null) {
-				root.getChildren().remove(unclickablePane);
+				animations.remove(transition);
+				if (animations.isEmpty()){
+					root.getChildren().remove(unclickablePane);
+				}
 				if (callPlace) {
 					Result result = ClientMatchMenuController.placeCard(idx, row);
 				}
@@ -828,7 +832,10 @@ public class ClientMatchMenu extends Application implements Menuable {
 				fadeTransition.setFromValue(1);
 				fadeTransition.setToValue(0);
 				fadeTransition.setOnFinished(e1 -> {
-					root.getChildren().remove(unclickablePane);
+					animations.remove(transition);
+					if (animations.isEmpty()){
+						root.getChildren().remove(unclickablePane);
+					}
 					if (callPlace) {
 						Result result = ClientMatchMenuController.placeCard(idx, row);
 					}
@@ -842,21 +849,24 @@ public class ClientMatchMenu extends Application implements Menuable {
 
 	public void moveAnimation(SmallCard card, double x, double y) {
 		Transition transition  = new CardMoving(card, x, y);
-		if (moveAnimations.isEmpty()) {
+		if (animations.isEmpty()) {
 			unclickablePane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
 			root.getChildren().add(unclickablePane);
 		}
-		moveAnimations.add(transition);
+		animations.add(transition);
 		transition.setOnFinished(e -> {
-			moveAnimations.remove(transition);
-			if (moveAnimations.isEmpty()) {
+			animations.remove(transition);
+			if (animations.isEmpty()) {
 				root.getChildren().remove(unclickablePane);
 			}
 		});
 		transition.play();
 	}
 
-	/*
+	public void openChat() {
+		new ChatPanel(root, myUsernameField.getText());
+	}
+        /*
 	 * Terminal version of the LobbyMenu
 	 */
 

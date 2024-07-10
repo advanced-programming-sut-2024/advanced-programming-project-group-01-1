@@ -193,5 +193,6 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
+      <Button id="ipad-dark-grey" layoutX="1127.0" layoutY="461.0" mnemonicParsing="false" prefHeight="50.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="chat" onMouseClicked="#openChat"/>
    </children>
 </Pane>

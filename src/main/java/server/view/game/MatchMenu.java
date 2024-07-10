@@ -4,6 +4,7 @@ import message.GameMenusCommands;
 import message.Result;
 import server.controller.game.MatchMenuController;
 import server.model.Client;
+import server.model.game.Game;
 import server.view.Menuable;
 
 import java.util.regex.Matcher;
@@ -91,6 +92,11 @@ public class MatchMenu implements Menuable {
 				result = MatchMenuController.getPowers(client);
 			} else if (GameMenusCommands.GET_SCORES.getMatcher(input) != null) {
 				result = MatchMenuController.getScores(client);
+			} else if ((matcher = GameMenusCommands.SEND_MESSAGE.getMatcher(input)) != null) {
+				result = sendMessage(client, matcher);
+			} else if (GameMenusCommands.GET_CHATS.getMatcher(input) != null) {
+				//result = MatchMenuController.getChats(client);
+				result = null;
 			} else if (MatchMenuController.isAsking(client).isSuccessful()) {
 				if (GameMenusCommands.IS_ASKING.getMatcher(input) != null) result = new Result("asking", true);
 				else if (GameMenusCommands.GET_ASKER_CARDS.getMatcher(input) != null) {
@@ -158,5 +164,11 @@ public class MatchMenu implements Menuable {
 	private Result selectCard(Client client, Matcher matcher) {
 		int cardNumber = Integer.parseInt(matcher.group("cardNumber"));
 		return MatchMenuController.selectCard(client, cardNumber);
+	}
+
+	private Result sendMessage(Client client, Matcher matcher) {
+		String message = matcher.group("message");
+		//return MatchMenuController.sendMessage(client, message);
+		return null;
 	}
 }

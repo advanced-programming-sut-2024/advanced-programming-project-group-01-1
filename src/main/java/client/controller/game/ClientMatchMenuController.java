@@ -236,6 +236,17 @@ public class ClientMatchMenuController {
 		return TCPClient.send(command);
 	}
 
+	public static Result sendMessage(String message) {
+		String command = GameMenusCommands.SEND_MESSAGE.getPattern();
+		command = command.replace("(?<message>.+)", message);
+		return TCPClient.send(command);
+	}
+
+	public static Result getChats() {
+		String command = GameMenusCommands.GET_CHATS.getPattern();
+		return TCPClient.send(command);
+	}
+
 	public static Result cheatClearWeather() {
 		String command = GameMenusCommands.CHEAT_CLEAR_WEATHER.getPattern();
 		return TCPClient.send(command);

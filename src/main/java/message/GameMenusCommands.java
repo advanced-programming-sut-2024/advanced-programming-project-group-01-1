@@ -72,6 +72,8 @@ public enum GameMenusCommands {
     IS_MY_TURN("is my turn"),
     GET_POWERS("get powers"),
     GET_SCORES("get scores"),
+    SEND_MESSAGE("send message (?<message>.+)"),
+    GET_CHATS("get messages"),
     PASS_ROUND("pass round"),
     OPPONENT_LAST_MOVE("get opponent last move"),
     EXIT_MATCH_FINDER("menu exit"),
