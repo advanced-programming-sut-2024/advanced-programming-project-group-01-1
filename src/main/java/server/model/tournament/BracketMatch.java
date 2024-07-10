@@ -12,8 +12,11 @@ public class BracketMatch {
 	User winner = null, loser = null;
 	Thread matchThread;
 
-	public BracketMatch(User player1, User player2) {
+	public void setPlayer1(User player1) {
 		this.player1 = player1;
+	}
+
+	public void setPlayer2(User player2) {
 		this.player2 = player2;
 	}
 
@@ -58,7 +61,14 @@ public class BracketMatch {
 
 	@Override
 	public String toString() {
-		if (game == null) return " \n \n";
+		if (game == null) {
+			String result = "";
+			if (player1 != null) result += player1.getUsername() + " -1\n";
+			else result += " \n";
+			if (player2 != null) result += player2.getUsername() + " -1\n";
+			else result += " \n";
+			return result;
+		}
 		User current = game.getCurrent();
 		return player1.getUsername() + " " + (current == player1 ? 2 - game.getOpponentLife() : 2 - game.getCurrentLife()) +
 				"\n" + player2.getUsername() + " " + (current == player2 ? 2 - game.getOpponentLife() : 2 - game.getCurrentLife()) + "\n";

@@ -21,7 +21,7 @@ public class Bracket {
 	User[] players;
 	User[] seed = new User[37];
 	BracketMatch[] matches = new BracketMatch[14];
-	boolean[] matchDone = new boolean[14];
+	boolean[] matchStarted = new boolean[14], matchDone = new boolean[14];
 	int[] currentSeed = new int[8];
 	User[] placement = new User[8];
 	Thread matchThread;
@@ -43,10 +43,10 @@ public class Bracket {
 	public void start() {
 		matchThread = new Thread(() -> {
 			while (seed[35] == null) {
+				updateMatches();
 				try {
 					Thread.sleep(4000);
 				} catch (InterruptedException e) {}
-				updateMatches();
 			}
 			for (int i = 0; i < 8; i++) {
 				placement[i] = seed[35 - i];
@@ -80,18 +80,27 @@ public class Bracket {
 		for (int i = 0; i < 14; i++) {
 			if (matches[i] != null) {
 				if (matchDone[i]) continue;
+				if (!matchStarted[i]) {
+					if (seed[i * 2] != null && seed[i * 2 + 1] != null) {
+						matches[i].setPlayer1(seed[i * 2]);
+						matches[i].setPlayer2(seed[i * 2 + 1]);
+						matches[i].start();
+					}
+					continue;
+				}
 				if (matches[i].winner != null) {
 					matchDone[i] = true;
+					System.out.println(nextSeed[i][0] + " " + nextSeed[i][1]);
 					seed[nextSeed[i][0]] = matches[i].winner;
 					seed[nextSeed[i][1]] = matches[i].loser;
 					currentSeed[originalSeed(matches[i].winner)] = nextSeed[i][0];
 					currentSeed[originalSeed(matches[i].loser)] = nextSeed[i][1];
 				}
 			} else {
-				if (seed[i * 2] != null && seed[i * 2 + 1] != null) {
-					System.out.println("Match " + i + " started");
-					matches[i] = new BracketMatch(seed[i * 2], seed[i * 2 + 1]);
-					matches[i].start();
+				if (seed[i * 2] != null || seed[i * 2 + 1] != null) {
+					matches[i] = new BracketMatch();
+					matches[i].setPlayer1(seed[i * 2]);
+					matches[i].setPlayer2(seed[i * 2 + 1]);
 				}
 			}
 		}

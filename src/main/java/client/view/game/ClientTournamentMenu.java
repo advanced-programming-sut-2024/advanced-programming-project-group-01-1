@@ -92,7 +92,7 @@ public class ClientTournamentMenu extends Application implements Menuable {
 		for (int i = 0; i < 28; i++) {
 			String[] parts = lines[i].equals(" ") ? new String[2] : lines[i].split(" ");
 			seedLabels[i].setText(parts[0]);
-			seedScores[i].setText(parts[1]);
+			seedScores[i].setText(parts[1] == null || parts[1].equals("-1") ? "" : parts[1]);
 		}
 	}
 
