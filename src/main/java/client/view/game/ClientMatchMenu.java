@@ -184,7 +184,11 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 		if (ClientMatchMenuController.isGameOver()) {
 			showEndGame();
-		} else if (!ClientMatchMenuController.isMyTurn()) lock.notify();
+		} else if (!ClientMatchMenuController.isMyTurn()) {
+			synchronized (lock) {
+				lock.notify();
+			}
+		}
 	}
 
 	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> clickHandler) {
@@ -644,6 +648,12 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void opponentPut(Result result) {
+		if (result.getMessage().equals("pass")){
+			updateScreen();
+			return;
+		}
+		unclickablePane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+		root.getChildren().add(unclickablePane);
 		String[] cardsInfo = result.getMessage().split("\n");
 		int row = Integer.parseInt(cardsInfo[0]);
 		StringBuilder cardInfo = new StringBuilder();
@@ -655,12 +665,13 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 		card.setLayoutX(0);
 		card.setLayoutY(0);
+		unclickablePane.getChildren().add(card);
 		Pane dest;
 		if (row != -1) {
 			if (card.getType().equals("Buffer")) {
-				dest = rowBufferPanes[row];
+				dest = rowBufferPanes[5-row];
 			} else {
-				dest = rowPanes[row];
+				dest = rowPanes[5-row];
 			}
 		} else if (card.getType().equals("Weather")) {
 			dest = weatherPane;
