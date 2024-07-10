@@ -153,7 +153,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 							Result result = ClientMatchMenuController.getOpponentMove();
 							if (result.getMessage() != null && !result.getMessage().equals(opponentLastMove)) {
 								opponentLastMove = result.getMessage();
-								Platform.runLater(() -> opponentPut(result));
+								Platform.runLater(() -> opponentPut(opponentLastMove.substring(opponentLastMove.indexOf('\n') + 1)));
 								isLocked = false;
 								lock.wait();
 							}
@@ -170,14 +170,16 @@ public class ClientMatchMenu extends Application implements Menuable {
 		onlineStatus = new Thread(() -> {
 			try {
 				while (true) {
-					boolean result = ClientMatchMenuController.isOpponentOnline();
+					Result result = ClientMatchMenuController.isOpponentOnline();
 					Platform.runLater(() -> {
-						if (result) {
+						if (result.isSuccessful()) {
 							opponentOnlineField.setEffect(null);
 						} else {
-							ColorAdjust colorAdjust = new ColorAdjust();
-							colorAdjust.setSaturation(-1);
-							opponentOnlineField.setEffect(colorAdjust);
+							if (result.getMessage().equals("Offline")) {
+								ColorAdjust colorAdjust = new ColorAdjust();
+								colorAdjust.setSaturation(-1);
+								opponentOnlineField.setEffect(colorAdjust);
+							} else updateScreen();
 						}
 					});
 					Thread.sleep(1000);
@@ -545,13 +547,15 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 
 		String result = ClientMatchMenuController.getScores().getMessage();
-		String[] scores = result.split("\n");
-		for (int i = 0; i < scores.length; i += 2) {
-			int myScore = Integer.parseInt(scores[i]);
-			int opponentScore = Integer.parseInt(scores[i + 1]);
-			int round = i / 2 + 1;
-			labels[1][round].setText(String.valueOf(myScore));
-			labels[2][round].setText(String.valueOf(opponentScore));
+		if (!result.isEmpty()) {
+			String[] scores = result.split("\n");
+			for (int i = 0; i < scores.length; i += 2) {
+				int myScore = Integer.parseInt(scores[i]);
+				int opponentScore = Integer.parseInt(scores[i + 1]);
+				int round = i / 2 + 1;
+				labels[1][round].setText(String.valueOf(myScore));
+				labels[2][round].setText(String.valueOf(opponentScore));
+			}
 		}
 
 		Label label = new Label("Click to continue");
@@ -729,15 +733,15 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 	}
 
-	public void opponentPut(Result result) {
-		System.out.println("\n------------------\n" + result.getMessage() + "\n------------------\n");
-		if (result.getMessage().equals("pass")){
+	public void opponentPut(String opponentMove) {
+		System.out.println("\n------------------\n" + opponentMove + "\n------------------\n");
+		if (opponentMove.equals("pass")){
 			updateScreen();
 			return;
 		}
 		unclickablePane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
 		root.getChildren().add(unclickablePane);
-		String[] cardsInfo = result.getMessage().split("\n");
+		String[] cardsInfo = opponentMove.split("\n");
 		int row = Integer.parseInt(cardsInfo[0]);
 
 		StringBuilder cardInfo = new StringBuilder();

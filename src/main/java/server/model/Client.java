@@ -1,9 +1,11 @@
 package server.model;
 
+import server.model.game.Game;
 import server.model.user.User;
 import server.view.Menuable;
 import server.view.sign.login.LoginMenu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -11,6 +13,7 @@ import java.util.Random;
 public class Client {
 	private static final Random random = new Random();
 	private static final Map<String, Client> clients = new HashMap<>();
+	private static final Map<Game, ArrayList<Thread>> gameBombs = new HashMap<>();
 	private final String token;
 	private Menuable Menu;
 	private User identity;
@@ -22,7 +25,6 @@ public class Client {
 		for (int i = 0; i < 5 || clients.containsKey(tmp.toString()); i++)
 			tmp.append((char) (random.nextInt(26) + (random.nextBoolean() ? 'A' : 'a')));
 		token = tmp.toString();
-		System.out.println("baba bikhial " + token);
 		Menu = new LoginMenu();
 		identity = null;
 		isWaiting = false;
@@ -40,9 +42,34 @@ public class Client {
 		return null;
 	}
 
+	private static void createGameBomb(Game game, User loser) {
+		synchronized (game) {
+			if (game.isGameOver()) return;
+			if (!gameBombs.containsKey(game))
+				gameBombs.put(game, new ArrayList<>());
+			Thread bomb = new Thread(() -> {
+				try {
+					Thread.sleep(15000);
+					synchronized (game) {
+						if (!game.isGameOver()) {
+							game.finishGame(loser);
+							gameBombs.remove(game);
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+			gameBombs.get(game).add(bomb);
+			bomb.start();
+		}
+	}
+
 	public static void remove(Client client) {
 		if (client.getIdentity() != null) {
 			User.getOnlineUsers().remove(client.getIdentity());
+			if (client.getIdentity().getCurrentGame() != null)
+				createGameBomb(client.getIdentity().getCurrentGame(), client.getIdentity());
 			if (client.getIdentity().getChallengedUser() != null) {
 				client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
 				client.getIdentity().setChallengedUser(null);

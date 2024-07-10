@@ -118,6 +118,10 @@ public class Game {
 		return opponent;
 	}
 
+	public int getRoundNumber() {
+		return roundNumber;
+	}
+
 	public Faction getCurrentFaction() {
 		return currentFaction;
 	}
@@ -457,6 +461,12 @@ public class Game {
 					counter++;
 				}
 		return null;
+	}
+
+	public void finishGame(User loser) {
+		if (loser == opponent) opponentLife = 0;
+		else currentLife = 0;
+		endGame();
 	}
 
 	private void endGame() {

@@ -51,6 +51,14 @@ public class MatchMenuController {
 		return client.getIdentity().getCurrentGame().getOpponentDiscardPile();
 	}
 
+	public static Result isOpponentOnline(Client client) {
+		User opponent = isCurrent(client) ? client.getIdentity().getCurrentGame().getOpponent() :
+			client.getIdentity().getCurrentGame().getCurrent();
+		if (User.getOnlineUsers().contains(opponent)) return new Result("Online", true);
+		if (client.getIdentity().getCurrentGame().isGameOver())
+			return new Result("Game Over", false);
+		return new Result("Offline", false);
+	}
 
 	public static Result isRowDebuffed(Client client, int rowNumber) {
 		if (!isCurrent(client)) rowNumber = 5 - rowNumber;
@@ -186,10 +194,11 @@ public class MatchMenuController {
 	public static Result placeCard(Client client, int cardNumber, int rowNumber) {
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		try {
+			Game clientGame = client.getIdentity().getCurrentGame();
 			Card card = getHand(client).getCards().get(cardNumber);
-			client.getIdentity().getCurrentGame().placeCard(card, rowNumber);
-			client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), rowNumber + "\n" + card.toString()
-					+ "\nunique code: " + card.toSuperString()));
+			clientGame.placeCard(card, rowNumber);
+			clientGame.getMoves().add(new Move(client.getIdentity(), clientGame.getRoundNumber() + "\n" + rowNumber + "\n"
+					+ card.toString() + "\nunique code: " + card.toSuperString()));
 			return new Result("Card placed successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -215,10 +224,11 @@ public class MatchMenuController {
 	public static Result useLeaderAbility(Client client) {
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		try {
-			Leader leader = client.getIdentity().getCurrentGame().getCurrentLeader();
-			client.getIdentity().getCurrentGame().useLeaderAbility();
-			client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), -1 + "\n" + leader.toString()
-					+ "\nunique code: " + leader.toSuperString()));
+			Game clientGame = client.getIdentity().getCurrentGame();
+			Leader leader = clientGame.getCurrentLeader();
+			clientGame.useLeaderAbility();
+			clientGame.getMoves().add(new Move(client.getIdentity(), clientGame.getRoundNumber() + "\n" + -1 + "\n"
+					+ leader.toString() + "\nunique code: " + leader.toSuperString()));
 			return new Result("Leader ability played successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -269,7 +279,8 @@ public class MatchMenuController {
 	public static Result passTurn(Client client) {
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		client.getIdentity().getCurrentGame().passTurn();
-		client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), "pass"));
+		client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(),
+				client.getIdentity().getCurrentGame().getRoundNumber() + "\npass"));
 		return new Result("Turn passed successfully", true);
 	}
 

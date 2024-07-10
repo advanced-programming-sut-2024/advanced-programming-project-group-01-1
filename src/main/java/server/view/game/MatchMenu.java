@@ -19,6 +19,8 @@ public class MatchMenu implements Menuable {
 		Matcher matcher;
 		if (GameMenusCommands.IS_MY_TURN.getMatcher(input) != null) {
 			result = MatchMenuController.isMyTurn(client);
+		} else if(GameMenusCommands.IS_OPPONENT_ONLINE.getMatcher(input) != null) {
+			result = MatchMenuController.isOpponentOnline(client);
 		} else if (isCheating) {
 			if (input.equals("exit")) {
 				isCheating = false;
