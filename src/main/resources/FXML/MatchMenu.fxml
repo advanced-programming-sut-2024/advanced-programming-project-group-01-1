@@ -1,16 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.game.ClientMatchMenu">
    <children>
       <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true">
          <image>
             <Image url="@../images/backgrounds/MatchMenu.jpg" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="95.0" layoutX="97.0" layoutY="593.0" stroke="BLACK" strokeType="INSIDE" width="75.0" />
+      <Pane fx:id="handPane" layoutX="410.0" layoutY="598.0" prefHeight="92.0" prefWidth="667.0" />
+      <Pane fx:id="rowPane0" layoutX="505.0" layoutY="492.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow0" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" layoutY="4.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_rain.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane1" layoutX="505.0" layoutY="394.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow1" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_fog.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane2" layoutX="505.0" layoutY="302.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow2" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_frost.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane3" layoutX="505.0" layoutY="195.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow3" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_frost.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane4" layoutX="505.0" layoutY="97.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow4" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" layoutY="3.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_fog.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowPane5" layoutX="505.0" layoutY="5.0" prefHeight="92.0" prefWidth="574.0">
+         <children>
+            <ImageView fx:id="weatherEffectRow5" fitHeight="92.0" fitWidth="676.0" layoutX="-102.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/overlay_rain.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+      <Pane fx:id="rowBuffer0" layoutX="405.0" layoutY="494.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer1" layoutX="405.0" layoutY="394.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer2" layoutX="405.0" layoutY="303.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer3" layoutX="405.0" layoutY="197.0" prefHeight="92.0" prefWidth="80.0" />
+      <Pane fx:id="rowBuffer4" layoutX="405.0" layoutY="97.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="rowBuffer5" layoutX="405.0" layoutY="5.0" prefHeight="92.0" prefWidth="92.0" />
+      <Pane fx:id="myLeaderPane" layoutX="102.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
+      <Pane fx:id="opponentLeaderPane" layoutX="102.0" layoutY="59.0" prefHeight="92.0" prefWidth="67.0" />
+      <Pane fx:id="weatherPane" layoutX="102.0" layoutY="323.0" prefHeight="92.0" prefWidth="197.0" />
+      <Pane fx:id="opponentPilePane" layoutX="1105.0" layoutY="59.0" prefHeight="92.0" prefWidth="67.0" />
+      <Pane fx:id="opponentDeckPane" layoutX="1231.0" layoutY="51.0" prefHeight="92.0" prefWidth="67.0" />
+      <Pane fx:id="myPilePane" layoutX="1105.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
+      <Pane fx:id="myDeckPane" layoutX="1231.0" layoutY="598.0" prefHeight="92.0" prefWidth="67.0" />
+      <Pane layoutX="14.0" layoutY="440.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="185.0" layoutY="73.0" preserveRatio="false">
+               <Image url="@../images/icons/icon_card_count.png" />
+            </ImageView>
+            <Label fx:id="myHandSize" alignment="CENTER" layoutX="213.0" layoutY="73.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font></Label>
+            <HBox fx:id="myLife" layoutX="173.0" layoutY="14.0" prefHeight="40.0" prefWidth="80.0">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" preserveRatio="false">
+                     <Image url="@../images/icons/icon_gem_on.png" />
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" preserveRatio="false">
+                     <Image url="@../images/icons/icon_gem_on.png" />
+                  </ImageView>
+               </children>
+            </HBox>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="13.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/profile.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/icon_player_border.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="myFactionField" fitHeight="50.0" fitWidth="50.0" layoutX="13.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="myUsernameField" layoutX="71.0" layoutY="29.0" prefHeight="50.0" prefWidth="100.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="myFactionNameField" layoutX="71.0" layoutY="88.0" prefHeight="50.0" prefWidth="100.0" text="Label" textFill="#b49326">
+               <font>
+                  <Font size="11.0" />
+               </font></Label>
+         </children></Pane>
+      <Pane layoutX="14.0" layoutY="157.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="28.0" layoutX="185.0" layoutY="33.0" preserveRatio="false">
+               <Image url="@../images/icons/icon_card_count.png" />
+            </ImageView>
+            <Label fx:id="opponentHandSize" alignment="CENTER" layoutX="213.0" layoutY="33.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font></Label>
+            <HBox fx:id="opponentLife" layoutX="173.0" layoutY="92.0" prefHeight="40.0" prefWidth="80.0">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" preserveRatio="false">
+                     <Image url="@../images/icons/icon_gem_on.png" />
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" preserveRatio="false">
+                     <Image url="@../images/icons/icon_gem_on.png" />
+                  </ImageView>
+               </children>
+            </HBox>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="28.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/profile.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="24.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/icons/icon_player_border.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="opponentFactionField" fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="opponentUsernameField" layoutX="71.0" layoutY="28.0" prefHeight="50.0" prefWidth="100.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="opponentFactionNameField" layoutX="71.0" layoutY="87.0" prefHeight="50.0" prefWidth="100.0" text="Nilfgaardian Empire" textFill="#b49326">
+               <font>
+                  <Font size="11.0" />
+               </font></Label>
+         </children></Pane>
+      <Button id="ipad-dark-grey" layoutX="158.0" layoutY="680.0" mnemonicParsing="false" onMouseClicked="#passTurn" prefHeight="57.0" prefWidth="43.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="pass" />
+      <Label fx:id="rowPowerLabel0" alignment="CENTER" layoutX="360.0" layoutY="520.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel1" alignment="CENTER" layoutX="360.0" layoutY="423.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel2" alignment="CENTER" layoutX="360.0" layoutY="328.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel3" alignment="CENTER" layoutX="360.0" layoutY="223.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel4" alignment="CENTER" layoutX="360.0" layoutY="123.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="rowPowerLabel5" alignment="CENTER" layoutX="360.0" layoutY="31.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <Label fx:id="myPower" alignment="CENTER" layoutX="301.0" layoutY="500.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <ImageView fx:id="meAhead" fitHeight="58.5" fitWidth="76.5" layoutX="283.0" layoutY="500.0" visible="false">
+         <Image url="@../images/icons/icon_high_score.png" />
+      </ImageView>
+      <Label fx:id="opponentPower" alignment="CENTER" layoutX="301.0" layoutY="214.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
+      <ImageView fx:id="opponentAhead" fitHeight="58.5" fitWidth="76.5" layoutX="283.0" layoutY="214.0" visible="false">
+         <Image url="@../images/icons/icon_high_score.png" />
+      </ImageView>
+      <Label fx:id="opponentPassedField" layoutX="219.0" layoutY="90.0" text="Passed" textFill="#b49326">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
+      <Label fx:id="myPassedField" layoutX="220.0" layoutY="629.0" text="Passed" textFill="#b49326">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="myDeckNumber" alignment="CENTER" layoutX="1231.0" layoutY="559.0" prefHeight="30.0" prefWidth="67.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="opponentDeckNumber" alignment="CENTER" layoutX="1231.0" layoutY="157.0" prefHeight="30.0" prefWidth="67.0" text="Label" textAlignment="CENTER" textFill="#b49326">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
