@@ -40,6 +40,7 @@ public class Game {
 	boolean gameEnded = false;
 	int currentCheatPower = 0, opponentCheatPower = 0;
 	final ArrayList<Move> moves = new ArrayList<>();
+	final ArrayList<String> chatMessages = new ArrayList<>();
 	Thread currentBomb, opponentBomb;
 
 	private Game(User player1, User player2) {
@@ -556,4 +557,12 @@ public class Game {
 		return hasCurrentPassed;
 	}
 
+	public void addMessage(String message) {
+		System.out.println("message gotted:" + message);
+		chatMessages.add(message);
+	}
+
+	public ArrayList<String> getChatMessages(){
+		return chatMessages;
+	}
 }

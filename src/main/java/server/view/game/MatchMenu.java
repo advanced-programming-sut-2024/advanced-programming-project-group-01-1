@@ -95,8 +95,7 @@ public class MatchMenu implements Menuable {
 			} else if ((matcher = GameMenusCommands.SEND_MESSAGE.getMatcher(input)) != null) {
 				result = sendMessage(client, matcher);
 			} else if (GameMenusCommands.GET_CHATS.getMatcher(input) != null) {
-				//result = MatchMenuController.getChats(client);
-				result = null;
+				result = MatchMenuController.getChats(client);
 			} else if (MatchMenuController.isAsking(client).isSuccessful()) {
 				if (GameMenusCommands.IS_ASKING.getMatcher(input) != null) result = new Result("asking", true);
 				else if (GameMenusCommands.GET_ASKER_CARDS.getMatcher(input) != null) {
@@ -168,7 +167,6 @@ public class MatchMenu implements Menuable {
 
 	private Result sendMessage(Client client, Matcher matcher) {
 		String message = matcher.group("message");
-		//return MatchMenuController.sendMessage(client, message);
-		return null;
+		return MatchMenuController.sendMessage(client, message);
 	}
 }

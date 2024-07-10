@@ -424,4 +424,18 @@ public class MatchMenuController {
 		if (isCurrent(client)) return new Result("your turn", true);
 		return new Result("opponent turn", false);
 	}
+
+	public static Result sendMessage(Client client, String message) {
+		client.getIdentity().getCurrentGame().addMessage(message);
+		return new Result("message send successfully", true);
+	}
+
+	public static Result getChats(Client client) {
+		ArrayList<String> chats = client.getIdentity().getCurrentGame().getChatMessages();
+		StringBuilder result = new StringBuilder();
+		for (String chat : chats) {
+			result.append(chat).append("\n####################\n");
+		}
+		return new Result(result.toString(), true);
+	}
 }

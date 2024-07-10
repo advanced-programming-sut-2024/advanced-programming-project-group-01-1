@@ -3,6 +3,7 @@ package client.view.game;
 import client.controller.game.ClientMatchMenuController;
 import client.view.Constants;
 import client.view.model.Chat;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
@@ -47,14 +48,19 @@ public class ChatPanel {
         chatBoxField.getStylesheets().add(getClass().getResource("/CSS/listviewstyle.css").toExternalForm());
         chatBoxField.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) return;
+            System.out.println("new reply\n" + newValue);
             String[] parts = newValue.toString().split("\n--------------------\n");
+            System.out.println(parts.length);
             String replyMessage = parts[parts.length - 1];
+            System.out.println(replyMessage);
             String[] replyParts = replyMessage.split("\n");
+            System.out.println(replyParts.length);
             StringBuilder reply = new StringBuilder();
             for (int i = 0; i < replyParts.length - 1; i++) {
                 reply.append(replyParts[i]).append("\n");
             }
-            messageField.setText("reply to:\n" + newValue + "\n--------------------\n");
+            messageField.setText("reply to:\n" + reply + "\n--------------------\n");
+            messageField.positionCaret(messageField.getText().length());
         });
         chatBox.getChildren().add(chatBoxField);
 
@@ -78,10 +84,13 @@ public class ChatPanel {
             try {
                 while (true) {
                     String[] message = ClientMatchMenuController.getChats().getMessage().split("\n####################\n");
-                    int sz = chatBoxField.getItems().size();
-                    for (int i = sz; i < message.length; i++) {
-                        chatBoxField.getItems().add(message[i]);
-                    }
+                    Platform.runLater(() -> {
+                        int sz = chatBoxField.getItems().size();
+                        for (int i = sz; i < message.length; i++) {
+                            chatBoxField.getItems().add(message[i]);
+                        }
+                        chatBoxField.scrollTo(message.length-1);
+                    });
                     Thread.sleep(1000);
                 }
             } catch (Exception e) {
@@ -95,7 +104,6 @@ public class ChatPanel {
     public void sendMessage() {
         System.out.println("Sending message");
         String message = messageField.getText();
-        message.replaceAll("\\\\n", "\n");
         if (message.isBlank()) return;
         String replyMessage = "";
         if (message.startsWith("reply to:")) {
@@ -104,7 +112,9 @@ public class ChatPanel {
             message = parts[1];
 
         }
-        Result result = ClientMatchMenuController.sendMessage(new Chat(message, replyMessage, username).toString());
+        String messageToSend = new Chat(message, replyMessage, username).toString();
+        System.out.println("message to send: " + messageToSend);
+        Result result = ClientMatchMenuController.sendMessage(messageToSend);
         messageField.clear();
     }
 

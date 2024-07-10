@@ -238,8 +238,10 @@ public class ClientMatchMenuController {
 
 	public static Result sendMessage(String message) {
 		String command = GameMenusCommands.SEND_MESSAGE.getPattern();
-		command = command.replace("(?<message>.+)", message);
-		return TCPClient.send(command);
+		command = command.replace("(?<message>(?:.|\n)+)", message);
+		Result result =  TCPClient.send(command);
+		System.out.println(result);
+		return result;
 	}
 
 	public static Result getChats() {

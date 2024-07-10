@@ -72,7 +72,7 @@ public enum GameMenusCommands {
     IS_MY_TURN("is my turn"),
     GET_POWERS("get powers"),
     GET_SCORES("get scores"),
-    SEND_MESSAGE("send message (?<message>.+)"),
+    SEND_MESSAGE("send message (?<message>(?:.|\n)+)"),
     GET_CHATS("get messages"),
     PASS_ROUND("pass round"),
     OPPONENT_LAST_MOVE("get opponent last move"),
