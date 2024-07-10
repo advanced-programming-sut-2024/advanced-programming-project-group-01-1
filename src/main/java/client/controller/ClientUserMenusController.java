@@ -70,7 +70,10 @@ public class ClientUserMenusController {
 			ClientAppview.setMenu(new ClientMainMenu());
 			stopUpdatingFriendList();
 		} else if (ClientAppview.getMenu() instanceof ClientHistoryMenu) ClientAppview.setMenu(new ClientProfileMenu());
-		else if (ClientAppview.getMenu() instanceof ClientRankingMenu) ClientAppview.setMenu(new ClientMainMenu());
+		else if (ClientAppview.getMenu() instanceof ClientRankingMenu) {
+			ClientAppview.setMenu(new ClientMainMenu());
+			stopUpdatingLeaderboard();
+		}
 		return result;
 	}
 
@@ -184,13 +187,15 @@ public class ClientUserMenusController {
 		return new ArrayList<>(Arrays.asList(players));
 	}
 
-	public static void startUpdatingFriendlist(ClientSocialMenu menu) {
+	public static void startUpdatingFriendList(ClientSocialMenu menu) {
 		if (friendListUpdater != null) stopUpdatingFriendList();
 		friendListUpdater = new Thread(() -> {
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
 					Thread.sleep(500);
-				} catch (InterruptedException ignored) {}
+				} catch (InterruptedException ignored) {
+					return;
+				}
 				javafx.application.Platform.runLater(menu::updateFriendsList);
 			}
 		});
@@ -208,7 +213,9 @@ public class ClientUserMenusController {
 			while (!Thread.currentThread().isInterrupted()) {
 				try {
 					Thread.sleep(500);
-				} catch (InterruptedException ignored) {}
+				} catch (InterruptedException ignored) {
+					return;
+				}
 				javafx.application.Platform.runLater(menu::updateScreen);
 			}
 		});
