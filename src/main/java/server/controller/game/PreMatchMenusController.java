@@ -48,7 +48,8 @@ public class PreMatchMenusController {
 				Bracket bracket = new Bracket(players);
 				for (int i = 0; i < 8; i++) players[i].setCurrentBracket(bracket);
 				tournamentQueue.clear();
-				System.out.println(tournamentQueue.size());
+				client.setMenu(new TournamentMenu());
+				bracket.start();
 				return new Result("Go to Tournament", true);
 			}
 			client.setWaiting(true);
@@ -58,7 +59,7 @@ public class PreMatchMenusController {
 
 	public static Result checkTournament(Client client) {
 		if (!client.isWaiting()) return new Result("You were not waiting", false);
-		if (tournamentQueue.contains(client.getIdentity())) return new Result("Still wait", false);
+		if (client.getIdentity().getCurrentBracket() == null) return new Result("Still wait", false);
 		client.setWaiting(false);
 		client.setMenu(new TournamentMenu());
 		return new Result("Tournament starting", true);
@@ -272,6 +273,8 @@ public class PreMatchMenusController {
 		if (Client.getClient(client.getIdentity().getChallengedUser()).isWaiting()) {
 			User me = client.getIdentity();
 			User opponent = client.getIdentity().getChallengedUser();
+			me.setChallengedUser(null);
+			opponent.setChallengedUser(null);
 			Game game = Game.createGame(me, opponent);
 			me.setCurrentGame(game);
 			opponent.setCurrentGame(game);

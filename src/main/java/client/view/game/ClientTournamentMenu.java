@@ -71,15 +71,26 @@ public class ClientTournamentMenu extends Application implements Menuable {
 		Result result = null;
 		if (GameMenusCommands.GET_TOURNAMENT_INFO.getMatcher(input).matches()) {
 			result = ClientTournamentMenuController.getTournamentInfo();
+		} else if (GameMenusCommands.READY.getMatcher(input).matches()) {
+			result = setPlayerReady();
 		}
 		return result;
 	}
 
+	public Result setPlayerReady() {
+		System.out.println("Player is ready");
+		return ClientTournamentMenuController.setPlayerReady();
+	}
+
 	public void updateScreen() {
-		String info = ClientTournamentMenuController.getTournamentInfo().getMessage();
-		String[] lines = info.split("\n");
+		Result info = ClientTournamentMenuController.getTournamentInfo();
+		if (!info.isSuccessful()) {
+			System.out.println("Couldn't get tournament info");
+			return;
+		}
+		String[] lines = info.getMessage().split("\n");
 		for (int i = 0; i < 28; i++) {
-			String[] parts = lines[i].split(" ");
+			String[] parts = lines[i].equals(" ") ? new String[2] : lines[i].split(" ");
 			seedLabels[i].setText(parts[0]);
 			seedScores[i].setText(parts[1]);
 		}

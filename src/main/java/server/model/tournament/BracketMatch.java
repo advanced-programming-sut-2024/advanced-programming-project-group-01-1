@@ -1,5 +1,6 @@
 package server.model.tournament;
 
+import server.controller.game.TournamentMenuController;
 import server.model.game.Game;
 import server.model.user.User;
 
@@ -33,7 +34,10 @@ public class BracketMatch {
 					} catch (InterruptedException e) {
 					}
 				}
-				game = Game.createGame(player1, player2);
+				TournamentMenuController.startBracketMatch(player1, player2);
+				while (game == null) {
+					game = player1.getCurrentGame();
+				}
 				while (!game.isGameOver()) {
 					try {
 						Thread.sleep(3000);
@@ -49,6 +53,7 @@ public class BracketMatch {
 				}
 			}
 		});
+		matchThread.start();
 	}
 
 	@Override
@@ -56,7 +61,7 @@ public class BracketMatch {
 		if (game == null) return " \n \n";
 		User current = game.getCurrent();
 		return player1.getUsername() + " " + (current == player1 ? 2 - game.getOpponentLife() : 2 - game.getCurrentLife()) +
-				"\n" + player2.getUsername() + " " + (current == player2 ? 2 - game.getOpponentLife() : 2 - game.getCurrentLife());
+				"\n" + player2.getUsername() + " " + (current == player2 ? 2 - game.getOpponentLife() : 2 - game.getCurrentLife()) + "\n";
 	}
 
 }

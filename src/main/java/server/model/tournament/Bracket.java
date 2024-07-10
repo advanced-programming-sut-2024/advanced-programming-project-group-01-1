@@ -43,10 +43,10 @@ public class Bracket {
 	public void start() {
 		matchThread = new Thread(() -> {
 			while (seed[35] == null) {
-				updateMatches();
 				try {
 					Thread.sleep(4000);
 				} catch (InterruptedException e) {}
+				updateMatches();
 			}
 			for (int i = 0; i < 8; i++) {
 				placement[i] = seed[35 - i];
@@ -54,6 +54,26 @@ public class Bracket {
 			endBracket();
 		});
 		matchThread.start();
+	}
+
+	private int originalSeed(User user) {
+		for (int i = 0; i < 8; i++) {
+			if (seed[i] == user) return i;
+		}
+		return -1;
+	}
+
+	public void setPlayerReady(User player) {
+		int seed = originalSeed(player);
+		if (seed == -1) {
+			System.out.println("Player not in bracket");
+			return;
+		}
+		if (seed % 2 == 0) {
+			matches[currentSeed[seed] / 2].setPlayer1Ready();
+		} else {
+			matches[currentSeed[seed] / 2].setPlayer2Ready();
+		}
 	}
 
 	private void updateMatches() {
@@ -64,10 +84,15 @@ public class Bracket {
 					matchDone[i] = true;
 					seed[nextSeed[i][0]] = matches[i].winner;
 					seed[nextSeed[i][1]] = matches[i].loser;
+					currentSeed[originalSeed(matches[i].winner)] = nextSeed[i][0];
+					currentSeed[originalSeed(matches[i].loser)] = nextSeed[i][1];
 				}
 			} else {
-				if (seed[i * 2] != null && seed[i * 2 + 1] != null)
+				if (seed[i * 2] != null && seed[i * 2 + 1] != null) {
+					System.out.println("Match " + i + " started");
 					matches[i] = new BracketMatch(seed[i * 2], seed[i * 2 + 1]);
+					matches[i].start();
+				}
 			}
 		}
 	}
@@ -91,7 +116,6 @@ public class Bracket {
 		for (int i = 0; i < 14; i++) {
 			if (matches[i] != null) {
 				result.append(matches[i].toString());
-				result.append("\n");
 			} else {
 				result.append(" \n \n");
 			}

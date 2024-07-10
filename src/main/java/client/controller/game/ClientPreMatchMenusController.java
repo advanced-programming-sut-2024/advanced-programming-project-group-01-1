@@ -61,6 +61,7 @@ public class ClientPreMatchMenusController {
 		System.out.println(result.getMessage());
 		if (result != null && result.isSuccessful()) {
 			if (result.getMessage().equals("Go to Tournament")) {
+				System.out.println("Go to Tournament");
 				Platform.runLater(() -> ClientAppview.setMenu(new ClientTournamentMenu()));
 				return result;
 			}

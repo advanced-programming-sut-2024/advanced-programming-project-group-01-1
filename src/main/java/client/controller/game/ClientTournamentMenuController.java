@@ -1,7 +1,9 @@
 package client.controller.game;
 
 import client.main.TCPClient;
+import client.view.ClientAppview;
 import client.view.game.ClientTournamentMenu;
+import client.view.game.prematch.ClientLobbyMenu;
 import javafx.application.Platform;
 import message.GameMenusCommands;
 import message.Result;
@@ -36,5 +38,26 @@ public class ClientTournamentMenuController {
 		return TCPClient.send(command);
 	}
 
+	public static Result setPlayerReady() {
+		String command = GameMenusCommands.READY.getPattern();
+		Result result = TCPClient.send(command);
+		new Thread(() -> {
+			while (true) {
+				Result check = TCPClient.send(GameMenusCommands.CHECK_REQUEST.getPattern());
+				System.out.println(check);
+				if (check.getMessage().equals("Go to Lobby")) {
+					break;
+				}
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+				}
+			}
+			System.out.println("Anjam meri dege?");
+			stopBracketThread();
+			Platform.runLater(() -> ClientAppview.setMenu(new ClientLobbyMenu()));
+		}).start();
+		return result;
+	}
 
 }
