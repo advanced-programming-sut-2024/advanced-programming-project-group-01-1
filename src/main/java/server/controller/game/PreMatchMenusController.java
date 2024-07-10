@@ -239,12 +239,18 @@ public class PreMatchMenusController {
 
 	public static Result getReady(Client client) {
 		if (!isDeckValid(client).isSuccessful()) return new Result("Deck is not ready", false);
-		client.setWaiting(true);
 		if (Client.getClient(client.getIdentity().getChallengedUser()).isWaiting()) {
+			User me = client.getIdentity();
+			User opponent = client.getIdentity().getChallengedUser();
+			Game game = Game.createGame(me, opponent);
+			me.setCurrentGame(game);
+			opponent.setCurrentGame(game);
+			MatchMenuController.handleVeto(game);
 			client.setWaiting(true);
 			client.setMenu(new MatchMenu());
 			return new Result("game started", true);
 		}
+		client.setWaiting(true);
 		return new Result("wait for your opponent", true);
 	}
 

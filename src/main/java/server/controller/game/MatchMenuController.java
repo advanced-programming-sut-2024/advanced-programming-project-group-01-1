@@ -301,6 +301,7 @@ public class MatchMenuController {
 
 	public static Result endGame(Client client) {
 		client.setMenu(new MatchFinderMenu());
+		client.getIdentity().setCurrentGame(null);
 		return new Result("game finished", true);
 	}
 

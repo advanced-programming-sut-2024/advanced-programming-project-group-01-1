@@ -21,7 +21,7 @@ public class User implements Serializable {
 	private boolean isEmailVerified = false;
 	private Question question;
 	private Deck deck;
-	private Game currentGame;
+	private transient Game currentGame;
 	private final ArrayList<GameInfo> history = new ArrayList<>();
 	private final ArrayList<User> sentRequests = new ArrayList<>(), receivedRequests = new ArrayList<>();
 	private final ArrayList<User> matchRequests = new ArrayList<>();
