@@ -78,7 +78,7 @@ public class CardCreator {
 		createDecoy();
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Geralt of Rivia", null, 15, true);
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Cirilla Fiona Elen Riannon", null, 15, true);
-		createUnit(Melee.class, Faction.NEUTRAL, 0, "Bovine Defence Force", null, 8, false);
+		createUnit(Melee.class, Faction.NEUTRAL, 0, "Bovine Defense Force", null, 8, false);
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Triss Merigold", null, 7, true);
 		createUnit(Melee.class, Faction.NEUTRAL, 1, "Villentretenmerth", Scorch.INSTANCE, 7, false);
 		createUnit(Ranged.class, Faction.NEUTRAL, 1, "Yennefer of Vengerberg", Medic.INSTANCE, 7, true);
@@ -129,7 +129,7 @@ public class CardCreator {
 		createUnit(Ranged.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Black Infantry Archer0", null, 10, false);
 		createUnit(Ranged.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Black Infantry Archer1", null, 10, false);
 		createUnit(Siege.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Heavy Zerrikanian Fire Scorpion", null, 10, false);
-		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Letho of Gulet", null, 10, false);
+		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Letho of Gulet", null, 10, true);
 		createUnit(Melee.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Menno Coehoorn", Medic.INSTANCE, 10, true);
 		createUnit(Siege.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Morvran Voorhis", null, 10, true);
 		createUnit(Ranged.class, Faction.NILFGAARDIAN_EMPIRE, 1, "Tibor Eggebracht", null, 10, true);
@@ -248,7 +248,7 @@ public class CardCreator {
 	private static void createSkelligeCards() {
 		createNonWeatherSpell(Buffer.class, 3, "Mardroeme", Mardroeme.INSTANCE);
 		createUnit(Melee.class, Faction.SKELLIGE, 0, "Transformed Vildkaarl", MoralBooster.INSTANCE, 14, false);
-		createUnit(Siege.class, Faction.SKELLIGE, 1, "Olaf", MoralBooster.INSTANCE, 12, false);
+		createUnit(Agile.class, Faction.SKELLIGE, 1, "Olaf", MoralBooster.INSTANCE, 12, false);
 		createUnit(Melee.class, Faction.SKELLIGE, 0, "Hemdall", null, 11, true);
 		createUnit(Melee.class, Faction.SKELLIGE, 1, "Cerys", Muster.INSTANCE, 10, true);
 		createUnit(Ranged.class, Faction.SKELLIGE, 1, "Hjalmar", null, 10, true);
