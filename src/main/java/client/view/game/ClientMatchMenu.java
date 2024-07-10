@@ -613,13 +613,13 @@ public class ClientMatchMenu extends Application implements Menuable {
 
 	public void useLeader(int idx) {
 		Result result = ClientMatchMenuController.useLeaderAbility();
-		updateScreen();
+		if (result.isSuccessful()) updateScreen();
 	}
 
 	public void passTurn(MouseEvent mouseEvent) {
 		clearSelectedCard();
-		ClientMatchMenuController.passTurn();
-		updateScreen();
+		Result result = ClientMatchMenuController.passTurn();
+		if (result.isSuccessful()) updateScreen();
 	}
 
 	public SmallCard getSmallCard(String cardsInfo) {
@@ -648,6 +648,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void opponentPut(Result result) {
+		System.out.println("\n------------------\n" + result.getMessage() + "\n------------------\n");
 		if (result.getMessage().equals("pass")){
 			updateScreen();
 			return;
@@ -656,11 +657,18 @@ public class ClientMatchMenu extends Application implements Menuable {
 		root.getChildren().add(unclickablePane);
 		String[] cardsInfo = result.getMessage().split("\n");
 		int row = Integer.parseInt(cardsInfo[0]);
+
 		StringBuilder cardInfo = new StringBuilder();
-		for (int i = 1; i < cardsInfo.length; i++) cardInfo.append(cardsInfo[i]).append("\n");
+		if (cardsInfo[1].startsWith("Leader:")){
+			cardInfo.append(cardsInfo[1].substring(8)).append("\ntype: leader\nAbility: ").append(cardsInfo[2]).append("\nunique code: ").append(cardsInfo[3]);
+		} else {
+			for (int i = 1; i < cardsInfo.length; i++) cardInfo.append(cardsInfo[i]).append("\n");
+		}
 		SmallCard card = getSmallCard(cardInfo.toString());
-		if (card.getType().equals("Leader")){
-			//TODO:
+		if (card.getType().equals("leader")) {
+			//TODO: fix this
+			root.getChildren().remove(unclickablePane);
+			updateScreen();
 			return;
 		}
 		card.setLayoutX(0);
@@ -735,7 +743,9 @@ public class ClientMatchMenu extends Application implements Menuable {
 				fadeTransition.setToValue(0);
 				fadeTransition.setOnFinished(e1 -> {
 					root.getChildren().remove(unclickablePane);
-					Result result = ClientMatchMenuController.placeCard(idx, row);
+					if (callPlace) {
+						Result result = ClientMatchMenuController.placeCard(idx, row);
+					}
 					updateScreen();
 				});
 				fadeTransition.play();
