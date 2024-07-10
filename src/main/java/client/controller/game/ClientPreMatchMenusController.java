@@ -5,6 +5,7 @@ import client.view.AlertMaker;
 import client.view.ClientAppview;
 import client.view.ClientMainMenu;
 import client.view.game.ClientMatchMenu;
+import client.view.game.ClientTournamentMenu;
 import client.view.game.prematch.ClientLobbyMenu;
 import client.view.game.prematch.ClientMatchFinderMenu;
 import javafx.application.Platform;
@@ -52,6 +53,39 @@ public class ClientPreMatchMenusController {
 			}).start();
 		}
 		return result;
+	}
+
+	public static Result enterTournament() {
+		String command = GameMenusCommands.ENTER_TOURNAMENT.getPattern();
+		Result result = TCPClient.send(command);
+		System.out.println(result.getMessage());
+		if (result != null && result.isSuccessful()) {
+			if (result.getMessage().equals("Go to Tournament")) {
+				Platform.runLater(() -> ClientAppview.setMenu(new ClientTournamentMenu()));
+				return result;
+			}
+			new Thread(() -> {
+				while (true) {
+					try {
+						if (!isWaiting().isSuccessful()) break;
+						Result check = checkTournament();
+						if (check.isSuccessful() && check.getMessage().equals("Tournament starting")) {
+							Platform.runLater(() -> ClientAppview.setMenu(new ClientTournamentMenu()));
+							break;
+						}
+						Thread.sleep(234);
+					} catch (Exception e) {
+						break;
+					}
+				}
+			}).start();
+		}
+		return result;
+	}
+
+	public static Result checkTournament() {
+		String command = GameMenusCommands.CHECK_TOURNAMENT.getPattern();
+		return TCPClient.send(command);
 	}
 
 	public static Result getMatchRequests() {

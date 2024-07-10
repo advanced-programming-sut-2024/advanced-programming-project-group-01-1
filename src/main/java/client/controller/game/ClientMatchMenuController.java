@@ -2,11 +2,15 @@ package client.controller.game;
 
 import client.main.TCPClient;
 import client.view.ClientAppview;
+import client.view.game.ClientTournamentMenu;
 import client.view.game.prematch.ClientMatchFinderMenu;
+import javafx.application.Platform;
 import message.GameMenusCommands;
 import message.Result;
 
 public class ClientMatchMenuController {
+
+	private static Thread bracketThread;
 
 	public static boolean isRowDebuffed(int rowNumber) {
 		String command = GameMenusCommands.IS_ROW_DEBUFFED.getPattern();
@@ -270,4 +274,26 @@ public class ClientMatchMenuController {
 		command = command.replace("(?<power>\\d+)", String.valueOf(power));
         return TCPClient.send(command);
 	}
+
+	public static void startUpdatingBracket(ClientTournamentMenu menu) {
+		if (bracketThread != null) stopBracketThread();
+		bracketThread = new Thread(() -> {
+			while (!Thread.currentThread().isInterrupted()) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					return;
+				}
+				Platform.runLater(menu::updateScreen);
+			}
+		});
+		bracketThread.setDaemon(true);
+		bracketThread.start();
+	}
+
+	public static void stopBracketThread() {
+		bracketThread.interrupt();
+		bracketThread = null;
+	}
+
 }

@@ -7,10 +7,12 @@ import server.model.card.Card;
 import server.model.game.Faction;
 import server.model.game.Game;
 import server.model.leader.Leader;
+import server.model.tournament.Bracket;
 import server.model.user.Deck;
 import server.model.user.User;
 import server.view.MainMenu;
 import server.view.game.MatchMenu;
+import server.view.game.TournamentMenu;
 import server.view.game.prematch.LobbyMenu;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class PreMatchMenusController {
 
 	private static int cnt = 0;
 	private static User opponent = null;
+	private static ArrayList<User> tournamentQueue = new ArrayList<>();
 
 	public static Result requestMatch(Client client, String opponentUsername) {
 		User opponent = User.getUserByUsername(opponentUsername);
@@ -35,6 +38,30 @@ public class PreMatchMenusController {
 		opponent.getMatchRequests().add(client.getIdentity());
 		client.setWaiting(true);
 		return new Result("Request sent", true);
+	}
+
+	public static Result enterTournament(Client client) {
+		synchronized (tournamentQueue) {
+			tournamentQueue.add(client.getIdentity());
+			if (tournamentQueue.size() == 8) {
+				User[] players = tournamentQueue.toArray(new User[0]);
+				Bracket bracket = new Bracket(players);
+				for (int i = 0; i < 8; i++) players[i].setCurrentBracket(bracket);
+				tournamentQueue.clear();
+				System.out.println(tournamentQueue.size());
+				return new Result("Go to Tournament", true);
+			}
+			client.setWaiting(true);
+			return new Result("Added to queue", true);
+		}
+	}
+
+	public static Result checkTournament(Client client) {
+		if (!client.isWaiting()) return new Result("You were not waiting", false);
+		if (tournamentQueue.contains(client.getIdentity())) return new Result("Still wait", false);
+		client.setWaiting(false);
+		client.setMenu(new TournamentMenu());
+		return new Result("Tournament starting", true);
 	}
 
 	public static Result getMatchRequests(Client client) {
@@ -74,6 +101,9 @@ public class PreMatchMenusController {
 
 	public static Result stopWait(Client client) {
 		if (!client.isWaiting()) return new Result("You were not waiting", false);
+		synchronized (tournamentQueue) {
+			tournamentQueue.remove(client.getIdentity());
+		}
 		client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
 		client.getIdentity().setChallengedUser(null);
 		client.setWaiting(false);

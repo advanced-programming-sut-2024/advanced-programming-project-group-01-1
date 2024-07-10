@@ -10,6 +10,8 @@ public enum GameMenusCommands {
     CHECK_REQUEST("check request"),
     STOP_WAIT("stop waiting"),
     IS_WAITING("is still waiting"),
+    ENTER_TOURNAMENT("enter tournament"),
+    CHECK_TOURNAMENT("check tournament"),
     READY("ready to play"),
     CANCEL_READY("cancel ready"),
     CHECK_OPPONENT_READY("check opponent being ready"),

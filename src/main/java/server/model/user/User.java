@@ -4,6 +4,7 @@ import server.controller.enums.Validation;
 import server.model.GameInfo;
 import server.model.game.Faction;
 import server.model.game.Game;
+import server.model.tournament.Bracket;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class User implements Serializable {
 	private Question question;
 	private Deck deck;
 	private transient Game currentGame;
+	private transient Bracket currentBracket;
 	private final ArrayList<GameInfo> history = new ArrayList<>();
 	private final ArrayList<User> sentRequests = new ArrayList<>(), receivedRequests = new ArrayList<>();
 	private final ArrayList<User> matchRequests = new ArrayList<>();
@@ -230,6 +232,14 @@ public class User implements Serializable {
 
 	public void setCurrentGame(Game currentGame) {
 		this.currentGame = currentGame;
+	}
+
+	public Bracket getCurrentBracket() {
+		return currentBracket;
+	}
+
+	public void setCurrentBracket(Bracket currentBracket) {
+		this.currentBracket = currentBracket;
 	}
 
 	public ArrayList<User> getFriends() {

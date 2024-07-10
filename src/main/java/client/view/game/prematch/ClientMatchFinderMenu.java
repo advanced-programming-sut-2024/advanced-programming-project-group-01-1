@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import message.GameMenusCommands;
 import message.Result;
+import server.model.Client;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -145,7 +146,9 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 	}
 
 	public void tournamentMatch(MouseEvent mouseEvent) {
-		AlertMaker.makeAlert("Tournament Match", new Result("coming soon!!!", true));
+		ClientPreMatchMenusController.enterTournament();
+		update();
+		System.out.println();
 	}
 
 	public void back(MouseEvent mouseEvent) {
@@ -162,11 +165,15 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 				result = ClientPreMatchMenusController.stopWait();
 			else if (GameMenusCommands.CHECK_REQUEST.getMatcher(input) != null)
 				result = ClientPreMatchMenusController.checkRequest();
+			else if (GameMenusCommands.CHECK_TOURNAMENT.getMatcher(input) != null)
+				result = ClientPreMatchMenusController.checkTournament();
 			else result = new Result("Invalid command", false);
 			return result;
 		}
 		if ((matcher = GameMenusCommands.SEND_MATCH_REQUEST.getMatcher(input)) != null)
 			result = sendMatchRequest(matcher);
+		else if(GameMenusCommands.ENTER_TOURNAMENT.getMatcher(input) != null)
+			result = ClientPreMatchMenusController.enterTournament();
 		else if (GameMenusCommands.GET_MATCH_REQUESTS.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.getMatchRequests();
 		else if ((matcher = GameMenusCommands.HANDLE_MATCH_REQUEST.getMatcher(input)) != null)

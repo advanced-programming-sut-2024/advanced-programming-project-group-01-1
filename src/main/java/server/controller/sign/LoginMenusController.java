@@ -52,7 +52,7 @@ public class LoginMenusController {
 //			return new Result("email sent", true);
 //		}
 //		return new Result("email not sent", false);
-		loggingInClients.put(client, "123456");
+		loggingInClients.put(client, "1");
 		return new Result("email sent", true);
 	}
 
