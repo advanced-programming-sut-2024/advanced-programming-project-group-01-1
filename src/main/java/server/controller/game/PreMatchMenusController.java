@@ -273,8 +273,6 @@ public class PreMatchMenusController {
 		if (Client.getClient(client.getIdentity().getChallengedUser()).isWaiting()) {
 			User me = client.getIdentity();
 			User opponent = client.getIdentity().getChallengedUser();
-			me.setChallengedUser(null);
-			opponent.setChallengedUser(null);
 			Game game = Game.createGame(me, opponent);
 			me.setCurrentGame(game);
 			opponent.setCurrentGame(game);
@@ -297,8 +295,12 @@ public class PreMatchMenusController {
 		if (!client.isWaiting()) return new Result("You are not ready", false);
 		if (!Client.getClient(client.getIdentity().getChallengedUser()).isWaiting())
 			return new Result("Opponent is not ready", false);
+		User me = client.getIdentity();
+		User opponent = client.getIdentity().getChallengedUser();
 		client.setWaiting(false);
-		Client.getClient(client.getIdentity().getChallengedUser()).setWaiting(false);
+		Client.getClient(opponent).setWaiting(false);
+		me.setChallengedUser(null);
+		opponent.setChallengedUser(null);
 		client.setMenu(new MatchMenu());
 		return new Result("Opponent is ready", true);
 	}
