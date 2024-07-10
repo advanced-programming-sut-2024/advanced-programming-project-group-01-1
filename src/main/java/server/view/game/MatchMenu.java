@@ -45,7 +45,9 @@ public class MatchMenu implements Menuable {
 				result = new Result("Invalid command", false);
 			}
 		} else {
-			if (MatchMenuController.isAsking(client).isSuccessful()) {
+			if ((matcher = GameMenusCommands.GET_DESCRIPTION.getMatcher(input)) != null) {
+				result = getDescription(matcher);
+			}else 			if (MatchMenuController.isAsking(client).isSuccessful()) {
 				if (GameMenusCommands.IS_ASKING.getMatcher(input) != null) result = new Result("asking", true);
 				else if (GameMenusCommands.GET_ASKER_CARDS.getMatcher(input) != null) {
 					result = MatchMenuController.getAskerCards(client);
@@ -114,6 +116,11 @@ public class MatchMenu implements Menuable {
 			}
 		}
 		return result;
+	}
+
+	private Result getDescription(Matcher matcher) {
+		String cardName = matcher.group("cardName");
+		return MatchMenuController.getDescription(cardName);
 	}
 
 	private Result showRowForGraphic(Client client, Matcher matcher) {

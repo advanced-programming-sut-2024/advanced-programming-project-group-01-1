@@ -17,6 +17,7 @@ import server.model.user.User;
 import server.view.game.prematch.MatchFinderMenu;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MatchMenuController {
 
@@ -391,5 +392,9 @@ public class MatchMenuController {
 	public static Result cheatAddPower(Client client, int power) {
 		client.getIdentity().getCurrentGame().addCheatPower(power, isCurrent(client));
 		return new Result("Power added", true);
+	}
+
+	public static Result getDescription(String cardName) {
+		return new Result(Objects.requireNonNull(CardCreator.getCard(cardName)).getDescription(), true);
 	}
 }
