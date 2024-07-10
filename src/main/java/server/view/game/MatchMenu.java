@@ -47,7 +47,9 @@ public class MatchMenu implements Menuable {
 				result = new Result("Invalid command", false);
 			}
 		} else {
-			if ((matcher = GameMenusCommands.GET_DESCRIPTION.getMatcher(input)) != null) {
+			if (GameMenusCommands.OPPONENT_LAST_MOVE.getMatcher(input) != null) {
+				result = MatchMenuController.getOpponentMove(client);
+			} else if ((matcher = GameMenusCommands.GET_DESCRIPTION.getMatcher(input)) != null) {
 				result = getDescription(matcher);
 			} else if ((matcher = GameMenusCommands.IS_ROW_DEBUFFED.getMatcher(input)) != null) {
 				result = isRowDebuffed(client, matcher);

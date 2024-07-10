@@ -69,6 +69,7 @@ public enum GameMenusCommands {
     GET_POWERS("get powers"),
     GET_SCORES("get scores"),
     PASS_ROUND("pass round"),
+    OPPONENT_LAST_MOVE("get opponent last move"),
     EXIT_MATCH_FINDER("menu exit"),
     CREATE_GAME("create game -p2 (?<opponent>\\S+)"),
     SHOW_HAND("show hand"),

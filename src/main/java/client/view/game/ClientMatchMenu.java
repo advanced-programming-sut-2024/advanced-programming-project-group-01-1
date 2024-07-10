@@ -98,6 +98,8 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public ArrayList<Pane> selectedPanes = new ArrayList<>();
 	private boolean isCheating = false;
 	public Pane unclickablePane = new Pane();
+	private final Object lock = new Object();
+	private Thread updater;
 
 	@Override
 	public void start(Stage stage) {
@@ -137,6 +139,24 @@ public class ClientMatchMenu extends Application implements Menuable {
 		opponentLeaderPane.setOnMouseClicked(this::showSpace);
 		updateScreen();
 		ClientAppview.setMenuOnMatchMenu(this);
+		updater = new Thread(() -> {
+			synchronized (lock) {
+				try {
+					while (true) {
+						if (ClientMatchMenuController.isMyTurn()) {
+							Result result = ClientMatchMenuController.getOpponentMove();
+							if (result.getMessage() != null)
+								Platform.runLater(() -> opponentPut(result));
+							lock.wait();
+						}
+						Thread.sleep(234);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		updater.start();
 	}
 
 	public void updateScreen() {
@@ -164,7 +184,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 		if (ClientMatchMenuController.isGameOver()) {
 			showEndGame();
-		}
+		} else if (!ClientMatchMenuController.isMyTurn()) lock.notify();
 	}
 
 	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> clickHandler) {

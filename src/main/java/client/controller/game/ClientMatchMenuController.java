@@ -153,6 +153,11 @@ public class ClientMatchMenuController {
 		return TCPClient.send(command);
 	}
 
+	public static Result getOpponentMove() {
+		String command = GameMenusCommands.OPPONENT_LAST_MOVE.getPattern();
+		return TCPClient.send(command);
+	}
+
 	public static Result isAsking() {
 		String command = GameMenusCommands.IS_ASKING.getPattern();
 		return TCPClient.send(command);

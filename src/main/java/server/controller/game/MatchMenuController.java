@@ -185,7 +185,10 @@ public class MatchMenuController {
 	public static Result placeCard(Client client, int cardNumber, int rowNumber) {
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		try {
-			client.getIdentity().getCurrentGame().placeCard(getHand(client).getCards().get(cardNumber), rowNumber);
+			Card card = getHand(client).getCards().get(cardNumber);
+			client.getIdentity().getCurrentGame().placeCard(card, rowNumber);
+			client.getIdentity().getCurrentGame().setOpponentLastMove(rowNumber + "\n" + card.toString() +
+					"\nunique code: " + card.toSuperString());
 			return new Result("Card placed successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -211,7 +214,10 @@ public class MatchMenuController {
 	public static Result useLeaderAbility(Client client) {
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		try {
+			Leader leader = client.getIdentity().getCurrentGame().getCurrentLeader();
 			client.getIdentity().getCurrentGame().useLeaderAbility();
+			client.getIdentity().getCurrentGame().setOpponentLastMove(-1 + "\n" + leader.toString() +
+					"\nunique code: " + leader.toSuperString());
 			return new Result("Leader ability played successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -262,7 +268,13 @@ public class MatchMenuController {
 	public static Result passTurn(Client client) {
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		client.getIdentity().getCurrentGame().passTurn();
+		client.getIdentity().getCurrentGame().setOpponentLastMove("pass");
 		return new Result("Turn passed successfully", true);
+	}
+
+	public static Result getOpponentMove(Client client) {
+		if (!isCurrent(client)) return new Result("still opponents turn", false);
+		return new Result(client.getIdentity().getCurrentGame().getOpponentLastMove(), true);
 	}
 
 	public static Result isAsking(Client client) {
