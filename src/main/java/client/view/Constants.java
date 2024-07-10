@@ -13,8 +13,8 @@ public enum Constants {
     LARGE_CARD_WIDTH(264),
     LARGE_CARD_HEIGHT(500),
 
-    SMALL_CARD_WIDTH(75),
-    SMALL_CARD_HEIGHT(95);
+    SMALL_CARD_WIDTH(62),
+    SMALL_CARD_HEIGHT(90);
 
     private final double value;
 

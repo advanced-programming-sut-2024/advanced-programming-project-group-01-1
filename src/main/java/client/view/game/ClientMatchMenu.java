@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -90,6 +91,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public Label myPassedField, opponentPassedField;
 	public Label myDeckNumber, opponentDeckNumber;
 	public Pane myInfoPane, opponentInfoPane;
+	public ImageView opponentOnlineField;
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
 	public Label[] rowPowerLabels;
@@ -101,6 +103,9 @@ public class ClientMatchMenu extends Application implements Menuable {
 	private boolean isLocked;
 	private final Object lock = new Object();
 	private String opponentLastMove;
+	Thread updater, onlineStatus;
+
+	ArrayList<Transition> moveAnimations = new ArrayList<>();
 
 	@Override
 	public void start(Stage stage) {
@@ -140,7 +145,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		opponentLeaderPane.setOnMouseClicked(this::showSpace);
 		updateScreen();
 		ClientAppview.setMenuOnMatchMenu(this);
-		Thread updater =  new Thread(() -> {
+		updater =  new Thread(() -> {
 				try {
 					while (true) {
 						synchronized (lock) {
@@ -157,14 +162,36 @@ public class ClientMatchMenu extends Application implements Menuable {
 						Thread.sleep(234);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					return;
 				}
 		});
 		updater.setDaemon(true);
 		updater.start();
+		onlineStatus = new Thread(() -> {
+			try {
+				while (true) {
+					boolean result = ClientMatchMenuController.isOpponentOnline();
+					Platform.runLater(() -> {
+						if (result) {
+							opponentOnlineField.setEffect(null);
+						} else {
+							ColorAdjust colorAdjust = new ColorAdjust();
+							colorAdjust.setSaturation(-1);
+							opponentOnlineField.setEffect(colorAdjust);
+						}
+					});
+					Thread.sleep(1000);
+				}
+			} catch (Exception e) {
+				return;
+			}
+		});
+		onlineStatus.setDaemon(true);
+		onlineStatus.start();
 	}
 
 	public void updateScreen() {
+		removeCards();
 		updateHand();
 		updateRows();
 		updateWeather();
@@ -188,6 +215,8 @@ public class ClientMatchMenu extends Application implements Menuable {
 			}
 		}
 		if (ClientMatchMenuController.isGameOver()) {
+			updater.interrupt();
+			onlineStatus.interrupt();
 			showEndGame();
 		} else if (!isLocked && !ClientMatchMenuController.isMyTurn()) {
 			synchronized (lock) {
@@ -196,20 +225,66 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 	}
 
+	public void removeCardsFromSpace(Pane space) {
+		ArrayList<Node> nodes = new ArrayList<>(space.getChildren());
+		for (Node node : nodes) {
+			if (node instanceof SmallCard) {
+				node.setLayoutX(node.getParent().getLayoutX() + node.getLayoutX());
+				node.setLayoutY(node.getParent().getLayoutY() + node.getLayoutY());
+				root.getChildren().add(node);
+			}
+		}
+	}
+
+	public void removeCards() {
+		for (Node node: handPane.getChildren()) {
+			node.setOnMouseClicked(null);
+			node.setOnMouseEntered(null);
+			node.setOnMouseExited(null);
+		}
+		removeCardsFromSpace(handPane);
+		for (Pane pane : rowPanes) {
+			removeCardsFromSpace(pane);
+		}
+		for (Pane pane : rowBufferPanes) {
+			removeCardsFromSpace(pane);
+		}
+		removeCardsFromSpace(weatherPane);
+		removeCardsFromSpace(myPilePane);
+		removeCardsFromSpace(opponentPilePane);
+	}
+
 	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> clickHandler) {
 		space.getChildren().clear();
 		for (int i = 0; i < cardsInfo.length; i++) {
 			SmallCard smallCard = getSmallCard(cardsInfo[i]);
+			double x = 0;
 			if (space.getPrefWidth() >= cardsInfo.length * smallCard.getPrefWidth()) {
-				double tmp = (space.getPrefWidth() - cardsInfo.length * smallCard.getPrefWidth()) / 2 + smallCard.getPrefWidth() * i;
-				smallCard.setLayoutX(tmp);
+				x = (space.getPrefWidth() - cardsInfo.length * smallCard.getPrefWidth()) / 2 + smallCard.getPrefWidth() * i;;
 			} else {
-				double tmp = i == cardsInfo.length - 1 ? space.getPrefWidth() - smallCard.getPrefWidth() : (space.getPrefWidth() - smallCard.getPrefWidth()) / (cardsInfo.length - 1) * i;
-				smallCard.setLayoutX(tmp);
+				x = i == cardsInfo.length - 1 ? space.getPrefWidth() - smallCard.getPrefWidth() : (space.getPrefWidth() - smallCard.getPrefWidth()) / (cardsInfo.length - 1) * i;
 			}
-			smallCard.setLayoutY(0);
-			smallCard.setOnMouseClicked(clickHandler);
-			space.getChildren().add(smallCard);
+			if (smallCard.getType().equals("leader") || smallCard.getType().equals("faction")) {
+				smallCard.setLayoutX(x);
+				smallCard.setLayoutY(0);
+				smallCard.setOnMouseClicked(clickHandler);
+				space.getChildren().add(smallCard);
+			} else {
+				if (smallCard.getLayoutX() == 0 && smallCard.getLayoutY() == 0) {
+					if (space == handPane || space == rowPane0 || space == rowPane1 || space == rowPane2 || space == rowBuffer0 || space == rowBuffer1 || space == rowBuffer2) {
+						smallCard.setLayoutX(myDeckPane.getLayoutX());
+						smallCard.setLayoutY(myDeckPane.getLayoutY());
+					} else {
+						smallCard.setLayoutX(opponentDeckPane.getLayoutX());
+						smallCard.setLayoutY(opponentDeckPane.getLayoutY());
+					}
+				}
+				smallCard.setLayoutX(smallCard.getLayoutX() - space.getLayoutX());
+				smallCard.setLayoutY(smallCard.getLayoutY() - space.getLayoutY());
+				space.getChildren().add(smallCard);
+				smallCard.setOnMouseClicked(clickHandler);
+				moveAnimation(smallCard, x, 0);
+			}
 		}
 	}
 
@@ -419,6 +494,8 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void showEndGame() {
+
+		SmallCard.clearCache();
 
 		Pane pane = new Pane();
 		pane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
@@ -754,6 +831,22 @@ public class ClientMatchMenu extends Application implements Menuable {
 					updateScreen();
 				});
 				fadeTransition.play();
+			}
+		});
+		transition.play();
+	}
+
+	public void moveAnimation(SmallCard card, double x, double y) {
+		Transition transition  = new CardMoving(card, x, y);
+		if (moveAnimations.isEmpty()) {
+			unclickablePane.setPrefSize(Constants.SCREEN_WIDTH.getValue(), Constants.SCREEN_HEIGHT.getValue());
+			root.getChildren().add(unclickablePane);
+		}
+		moveAnimations.add(transition);
+		transition.setOnFinished(e -> {
+			moveAnimations.remove(transition);
+			if (moveAnimations.isEmpty()) {
+				root.getChildren().remove(unclickablePane);
 			}
 		});
 		transition.play();

@@ -10,12 +10,11 @@ import java.util.HashMap;
 
 public class SmallCard extends Pane {
 
-    static HashMap<String, ImagePattern> iconImagePatterns = new HashMap<>();
-    static HashMap<String, ImagePattern> imagePatterns = new HashMap<>();
+
     static HashMap<String, SmallCard> smallCards = new HashMap<>();
     static HashMap<String, String> iconNames = new HashMap<>();
 
-    {
+    static {
         iconNames.put("Decoy", "power_decoy");
         iconNames.put("Commander's Horn", "power_horn");
         iconNames.put("Scorch", "power_scorch");
@@ -38,6 +37,8 @@ public class SmallCard extends Pane {
         super();
         this.setPrefWidth(Constants.SMALL_CARD_WIDTH.getValue());
         this.setPrefHeight(Constants.SMALL_CARD_HEIGHT.getValue());
+        this.setLayoutX(0);
+        this.setLayoutY(0);
         this.name = name;
         this.description = description;
         this.type = type;
@@ -68,6 +69,10 @@ public class SmallCard extends Pane {
             smallCards.put(uniqueCode, smallCard);
         }
         return smallCard;
+    }
+
+    public static void clearCache() {
+        smallCards.clear();
     }
 
     public String getAbility() {

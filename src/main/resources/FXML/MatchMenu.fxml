@@ -153,6 +153,11 @@
                <font>
                   <Font size="11.0" />
                </font></Label>
+            <ImageView fx:id="opponentOnlineField" fitHeight="30.0" fitWidth="40.0" layoutX="49.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/online_icon.png" />
+               </image>
+            </ImageView>
          </children></Pane>
       <Button id="ipad-dark-grey" layoutX="158.0" layoutY="680.0" mnemonicParsing="false" onMouseClicked="#passTurn" prefHeight="57.0" prefWidth="43.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="pass" />
       <Label fx:id="rowPowerLabel0" alignment="CENTER" layoutX="360.0" layoutY="520.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />

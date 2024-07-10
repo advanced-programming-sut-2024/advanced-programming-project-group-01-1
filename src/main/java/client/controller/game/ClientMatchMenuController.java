@@ -215,6 +215,11 @@ public class ClientMatchMenuController {
 		return TCPClient.send(command).isSuccessful();
 	}
 
+	public static boolean isOpponentOnline() {
+		String command = GameMenusCommands.IS_OPPONENT_ONLINE.getPattern();
+		return TCPClient.send(command).isSuccessful();
+	}
+
 	public static Result getPowers() {
 		String command = GameMenusCommands.GET_POWERS.getPattern();
 		return TCPClient.send(command);
