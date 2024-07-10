@@ -98,8 +98,9 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public ArrayList<Pane> selectedPanes = new ArrayList<>();
 	private boolean isCheating = false;
 	public Pane unclickablePane = new Pane();
+	private boolean isLocked;
 	private final Object lock = new Object();
-	private Thread updater;
+	private String opponentLastMove;
 
 	@Override
 	public void start(Stage stage) {
@@ -139,23 +140,27 @@ public class ClientMatchMenu extends Application implements Menuable {
 		opponentLeaderPane.setOnMouseClicked(this::showSpace);
 		updateScreen();
 		ClientAppview.setMenuOnMatchMenu(this);
-		updater = new Thread(() -> {
-			synchronized (lock) {
+		Thread updater =  new Thread(() -> {
 				try {
 					while (true) {
-						if (ClientMatchMenuController.isMyTurn()) {
+						synchronized (lock) {
+							isLocked = true;
 							Result result = ClientMatchMenuController.getOpponentMove();
-							if (result.getMessage() != null)
+							if (result.getMessage() != null && !result.getMessage().equals(opponentLastMove)) {
+								opponentLastMove = result.getMessage();
 								Platform.runLater(() -> opponentPut(result));
-							lock.wait();
+								isLocked = false;
+								lock.wait();
+							}
+							isLocked = false;
 						}
 						Thread.sleep(234);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
 		});
+		updater.setDaemon(true);
 		updater.start();
 	}
 
@@ -184,7 +189,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		}
 		if (ClientMatchMenuController.isGameOver()) {
 			showEndGame();
-		} else if (!ClientMatchMenuController.isMyTurn()) {
+		} else if (!isLocked && !ClientMatchMenuController.isMyTurn()) {
 			synchronized (lock) {
 				lock.notify();
 			}

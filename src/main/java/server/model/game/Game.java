@@ -39,7 +39,7 @@ public class Game {
 	boolean isSpyPowerDoubled = false, isDebuffWeakened = false, isMedicRandom = false;
 	boolean gameEnded = false;
 	int currentCheatPower = 0, opponentCheatPower = 0;
-	String opponentLastMove;
+	final ArrayList<Move> moves = new ArrayList<>();
 
 	private Game(User player1, User player2) {
 		this.current = player1;
@@ -55,7 +55,6 @@ public class Game {
 		this.opponentDeck = new Space(player2.getDeck().getCards());
 		for (Card card : this.currentDeck.getCards()) card.setSpace(currentDeck);
 		for (Card card : this.opponentDeck.getCards()) card.setSpace(opponentDeck);
-		opponentLastMove = null;
 	}
 
 	public static Game createGame(User player1, User player2) {
@@ -296,12 +295,15 @@ public class Game {
 		changeTurn();
 	}
 
-	public String getOpponentLastMove() {
-		return opponentLastMove;
+	public ArrayList<Move> getMoves() {
+		return moves;
 	}
 
-	public void setOpponentLastMove(String opponentLastMove) {
-		this.opponentLastMove = opponentLastMove;
+	public String getLastMove(User player) {
+		for (int i = moves.size() - 1; i >= 0; i--) {
+			if (moves.get(i).getMover() == player) return moves.get(i).getDescription();
+		}
+		return null;
 	}
 
 	public void changeTurn() {

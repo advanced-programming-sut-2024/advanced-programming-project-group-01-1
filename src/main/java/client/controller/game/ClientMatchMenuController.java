@@ -150,7 +150,9 @@ public class ClientMatchMenuController {
 
 	public static Result passTurn() {
 		String command = GameMenusCommands.PASS_ROUND.getPattern();
-		return TCPClient.send(command);
+		Result result = TCPClient.send(command);
+		System.out.println(result);
+		return result;
 	}
 
 	public static Result getOpponentMove() {

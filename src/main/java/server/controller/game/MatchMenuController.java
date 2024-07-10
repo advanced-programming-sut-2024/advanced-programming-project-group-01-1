@@ -9,6 +9,7 @@ import server.model.card.special.spell.Buffer;
 import server.model.game.CardMover;
 import server.model.game.Faction;
 import server.model.game.Game;
+import server.model.game.Move;
 import server.model.game.space.Row;
 import server.model.game.space.Space;
 import server.model.leader.Leader;
@@ -187,8 +188,8 @@ public class MatchMenuController {
 		try {
 			Card card = getHand(client).getCards().get(cardNumber);
 			client.getIdentity().getCurrentGame().placeCard(card, rowNumber);
-			client.getIdentity().getCurrentGame().setOpponentLastMove(rowNumber + "\n" + card.toString() +
-					"\nunique code: " + card.toSuperString());
+			client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), rowNumber + "\n" + card.toString()
+					+ "\nunique code: " + card.toSuperString()));
 			return new Result("Card placed successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -216,8 +217,8 @@ public class MatchMenuController {
 		try {
 			Leader leader = client.getIdentity().getCurrentGame().getCurrentLeader();
 			client.getIdentity().getCurrentGame().useLeaderAbility();
-			client.getIdentity().getCurrentGame().setOpponentLastMove(-1 + "\n" + leader.toString() +
-					"\nunique code: " + leader.toSuperString());
+			client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), -1 + "\n" + leader.toString()
+					+ "\nunique code: " + leader.toSuperString()));
 			return new Result("Leader ability played successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -268,13 +269,14 @@ public class MatchMenuController {
 	public static Result passTurn(Client client) {
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		client.getIdentity().getCurrentGame().passTurn();
-		client.getIdentity().getCurrentGame().setOpponentLastMove("pass");
+		client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), "pass"));
 		return new Result("Turn passed successfully", true);
 	}
 
 	public static Result getOpponentMove(Client client) {
-		if (!isCurrent(client)) return new Result("still opponents turn", false);
-		return new Result(client.getIdentity().getCurrentGame().getOpponentLastMove(), true);
+		User opponent = isCurrent(client) ? client.getIdentity().getCurrentGame().getOpponent() :
+				client.getIdentity().getCurrentGame().getCurrent();
+		return new Result(client.getIdentity().getCurrentGame().getLastMove(opponent), true);
 	}
 
 	public static Result isAsking(Client client) {
