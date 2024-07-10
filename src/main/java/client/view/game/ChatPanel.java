@@ -59,7 +59,7 @@ public class ChatPanel {
             for (int i = 0; i < replyParts.length - 1; i++) {
                 reply.append(replyParts[i]).append("\n");
             }
-            messageField.setText("reply to:\n" + reply + "\n--------------------\n");
+            messageField.setText("reply to:\n--------------------\n" + reply + "--------------------\n");
             messageField.positionCaret(messageField.getText().length());
         });
         chatBox.getChildren().add(chatBoxField);
@@ -85,11 +85,17 @@ public class ChatPanel {
                 while (true) {
                     String[] message = ClientMatchMenuController.getChats().getMessage().split("\n####################\n");
                     Platform.runLater(() -> {
-                        int sz = chatBoxField.getItems().size();
-                        for (int i = sz; i < message.length; i++) {
-                            chatBoxField.getItems().add(message[i]);
+                        if (message.length == 1){
+                            chatBoxField.getItems().clear();
+                            chatBoxField.getItems().add(message[0]);
                         }
-                        chatBoxField.scrollTo(message.length-1);
+                        else {
+                            int sz = chatBoxField.getItems().size();
+                            for (int i = sz; i < message.length; i++) {
+                                chatBoxField.getItems().add(message[i]);
+                            }
+                            chatBoxField.scrollTo(message.length - 1);
+                        }
                     });
                     Thread.sleep(1000);
                 }
@@ -106,11 +112,11 @@ public class ChatPanel {
         String message = messageField.getText();
         if (message.isBlank()) return;
         String replyMessage = "";
+        System.out.println("message: " + message);
         if (message.startsWith("reply to:")) {
-            String[] parts = message.split("\n--------------------\n");
-            replyMessage = parts[0].substring(10);
-            message = parts[1];
-
+            String[] parts = message.split("--------------------\n");
+            replyMessage = parts[1];
+            message = parts[2];
         }
         String messageToSend = new Chat(message, replyMessage, username).toString();
         System.out.println("message to send: " + messageToSend);

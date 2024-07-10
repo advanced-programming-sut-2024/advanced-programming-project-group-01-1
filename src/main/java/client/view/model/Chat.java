@@ -1,5 +1,6 @@
 package client.view.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Chat {
@@ -16,9 +17,10 @@ public class Chat {
 
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
         if (replyMessage != null && !replyMessage.isEmpty()) {
-            return "reply to:\n" + replyMessage + "\n--------------------\n" + username + ":\n" + message + "\n" + time;
+            return "reply to:\n--------------------\n" + replyMessage + "--------------------\n" + username + ":\n" + message + "\n" + dateFormat.format(time);
         }
-        return username + ":\n" + message + "\n" + time;
+        return username + ":\n" + message + "\n" + dateFormat.format(time);
     }
 }
