@@ -13,7 +13,6 @@ import java.util.Random;
 public class Client {
 	private static final Random random = new Random();
 	private static final Map<String, Client> clients = new HashMap<>();
-	private static final Map<Game, ArrayList<Thread>> gameBombs = new HashMap<>();
 	private final String token;
 	private Menuable Menu;
 	private User identity;
@@ -42,34 +41,11 @@ public class Client {
 		return null;
 	}
 
-	private static void createGameBomb(Game game, User loser) {
-		synchronized (game) {
-			if (game.isGameOver()) return;
-			if (!gameBombs.containsKey(game))
-				gameBombs.put(game, new ArrayList<>());
-			Thread bomb = new Thread(() -> {
-				try {
-					Thread.sleep(15000);
-					synchronized (game) {
-						if (!game.isGameOver()) {
-							game.finishGame(loser);
-							gameBombs.remove(game);
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			});
-			gameBombs.get(game).add(bomb);
-			bomb.start();
-		}
-	}
-
 	public static void remove(Client client) {
 		if (client.getIdentity() != null) {
 			User.getOnlineUsers().remove(client.getIdentity());
 			if (client.getIdentity().getCurrentGame() != null)
-				createGameBomb(client.getIdentity().getCurrentGame(), client.getIdentity());
+				client.getIdentity().getCurrentGame().createBomb(client.getIdentity());
 			if (client.getIdentity().getChallengedUser() != null) {
 				client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
 				client.getIdentity().setChallengedUser(null);
@@ -113,4 +89,5 @@ public class Client {
 	public void setInGame(boolean inGame) {
 		isInGame = inGame;
 	}
+
 }

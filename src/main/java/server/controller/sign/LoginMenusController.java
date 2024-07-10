@@ -5,6 +5,7 @@ import server.controller.enums.Validation;
 import server.model.Client;
 import server.model.user.User;
 import server.view.MainMenu;
+import server.view.game.MatchMenu;
 import server.view.sign.login.AuthenticationMenu;
 import server.view.sign.login.ForgotPasswordMenu;
 import server.view.sign.login.LoginMenu;
@@ -61,6 +62,11 @@ public class LoginMenusController {
 	public static Result checkCode(Client client, String code) {
 		if (loggingInClients.containsKey(client) && loggingInClients.get(client).equals(code)) {
 			loggingInClients.remove(client);
+			if (client.getIdentity().getCurrentGame() != null) {
+				client.getIdentity().getCurrentGame().defuseBomb(client.getIdentity());
+				client.setMenu(new MatchMenu());
+				return new Result("Back to game", true);
+			}
 			client.setMenu(new MainMenu());
 			return new Result("Code is correct", true);
 		}

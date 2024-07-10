@@ -1,6 +1,7 @@
 package client.view.sign.login;
 
 import client.controller.sign.ClientLoginMenusController;
+import client.view.AlertMaker;
 import client.view.ClientAppview;
 import client.view.Menuable;
 import javafx.application.Application;
@@ -73,7 +74,7 @@ public class ClientAuthenticationMenu extends Application implements Menuable {
 	}
 
 	public void checkCode(MouseEvent mouseEvent) {
-		ClientLoginMenusController.checkCode(authenticationCodeField.getText());
+		AlertMaker.makeAlert("CODE", ClientLoginMenusController.checkCode(authenticationCodeField.getText()));
 	}
 
 	public void exit(MouseEvent mouseEvent) {

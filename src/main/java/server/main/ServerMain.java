@@ -11,7 +11,7 @@ public class ServerMain {
 		JsonController.load();
 		ServerWorker.setupServer(2357, 5);
 		try {
-			EmailController.runVerifier();
+			//EmailController.runVerifier();
 			ServerWorker.listen();
 		} catch (IOException e) {
 			e.printStackTrace();

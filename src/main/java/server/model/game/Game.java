@@ -40,6 +40,7 @@ public class Game {
 	boolean gameEnded = false;
 	int currentCheatPower = 0, opponentCheatPower = 0;
 	final ArrayList<Move> moves = new ArrayList<>();
+	Thread currentBomb, opponentBomb;
 
 	private Game(User player1, User player2) {
 		this.current = player1;
@@ -350,6 +351,9 @@ public class Game {
 		boolean tempPassed = hasCurrentPassed;
 		hasCurrentPassed = hasOpponentPassed;
 		hasOpponentPassed = tempPassed;
+		Thread tempBomb = currentBomb;
+		currentBomb = opponentBomb;
+		opponentBomb = tempBomb;
 		if (currentHand.getCards().isEmpty() && currentLeader.isDisable()) passTurn();
 	}
 
@@ -463,7 +467,30 @@ public class Game {
 		return null;
 	}
 
-	public void finishGame(User loser) {
+	public synchronized void createBomb(User loser) {
+		Thread bomb = new Thread(() -> {
+			try {
+				Thread.sleep(90000);
+				synchronized (this) {
+					if (!isGameOver())
+						finishGame(loser);
+				}
+			} catch (Exception ignored) {
+			}
+		});
+		if (loser == current) currentBomb = bomb;
+		else opponentBomb = bomb;
+		bomb.start();
+	}
+
+	public synchronized void defuseBomb(User player) {
+		Thread bomb = player == current ? currentBomb : opponentBomb;
+		if (!isGameOver() && bomb != null) {
+			bomb.interrupt();
+		}
+	}
+
+	private void finishGame(User loser) {
 		if (loser == opponent) opponentLife = 0;
 		else currentLife = 0;
 		endGame();

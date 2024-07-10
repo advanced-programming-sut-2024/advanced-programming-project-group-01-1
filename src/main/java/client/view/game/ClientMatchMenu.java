@@ -143,7 +143,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 		opponentPilePane.setOnMouseClicked(this::showSpace);
 		myLeaderPane.setOnMouseClicked(this::showLeader);
 		opponentLeaderPane.setOnMouseClicked(this::showSpace);
-		updateScreen();
 		ClientAppview.setMenuOnMatchMenu(this);
 		updater =  new Thread(() -> {
 				try {
@@ -190,6 +189,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		});
 		onlineStatus.setDaemon(true);
 		onlineStatus.start();
+		updateScreen();
 	}
 
 	public void updateScreen() {

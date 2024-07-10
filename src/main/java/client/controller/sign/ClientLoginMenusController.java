@@ -3,6 +3,7 @@ package client.controller.sign;
 import client.main.TCPClient;
 import client.view.ClientAppview;
 import client.view.ClientMainMenu;
+import client.view.game.ClientMatchMenu;
 import client.view.sign.login.ClientAuthenticationMenu;
 import client.view.sign.login.ClientForgotPasswordMenu;
 import client.view.sign.login.ClientLoginMenu;
@@ -35,7 +36,10 @@ public class ClientLoginMenusController {
 		String command = LoginMenusCommands.CHECK_CODE.getPattern();
 		command = command.replace("(?<code>\\d+)", code);
 		Result result = TCPClient.send(command);
-		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientMainMenu());
+		if (result != null && result.isSuccessful()) {
+			if (result.getMessage().startsWith("Back")) ClientAppview.setMenu(new ClientMatchMenu());
+			else ClientAppview.setMenu(new ClientMainMenu());
+		}
 		return result;
 	}
 
