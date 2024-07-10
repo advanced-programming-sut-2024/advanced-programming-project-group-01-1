@@ -51,4 +51,12 @@ public class BracketMatch {
 		});
 	}
 
+	@Override
+	public String toString() {
+		if (game == null) return " \n \n";
+		User current = game.getCurrent();
+		return player1.getUsername() + " " + (current == player1 ? 2 - game.getOpponentLife() : 2 - game.getCurrentLife()) +
+				"\n" + player2.getUsername() + " " + (current == player2 ? 2 - game.getOpponentLife() : 2 - game.getCurrentLife());
+	}
+
 }

@@ -1,6 +1,7 @@
 package client.view.game;
 
 import client.controller.game.ClientMatchMenuController;
+import client.controller.game.ClientTournamentMenuController;
 import client.view.ClientAppview;
 import client.view.Menuable;
 import javafx.application.Application;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import message.GameMenusCommands;
 import message.Result;
 
 import java.io.IOException;
@@ -37,7 +39,7 @@ public class ClientTournamentMenu extends Application implements Menuable {
 				seedScores[(i - 5) * 2 + 3] = (Label) match.getChildren().get(5);
 			}
 		}
-//		ClientMatchMenuController.startUpdatingBracket(this);
+		ClientTournamentMenuController.startUpdatingBracket(this);
 	}
 
 	@Override
@@ -66,13 +68,20 @@ public class ClientTournamentMenu extends Application implements Menuable {
 
 	@Override
 	public Result run(String input) {
-		return null;
+		Result result = null;
+		if (GameMenusCommands.GET_TOURNAMENT_INFO.getMatcher(input).matches()) {
+			result = ClientTournamentMenuController.getTournamentInfo();
+		}
+		return result;
 	}
 
 	public void updateScreen() {
-		counter++;
-		for (int i = 0; i < 30; i++) {
-			seedScores[i].setText(String.valueOf(counter));
+		String info = ClientTournamentMenuController.getTournamentInfo().getMessage();
+		String[] lines = info.split("\n");
+		for (int i = 0; i < 28; i++) {
+			String[] parts = lines[i].split(" ");
+			seedLabels[i].setText(parts[0]);
+			seedScores[i].setText(parts[1]);
 		}
 	}
 

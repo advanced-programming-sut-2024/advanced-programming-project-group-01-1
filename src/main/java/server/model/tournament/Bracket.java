@@ -85,5 +85,19 @@ public class Bracket {
 		return new Result(placementString, true);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < 14; i++) {
+			if (matches[i] != null) {
+				result.append(matches[i].toString());
+				result.append("\n");
+			} else {
+				result.append(" \n \n");
+			}
+		}
+		return result.toString();
+	}
+
 
 }
