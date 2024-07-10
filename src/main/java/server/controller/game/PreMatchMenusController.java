@@ -41,6 +41,10 @@ public class PreMatchMenusController {
 	}
 
 	public static Result enterTournament(Client client) {
+		if (client.getIdentity().getCurrentBracket() != null) {
+			client.setMenu(new TournamentMenu());
+			return new Result("Go to Tournament", true);
+		}
 		synchronized (tournamentQueue) {
 			tournamentQueue.add(client.getIdentity());
 			if (tournamentQueue.size() == 8) {

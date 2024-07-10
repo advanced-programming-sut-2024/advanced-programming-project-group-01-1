@@ -4,6 +4,7 @@ import client.main.TCPClient;
 import client.view.ClientAppview;
 import client.view.game.ClientTournamentMenu;
 import client.view.game.prematch.ClientLobbyMenu;
+import client.view.game.prematch.ClientMatchFinderMenu;
 import javafx.application.Platform;
 import message.GameMenusCommands;
 import message.Result;
@@ -58,6 +59,13 @@ public class ClientTournamentMenuController {
 			Platform.runLater(() -> ClientAppview.setMenu(new ClientLobbyMenu()));
 		}).start();
 		return result;
+	}
+
+	public static Result exit() {
+		String command = GameMenusCommands.EXIT_MATCH_FINDER.getPattern();
+		stopBracketThread();
+		ClientAppview.setMenu(new ClientMatchFinderMenu());
+		return TCPClient.send(command);
 	}
 
 }

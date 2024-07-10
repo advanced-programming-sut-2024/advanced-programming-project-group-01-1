@@ -16,8 +16,9 @@ public class TournamentMenu implements Menuable {
 		} else if (GameMenusCommands.READY.getMatcher(command) != null) {
 			result = TournamentMenuController.setPlayerReady(client);
 		} else if (GameMenusCommands.CHECK_REQUEST.getMatcher(command) != null) {
-			System.out.println(client.getIdentity().getUsername() + " - " + client.getIdentity().getChallengedUser());
 			result = TournamentMenuController.checkRequest(client);
+		} else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(command) != null) {
+			result = TournamentMenuController.exit(client);
 		} else {
 			result = new Result("Invalid command", false);
 		}

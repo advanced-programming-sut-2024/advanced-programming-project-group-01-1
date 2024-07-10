@@ -69,7 +69,7 @@ public class Bracket {
 			System.out.println("Player not in bracket");
 			return;
 		}
-		if (seed % 2 == 0) {
+		if (currentSeed[seed] % 2 == 0) {
 			matches[currentSeed[seed] / 2].setPlayer1Ready();
 		} else {
 			matches[currentSeed[seed] / 2].setPlayer2Ready();
@@ -85,6 +85,7 @@ public class Bracket {
 						matches[i].setPlayer1(seed[i * 2]);
 						matches[i].setPlayer2(seed[i * 2 + 1]);
 						matches[i].start();
+						matchStarted[i] = true;
 					}
 					continue;
 				}

@@ -5,6 +5,7 @@ import server.model.Client;
 import server.model.tournament.Bracket;
 import server.model.user.User;
 import server.view.game.prematch.LobbyMenu;
+import server.view.game.prematch.MatchFinderMenu;
 
 public class TournamentMenuController {
 
@@ -38,6 +39,11 @@ public class TournamentMenuController {
 		if (!started)
 			return new Result("Game hasn't started yet", false);
 		return new Result("Go to Lobby", true);
+	}
+
+	public static Result exit(Client client) {
+		client.setMenu(new MatchFinderMenu());
+		return new Result("Entering match finder menu", true);
 	}
 
 }

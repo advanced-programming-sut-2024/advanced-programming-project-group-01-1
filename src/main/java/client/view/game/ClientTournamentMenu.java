@@ -5,6 +5,7 @@ import client.controller.game.ClientTournamentMenuController;
 import client.view.ClientAppview;
 import client.view.Menuable;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -88,6 +89,7 @@ public class ClientTournamentMenu extends Application implements Menuable {
 			System.out.println("Couldn't get tournament info");
 			return;
 		}
+		System.out.println(info);
 		String[] lines = info.getMessage().split("\n");
 		for (int i = 0; i < 28; i++) {
 			String[] parts = lines[i].equals(" ") ? new String[2] : lines[i].split(" ");
@@ -96,4 +98,7 @@ public class ClientTournamentMenu extends Application implements Menuable {
 		}
 	}
 
+	public Result exit() {
+		return ClientTournamentMenuController.exit();
+	}
 }

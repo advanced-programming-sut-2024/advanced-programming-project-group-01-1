@@ -54,6 +54,7 @@ public class BracketMatch {
 					loser = winner == player1 ? player2 : player1;
 					break;
 				}
+				game = null;
 			}
 		});
 		matchThread.start();
