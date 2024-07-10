@@ -58,42 +58,38 @@ public class MatchMenuController {
 		return new Result("not debuffed", false);
 	}
 
-	private static void vetoCard(Game game, Card card) {
-		new Asker(game.getCurrent(), game.getCurrentDeck(), false, false, true, index -> {
-			Card card1 = game.getCurrentDeck().getCards().get(index);
-			card1.updateSpace(game.getCurrentHand());
+	private static void vetoCard(Card card, User player, Space deck, Space hand) {
+		new Asker(player, deck, false, false, true, index -> {
+			Card card1 = deck.getCards().get(index);
+			card1.updateSpace(hand);
 		}, false, 0, true);
-		card.updateSpace(game.getCurrentDeck());
+		card.updateSpace(deck);
+	}
+
+	private static void handleVeto(User player, Space hand, Space deck) {
+		new Asker(player, hand, false, false, false, index -> {
+			if (index != -1) {
+				vetoCard(hand.getCards().get(index), player, deck, hand);
+				new Asker(player, hand, false, false, false, index1 -> {
+					if (index1 != -1) vetoCard(hand.getCards().get(index1), player, deck, hand);
+				}, true, index, true);
+			}
+		}, true, 0);
 	}
 
 	public static void handleVeto(Game game) {
 		if (!game.getCurrentLeader().isManual()) game.getCurrentLeader().act();
-		final Space hand = game.getCurrentHand();
-		new Asker(game.getCurrent(), hand, false, false, false, index -> {
-			if (index != -1) {
-				vetoCard(game, hand.getCards().get(index));
-				new Asker(game.getCurrent(), hand, false, false, false, index1 -> {
-					if (index1 != -1) vetoCard(game, hand.getCards().get(index1));
-					game.changeTurn();
-					if (!game.getCurrentLeader().isManual())
-						game.getCurrentLeader().act();
-				}, true, index, true);
-			} else {
-				game.changeTurn();
-				if (!game.getCurrentLeader().isManual())
-					game.getCurrentLeader().act();
-			}
-		}, true, 0);
-		final Space hand1 = game.getOpponentHand();
-		new Asker(game.getOpponent(), hand1, false, false, false, index -> {
-			if (index != -1) {
-				vetoCard(game, hand1.getCards().get(index));
-				new Asker(game.getOpponent(), hand1, false, false, false, index1 -> {
-					if (index1 != -1) vetoCard(game, hand1.getCards().get(index1));
-					game.changeTurn();
-				}, true, index, true);
-			} else game.changeTurn();
-		}, true, 0);
+		game.changeTurn();
+		if (!game.getCurrentLeader().isManual()) game.getCurrentLeader().act();
+		game.changeTurn();
+		final User  player1 = game.getCurrent();
+		final Space hand1 = game.getCurrentHand();
+		final Space deck1 = game.getCurrentDeck();
+		final User player2 = game.getOpponent();
+		final Space hand2 = game.getOpponentHand();
+		final Space deck2 = game.getOpponentDeck();
+		handleVeto(player1, hand1, deck1);
+		handleVeto(player2, hand2, deck2);
 	}
 
 	public static Result getUsernames(Client client) {
@@ -131,7 +127,7 @@ public class MatchMenuController {
 		StringBuilder discardPiles = new StringBuilder();
 		Space myPile = getDiscardPile(client);
 		Space opponentPile = client.getIdentity().getCurrentGame().getOpponentDiscardPile();
-		if (opponentPile == myPile) opponentPile = client.getIdentity().getCurrentGame().getOpponentDiscardPile();
+		if (opponentPile == myPile) opponentPile = client.getIdentity().getCurrentGame().getCurrentDiscardPile();
 		discardPiles.append("Current Discard Pile:\n");
 		for (Card card : myPile.getCards()) {
 			discardPiles.append(card.toString()).append("\n");
@@ -397,5 +393,10 @@ public class MatchMenuController {
 
 	public static Result getDescription(String cardName) {
 		return new Result(Objects.requireNonNull(CardCreator.getCard(cardName)).getDescription(), true);
+	}
+
+	public static Result isMyTurn(Client client) {
+		if (isCurrent(client)) return new Result("your turn", true);
+		return new Result("opponent turn", false);
 	}
 }

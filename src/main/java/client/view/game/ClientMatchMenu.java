@@ -539,7 +539,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void placeCard(MouseEvent event) {
-
+		if (!ClientMatchMenuController.isMyTurn()) return;
 		SmallCard card = (SmallCard) selectedCard;
 		int idx = handPane.getChildren().indexOf(card);
 		Pane pane = (Pane) event.getSource();

@@ -17,7 +17,9 @@ public class MatchMenu implements Menuable {
 	public Result run(Client client, String input) {
 		Result result;
 		Matcher matcher;
-		if (isCheating) {
+		if (GameMenusCommands.IS_MY_TURN.getMatcher(input) != null) {
+			result = MatchMenuController.isMyTurn(client);
+		} else if (isCheating) {
 			if (input.equals("exit")) {
 				isCheating = false;
 				result = new Result("Cheat menu deactivated", true);
