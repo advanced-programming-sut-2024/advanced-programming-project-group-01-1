@@ -170,30 +170,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> clickHandler) {
 		space.getChildren().clear();
 		for (int i = 0; i < cardsInfo.length; i++) {
-			SmallCard smallCard;
-			String[] cardInfo = cardsInfo[i].split("\n");
-			String cardName = cardInfo[0];
-			String type = cardInfo[1].substring(6);
-			String Ability = cardInfo[2].substring(9);
-			String cardDescription;
-			if (type.equals("faction")) {
-				cardDescription = "KTKM";
-			} else if (type.equals("leader")) {
-				cardDescription = Ability;
-			} else {
-				cardDescription = ClientMatchMenuController.getDescription(cardName).getMessage();
-			}
-			if (type.equals("Melee") || type.equals("Ranged") || type.equals("Siege") || type.equals("Agile")) {
-				int power = Integer.parseInt(cardInfo[3].substring(7));
-				String currentPower = cardInfo[4].substring(15);
-				boolean hero = (cardInfo.length == 7);
-				String uniqueCode = cardInfo[cardInfo.length - 1].substring(13);
-				smallCard = SmallUnit.getInstance(cardName, cardDescription, type, Ability, power, currentPower, hero, uniqueCode);
-
-			} else {
-				String uniqueCode = cardInfo[3].substring(13);
-				smallCard = SmallCard.getInstance(cardName, cardDescription, type, Ability, uniqueCode);
-			}
+			SmallCard smallCard = getSmallCard(cardsInfo[i]);
 			if (space.getPrefWidth() >= cardsInfo.length * smallCard.getPrefWidth()) {
 				double tmp = (space.getPrefWidth() - cardsInfo.length * smallCard.getPrefWidth()) / 2 + smallCard.getPrefWidth() * i;
 				smallCard.setLayoutX(tmp);
@@ -214,21 +191,33 @@ public class ClientMatchMenu extends Application implements Menuable {
 			return;
 		}
 		String[] cardsInfo = result.getMessage().split("\n------------------\n");
-		updateSpace(handPane, cardsInfo, this::selectCard);
+		if (ClientMatchMenuController.isMyTurn()) {
+			updateSpace(handPane, cardsInfo, this::selectCard);
+			handPane.setOnMouseClicked(null);
+		}
+		else {
+			updateSpace(handPane, cardsInfo, null);
+			handPane.setOnMouseClicked(this::showSpace);
+		}
 		for (Node node: handPane.getChildren()) {
 			if (node instanceof SmallUnit) {
 				SmallUnit unit = (SmallUnit) node;
 				unit.setCurrentPower(String.valueOf(unit.getPower()));
 			}
 			SmallCard card = (SmallCard) node;
-			card.setOnMouseEntered((e) -> {
-				SmallCard card1 = (SmallCard) e.getSource();
-				card1.setLayoutY(-10);
-			});
-			card.setOnMouseExited((e) -> {
-				SmallCard card1 = (SmallCard) e.getSource();
-				card1.setLayoutY(0);
-			});
+			if (ClientMatchMenuController.isMyTurn()) {
+				card.setOnMouseEntered((e) -> {
+					SmallCard card1 = (SmallCard) e.getSource();
+					card1.setLayoutY(-10);
+				});
+				card.setOnMouseExited((e) -> {
+					SmallCard card1 = (SmallCard) e.getSource();
+					card1.setLayoutY(0);
+				});
+			} else {
+				card.setOnMouseEntered(null);
+				card.setOnMouseExited(null);
+			}
 		}
 	}
 
@@ -407,7 +396,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 		pane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.9);");
 		pane.setOnMouseClicked(event -> {
 			ClientMatchMenuController.endGame();
-			updateScreen();
 		});
 
 		ImageView image;
@@ -560,63 +548,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		card.setOnMouseEntered(null);
 		card.setOnMouseExited(null);
 		Transition transition = new CardMoving(card, pane.getLayoutX() + (pane.getPrefWidth() - card.getPrefWidth()) / 2, pane.getLayoutY());
-		transition.setOnFinished(e -> {
-			ImageView abilityIcon = null;
-			switch (card.getAbility()){
-				case "TightBond":
-					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_bond.png")));
-					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
-					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 74 / 90);
-					break;
-				case "Horn":
-					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_horn.png")));
-					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
-					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 74 / 88);
-					break;
-				case "Medic":
-					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_medic.png")));
-					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
-					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 86 / 90);
-					break;
-				case "MoralBooster":
-					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_morale.png")));
-					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
-					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 71 / 90);
-					break;
-				case "Muster":
-					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_muster.png")));
-					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
-					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 73 / 76);
-					break;
-				case "Spy":
-					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_spy.png")));
-					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
-					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 67 / 90);
-					break;
-				default:
-					break;
-			}
-			if (abilityIcon == null) {
-				root.getChildren().remove(unclickablePane);
-				Result result = ClientMatchMenuController.placeCard(idx, row);
-				updateScreen();
-			}
-			else {
-				unclickablePane.getChildren().add(abilityIcon);
-				abilityIcon.setLayoutX(card.getLayoutX());
-				abilityIcon.setLayoutY(card.getLayoutY() + ((card.getPrefHeight() - abilityIcon.getFitWidth()) / 2));
-				FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), abilityIcon);
-				fadeTransition.setFromValue(1);
-				fadeTransition.setToValue(0);
-				fadeTransition.setOnFinished(e1 -> {
-					root.getChildren().remove(unclickablePane);
-					Result result = ClientMatchMenuController.placeCard(idx, row);
-					updateScreen();
-				});
-				fadeTransition.play();
-			}
-		});
-		transition.play();
+		putAnimation(card, pane.getLayoutX() + (pane.getPrefWidth() - card.getPrefWidth()) / 2, pane.getLayoutY(), true, idx, row);
 	}
 
 	public void showSpace(MouseEvent mouseEvent) {
@@ -664,6 +596,121 @@ public class ClientMatchMenu extends Application implements Menuable {
 		clearSelectedCard();
 		ClientMatchMenuController.passTurn();
 		updateScreen();
+	}
+
+	public SmallCard getSmallCard(String cardsInfo) {
+		String[] cardInfo = cardsInfo.split("\n");
+		String cardName = cardInfo[0];
+		String type = cardInfo[1].substring(6);
+		String Ability = cardInfo[2].substring(9);
+		String cardDescription;
+		if (type.equals("faction")) {
+			cardDescription = "KTKM";
+		} else if (type.equals("leader")) {
+			cardDescription = Ability;
+		} else {
+			cardDescription = ClientMatchMenuController.getDescription(cardName).getMessage();
+		}
+		if (type.equals("Melee") || type.equals("Ranged") || type.equals("Siege") || type.equals("Agile")) {
+			int power = Integer.parseInt(cardInfo[3].substring(7));
+			String currentPower = cardInfo[4].substring(15);
+			boolean hero = (cardInfo.length == 7);
+			String uniqueCode = cardInfo[cardInfo.length - 1].substring(13);
+			return SmallUnit.getInstance(cardName, cardDescription, type, Ability, power, currentPower, hero, uniqueCode);
+		} else {
+			String uniqueCode = cardInfo[3].substring(13);
+			return SmallCard.getInstance(cardName, cardDescription, type, Ability, uniqueCode);
+		}
+	}
+
+	public void opponentPut(Result result) {
+		String[] cardsInfo = result.getMessage().split("\n");
+		int row = Integer.parseInt(cardsInfo[0]);
+		StringBuilder cardInfo = new StringBuilder();
+		for (int i = 1; i < cardsInfo.length; i++) cardInfo.append(cardsInfo[i]).append("\n");
+		SmallCard card = getSmallCard(cardInfo.toString());
+		if (card.getType().equals("Leader")){
+			//TODO:
+			return;
+		}
+		card.setLayoutX(0);
+		card.setLayoutY(0);
+		Pane dest;
+		if (row != -1) {
+			if (card.getType().equals("Buffer")) {
+				dest = rowBufferPanes[row];
+			} else {
+				dest = rowPanes[row];
+			}
+		} else if (card.getType().equals("Weather")) {
+			dest = weatherPane;
+		} else {
+			dest = opponentPilePane;
+		}
+		putAnimation(card, dest.getLayoutX() + (dest.getPrefWidth() - card.getPrefWidth()) / 2, dest.getLayoutY(), false, -1, row);
+	}
+
+	public void putAnimation(SmallCard card, double x, double y, boolean callPlace, int idx, int row) {
+		Transition transition = new CardMoving(card, x, y);
+		transition.setOnFinished(e -> {
+			ImageView abilityIcon = null;
+			switch (card.getAbility()){
+				case "TightBond":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_bond.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 74 / 90);
+					break;
+				case "Horn":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_horn.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 74 / 88);
+					break;
+				case "Medic":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_medic.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 86 / 90);
+					break;
+				case "MoralBooster":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_morale.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 71 / 90);
+					break;
+				case "Muster":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_muster.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 73 / 76);
+					break;
+				case "Spy":
+					abilityIcon = new ImageView(new Image(this.getClass().getResourceAsStream("/images/icons/anim_spy.png")));
+					abilityIcon.setFitWidth(Constants.SMALL_CARD_WIDTH.getValue());
+					abilityIcon.setFitHeight(abilityIcon.getFitWidth() * 67 / 90);
+					break;
+				default:
+					break;
+			}
+			if (abilityIcon == null) {
+				root.getChildren().remove(unclickablePane);
+				if (callPlace) {
+					Result result = ClientMatchMenuController.placeCard(idx, row);
+				}
+				updateScreen();
+			}
+			else {
+				unclickablePane.getChildren().add(abilityIcon);
+				abilityIcon.setLayoutX(card.getLayoutX());
+				abilityIcon.setLayoutY(card.getLayoutY() + ((card.getPrefHeight() - abilityIcon.getFitWidth()) / 2));
+				FadeTransition fadeTransition = new FadeTransition(Duration.millis(1000), abilityIcon);
+				fadeTransition.setFromValue(1);
+				fadeTransition.setToValue(0);
+				fadeTransition.setOnFinished(e1 -> {
+					root.getChildren().remove(unclickablePane);
+					Result result = ClientMatchMenuController.placeCard(idx, row);
+					updateScreen();
+				});
+				fadeTransition.play();
+			}
+		});
+		transition.play();
 	}
 
 	/*
