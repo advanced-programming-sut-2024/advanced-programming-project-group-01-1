@@ -32,9 +32,7 @@ public class ClientMatchMenuController {
 
 	public static Result showHandForGraphic() {
 		String command = GameMenusCommands.SHOW_CARDS_GRAPHIC.getPattern();
-		Result result = TCPClient.send(command);
-		//System.out.println(result);
-		return result;
+		return TCPClient.send(command);
 	}
 
 	public static Result remainingInDeck() {
@@ -103,7 +101,10 @@ public class ClientMatchMenuController {
 
 	public static Result useLeaderAbility() {
 		String command = GameMenusCommands.COMMANDER_POWER_PLAY.getPattern();
-		return TCPClient.send(command);
+		System.out.println("fuck user leader ability");
+		Result result = TCPClient.send(command);
+		System.out.println(result);
+		return result;
 	}
 
 	public static Result passedState() {
@@ -154,9 +155,7 @@ public class ClientMatchMenuController {
 
 	public static Result passTurn() {
 		String command = GameMenusCommands.PASS_ROUND.getPattern();
-		Result result = TCPClient.send(command);
-		System.out.println(result);
-		return result;
+		return TCPClient.send(command);
 	}
 
 	public static Result getOpponentMove() {
@@ -187,9 +186,7 @@ public class ClientMatchMenuController {
 	public static Result selectCard(int index) {
 		String command = GameMenusCommands.SELECT_CARD.getPattern();
 		command = command.replace("(?<cardNumber>(-)?\\d+)", String.valueOf(index));
-		Result result = TCPClient.send(command);
-		System.out.println(result);
-		return result;
+		return TCPClient.send(command);
 	}
 
 	public static void endGame() {

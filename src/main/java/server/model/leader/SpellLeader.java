@@ -41,6 +41,7 @@ public class SpellLeader extends Leader {
 			for (String spellName : spellNames)
 				availableSpells.add((Spell) CardCreator.getCard(spellName));
 			spell = availableSpells.get(random.nextInt(availableSpells.size()));
+			spell.setGame(this.game);
 			spell.setSpace(this.game.getCurrentHand());
 		}
 		if (spell.getAbility() instanceof Scorch) ((Scorch) spell.getAbility()).killRow(this.game, spaceNumber);
