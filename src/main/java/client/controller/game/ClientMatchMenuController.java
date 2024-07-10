@@ -28,7 +28,9 @@ public class ClientMatchMenuController {
 
 	public static Result showHandForGraphic() {
 		String command = GameMenusCommands.SHOW_CARDS_GRAPHIC.getPattern();
-		return TCPClient.send(command);
+		Result result = TCPClient.send(command);
+		//System.out.println(result);
+		return result;
 	}
 
 	public static Result remainingInDeck() {
@@ -172,9 +174,12 @@ public class ClientMatchMenuController {
 	}
 
 	public static Result selectCard(int index) {
-		String command = GameMenusCommands.ASKER_SELECT_CARD.getPattern();
-		command = command.replace("(?<cardNumber>\\d+)", String.valueOf(index));
-		return TCPClient.send(command);
+		System.out.println("jeddan ?");
+		String command = GameMenusCommands.SELECT_CARD.getPattern();
+		command = command.replace("(?<cardNumber>(-)?\\d+)", String.valueOf(index));
+		Result result = TCPClient.send(command);
+		System.out.println(result);
+		return result;
 	}
 
 	public static void endGame() {

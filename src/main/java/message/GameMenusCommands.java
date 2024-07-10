@@ -78,8 +78,6 @@ public enum GameMenusCommands {
     GET_ASKER_CARDS("get asker cards"),
     GET_ASKER_PTR("get asker ptr"),
     IS_ASKER_OPTIONAL("is asker optional"),
-    ASKER_SELECT_CARD("asker select card (?<cardNumber>(-)?\\d+)"),
-
     CHEAT_MENU("cheat"),
     CHEAT_DEBUFF_ROW("debuff row (?<rowNumber>(0|1|2|3|4|5))"),
     CHEAT_CLEAR_ROW("clear row (?<rowNumber>(0|1|2|3|4|5))"),

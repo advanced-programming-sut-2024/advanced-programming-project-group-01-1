@@ -47,21 +47,6 @@ public class MatchMenu implements Menuable {
 		} else {
 			if ((matcher = GameMenusCommands.GET_DESCRIPTION.getMatcher(input)) != null) {
 				result = getDescription(matcher);
-			}else 			if (MatchMenuController.isAsking(client).isSuccessful()) {
-				if (GameMenusCommands.IS_ASKING.getMatcher(input) != null) result = new Result("asking", true);
-				else if (GameMenusCommands.GET_ASKER_CARDS.getMatcher(input) != null) {
-					result = MatchMenuController.getAskerCards(client);
-				} else if (GameMenusCommands.GET_ASKER_PTR.getMatcher(input) != null) {
-					result = MatchMenuController.getAskerPtr(client);
-				} else if (GameMenusCommands.IS_ASKER_OPTIONAL.getMatcher(input) != null) {
-					result = MatchMenuController.isAskerOptional(client);
-				} else if ((matcher = GameMenusCommands.SELECT_CARD.getMatcher(input)) != null) {
-					result = selectCard(client, matcher);
-				} else {
-					result = new Result("Invalid command", false);
-				}
-			} else if (GameMenusCommands.IS_ASKING.getMatcher(input) != null) {
-				result = new Result("not asking", false);
 			} else if ((matcher = GameMenusCommands.IS_ROW_DEBUFFED.getMatcher(input)) != null) {
 				result = isRowDebuffed(client, matcher);
 			} else if (GameMenusCommands.GET_USERNAMES.getMatcher(input) != null) {
@@ -78,14 +63,10 @@ public class MatchMenu implements Menuable {
 				result = showRowForGraphic(client, matcher);
 			} else if (GameMenusCommands.SHOW_WEATHER_GRAPHIC.getMatcher(input) != null) {
 				result = MatchMenuController.showWeatherSystemForGraphic(client);
-			} else if ((matcher = GameMenusCommands.PLACE_CARD.getMatcher(input)) != null) {
-				result = placeCard(client, matcher);
 			} else if (GameMenusCommands.SHOW_LEADER_GRAPHIC.getMatcher(input) != null) {
 				result = MatchMenuController.showLeadersForGraphic(client);
 			} else if (GameMenusCommands.IS_LEADERS_DISABLE.getMatcher(input) != null) {
 				result = MatchMenuController.isLeadersDisable(client);
-			} else if (GameMenusCommands.COMMANDER_POWER_PLAY.getMatcher(input) != null) {
-				result = MatchMenuController.useLeaderAbility(client);
 			} else if (GameMenusCommands.PASSED_STATE.getMatcher(input) != null) {
 				result = MatchMenuController.passedState(client);
 			} else if (GameMenusCommands.SHOW_FACTION_GRAPHIC.getMatcher(input) != null) {
@@ -94,13 +75,6 @@ public class MatchMenu implements Menuable {
 				result = MatchMenuController.showPlayersLives(client);
 			} else if (GameMenusCommands.SHOW_NUMBER_OF_CARDS_IN_HAND.getMatcher(input) != null) {
 				result = MatchMenuController.showHandSize(client);
-			} else if (GameMenusCommands.PASS_ROUND.getMatcher(input) != null) {
-				result = MatchMenuController.passTurn(client);
-			} else if (GameMenusCommands.CHEAT_MENU.getMatcher(input) != null) {
-				isCheating = true;
-				result = new Result("Cheat menu activated", true);
-			} else if (GameMenusCommands.END_GAME.getMatcher(input) != null) {
-				result = MatchMenuController.endGame(client);
 			} else if (GameMenusCommands.IS_GAME_OVER.getMatcher(input) != null) {
 				result = MatchMenuController.isGameOver(client);
 			} else if (GameMenusCommands.IS_GAME_WIN.getMatcher(input) != null) {
@@ -111,6 +85,32 @@ public class MatchMenu implements Menuable {
 				result = MatchMenuController.getPowers(client);
 			} else if (GameMenusCommands.GET_SCORES.getMatcher(input) != null) {
 				result = MatchMenuController.getScores(client);
+			} else if (MatchMenuController.isAsking(client).isSuccessful()) {
+				if (GameMenusCommands.IS_ASKING.getMatcher(input) != null) result = new Result("asking", true);
+				else if (GameMenusCommands.GET_ASKER_CARDS.getMatcher(input) != null) {
+					result = MatchMenuController.getAskerCards(client);
+				} else if (GameMenusCommands.GET_ASKER_PTR.getMatcher(input) != null) {
+					result = MatchMenuController.getAskerPtr(client);
+				} else if (GameMenusCommands.IS_ASKER_OPTIONAL.getMatcher(input) != null) {
+					result = MatchMenuController.isAskerOptional(client);
+				} else if ((matcher = GameMenusCommands.SELECT_CARD.getMatcher(input)) != null) {
+					result = selectCard(client, matcher);
+				} else {
+					result = new Result("Invalid command", false);
+				}
+			} else if (GameMenusCommands.IS_ASKING.getMatcher(input) != null) {
+				result = new Result("not asking", false);
+			} else if ((matcher = GameMenusCommands.PLACE_CARD.getMatcher(input)) != null) {
+				result = placeCard(client, matcher);
+			} else if (GameMenusCommands.COMMANDER_POWER_PLAY.getMatcher(input) != null) {
+				result = MatchMenuController.useLeaderAbility(client);
+			} else if (GameMenusCommands.PASS_ROUND.getMatcher(input) != null) {
+				result = MatchMenuController.passTurn(client);
+			} else if (GameMenusCommands.CHEAT_MENU.getMatcher(input) != null) {
+				isCheating = true;
+				result = new Result("Cheat menu activated", true);
+			} else if (GameMenusCommands.END_GAME.getMatcher(input) != null) {
+				result = MatchMenuController.endGame(client);
 			} else {
 				result = new Result("Invalid command", false);
 			}

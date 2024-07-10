@@ -147,7 +147,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 		updateDecks();
 		updateLeader();
 		updateInfo();
-		System.out.println("fuck :: " + ClientMatchMenuController.isAsking().isSuccessful());
 		if (ClientMatchMenuController.isAsking().isSuccessful()) {
 			String[] cards = ClientMatchMenuController.getAskerCards().getMessage().split("\n");
 			int ptr = Integer.parseInt(ClientMatchMenuController.getAskerPtr().getMessage());
