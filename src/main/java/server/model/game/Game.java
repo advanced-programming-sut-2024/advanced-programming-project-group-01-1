@@ -137,8 +137,13 @@ public class Game {
 		return opponentLife;
 	}
 
-	public void addCheatPower(int cheatPower) {
-		currentCheatPower += cheatPower;
+	public void setOpponentLife(int opponentLife) {
+		this.opponentLife = opponentLife;
+	}
+
+	public void addCheatPower(int cheatPower, boolean current) {
+		if (current) currentCheatPower += cheatPower;
+		else opponentCheatPower += cheatPower;
 	}
 
 	public int getCurrentPower() {
@@ -479,6 +484,12 @@ public class Game {
 
 	public boolean isGameDraw() {
 		return opponentLife == 0 && currentLife == 0;
+	}
+
+	public User getWinner() {
+		if (isGameDraw()) return null;
+		if (isGameWin()) return current;
+		return opponent;
 	}
 
 	public ArrayList<Integer> getCurrentScores() {

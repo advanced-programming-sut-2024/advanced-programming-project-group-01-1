@@ -7,6 +7,7 @@ import server.model.Client;
 import server.model.card.Card;
 import server.model.card.special.spell.Buffer;
 import server.model.game.CardMover;
+import server.model.game.Faction;
 import server.model.game.Game;
 import server.model.game.space.Row;
 import server.model.game.space.Space;
@@ -49,45 +50,48 @@ public class MatchMenuController {
 	}
 
 
-	public static boolean isRowDebuffed(int rowNumber) {
-		return Game.getCurrentGame().getRow(rowNumber).isDebuffed();
+	public static Result isRowDebuffed(Client client, int rowNumber) {
+		if (!isCurrent(client)) rowNumber = 5 - rowNumber;
+		if(client.getIdentity().getCurrentGame().getRow(rowNumber).isDebuffed())
+			return new Result("debuffed", true);
+		return new Result("not debuffed", false);
 	}
 
-	private static void vetoCard(Card card) {
-		new Asker(Game.getCurrentGame().getCurrentDeck(), false, false, true, index -> {
-			Card card1 = Game.getCurrentGame().getCurrentDeck().getCards().get(index);
-			card1.updateSpace(Game.getCurrentGame().getCurrentHand());
+	private static void vetoCard(Game game, Card card) {
+		new Asker(game.getCurrent(), game.getCurrentDeck(), false, false, true, index -> {
+			Card card1 = game.getCurrentDeck().getCards().get(index);
+			card1.updateSpace(game.getCurrentHand());
 		}, false, 0, true);
-		card.updateSpace(Game.getCurrentGame().getCurrentDeck());
+		card.updateSpace(game.getCurrentDeck());
 	}
 
-	public static void handleVeto() {
-		if (!Game.getCurrentGame().getCurrentLeader().isManual()) Game.getCurrentGame().getCurrentLeader().act();
-		final Space hand = Game.getCurrentGame().getCurrentHand();
-		new Asker(hand, false, false, false, index -> {
+	public static void handleVeto(Game game) {
+		if (!game.getCurrentLeader().isManual()) game.getCurrentLeader().act();
+		final Space hand = game.getCurrentHand();
+		new Asker(game.getCurrent(), hand, false, false, false, index -> {
 			if (index != -1) {
-				vetoCard(hand.getCards().get(index));
-				new Asker(hand, false, false, false, index1 -> {
-					if (index1 != -1) vetoCard(hand.getCards().get(index1));
-					Game.getCurrentGame().changeTurn();
-					if (!Game.getCurrentGame().getCurrentLeader().isManual())
-						Game.getCurrentGame().getCurrentLeader().act();
+				vetoCard(game, hand.getCards().get(index));
+				new Asker(game.getCurrent(), hand, false, false, false, index1 -> {
+					if (index1 != -1) vetoCard(game, hand.getCards().get(index1));
+					game.changeTurn();
+					if (!game.getCurrentLeader().isManual())
+						game.getCurrentLeader().act();
 				}, true, index, true);
 			} else {
-				Game.getCurrentGame().changeTurn();
-				if (!Game.getCurrentGame().getCurrentLeader().isManual())
-					Game.getCurrentGame().getCurrentLeader().act();
+				game.changeTurn();
+				if (!game.getCurrentLeader().isManual())
+					game.getCurrentLeader().act();
 			}
 		}, true, 0);
-		final Space hand1 = Game.getCurrentGame().getSpaceById(Game.OPPONENT_HAND);
-		new Asker(hand1, false, false, false, index -> {
+		final Space hand1 = game.getOpponentHand();
+		new Asker(game.getOpponent(), hand1, false, false, false, index -> {
 			if (index != -1) {
-				vetoCard(hand1.getCards().get(index));
-				new Asker(hand1, false, false, false, index1 -> {
-					if (index1 != -1) vetoCard(hand1.getCards().get(index1));
-					Game.getCurrentGame().changeTurn();
+				vetoCard(game, hand1.getCards().get(index));
+				new Asker(game.getOpponent(), hand1, false, false, false, index1 -> {
+					if (index1 != -1) vetoCard(game, hand1.getCards().get(index1));
+					game.changeTurn();
 				}, true, index, true);
-			} else Game.getCurrentGame().changeTurn();
+			} else game.changeTurn();
 		}, true, 0);
 	}
 
@@ -182,6 +186,7 @@ public class MatchMenuController {
 	}
 
 	public static Result placeCard(Client client, int cardNumber, int rowNumber) {
+		if (!isCurrent(client)) return new Result("not your turn", false);
 		try {
 			client.getIdentity().getCurrentGame().placeCard(getHand(client).getCards().get(cardNumber), rowNumber);
 			return new Result("Card placed successfully", true);
@@ -203,12 +208,13 @@ public class MatchMenuController {
 		Leader myLeader = getLeader(client);
 		Leader opponentLeader = client.getIdentity().getCurrentGame().getOpponentLeader();
 		if (opponentLeader == myLeader) opponentLeader = client.getIdentity().getCurrentGame().getCurrentLeader();
-		return new Result(myLeader.isDisable() + "\n" + .isDisable(), true);
+		return new Result(myLeader.isDisable() + "\n" + opponentLeader.isDisable(), true);
 	}
 
 	public static Result useLeaderAbility(Client client) {
+		if (!isCurrent(client)) return new Result("not your turn", false);
 		try {
-			Game.getCurrentGame().useLeaderAbility();
+			client.getIdentity().getCurrentGame().useLeaderAbility();
 			return new Result("Leader ability played successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -216,103 +222,145 @@ public class MatchMenuController {
 	}
 
 	public static Result passedState(Client client) {
-		return new Result(Game.getCurrentGame().hasPassed() + "\n" + Game.getCurrentGame().hasOpponentPassed(), true);
+		boolean hasPassed = client.getIdentity().getCurrentGame().hasPassed();
+		boolean hasOpponentPassed = client.getIdentity().getCurrentGame().hasOpponentPassed();
+		if (!isCurrent(client)) {
+			boolean tmp = hasPassed;
+			hasPassed = hasOpponentPassed;
+			hasOpponentPassed = tmp;
+		}
+		return new Result(hasPassed + "\n" + hasOpponentPassed, true);
 	}
 
 	public static Result showFactionsForGraphic(Client client) {
-		return new Result(Game.getCurrentGame().getCurrentFaction() + "\n" + Game.getCurrentGame().getOpponentFaction(), true);
+		Faction myFaction = client.getIdentity().getCurrentGame().getCurrentFaction();
+		Faction opponentFaction = client.getIdentity().getCurrentGame().getOpponentFaction();
+		if (!isCurrent(client)) {
+			Faction tmp = myFaction;
+			myFaction = opponentFaction;
+			opponentFaction = tmp;
+		}
+		return new Result(myFaction + "\n" + opponentFaction, true);
 	}
 
 
 	public static Result showPlayersLives(Client client) {
-		return new Result("Current: " + Game.getCurrentGame().getCurrentLife() + "\n" + "Opponent: " + Game.getCurrentGame().getOpponentLife(), true);
+		int myLife = client.getIdentity().getCurrentGame().getCurrentLife();
+		int opponentLife = client.getIdentity().getCurrentGame().getOpponentLife();
+		if (!isCurrent(client)) {
+			int tmp = myLife;
+			myLife = opponentLife;
+			opponentLife = tmp;
+		}
+		return new Result("Current: " + myLife + "\n" + "Opponent: " + opponentLife, true);
 	}
 
 	public static Result showHandSize(Client client) {
-		return new Result(String.valueOf(Game.getCurrentGame().getCurrentHand().getCards().size() + " - " + Game.getCurrentGame().getOpponentNumberOfCardsInHand()), true);
+		Space myHand = getHand(client);
+		Space opponentHand = client.getIdentity().getCurrentGame().getOpponentHand();
+		if (myHand == opponentHand) opponentHand = client.getIdentity().getCurrentGame().getCurrentHand();
+		return new Result(myHand.getCards().size() + " - " + opponentHand.getCards().size(), true);
 	}
 
 	public static Result passTurn(Client client) {
-		Game.getCurrentGame().passTurn();
+		if (!isCurrent(client)) return new Result("not your turn", false);
+		client.getIdentity().getCurrentGame().passTurn();
 		return new Result("Turn passed successfully", true);
 	}
 
 	public static Result isAsking(Client client) {
-		if (Asker.isAsking()) return new Result("asking", true);
+		if (Asker.isAsking(client.getIdentity())) return new Result("asking", true);
 		return new Result("not asking", false);
 	}
 
 	public static Result getAskerCards(Client client) {
-		if (!Asker.isAsking()) return new Result("not asking", false);
+		if (!Asker.isAsking(client.getIdentity())) return new Result("not asking", false);
 		StringBuilder cards = new StringBuilder();
-		for (Card card : Asker.getRunning().getCards()) {
+		for (Card card : Asker.getRunning(client.getIdentity()).getCards()) {
 			cards.append(card.getName()).append("\n").append(card.getDescription()).append("\n");
 		}
 		return new Result(cards.toString(), true);
 	}
 
 	public static Result getAskerPtr(Client client) {
-		if (!Asker.isAsking()) return new Result("not asking", false);
-		return new Result(String.valueOf(Asker.getRunning().getPtr()), true);
+		if (!Asker.isAsking(client.getIdentity())) return new Result("not asking", false);
+		return new Result(String.valueOf(Asker.getRunning(client.getIdentity()).getPtr()), true);
 	}
 
 	public static Result isAskerOptional(Client client) {
-		if (!Asker.isAsking()) return new Result("not asking", false);
-		if (Asker.getRunning().isOptional()) return new Result("optional", true);
+		if (!Asker.isAsking(client.getIdentity())) return new Result("not asking", false);
+		if (Asker.getRunning(client.getIdentity()).isOptional()) return new Result("optional", true);
 		return new Result("not optional", false);
 	}
 
 	public static Result selectCard(Client client, int index) {
-		if (Asker.select(index)) return new Result("success", true);
+		if (Asker.select(client.getIdentity(), index)) return new Result("success", true);
 		return new Result("failure", false);
 	}
 
-	public static void endGame() {
-		Appview.setMenu(new MatchFinderMenu());
+	public static Result endGame(Client client) {
+		client.setMenu(new MatchFinderMenu());
+		return new Result("game finished", true);
 	}
 
-	public static boolean isGameOver() {
-		return Game.getCurrentGame().isGameOver();
+	public static Result isGameOver(Client client) {
+		if (client.getIdentity().getCurrentGame().isGameOver())
+			return new Result("game is over", true);
+		return new Result("game isn't over", false);
 	}
 
-	public static boolean isGameWin() {
-		return Game.getCurrentGame().isGameWin();
+	public static Result isGameWin(Client client) {
+		if(client.getIdentity().getCurrentGame().isGameWin() == isCurrent(client))
+			return new Result("win", true);
+		return new Result("lose", false);
 	}
 
-	public static boolean isGameDraw() {
-		return Game.getCurrentGame().isGameDraw();
+	public static Result isGameDraw(Client client) {
+		if (client.getIdentity().getCurrentGame().isGameDraw())
+			return new Result("draw", true);
+		return new Result("not draw", false);
 	}
 
 	public static Result getPowers(Client client) {
-		String powers = Game.getCurrentGame().getCurrentPower() + "\n"
-				+ Game.getCurrentGame().getOpponentPower() + "\n";
-		return new Result(powers, true);
+		int myPower = client.getIdentity().getCurrentGame().getCurrentPower();
+		int opponentPower = client.getIdentity().getCurrentGame().getOpponentPower();
+		if (!isCurrent(client)) {
+			int tmp = myPower;
+			myPower = opponentPower;
+			opponentPower = tmp;
+		}
+		return new Result(myPower + "\n" + opponentPower + "\n", true);
 	}
 
 	public static Result getScores(Client client) {
-		ArrayList<Integer> scores = Game.getCurrentGame().getCurrentScores();
-		ArrayList<Integer> opponentScores = Game.getCurrentGame().getOpponentScores();
-		StringBuilder Result = new StringBuilder(Client client);
-		for (int i = 0; i < scores.size(); i++) {
-			result.append(scores.get(i)).append("\n").append(opponentScores.get(i)).append("\n");
+		ArrayList<Integer> scores = client.getIdentity().getCurrentGame().getCurrentScores();
+		ArrayList<Integer> opponentScores = client.getIdentity().getCurrentGame().getOpponentScores();
+		if (!isCurrent(client)) {
+			ArrayList<Integer> tmp = scores;
+			scores = opponentScores;
+			opponentScores = tmp;
 		}
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < scores.size(); i++)
+			result.append(scores.get(i)).append("\n").append(opponentScores.get(i)).append("\n");
 		return new Result(result.toString(), true);
 	}
 
 	public static Result cheatClearWeather(Client client) {
-		Game.getCurrentGame().getCurrentWeatherSystem().clear(Game.getCurrentGame().getCurrentDiscardPile(), null);
-		Game.getCurrentGame().getOpponentWeatherSystem().clear(Game.getCurrentGame().getOpponentDiscardPile(), null);
+		client.getIdentity().getCurrentGame().getCurrentWeatherSystem().clear(client.getIdentity().getCurrentGame().getCurrentDiscardPile(), null);
+		client.getIdentity().getCurrentGame().getOpponentWeatherSystem().clear(client.getIdentity().getCurrentGame().getOpponentDiscardPile(), null);
 		return new Result("Weather cleared", true);
 	}
 
 	public static Result cheatClearRow(Client client, int rowNumber) {
-		Game.getCurrentGame().getRow(rowNumber).clear(rowNumber < 3 ? Game.getCurrentGame().getCurrentDiscardPile() : Game.getCurrentGame().getOpponentDiscardPile(), null);
+		if (!isCurrent(client)) rowNumber = 5 - rowNumber;
+		client.getIdentity().getCurrentGame().getRow(rowNumber).clear(rowNumber < 3 ? client.getIdentity().getCurrentGame().getCurrentDiscardPile() : client.getIdentity().getCurrentGame().getOpponentDiscardPile(), null);
 		return new Result("Row cleared", true);
 	}
 
 	public static Result cheatDebuffRow(Client client, int rowNumber) {
 		Card card = CardCreator.getCard(rowNumber == 2 ? "Biting Frost" : rowNumber == 1 ? "Impenetrable Fog" : "Torrential Rain");
-		card.setSpace(Game.getCurrentGame().getCurrentDeck());
+		card.setSpace(client.getIdentity().getCurrentGame().getCurrentDeck());
 		try {
 			card.put(-1);
 		} catch (Exception e) {
@@ -322,25 +370,26 @@ public class MatchMenuController {
 	}
 
 	public static Result cheatHeal(Client client) {
-		Game.getCurrentGame().setCurrentLife(2);
+		if (isCurrent(client)) client.getIdentity().getCurrentGame().setCurrentLife(2);
+		else client.getIdentity().getCurrentGame().setOpponentLife(2);
 		return new Result("Recovered Crystal", true);
 	}
 
 	public static Result cheatAddCard(Client client, String cardName) {
 		Card card = CardCreator.getCard(cardName);
 		if (card == null) return new Result("Card not found", false);
-		card.setSpace(Game.getCurrentGame().getCurrentDeck());
-		card.updateSpace(Game.getCurrentGame().getCurrentHand());
+		card.setSpace(getDeck(client));
+		card.updateSpace(getHand(client));
 		return new Result("Card added to hand", true);
 	}
 
 	public static Result cheatMoveFromDeckToHand(Client client) {
-		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1, false, false).move();
+		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1, false, false).move(client.getIdentity());
 		return new Result("Card moved from deck to hand", true);
 	}
 
 	public static Result cheatAddPower(Client client, int power) {
-		Game.getCurrentGame().addCheatPower(power);
+		client.getIdentity().getCurrentGame().addCheatPower(power, isCurrent(client));
 		return new Result("Power added", true);
 	}
 }

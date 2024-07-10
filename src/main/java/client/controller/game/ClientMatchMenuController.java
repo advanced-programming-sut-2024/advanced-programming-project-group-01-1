@@ -1,23 +1,10 @@
-package controller.game;
+package client.controller.game;
 
 import client.main.TCPClient;
 import client.view.ClientAppview;
 import client.view.game.prematch.ClientMatchFinderMenu;
-import main.CardCreator;
 import message.GameMenusCommands;
 import message.Result;
-import model.Asker;
-import model.Result;
-import model.card.Card;
-import model.card.special.spell.Buffer;
-import model.game.CardMover;
-import model.game.Game;
-import model.game.space.Space;
-import server.model.game.Game;
-import view.Appview;
-import view.game.prematch.MatchFinderMenu;
-
-import java.util.ArrayList;
 
 public class ClientMatchMenuController {
 
