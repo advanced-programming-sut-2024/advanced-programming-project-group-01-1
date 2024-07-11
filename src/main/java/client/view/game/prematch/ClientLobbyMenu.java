@@ -452,7 +452,9 @@ public class ClientLobbyMenu extends Application implements Menuable {
 	public Result run(String input) {
 		Matcher matcher;
 		Result result;
-		if (GameMenusCommands.SHOW_FACTIONS.getMatcher(input) != null)
+		if (GameMenusCommands.READY.getMatcher(input) != null)
+			result = ClientPreMatchMenusController.getReady();
+		else if (GameMenusCommands.SHOW_FACTIONS.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.showFactions();
 		else if ((matcher = GameMenusCommands.SELECT_FACTION.getMatcher(input)) != null)
 			result = selectFaction(matcher);
@@ -487,7 +489,7 @@ public class ClientLobbyMenu extends Application implements Menuable {
 		else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(input) != null)
 			result = ClientPreMatchMenusController.exit();
 		else result = new Result("Invalid command", false);
-		Platform.runLater(() -> {updateScreen();});
+		//Platform.runLater(this::updateScreen);
 		return result;
 	}
 
