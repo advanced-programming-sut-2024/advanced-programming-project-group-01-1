@@ -48,9 +48,6 @@ public class Bracket {
 					Thread.sleep(4000);
 				} catch (InterruptedException e) {}
 			}
-			for (int i = 0; i < 8; i++) {
-				placement[i] = seed[35 - i];
-			}
 			endBracket();
 		});
 		matchThread.start();
@@ -107,22 +104,23 @@ public class Bracket {
 		}
 	}
 
-	private Result endBracket() {
+	private void endBracket() {
 		matchThread.interrupt();
-		String placementString = "";
-		for (int i = 1; i <= 4; i++){
-			placementString += i + ". " + placement[i - 1].getUsername() + "\n";
+		for (int i = 0; i < 8; i++) {
+			placement[i] = seed[35 - i];
 		}
-		for (int i = 5; i <= 7; i += 2) {
-			placementString += i + ". " + placement[i - 1].getUsername() + "\n";
-			placementString += i + ". " + placement[i].getUsername() + "\n";
-		}
-		return new Result(placementString, true);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
+		if (seed[35] != null) {
+			result.append("Placements:").append("\n");
+			for (int i = 0; i < 8; i++) {
+				result.append(placement[i].getUsername()).append("\n");
+			}
+			return result.toString();
+		}
 		for (int i = 0; i < 14; i++) {
 			if (matches[i] != null) {
 				result.append(matches[i].toString());

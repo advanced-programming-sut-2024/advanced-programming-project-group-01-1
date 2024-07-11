@@ -10,10 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import message.GameMenusCommands;
 import message.Result;
+import server.controller.game.TournamentMenuController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +27,7 @@ public class ClientTournamentMenu extends Application implements Menuable {
 	@FXML
 	private Pane basePane;
 
+	private Pane[] matches = new Pane[14];
 	private Label[] seedLabels = new Label[28], seedScores = new Label[30];
 
 	private int counter = 0;
@@ -31,6 +36,7 @@ public class ClientTournamentMenu extends Application implements Menuable {
 	public void initialize() {
 		for (int i = 5; i < 5 + 14; i++) {
 			Pane match = (Pane) basePane.getChildren().get(i);
+			matches[i - 5] = match;
 			seedLabels[(i - 5) * 2] = (Label) match.getChildren().get(0);
 			seedLabels[(i - 5) * 2 + 1] = (Label) match.getChildren().get(1);
 			seedScores[(i - 5) * 2] = (Label) match.getChildren().get(2);
@@ -89,16 +95,76 @@ public class ClientTournamentMenu extends Application implements Menuable {
 			System.out.println("Couldn't get tournament info");
 			return;
 		}
-		System.out.println(info);
 		String[] lines = info.getMessage().split("\n");
+		if (lines[0].equals("Placements:")) {
+			showEndScreen(lines);
+			return;
+		}
 		for (int i = 0; i < 28; i++) {
 			String[] parts = lines[i].equals(" ") ? new String[2] : lines[i].split(" ");
 			seedLabels[i].setText(parts[0]);
 			seedScores[i].setText(parts[1] == null || parts[1].equals("-1") ? "" : parts[1]);
 		}
+		for (int i = 0; i < 28; i += 2) {
+			if (seedScores[i].getText().equals("2") && !seedScores[i + 1].getText().equals("2")) {
+				seedScores[i].setStyle("-fx-font-weight: bold;");
+			} else if (seedScores[i + 1].getText().equals("2") && !seedScores[i].getText().equals("2")) {
+				seedScores[i + 1].setStyle("-fx-font-weight: bold;");
+			} else if (!seedScores[i].getText().equals("") && !seedScores[i + 1].getText().equals("")) {
+				matches[i / 2].setStyle("-fx-background-color: lightgreen");
+				matches[i / 2].setOnMouseClicked(event -> {
+					System.out.println(TournamentMenuController.getUsername());
+					// TODO: add stream
+				});
+			}
+		}
+		for (int i = 0; i < 28; i++) {
+			if (seedScores[i].equals("") || seedScores[i].equals("2")) {
+				matches[i / 2].setStyle("");
+				matches[i / 2].setOnMouseClicked(mouseEvent -> {});
+			}
+		}
+	}
+
+	private void showEndScreen(String[] lines) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/TournamentEndingScreen.fxml"));
+		Pane pane = null;
+		try {
+			pane = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		((Pane) ClientAppview.getStage().getScene().getRoot()).getChildren().add(pane);
+		String username = ClientTournamentMenuController.getUsername();
+		for (int i = 0; i < 4; i++) {
+			HBox hBox = (HBox) pane.getChildren().get(i);
+			Label label = new Label(lines[i + 1]);
+			label.setStyle("-fx-font-size: 20; " + (i == 0 ? "-fx-text-fill: gold" : i == 1 ? "-fx-text-fill: silver" : i == 2 ? "-fx-text-fill: #8B4513" : ""));
+			((VBox) hBox.getChildren().get(1)).getChildren().add(label);
+			if (username.equals(lines[i + 1])) hBox.setStyle(" -fx-background-color: rgba(57,227,61,0.5)");
+		}
+		for (int i = 4; i < 8; i += 2) {
+			HBox hBox = (HBox) pane.getChildren().get(4 + (4 - i) / 2);
+			Label label = new Label(lines[i + 1]);
+			label.setStyle("-fx-font-size: 20");
+			((VBox) hBox.getChildren().get(1)).getChildren().add(label);
+			label = new Label(lines[i + 2]);
+			label.setStyle("-fx-font-size: 20");
+			((VBox) hBox.getChildren().get(1)).getChildren().add(label);
+			if (username.equals(lines[i + 1]) || username.equals(lines[i + 2]))
+				hBox.setStyle(" -fx-background-color: rgba(57,227,61,0.5)");
+		}
+		ClientTournamentMenuController.stopBracketThread();
+		return;
+
 	}
 
 	public Result exit() {
 		return ClientTournamentMenuController.exit();
 	}
+
+	public void endBracket(MouseEvent mouseEvent) {
+		ClientTournamentMenuController.endBracket();
+	}
+
 }

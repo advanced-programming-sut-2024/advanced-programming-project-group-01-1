@@ -2,6 +2,7 @@ package client.controller.game;
 
 import client.main.TCPClient;
 import client.view.ClientAppview;
+import client.view.ClientMainMenu;
 import client.view.game.ClientTournamentMenu;
 import client.view.game.prematch.ClientLobbyMenu;
 import client.view.game.prematch.ClientMatchFinderMenu;
@@ -50,7 +51,7 @@ public class ClientTournamentMenuController {
 					break;
 				}
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 				}
 			}
@@ -68,4 +69,19 @@ public class ClientTournamentMenuController {
 		return TCPClient.send(command);
 	}
 
+	public static Result endBracket() {
+		stopBracketThread();
+		String command = GameMenusCommands.END_TOURNAMENT.getPattern();
+		Result result = TCPClient.send(command);
+		if (!result.isSuccessful()) {
+			System.out.println("Couldn't end tournament");
+		}
+		ClientAppview.setMenu(new ClientMainMenu());
+		return result;
+	}
+
+	public static String getUsername() {
+		String command = GameMenusCommands.GET_USERNAMES.getPattern();
+		return TCPClient.send(command).getMessage();
+	}
 }

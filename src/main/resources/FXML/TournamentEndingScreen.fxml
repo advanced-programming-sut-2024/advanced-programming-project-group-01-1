@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="basePane" onMouseClicked="#endBracket" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: black" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.game.ClientTournamentMenu">
+   <children>
+      <VBox alignment="CENTER" layoutX="487.0" layoutY="174.0" prefHeight="512.0" prefWidth="400.0">
+         <children>
+			 <HBox alignment="CENTER" prefHeight="064.0" prefWidth="200.0">
+				 <children>
+					 <Label alignment="CENTER" prefHeight="128.0" prefWidth="120.0" style="-fx-font-size: 18;" text="1st" textFill="gold" />
+					 <VBox alignment="CENTER" prefHeight="128.0" prefWidth="280.0" />
+				 </children>
+			 </HBox>
+			 <HBox alignment="CENTER" prefHeight="064.0" prefWidth="200.0">
+				 <children>
+					 <Label alignment="CENTER" prefHeight="128.0" prefWidth="120.0" style="-fx-font-size: 18" text="2nd" textFill="silver" />
+					 <VBox alignment="CENTER" prefHeight="128.0" prefWidth="280.0" />
+				 </children>
+			 </HBox>
+			 <HBox alignment="CENTER" prefHeight="064.0" prefWidth="200.0">
+				 <children>
+					 <Label alignment="CENTER" prefHeight="128.0" prefWidth="120.0" style="-fx-font-size: 18" text="3rd" textFill="#8B4513" />
+					 <VBox alignment="CENTER" prefHeight="128.0" prefWidth="280.0" />
+				 </children>
+			 </HBox>
+			 <HBox alignment="CENTER" prefHeight="064.0" prefWidth="200.0">
+				 <children>
+					 <Label alignment="CENTER" prefHeight="128.0" prefWidth="120.0" style="-fx-font-size: 18" text="4th" textFill="white" />
+					 <VBox alignment="CENTER" prefHeight="128.0" prefWidth="280.0" />
+				 </children>
+			 </HBox>
+			 <HBox alignment="CENTER" prefHeight="128.0" prefWidth="200.0">
+				 <children>
+					 <Label alignment="CENTER" prefHeight="128.0" prefWidth="120.0" style="-fx-font-size: 18" text="5th-6th" textFill="white" />
+					 <VBox alignment="CENTER" prefHeight="128.0" prefWidth="280.0" />
+				 </children>
+			 </HBox>
+			 <HBox alignment="CENTER" prefHeight="128.0" prefWidth="200.0">
+				 <children>
+					 <Label alignment="CENTER" prefHeight="128.0" prefWidth="120.0" style="-fx-font-size: 18" text="7th-8th" textFill="white" />
+					 <VBox alignment="CENTER" prefHeight="128.0" prefWidth="280.0" />
+				 </children>
+			 </HBox>
+         </children></VBox>
+	   <Label id="title-text" alignment="CENTER" layoutX="511.0" layoutY="35.0" prefHeight="83.0" prefWidth="345.0" style="-fx-font-size: 24" stylesheets="@../CSS/textstyle.css" text="tournament is over" textAlignment="CENTER" />
+	   <Label id="title-text" alignment="CENTER" layoutX="577.0" layoutY="671.0" prefHeight="83.0" prefWidth="214.0" style="-fx-font-size: 24" stylesheets="@../CSS/textstyle.css" text="click to continue" textAlignment="CENTER" />
+   </children>
+</Pane>

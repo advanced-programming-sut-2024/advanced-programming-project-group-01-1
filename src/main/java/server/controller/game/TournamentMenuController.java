@@ -1,11 +1,16 @@
 package server.controller.game;
 
+import client.main.TCPClient;
 import message.Result;
+import message.UserMenusCommands;
 import server.model.Client;
 import server.model.tournament.Bracket;
 import server.model.user.User;
+import server.view.MainMenu;
 import server.view.game.prematch.LobbyMenu;
 import server.view.game.prematch.MatchFinderMenu;
+
+import java.util.Objects;
 
 public class TournamentMenuController {
 
@@ -21,6 +26,8 @@ public class TournamentMenuController {
 		Client client1 = Client.getClient(player1), client2 = Client.getClient(player2);
 		client1.getIdentity().setChallengedUser(player2);
 		client2.getIdentity().setChallengedUser(player1);
+		client1.setInGame(true);
+		client2.setInGame(true);
 		client1.setMenu(new LobbyMenu());
 		client2.setMenu(new LobbyMenu());
 		return new Result("Match started", true);
@@ -44,6 +51,17 @@ public class TournamentMenuController {
 	public static Result exit(Client client) {
 		client.setMenu(new MatchFinderMenu());
 		return new Result("Entering match finder menu", true);
+	}
+
+	public static Result endTournament(Client client) {
+		client.getIdentity().setCurrentBracket(null);
+		client.setMenu(new MainMenu());
+		return new Result("Tournament ended", true);
+	}
+
+	public static String getUsername() {
+		String command = UserMenusCommands.GET_USERNAME.getPattern();
+		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
 	}
 
 }

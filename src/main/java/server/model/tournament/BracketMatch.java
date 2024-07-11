@@ -33,7 +33,7 @@ public class BracketMatch {
 			while (true) {
 				while (!isPlayer1Ready || !isPlayer2Ready) {
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 					}
 				}
@@ -43,7 +43,7 @@ public class BracketMatch {
 				}
 				while (!game.isGameOver()) {
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 					}
 				}
