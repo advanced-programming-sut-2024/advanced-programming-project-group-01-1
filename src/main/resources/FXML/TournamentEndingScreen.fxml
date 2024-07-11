@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="basePane" onMouseClicked="#endBracket" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: black" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.game.ClientTournamentMenu">
+<Pane fx:id="basePane" onMouseClicked="#endBracket" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: black" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.game.ClientTournamentEndingScreenController">
    <children>
       <VBox alignment="CENTER" layoutX="487.0" layoutY="174.0" prefHeight="512.0" prefWidth="400.0">
          <children>

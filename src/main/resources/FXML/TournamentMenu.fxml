@@ -104,37 +104,37 @@
 			<Label layoutX="170" layoutY="33" prefHeight="29" prefWidth="29" alignment="CENTER" style="-fx-background-color: #a47934" />
 		</Pane>
 
-		<Line endX="0290.0" endY="115.0" startX="0270.0" startY="115.0" strokeWidth="2.0" />
-		<Line endX="0290.0" endY="149.5" startX="0290.0" startY="115.0" strokeWidth="2.0" />
-		<Line endX="0350.0" endY="149.5" startX="0290.0" startY="149.5" strokeWidth="2.0" />
-		<Line endX="0290.0" endY="215.0" startX="0270.0" startY="215.0" strokeWidth="2.0" />
-		<Line endX="0290.0" endY="180.5" startX="0290.0" startY="215.0" strokeWidth="2.0" />
-		<Line endX="0350.0" endY="180.5" startX="0290.0" startY="180.5" strokeWidth="2.0" />
-		<Line endX="0290.0" endY="315.0" startX="0270.0" startY="315.0" strokeWidth="2.0" />
-		<Line endX="0290.0" endY="349.5" startX="0290.0" startY="315.0" strokeWidth="2.0" />
-		<Line endX="0350.0" endY="349.5" startX="0290.0" startY="349.5" strokeWidth="2.0" />
-		<Line endX="0290.0" endY="415.0" startX="0270.0" startY="415.0" strokeWidth="2.0" />
-		<Line endX="0290.0" endY="380.5" startX="0290.0" startY="415.0" strokeWidth="2.0" />
-		<Line endX="0350.0" endY="380.5" startX="0290.0" startY="380.5" strokeWidth="2.0" />
-		<Line endX="0540.0" endY="165.0" startX="0520.0" startY="165.0" strokeWidth="2.0" />
-		<Line endX="0540.0" endY="249.5" startX="0540.0" startY="165.0" strokeWidth="2.0" />
-		<Line endX="0700.0" endY="249.5" startX="0540.0" startY="249.5" strokeWidth="2.0" />
-		<Line endX="0540.0" endY="365.0" startX="0520.0" startY="365.0" strokeWidth="2.0" />
-		<Line endX="0540.0" endY="280.5" startX="0540.0" startY="365.0" strokeWidth="2.0" />
-		<Line endX="0700.0" endY="280.5" startX="0540.0" startY="280.5" strokeWidth="2.0" />
-		<Line endX="0540.0" endY="557.0" startX="0520.0" startY="557.0" strokeWidth="2.0" />
-		<Line endX="0540.0" endY="591.5" startX="0540.0" startY="557.0" strokeWidth="2.0" />
-		<Line endX="0600.0" endY="591.5" startX="0540.0" startY="591.5" strokeWidth="2.0" />
-		<Line endX="0540.0" endY="657.0" startX="0520.0" startY="657.0" strokeWidth="2.0" />
-		<Line endX="0540.0" endY="622.5" startX="0540.0" startY="657.0" strokeWidth="2.0" />
-		<Line endX="0600.0" endY="622.5" startX="0540.0" startY="622.5" strokeWidth="2.0" />
-		<Line endX="1060.0" endY="590.0" startX="1040.0" startY="590.0" strokeWidth="2.0" />
-		<Line endX="1060.0" endY="296.5" startX="1060.0" startY="590.0" strokeWidth="2.0" />
-		<Line endX="1100.0" endY="296.5" startX="1060.0" startY="296.5" strokeWidth="2.0" />
+		<Line endX="0290.0" endY="115.0" startX="0271.0" startY="115.0" strokeWidth="2.0" />
+		<Line endX="0290.0" endY="149.5" startX="0291.0" startY="115.0" strokeWidth="2.0" />
+		<Line endX="0350.0" endY="149.5" startX="0291.0" startY="149.5" strokeWidth="2.0" />
+		<Line endX="0290.0" endY="215.0" startX="0271.0" startY="215.0" strokeWidth="2.0" />
+		<Line endX="0290.0" endY="180.5" startX="0291.0" startY="215.0" strokeWidth="2.0" />
+		<Line endX="0350.0" endY="180.5" startX="0291.0" startY="180.5" strokeWidth="2.0" />
+		<Line endX="0290.0" endY="315.0" startX="0271.0" startY="315.0" strokeWidth="2.0" />
+		<Line endX="0290.0" endY="349.5" startX="0291.0" startY="315.0" strokeWidth="2.0" />
+		<Line endX="0350.0" endY="349.5" startX="0291.0" startY="349.5" strokeWidth="2.0" />
+		<Line endX="0290.0" endY="415.0" startX="0271.0" startY="415.0" strokeWidth="2.0" />
+		<Line endX="0290.0" endY="380.5" startX="0291.0" startY="415.0" strokeWidth="2.0" />
+		<Line endX="0350.0" endY="380.5" startX="0291.0" startY="380.5" strokeWidth="2.0" />
+		<Line endX="0540.0" endY="165.0" startX="0521.0" startY="165.0" strokeWidth="2.0" />
+		<Line endX="0540.0" endY="249.5" startX="0541.0" startY="165.0" strokeWidth="2.0" />
+		<Line endX="0700.0" endY="249.5" startX="0541.0" startY="249.5" strokeWidth="2.0" />
+		<Line endX="0540.0" endY="365.0" startX="0521.0" startY="365.0" strokeWidth="2.0" />
+		<Line endX="0540.0" endY="280.5" startX="0541.0" startY="365.0" strokeWidth="2.0" />
+		<Line endX="0700.0" endY="280.5" startX="0541.0" startY="280.5" strokeWidth="2.0" />
+		<Line endX="0540.0" endY="557.0" startX="0521.0" startY="557.0" strokeWidth="2.0" />
+		<Line endX="0540.0" endY="591.5" startX="0541.0" startY="557.0" strokeWidth="2.0" />
+		<Line endX="0600.0" endY="591.5" startX="0541.0" startY="591.5" strokeWidth="2.0" />
+		<Line endX="0540.0" endY="657.0" startX="0521.0" startY="657.0" strokeWidth="2.0" />
+		<Line endX="0540.0" endY="622.5" startX="0541.0" startY="657.0" strokeWidth="2.0" />
+		<Line endX="0600.0" endY="622.5" startX="0541.0" startY="622.5" strokeWidth="2.0" />
+		<Line endX="1060.0" endY="590.0" startX="1041.0" startY="590.0" strokeWidth="2.0" />
+		<Line endX="1060.0" endY="296.5" startX="1061.0" startY="590.0" strokeWidth="2.0" />
+		<Line endX="1100.0" endY="296.5" startX="1061.0" startY="296.5" strokeWidth="2.0" />
 
-		<Line endX="0350.0" endY="573.0" startX="0270.0" startY="573.0" strokeWidth="2.0" />
-		<Line endX="0350.0" endY="673.0" startX="0270.0" startY="673.0" strokeWidth="2.0" />
-		<Line endX="0870.0" endY="607.0" startX="0770.0" startY="607.0" strokeWidth="2.0" />
-		<Line endX="1100.0" endY="265.0" startX="0870.0" startY="265.0" strokeWidth="2.0" />
+		<Line endX="0350.0" endY="573.0" startX="0271.0" startY="573.0" strokeWidth="2.0" />
+		<Line endX="0350.0" endY="673.0" startX="0271.0" startY="673.0" strokeWidth="2.0" />
+		<Line endX="0870.0" endY="607.0" startX="0771.0" startY="607.0" strokeWidth="2.0" />
+		<Line endX="1100.0" endY="265.0" startX="0871.0" startY="265.0" strokeWidth="2.0" />
 	</children>
 </Pane>

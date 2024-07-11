@@ -11,7 +11,7 @@ public class Bracket {
 
 	public static int[] opponent = new int[37];
 	public static int[][] nextSeed = {{8, 12}, {9, 13}, {10, 14}, {11, 15}, {20, 18}, {21, 16}, {17, 28}, {19, 29},
-			{22, 30}, {23, 31}, {26, 24}, {25, 32}, {27, 34}, {35, 34}};
+			{22, 30}, {23, 31}, {26, 24}, {25, 32}, {27, 33}, {35, 34}};
 
 	static {
 		for (int i = 0; i < 28; i++) opponent[i] = i ^ 1;
@@ -115,6 +115,7 @@ public class Bracket {
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		if (seed[35] != null) {
+			endBracket();
 			result.append("Placements:").append("\n");
 			for (int i = 0; i < 8; i++) {
 				result.append(placement[i].getUsername()).append("\n");

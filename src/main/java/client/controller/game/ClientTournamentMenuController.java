@@ -31,6 +31,7 @@ public class ClientTournamentMenuController {
 	}
 
 	public static void stopBracketThread() {
+		if (bracketThread == null) return;
 		bracketThread.interrupt();
 		bracketThread = null;
 	}

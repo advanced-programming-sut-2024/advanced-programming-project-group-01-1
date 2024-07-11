@@ -96,6 +96,7 @@ public class ClientTournamentMenu extends Application implements Menuable {
 			return;
 		}
 		String[] lines = info.getMessage().split("\n");
+		System.out.println(info);
 		if (lines[0].equals("Placements:")) {
 			showEndScreen(lines);
 			return;
@@ -107,20 +108,20 @@ public class ClientTournamentMenu extends Application implements Menuable {
 		}
 		for (int i = 0; i < 28; i += 2) {
 			if (seedScores[i].getText().equals("2") && !seedScores[i + 1].getText().equals("2")) {
-				seedScores[i].setStyle("-fx-font-weight: bold;");
+				seedScores[i].setStyle("-fx-background-color: lightgreen;");
 			} else if (seedScores[i + 1].getText().equals("2") && !seedScores[i].getText().equals("2")) {
-				seedScores[i + 1].setStyle("-fx-font-weight: bold;");
+				seedScores[i + 1].setStyle("-fx-background-color: lightgreen;");
 			} else if (!seedScores[i].getText().equals("") && !seedScores[i + 1].getText().equals("")) {
 				matches[i / 2].setStyle("-fx-background-color: lightgreen");
 				matches[i / 2].setOnMouseClicked(event -> {
-					System.out.println(TournamentMenuController.getUsername());
+					System.out.println(ClientTournamentMenuController.getUsername());
 					// TODO: add stream
 				});
 			}
 		}
 		for (int i = 0; i < 28; i++) {
-			if (seedScores[i].equals("") || seedScores[i].equals("2")) {
-				matches[i / 2].setStyle("");
+			if (seedScores[i].getText().equals("") || seedScores[i].getText().equals("2")) {
+				matches[i / 2].setStyle("-fx-background-color: black");
 				matches[i / 2].setOnMouseClicked(mouseEvent -> {});
 			}
 		}
@@ -136,35 +137,38 @@ public class ClientTournamentMenu extends Application implements Menuable {
 		}
 		((Pane) ClientAppview.getStage().getScene().getRoot()).getChildren().add(pane);
 		String username = ClientTournamentMenuController.getUsername();
+		System.out.println(username);
 		for (int i = 0; i < 4; i++) {
-			HBox hBox = (HBox) pane.getChildren().get(i);
+			HBox hBox = (HBox) ((VBox) pane.getChildren().get(0)).getChildren().get(i);
 			Label label = new Label(lines[i + 1]);
-			label.setStyle("-fx-font-size: 20; " + (i == 0 ? "-fx-text-fill: gold" : i == 1 ? "-fx-text-fill: silver" : i == 2 ? "-fx-text-fill: #8B4513" : ""));
+			label.setStyle("-fx-font-size: 20; " + (i == 0 ? "-fx-text-fill: gold" : i == 1 ? "-fx-text-fill: silver" : i == 2 ? "-fx-text-fill: #8B4513" : "-fx-text-fill: white"));
 			((VBox) hBox.getChildren().get(1)).getChildren().add(label);
-			if (username.equals(lines[i + 1])) hBox.setStyle(" -fx-background-color: rgba(57,227,61,0.5)");
+			if (username.equals(lines[i + 1]) || username.equals(lines[i + 2])) {
+				label.setStyle(label.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
+				Label rank = (Label) hBox.getChildren().get(0);
+				rank.setStyle(rank.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
+			}
 		}
 		for (int i = 4; i < 8; i += 2) {
-			HBox hBox = (HBox) pane.getChildren().get(4 + (4 - i) / 2);
-			Label label = new Label(lines[i + 1]);
-			label.setStyle("-fx-font-size: 20");
-			((VBox) hBox.getChildren().get(1)).getChildren().add(label);
-			label = new Label(lines[i + 2]);
-			label.setStyle("-fx-font-size: 20");
-			((VBox) hBox.getChildren().get(1)).getChildren().add(label);
-			if (username.equals(lines[i + 1]) || username.equals(lines[i + 2]))
-				hBox.setStyle(" -fx-background-color: rgba(57,227,61,0.5)");
+			HBox hBox = (HBox) ((VBox) pane.getChildren().get(0)).getChildren().get(4 + (i - 4) / 2);
+			Label label1 = new Label(lines[i + 1]);
+			label1.setStyle("-fx-font-size: 20; -fx-text-fill: white");
+			((VBox) hBox.getChildren().get(1)).getChildren().add(label1);
+			Label label2 = new Label(lines[i + 2]);
+			label2.setStyle("-fx-font-size: 20; -fx-text-fill: white");
+			((VBox) hBox.getChildren().get(1)).getChildren().add(label2);
+			if (username.equals(lines[i + 1]) || username.equals(lines[i + 2])) {
+				label1.setStyle(label1.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
+				label2.setStyle(label2.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
+				Label rank = (Label) hBox.getChildren().get(0);
+				rank.setStyle(rank.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
+			}
 		}
 		ClientTournamentMenuController.stopBracketThread();
-		return;
-
 	}
 
 	public Result exit() {
 		return ClientTournamentMenuController.exit();
-	}
-
-	public void endBracket(MouseEvent mouseEvent) {
-		ClientTournamentMenuController.endBracket();
 	}
 
 }

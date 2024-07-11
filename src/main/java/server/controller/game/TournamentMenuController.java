@@ -59,9 +59,8 @@ public class TournamentMenuController {
 		return new Result("Tournament ended", true);
 	}
 
-	public static String getUsername() {
-		String command = UserMenusCommands.GET_USERNAME.getPattern();
-		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
+	public static Result getUsername(Client client) {
+		return new Result(client.getIdentity().getUsername(), true);
 	}
 
 }
