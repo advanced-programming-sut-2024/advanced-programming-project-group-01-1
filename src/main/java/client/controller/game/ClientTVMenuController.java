@@ -18,6 +18,7 @@ public class ClientTVMenuController {
         String command = GameMenusCommands.SPECTATE.getPattern();
         command = command.replace("(?<username1>.+)", username1);
         command = command.replace("(?<username2>.+)", username2);
+        System.out.println(command);
         Result result = TCPClient.send(command);
         if (result.isSuccessful()) {
             ClientAppview.setMenu(new ClientStreamMenu());
