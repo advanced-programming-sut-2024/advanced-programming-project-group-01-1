@@ -42,6 +42,7 @@ public class Game {
 	int currentCheatPower = 0, opponentCheatPower = 0;
 	final ArrayList<Move> moves = new ArrayList<>();
 	final ArrayList<String> chatMessages = new ArrayList<>();
+	final ArrayList<String> chatMessagesForSpectator = new ArrayList<>();
 	Thread currentBomb, opponentBomb;
 
 	private Game(User player1, User player2) {
@@ -582,6 +583,14 @@ public class Game {
 
 	public ArrayList<String> getChatMessages(){
 		return chatMessages;
+	}
+
+	public void addMessageForSpectator(String message) {
+		chatMessagesForSpectator.add(message);
+	}
+
+	public ArrayList<String> getChatMessagesForSpectator() {
+		return chatMessagesForSpectator;
 	}
 
 	@Override

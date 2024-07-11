@@ -146,4 +146,8 @@ public class ClientStreamMenu extends ClientMatchMenu {
     public void back(MouseEvent mouseEvent) {
         ClientMatchMenuController.back();
     }
+
+    public void reaction(MouseEvent mouseEvent) {
+        return;
+    }
 }

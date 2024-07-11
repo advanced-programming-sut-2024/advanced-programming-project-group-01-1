@@ -470,7 +470,10 @@ public class MatchMenuController {
 	}
 
 	public static Result sendMessage(Client client, String message) {
-		if (!client.isInGame()) return new Result("you are not playing", false);
+		if (!client.isInGame()) {
+			client.getGame().addMessageForSpectator(message);
+			return new Result("message send successfully", true);
+		}
 		client.getIdentity().getCurrentGame().addMessage(message);
 		return new Result("message send successfully", true);
 	}
@@ -482,7 +485,12 @@ public class MatchMenuController {
 	}
 
 	public static Result getChats(Client client) {
-		ArrayList<String> chats = client.getGame().getChatMessages();
+		ArrayList<String> chats;
+		if (!client.isInGame()) {
+			chats = client.getGame().getChatMessagesForSpectator();
+		} else {
+			chats = client.getGame().getChatMessages();
+		}
 		StringBuilder result = new StringBuilder();
 		for (String chat : chats) {
 			result.append(chat).append("\n####################\n");
