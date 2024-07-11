@@ -24,7 +24,7 @@ public class TournamentMenu implements Menuable {
 		else if (GameMenusCommands.GET_USERNAMES.getMatcher(command) != null)
 			result = TournamentMenuController.getUsername(client);
 		else if ((matcher = GameMenusCommands.SPECTATE.getMatcher(command)) != null)
-			spectate(client, matcher);
+			result = spectate(client, matcher);
 		else if ( GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(command) != null)
 			result = TournamentMenuController.exit(client);
 		else if (GameMenusCommands.END_TOURNAMENT.getMatcher(command) != null)
