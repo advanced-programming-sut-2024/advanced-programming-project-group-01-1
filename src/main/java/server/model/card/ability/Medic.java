@@ -4,6 +4,7 @@ import server.model.Asker;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 import server.model.game.Game;
+import server.model.game.Move;
 import server.model.game.space.Space;
 
 public enum Medic implements Ability {

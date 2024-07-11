@@ -3,6 +3,7 @@ package server.model.card.special.spell;
 import server.model.card.Card;
 import server.model.card.ability.Ability;
 import server.model.game.Game;
+import server.model.game.Move;
 import server.model.game.space.Row;
 import server.model.game.space.Space;
 
@@ -30,6 +31,8 @@ public class Buffer extends Spell {
 		Row row = this.game.getRow(rowNumber);
 		if (row.getBuffer() != null) throw new Exception("Buffer already exists in this row");
 		this.updateSpace(row);
+		game.getMoves().add(new Move(game.getCurrent(), rowNumber + "\n" + this +
+				"\nunique code: " + this.toSuperString()));
 		this.ability.act(this);
 	}
 

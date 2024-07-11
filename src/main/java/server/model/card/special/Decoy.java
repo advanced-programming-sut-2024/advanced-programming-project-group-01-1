@@ -4,6 +4,7 @@ import server.model.Asker;
 import server.model.card.Card;
 import server.model.card.unit.Unit;
 import server.model.game.Game;
+import server.model.game.Move;
 import server.model.game.space.Row;
 
 public class Decoy extends Special {
@@ -29,6 +30,8 @@ public class Decoy extends Special {
 			decoy.updateSpace(row);
 			this.game.changeTurn();
 		}, false, 0);
+		game.getMoves().add(new Move(game.getCurrent(), rowNumber + "\n" + this +
+				"\nunique code: " + this.toSuperString()));
 		this.game.changeTurn();
 	}
 

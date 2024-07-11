@@ -207,7 +207,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void updateScreen() {
-		System.out.println("khob kir");
 		removeCards();
 		updateHand();
 		updateRows();
@@ -216,7 +215,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 		updateDecks();
 		updateLeader();
 		updateInfo();
-		System.out.println("nemishe ke");
 		if (ClientMatchMenuController.isAsking().isSuccessful()) {
 			String[] cards = ClientMatchMenuController.getAskerCards().getMessage().split("\n");
 			int ptr = Integer.parseInt(ClientMatchMenuController.getAskerPtr().getMessage());
@@ -613,7 +611,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 			}
 		} else if (card.getType().equals("Decoy")) {
 			for (int i = 0; i < 3; i++) {
-				if (rowPanes[i].getChildren().size() > 1 || (rowPanes[i].getChildren().isEmpty() && rowPanes[i].getChildren().get(0) instanceof SmallUnit)) {
+				if (rowPanes[i].getChildren().size() > 1 || (!rowPanes[i].getChildren().isEmpty() && rowPanes[i].getChildren().get(0) instanceof SmallUnit)) {
 					panes.add(rowPanes[i]);
 				}
 			}
@@ -758,6 +756,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 			for (int i = 1; i < cardsInfo.length; i++) cardInfo.append(cardsInfo[i]).append("\n");
 		}
 		SmallCard card = getSmallCard(cardInfo.toString());
+		System.out.println(card);
 		if (card.getType().equals("leader")) {
 			//TODO: fix this
 			updateScreen();

@@ -3,6 +3,7 @@ package server.model.card.special.spell;
 import server.model.card.Card;
 import server.model.card.ability.Debuffer;
 import server.model.game.Game;
+import server.model.game.Move;
 
 public class Weather extends Spell {
 
@@ -23,6 +24,8 @@ public class Weather extends Spell {
 	public void put(int rowNumber) throws Exception {
 		if (rowNumber != -1) throw new Exception("Weather can only be put in weather system");
 		this.updateSpace(this.game.getCurrentWeatherSystem());
+		game.getMoves().add(new Move(game.getCurrent(), rowNumber + "\n" + this +
+				"\nunique code: " + this.toSuperString()));
 		this.ability.act(this);
 	}
 

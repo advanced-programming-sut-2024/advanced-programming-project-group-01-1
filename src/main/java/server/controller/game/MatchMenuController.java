@@ -203,8 +203,6 @@ public class MatchMenuController {
 			Game clientGame = client.getIdentity().getCurrentGame();
 			Card card = getHand(client).getCards().get(cardNumber);
 			clientGame.placeCard(card, rowNumber);
-			clientGame.getMoves().add(new Move(client.getIdentity(), rowNumber + "\n" + card.toString() +
-					"\nunique code: " + card.toSuperString()));
 			return new Result("Card placed successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -357,6 +355,8 @@ public class MatchMenuController {
 
 	public static Result endGame(Client client) {
 		if (!client.isInGame()) return new Result("you are not playing", false);
+		client.setInGame(false);
+		client.getIdentity().setCurrentGame(null);
 		client.setMenu(new MatchFinderMenu());
 		client.getIdentity().setCurrentGame(null);
 		return new Result("game finished", true);
