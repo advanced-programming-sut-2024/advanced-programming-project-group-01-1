@@ -26,7 +26,7 @@ module w {
 	opens model.leader to com.google.gson, com.fasterxml.jackson.databind;
 
 
-
+	// exports everything for tests
 	exports model;
 	exports model.user;
 	exports model.card;
@@ -38,6 +38,14 @@ module w {
 	exports model.game.space;
 	exports model.leader;
 	exports view.game;
+	exports view;
+	exports view.game.prematch;
+	exports view.sign.login;
+	exports view.sign.register;
+	exports view.user;
+	exports controller;
+	exports controller.game;
+	exports controller.sign;
 
 	exports main;
 

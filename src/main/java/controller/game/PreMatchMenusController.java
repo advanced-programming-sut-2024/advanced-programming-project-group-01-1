@@ -137,7 +137,7 @@ public class PreMatchMenusController {
 			oos.writeObject(User.getLoggedInUser().getDeck());
 			oos.close();
 		} catch (IOException e) {
-			return new Result("Invalid address", false);
+			return new Result("Invalid Address", false);
 		}
 		return new Result("Deck Saved Successfully", true);
 	}
@@ -154,7 +154,7 @@ public class PreMatchMenusController {
 			Deck deck = (Deck) ois.readObject();
 			User.getLoggedInUser().setDeck(deck);
 		} catch (IOException e) {
-			return new Result("Invalid address", false);
+			return new Result("Invalid Address", false);
 		} catch (ClassNotFoundException e) {
 			return new Result("Invalid Deck", false);
 		}
@@ -174,7 +174,7 @@ public class PreMatchMenusController {
 		return new Result(message.toString(), true);
 	}
 
-	public static Result showNowLeaderToGraphics() {
+	public static Result showNowLeaderForGraphic() {
 		return new Result(User.getLoggedInUser().getDeck().getLeader().getName(), true);
 	}
 

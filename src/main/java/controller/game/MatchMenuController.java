@@ -28,7 +28,8 @@ public class MatchMenuController {
 	}
 
 	public static void handleVeto() {
-		if (!Game.getCurrentGame().getCurrentLeader().isManual()) Game.getCurrentGame().getCurrentLeader().act();
+		if (!Game.getCurrentGame().getCurrentLeader().isManual() && !Game.getCurrentGame().getCurrentLeader().isDisable())
+			Game.getCurrentGame().getCurrentLeader().act();
 		final Space hand = Game.getCurrentGame().getCurrentHand();
 		new Asker(hand, false, false, false, index -> {
 			if (index != -1) {
@@ -41,7 +42,7 @@ public class MatchMenuController {
 				}, true, index, true);
 			} else {
 				Game.getCurrentGame().changeTurn();
-				if (!Game.getCurrentGame().getCurrentLeader().isManual())
+				if (!Game.getCurrentGame().getCurrentLeader().isManual() && !Game.getCurrentGame().getCurrentLeader().isDisable())
 					Game.getCurrentGame().getCurrentLeader().act();
 			}
 		}, true, 0);

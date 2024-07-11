@@ -60,11 +60,6 @@ public class UserMenusController {
 		return new Result(userInfo.toString(), true);
 	}
 
-	public static Result goToRankingMenu() {
-		Appview.setMenu(new RankingMenu());
-		return new Result("Entering Ranking Menu", true);
-	}
-
 	public static Result goToHistoryMenu() {
 		Appview.setMenu(new HistoryMenu());
 		return new Result("Entering History Menu", true);

@@ -66,10 +66,10 @@ public class Game {
 			decider = currentGame.getOpponent();
 		else decider = Math.random() >= 0.5 ? currentGame.getOpponent() : currentGame.getCurrent();
 		if (decider.equals(currentGame.getCurrent()) ^ decider.getDeck().doesPreferFirst()) currentGame.changeTurn();
-		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false, false).move();
-		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false, false).move();
 		if (currentGame.getCurrentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getCurrentLeader().act();
 		else if (currentGame.getOpponentLeader().getName().equals("Emhyr var Emreis Emperor of Nilfgaard")) currentGame.getOpponentLeader().act();
+		new CardMover(CURRENT_DECK, CURRENT_HAND, true, 10, false, false).move();
+		new CardMover(OPPONENT_DECK, OPPONENT_HAND, true, 10, false, false).move();
 		return currentGame;
 	}
 

@@ -183,7 +183,7 @@ public class LobbyMenu extends Application implements Menuable {
 	}
 
 	private void updateLeader() {
-		Result result = PreMatchMenusController.showNowLeaderToGraphics();
+		Result result = PreMatchMenusController.showNowLeaderForGraphic();
 		String leaderName = result.getMessage();
 		ImagePattern imagePattern = new ImagePattern(new Image(getClass().getResourceAsStream("/images/largecards/" + leaderName + ".jpg")));
 		leaderField.setFill(imagePattern);
@@ -229,7 +229,7 @@ public class LobbyMenu extends Application implements Menuable {
 			leaders[i] = leaders[i].substring(8);
 
 		}
-		String currentLeader = PreMatchMenusController.showNowLeaderToGraphics().getMessage();
+		String currentLeader = PreMatchMenusController.showNowLeaderForGraphic().getMessage();
 		int ptr = -1;
 		for (int i = 0; i < leaders.length; i += 2) {
 			if (leaders[i].equals(currentLeader)) {

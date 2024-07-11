@@ -20,7 +20,7 @@ public class Appview {
 
 	public static void setMenu(Menuable menu) {
 		Appview.menu = menu;
-		runMenu();
+//		runMenu();
 	}
 
 	public static Stage getStage() {

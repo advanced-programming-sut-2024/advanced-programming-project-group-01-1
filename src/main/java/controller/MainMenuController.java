@@ -6,6 +6,7 @@ import view.Appview;
 import view.game.prematch.MatchFinderMenu;
 import view.sign.login.LoginMenu;
 import view.user.ProfileMenu;
+import view.user.RankingMenu;
 
 public class MainMenuController {
 
@@ -24,6 +25,11 @@ public class MainMenuController {
 	public static Result goToMatchFinderMenu() {
 		Appview.setMenu(new MatchFinderMenu());
 		return new Result("Entered Match Finder Menu", true);
+	}
+
+	public static Result goToRankingMenu() {
+		Appview.setMenu(new RankingMenu());
+		return new Result("Entering Ranking Menu", true);
 	}
 
 	public static Result showCurrentMenu() {

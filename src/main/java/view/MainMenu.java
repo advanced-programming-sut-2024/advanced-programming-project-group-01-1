@@ -77,7 +77,7 @@ public class MainMenu extends Application implements Menuable {
 	}
 
 	public void leaderboard(MouseEvent mouseEvent) {
-		Result result = UserMenusController.goToRankingMenu();
+		Result result = MainMenuController.goToRankingMenu();
 	}
 
 	public void tv(MouseEvent mouseEvent) {

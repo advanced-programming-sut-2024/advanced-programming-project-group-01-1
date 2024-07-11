@@ -86,8 +86,7 @@ public class InfoMenu extends Application implements Menuable {
 	public void run(String input) {
 		Matcher matcher;
 		Result result;
-		if ((matcher = UserMenusCommands.GAME_HISTORY.getMatcher(input)) != null) result = showGameHistory(matcher);
-		else if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
+		if (UserMenusCommands.SHOW_CURRENT_MENU.getMatcher(input) != null) result = showCurrentMenu();
 		else if (UserMenusCommands.EXIT.getMatcher(input) != null) result = exit();
 		else if (UserMenusCommands.HISTORY.getMatcher(input) != null) result = goToHistoryMenu();
 		else result = new Result("Invalid command", false);
