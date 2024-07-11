@@ -16,6 +16,7 @@ import message.Result;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -150,6 +151,14 @@ public class ClientPreMatchMenusController {
 		Result result = TCPClient.send(command);
 		try {
 			File deckFile = new File(address);
+			System.out.println(address);
+			if (!deckFile.exists()) {
+				try {
+					deckFile.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			FileOutputStream fileOutputStream = new FileOutputStream(deckFile);
 			fileOutputStream.write(result.getMessage().getBytes());
 		} catch (Exception e) {
@@ -160,27 +169,31 @@ public class ClientPreMatchMenusController {
 	}
 
 	public static Result saveDeckByName(String name) {
-		String address = ClientPreMatchMenusController.class.getResource("/resources/decks/") + name + ".txt";
+		String address = ClientPreMatchMenusController.class.getResource("/decks/") + name + ".json";
+		address = address.replace("file:/", "");
 		return saveDeckByAddress(address);
 	}
 
 	public static Result loadDeckByAddress(String address) {
 		String command = GameMenusCommands.LOAD_DECK.getPattern();
+		command = command.replace("(?s)", "");
 		try {
 			File deckFile = new File(address);
 			FileInputStream fileInputStream = new FileInputStream(deckFile);
 			byte[] bytes = new byte[(int) deckFile.length()];
 			fileInputStream.read(bytes);
 			String deckFson = new String(bytes);
-			command = command.replace("(?<deckFson>\\S+)", deckFson);
+			command = command.replace("(?<deckFson>.+)", deckFson);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return new Result("Error Loading Deck", false);
 		}
 		return TCPClient.send(command);
 	}
 
 	public static Result loadDeckByName(String name) {
-		String address = ClientPreMatchMenusController.class.getResource("/resources/decks/") + name + ".txt";
+		String address = ClientPreMatchMenusController.class.getResource("/decks/") + name + ".json";
+		address = address.replace("file:/", "");
 		return loadDeckByAddress(address);
 	}
 

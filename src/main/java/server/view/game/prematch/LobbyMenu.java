@@ -13,6 +13,7 @@ public class LobbyMenu implements Menuable {
 
 	@Override
 	public Result run(Client client, String input) {
+		System.out.println("LobbyMenu.run " + input);
 		Matcher matcher;
 		Result result;
 		if (client.isWaiting()) {
@@ -47,6 +48,8 @@ public class LobbyMenu implements Menuable {
 			result = addToDeck(client, matcher);
 		else if ((matcher = GameMenusCommands.REMOVE_FROM_DECK.getMatcher(input)) != null)
 			result = deleteFromDeck(client, matcher);
+		else if ((matcher = GameMenusCommands.LOAD_DECK.getMatcher(input)) != null)
+			result = loadDeck(client, matcher);
 		else if (GameMenusCommands.SHOW_CARDS_GRAPHIC.getMatcher(input) != null)
 			result = PreMatchMenusController.showCardsForGraphic(client);
 		else if (GameMenusCommands.SHOW_DECK_GRAPHIC.getMatcher(input) != null)
