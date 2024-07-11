@@ -3,6 +3,7 @@ package client.controller;
 import client.main.TCPClient;
 import client.view.ClientAppview;
 import client.view.game.prematch.ClientMatchFinderMenu;
+import client.view.game.prematch.ClientTVMenu;
 import client.view.sign.login.ClientLoginMenu;
 import client.view.user.ClientProfileMenu;
 import client.view.user.ClientRankingMenu;
@@ -56,6 +57,13 @@ public class ClientMainMenuController {
 	public static String getLoggedInUsername() {
 		String command = MainMenuCommands.GET_LOGGED_IN_USERNAME.getPattern();
 		return Objects.requireNonNull(TCPClient.send(command)).getMessage();
+	}
+
+	public static Result tv(){
+		String command = MainMenuCommands.ENTER_TV_MENU.getPattern();
+		Result result = TCPClient.send(command);
+		ClientAppview.setMenu(new ClientTVMenu());
+		return result;
 	}
 
 }

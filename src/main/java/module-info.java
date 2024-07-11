@@ -46,4 +46,5 @@ module w {
 	requires com.google.gson;
 	requires jakarta.mail;
 	requires jdk.httpserver;
+    requires java.xml;
 }

@@ -19,6 +19,7 @@ public class MainMenu implements Menuable {
 		else if (MainMenuCommands.ENTER_PROFILE_MENU.getMatcher(command) != null) result = goToProfileMenu(client);
 		else if (MainMenuCommands.ENTER_SOCIAL_MENU.getMatcher(command) != null) result = MainMenuController.goToSocialMenu(client);
 		else if (MainMenuCommands.ENTER_LEADERBOARD_MENU.getMatcher(command) != null) result = MainMenuController.goToRankingMenu(client);
+		else if (MainMenuCommands.ENTER_TV_MENU.getMatcher(command) != null) result = MainMenuController.goToTVMenu(client);
 		else if (MainMenuCommands.LOGOUT.getMatcher(command) != null) result = MainMenuController.logout(client);
 		else if (MainMenuCommands.GET_LOGGED_IN_USERNAME.getMatcher(command) != null)
 			result = MainMenuController.getLoggedInUsername(client);

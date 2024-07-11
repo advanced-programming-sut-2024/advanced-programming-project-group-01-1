@@ -1,6 +1,8 @@
 package client.view;
 
 import client.controller.ClientMainMenuController;
+import client.view.game.ClientStreamMenu;
+import client.view.game.prematch.ClientTVMenu;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import message.MainMenuCommands;
 import message.Result;
+import server.view.game.prematch.TVMenu;
 
 import java.net.URL;
 
@@ -67,9 +70,7 @@ public class ClientMainMenu extends Application implements Menuable {
 	}
 
 	public void tv(MouseEvent mouseEvent) {
-		Result result = new Result("coming soon!!!", true);
-		AlertMaker.makeAlert("GoGo TV", result);
-		//TODO: implement GoGo TV
+		Result result = ClientMainMenuController.tv();
 	}
 
 	public void logout(MouseEvent mouseEvent) {

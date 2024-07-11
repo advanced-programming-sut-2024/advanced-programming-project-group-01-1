@@ -4,6 +4,7 @@ import message.Result;
 import server.model.Client;
 import server.model.user.User;
 import server.view.game.prematch.MatchFinderMenu;
+import server.view.game.prematch.TVMenu;
 import server.view.sign.login.LoginMenu;
 import server.view.user.ProfileMenu;
 import server.view.user.RankingMenu;
@@ -37,6 +38,11 @@ public class MainMenuController {
 	public static Result goToRankingMenu(Client client) {
 		client.setMenu(new RankingMenu());
 		return new Result("Entered Leaderboard Menu", true);
+	}
+
+	public static Result goToTVMenu(Client client) {
+		client.setMenu(new TVMenu());
+		return new Result("Entered TV Menu", true);
 	}
 
 	public static Result showCurrentMenu() {

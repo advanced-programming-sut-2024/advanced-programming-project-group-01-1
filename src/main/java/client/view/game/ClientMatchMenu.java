@@ -30,6 +30,7 @@ import client.view.animation.CardMoving;
 import client.view.model.SmallCard;
 import client.view.model.SmallUnit;
 import message.SelectionHandler;
+import org.w3c.dom.ls.LSOutput;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -240,9 +241,12 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public void removeCardsFromSpace(Pane space) {
 		ArrayList<Node> nodes = new ArrayList<>(space.getChildren());
 		for (Node node : nodes) {
+			if (space == weatherPane){
+				System.out.println(node instanceof SmallCard);
+			}
 			if (node instanceof SmallCard) {
-				node.setLayoutX(node.getParent().getLayoutX() + node.getLayoutX());
-				node.setLayoutY(node.getParent().getLayoutY() + node.getLayoutY());
+				node.setLayoutX(space.getLayoutX() + node.getLayoutX());
+				node.setLayoutY(space.getLayoutY() + node.getLayoutY());
 				space.getChildren().remove(node);
 			}
 		}
@@ -269,6 +273,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public void updateSpace(Pane space, String[] cardsInfo, EventHandler<MouseEvent> clickHandler) {
 		space.getChildren().clear();
 		for (int i = 0; i < cardsInfo.length; i++) {
+			System.out.println( i + ":\n" + cardsInfo[i]);
 			SmallCard smallCard = getSmallCard(cardsInfo[i]);
 			double x = 0;
 			if (space.getPrefWidth() >= cardsInfo.length * smallCard.getPrefWidth()) {

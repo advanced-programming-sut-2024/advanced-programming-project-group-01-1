@@ -53,6 +53,7 @@ public class ClientStreamMenu extends ClientMatchMenu {
                     Result result = ClientMatchMenuController.getMove(number);
                     if (result.getMessage() != null) {
                         lastMove = result.getMessage();
+                        System.out.println(lastMove);
                         String description = getLastMoveDescription();
                         boolean isOpponent = getLastMover().equals("opponent");
                         if (description.startsWith("reaction")) {

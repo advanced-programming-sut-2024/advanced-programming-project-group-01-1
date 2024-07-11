@@ -182,7 +182,7 @@ public class MatchMenuController {
 		Space currentWeather = getWeatherSystem(client);
 		Space opponentWeather = client.getGame().getOpponentWeatherSystem();
 		if (currentWeather == opponentWeather)
-			opponentWeather = client.getGame().getOpponentWeatherSystem();
+			opponentWeather = client.getGame().getCurrentWeatherSystem();
 		for (Card card : currentWeather.getCards()) {
 			weather.append(card.toString()).append("\n");
 			weather.append("unique code: ").append(card.toSuperString());
@@ -311,9 +311,10 @@ public class MatchMenuController {
 		String moveDescription = null;
 		ArrayList<Move> moves = client.getGame().getMoves();
 		if (moves.size() > number) {
-			if (isCurrent(client) && moves.get(number).getMover() == client.getGame().getCurrent()) moveDescription = "current";
+			if ((isCurrent(client) && moves.get(number).getMover() == client.getGame().getCurrent())
+			|| (!isCurrent(client) && moves.get(number).getMover() == client.getGame().getOpponent())) moveDescription = "current";
 			else moveDescription = "opponent";
-			moveDescription += "\n" + moves.get(number).getDescription();
+			moveDescription += "\n" + number + "\n" + moves.get(number).getDescription();
 		}
 		return new Result(moveDescription, true);
 	}

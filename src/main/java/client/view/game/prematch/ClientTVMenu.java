@@ -57,7 +57,7 @@ public class ClientTVMenu extends Application implements Menuable {
 
     public void spectate(MouseEvent mouseEvent) {
         HBox row = (HBox) gamesField.getSelectionModel().getSelectedItem();
-        String[] usernames = ((Label)row.getChildren().get(0)).getText().split("-");
+        String[] usernames = ((Label)row.getChildren().get(0)).getText().split(" - ");
         Result result = ClientTVMenuController.spectate(usernames[0], usernames[1]);
     }
 
@@ -66,9 +66,12 @@ public class ClientTVMenu extends Application implements Menuable {
     }
 
     private void refresh() {
-        String[] games = ClientTVMenuController.getGames().getMessage().split("\n---------------------\n");
+        String result = ClientTVMenuController.getGames().getMessage();
         gamesField.getItems().clear();
-        for (int i = 0; i < games.length; i++) {
+        if (result.isEmpty()) return;
+        String[] games = result.split("\n---------------------\n");
+            for (int i = 0; i < games.length; i++) {
+            System.out.println(games[i]);
             String[] gameData = games[i].split("\n");
             String username1 = gameData[0];
             String username2 = gameData[1];
