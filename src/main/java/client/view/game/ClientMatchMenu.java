@@ -756,7 +756,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 			for (int i = 1; i < cardsInfo.length; i++) cardInfo.append(cardsInfo[i]).append("\n");
 		}
 		SmallCard card = getSmallCard(cardInfo.toString());
-		System.out.println(card);
+		System.out.println(card.getType());
 		if (card.getType().equals("leader")) {
 			//TODO: fix this
 			updateScreen();
@@ -787,7 +787,9 @@ public class ClientMatchMenu extends Application implements Menuable {
 			root.getChildren().add(unclickablePane);
 		}
 		animations.add(cardMoving);
+		System.out.println("wtf khob");
 		cardMoving.setOnFinished(e -> {
+			System.out.println("jeddi mifarmayid?");
 			ImageView abilityIcon = null;
 			switch (card.getAbility()){
 				case "TightBond":
@@ -824,6 +826,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 					break;
 			}
 			if (abilityIcon == null) {
+				System.out.println("khob digeeee");
 				animations.remove(cardMoving);
 				if (animations.isEmpty()){
 					root.getChildren().remove(unclickablePane);
@@ -831,6 +834,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 				if (callPlace) {
 					Result result = ClientMatchMenuController.placeCard(idx, row);
 				}
+				System.out.println("jijiji");
 				updateScreen();
 			}
 			else {

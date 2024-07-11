@@ -28,10 +28,10 @@ public class Decoy extends Special {
 			unit.pull();
 			unit.updateSpace(this.game.getCurrentHand());
 			decoy.updateSpace(row);
+			game.getMoves().add(new Move(game.getCurrent(), rowNumber + "\n" + this +
+					"\nunique code: " + this.toSuperString()));
 			this.game.changeTurn();
 		}, false, 0);
-		game.getMoves().add(new Move(game.getCurrent(), rowNumber + "\n" + this +
-				"\nunique code: " + this.toSuperString()));
 		this.game.changeTurn();
 	}
 
