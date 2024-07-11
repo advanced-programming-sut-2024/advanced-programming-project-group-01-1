@@ -194,6 +194,15 @@ public class ClientMatchMenuController {
 		}
 	}
 
+	public static void back() {
+		String command = GameMenusCommands.BACK.getPattern();
+		Result result = TCPClient.send(command);
+		if (result.isSuccessful()) {
+			//TODO:
+			//ClientAppview.setMenu(new ClientTVMenu());
+		}
+	}
+
 	public static boolean isGameOver() {
 		String command = GameMenusCommands.IS_GAME_OVER.getPattern();
 		return TCPClient.send(command).isSuccessful();

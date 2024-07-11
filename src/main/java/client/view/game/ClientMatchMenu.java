@@ -694,7 +694,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 		String[] cardsInfo = new String[2];
 		cardsInfo[0] = card.getName();
 		cardsInfo[1] = card.getDescription();
-
 		SelectPanel selectPanel = new SelectPanel(root, cardsInfo, 0, this::useLeader, true);
 	}
 
