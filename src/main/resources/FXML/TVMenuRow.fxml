@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.game.prematch.ClientTVMenuRowController">
+   <children>
+      <Label fx:id="usernamesField" alignment="CENTER" prefHeight="20.0" prefWidth="290.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" text="usernames" textAlignment="CENTER" />
+      <Label fx:id="roundField" alignment="CENTER" prefHeight="20.0" prefWidth="66.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" text="Round Score" textAlignment="CENTER" />
+      <VBox fx:id="scoresField" prefHeight="50.0" prefWidth="56.0" />
+   </children>
+</HBox>
