@@ -106,10 +106,8 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public ArrayList<Pane> selectedPanes = new ArrayList<>();
 	private boolean isCheating = false;
 	public Pane unclickablePane = new Pane();
-	private boolean isLocked;
-	private final Object lock = new Object();
 	private String opponentLastMove;
-	Thread updater, onlineStatus, myReaction, opponentReaction, reactionUpdater;
+	Thread updater, onlineStatus, myReaction, opponentReaction;
 
 	ArrayList<CardMoving> animations = new ArrayList<>();
 
@@ -150,19 +148,18 @@ public class ClientMatchMenu extends Application implements Menuable {
 		myLeaderPane.setOnMouseClicked(this::showLeader);
 		opponentLeaderPane.setOnMouseClicked(this::showSpace);
 		ClientAppview.setMenuOnMatchMenu(this);
+		opponentLastMove = "-1\n";
 		updater =  new Thread(() -> {
 				try {
 					while (true) {
-						synchronized (lock) {
-							isLocked = true;
-							Result result = ClientMatchMenuController.getOpponentMove();
-							if (result.getMessage() != null && !result.getMessage().equals(opponentLastMove)) {
-								opponentLastMove = result.getMessage();
-								Platform.runLater(() -> opponentPut(opponentLastMove.substring(opponentLastMove.indexOf('\n') + 1)));
-								isLocked = false;
-								lock.wait();
-							}
-							isLocked = false;
+						int number = Integer.parseInt(opponentLastMove.substring(0, opponentLastMove.indexOf('\n'))) + 1;
+						Result result = ClientMatchMenuController.getOpponentMove(number);
+						if (result.getMessage() != null) {
+							opponentLastMove = result.getMessage();
+							String description = opponentLastMove.substring(opponentLastMove.indexOf('\n') + 1);
+							if (description.startsWith("reaction"))
+								Platform.runLater(() -> reactionForOpponent(description.substring(9)));
+							else Platform.runLater(() -> opponentPut(description));
 						}
 						Thread.sleep(234);
 					}
@@ -195,22 +192,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 		});
 		onlineStatus.setDaemon(true);
 		onlineStatus.start();
-		reactionUpdater = new Thread(() -> {
-			try {
-				while (true) {
-					Result result = ClientMatchMenuController.getOpponentReaction();
-					if (result.isSuccessful()) {
-						String reaction = result.getMessage();
-						Platform.runLater(() -> {
-							reactionForOpponent(reaction);
-						});
-					}
-					Thread.sleep(234);
-				}
-			} catch (Exception e) {
-				return;
-			}
-		});
 		for (Node node : reactionPane.getChildren()) {
 			node.setOnMouseClicked(this::reaction);
 		}
@@ -246,10 +227,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 			updater.interrupt();
 			onlineStatus.interrupt();
 			showEndGame();
-		} else if (!isLocked && !ClientMatchMenuController.isMyTurn()) {
-			synchronized (lock) {
-				lock.notify();
-			}
 		}
 	}
 

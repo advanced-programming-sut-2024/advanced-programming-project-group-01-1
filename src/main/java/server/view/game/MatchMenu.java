@@ -4,7 +4,6 @@ import message.GameMenusCommands;
 import message.Result;
 import server.controller.game.MatchMenuController;
 import server.model.Client;
-import server.model.game.Game;
 import server.view.Menuable;
 
 import java.util.regex.Matcher;
@@ -50,8 +49,8 @@ public class MatchMenu implements Menuable {
 				result = new Result("Invalid command", false);
 			}
 		} else {
-			if (GameMenusCommands.OPPONENT_LAST_MOVE.getMatcher(input) != null) {
-				result = MatchMenuController.getOpponentMove(client);
+			if ((matcher = GameMenusCommands.GET_OPPONENT_MOVE.getMatcher(input)) != null) {
+				result = getOpponentMove(client, matcher);
 			} else if ((matcher = GameMenusCommands.GET_DESCRIPTION.getMatcher(input)) != null) {
 				result = getDescription(matcher);
 			} else if ((matcher = GameMenusCommands.IS_ROW_DEBUFFED.getMatcher(input)) != null) {
@@ -117,6 +116,8 @@ public class MatchMenu implements Menuable {
 				result = MatchMenuController.useLeaderAbility(client);
 			} else if (GameMenusCommands.PASS_ROUND.getMatcher(input) != null) {
 				result = MatchMenuController.passTurn(client);
+			} else if ((matcher = GameMenusCommands.SEND_REACTION.getMatcher(input)) != null) {
+				result = sendReaction(client, matcher);
 			} else if (GameMenusCommands.CHEAT_MENU.getMatcher(input) != null) {
 				isCheating = true;
 				result = new Result("Cheat menu activated", true);
@@ -127,6 +128,16 @@ public class MatchMenu implements Menuable {
 			}
 		}
 		return result;
+	}
+
+	private Result getOpponentMove(Client client, Matcher matcher) {
+		int number = Integer.parseInt(matcher.group("number"));
+		return MatchMenuController.getOpponentMove(client, number);
+	}
+
+	private Result sendReaction(Client client, Matcher matcher) {
+		String reaction = matcher.group("reaction");
+		return MatchMenuController.sendReaction(client, reaction);
 	}
 
 	private Result getDescription(Matcher matcher) {

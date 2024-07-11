@@ -77,7 +77,7 @@ public enum GameMenusCommands {
     GET_REACTION("get reaction"),
     GET_CHATS("get messages"),
     PASS_ROUND("pass round"),
-    OPPONENT_LAST_MOVE("get opponent last move"),
+    GET_OPPONENT_MOVE("get opponent move (?<number>\\d+)"),
     EXIT_MATCH_FINDER("menu exit"),
     CREATE_GAME("create game -p2 (?<opponent>\\S+)"),
     SHOW_HAND("show hand"),

@@ -197,8 +197,8 @@ public class MatchMenuController {
 			Game clientGame = client.getIdentity().getCurrentGame();
 			Card card = getHand(client).getCards().get(cardNumber);
 			clientGame.placeCard(card, rowNumber);
-			clientGame.getMoves().add(new Move(client.getIdentity(), clientGame.getRoundNumber() + "\n" + rowNumber + "\n"
-					+ card.toString() + "\nunique code: " + card.toSuperString()));
+			clientGame.getMoves().add(new Move(client.getIdentity(), rowNumber + "\n" + card.toString() +
+					"\nunique code: " + card.toSuperString()));
 			return new Result("Card placed successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -227,8 +227,8 @@ public class MatchMenuController {
 			Game clientGame = client.getIdentity().getCurrentGame();
 			Leader leader = clientGame.getCurrentLeader();
 			clientGame.useLeaderAbility();
-			clientGame.getMoves().add(new Move(client.getIdentity(), clientGame.getRoundNumber() + "\n" + -1 + "\n"
-					+ leader.toString() + "\nunique code: " + leader.toSuperString()));
+			clientGame.getMoves().add(new Move(client.getIdentity(), -1 + "\n" + leader.toString() +
+					"\nunique code: " + leader.toSuperString()));
 			return new Result("Leader ability played successfully", true);
 		} catch (Exception e) {
 			return new Result(e.getMessage(), false);
@@ -279,15 +279,22 @@ public class MatchMenuController {
 	public static Result passTurn(Client client) {
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		client.getIdentity().getCurrentGame().passTurn();
-		client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(),
-				client.getIdentity().getCurrentGame().getRoundNumber() + "\npass"));
+		client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), "pass"));
 		return new Result("Turn passed successfully", true);
 	}
 
-	public static Result getOpponentMove(Client client) {
+	public static Result getOpponentMove(Client client, int number) {
 		User opponent = isCurrent(client) ? client.getIdentity().getCurrentGame().getOpponent() :
 				client.getIdentity().getCurrentGame().getCurrent();
-		return new Result(client.getIdentity().getCurrentGame().getLastMove(opponent), true);
+		String moveDescription = null;
+		ArrayList<Move> moves = client.getIdentity().getCurrentGame().getMoves();
+		for (int i = number; i < moves.size(); i++) {
+			if (moves.get(i).getMover() == opponent) {
+				moveDescription = i + "\n" + moves.get(i).getDescription();
+				break;
+			}
+		}
+		return new Result(moveDescription, true);
 	}
 
 	public static Result isAsking(Client client) {
@@ -428,6 +435,11 @@ public class MatchMenuController {
 	public static Result sendMessage(Client client, String message) {
 		client.getIdentity().getCurrentGame().addMessage(message);
 		return new Result("message send successfully", true);
+	}
+
+	public static Result sendReaction(Client client, String reaction) {
+		client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), "reaction\n" + reaction));
+		return new Result("sent", true);
 	}
 
 	public static Result getChats(Client client) {

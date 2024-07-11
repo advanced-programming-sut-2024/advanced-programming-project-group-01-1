@@ -2,9 +2,7 @@ package client.controller.game;
 
 import client.main.TCPClient;
 import client.view.ClientAppview;
-import client.view.game.ClientTournamentMenu;
 import client.view.game.prematch.ClientMatchFinderMenu;
-import javafx.application.Platform;
 import message.GameMenusCommands;
 import message.Result;
 
@@ -156,8 +154,9 @@ public class ClientMatchMenuController {
 		return TCPClient.send(command);
 	}
 
-	public static Result getOpponentMove() {
-		String command = GameMenusCommands.OPPONENT_LAST_MOVE.getPattern();
+	public static Result getOpponentMove(int number) {
+		String command = GameMenusCommands.GET_OPPONENT_MOVE.getPattern();
+		command = command.replace("(?<number>\\d+)", String.valueOf(number));
 		return TCPClient.send(command);
 	}
 
@@ -248,12 +247,6 @@ public class ClientMatchMenuController {
 		String command = GameMenusCommands.SEND_REACTION.getPattern();
 		command = command.replace("(?<reaction>.+)", reaction);
 		return TCPClient.send(command);
-	}
-
-	public static Result getOpponentReaction() {
-		String command = GameMenusCommands.GET_REACTION.getPattern();
-		return TCPClient.send(command);
-
 	}
 
 	public static Result getChats() {
