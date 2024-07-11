@@ -25,6 +25,7 @@ public class Game {
 
 
 	ArrayList<Integer> currentScores = new ArrayList<>(), opponentScores = new ArrayList<>();
+	User basePlayer;
 	User current, opponent;
 	int roundNumber = 1;
 	Row[] rows = new Row[6];
@@ -46,6 +47,7 @@ public class Game {
 	private Game(User player1, User player2) {
 		this.current = player1;
 		this.opponent = player2;
+		this.basePlayer = this.current;
 		this.currentFaction = player1.getDeck().getFaction();
 		this.opponentFaction = player2.getDeck().getFaction();
 		this.currentLeader = player1.getDeck().getLeader();
@@ -120,8 +122,8 @@ public class Game {
 		return opponent;
 	}
 
-	public int getRoundNumber() {
-		return roundNumber;
+	public User getBasePlayer() {
+		return basePlayer;
 	}
 
 	public Faction getCurrentFaction() {

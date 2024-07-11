@@ -61,6 +61,7 @@ public enum GameMenusCommands {
     SHOW_FACTION_GRAPHIC("show current faction for graphic"),
     SHOW_WEATHER_GRAPHIC("show weather for graphic"),
     GET_MOVE("get move (?<number>\\d+)"),
+    MOVE_COUNT("get number of moves"),
     GET_USERNAMES("get usernames"),
     GET_DESCRIPTION("get description (?<cardName>.+)"),
     PASSED_STATE("passed state"),

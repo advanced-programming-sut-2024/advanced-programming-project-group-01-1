@@ -6,7 +6,6 @@ import server.model.user.User;
 import server.view.Menuable;
 import server.view.sign.login.LoginMenu;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -19,6 +18,7 @@ public class Client {
 	private User identity;
 	private boolean isWaiting;
 	private boolean isInGame;
+	private Game streamingGame;
 
 	public Client() {
 		StringBuilder tmp = new StringBuilder();
@@ -92,4 +92,12 @@ public class Client {
 		isInGame = inGame;
 	}
 
+	public Game getGame() {
+		if (this.isInGame) return this.identity.getCurrentGame();
+		return streamingGame;
+	}
+
+	public void setStreamingGame(Game streamingGame) {
+		this.streamingGame = streamingGame;
+	}
 }

@@ -154,6 +154,19 @@ public class ClientMatchMenuController {
 		return TCPClient.send(command);
 	}
 
+	public static int getNumberOfMoves() {
+		String command = GameMenusCommands.MOVE_COUNT.getPattern();
+		Result result = TCPClient.send(command);
+		if (result != null) return Integer.parseInt(result.getMessage());
+		return 0;
+	}
+
+	public static Result getMove(int number) {
+		String command = GameMenusCommands.GET_MOVE.getPattern();
+		command = command.replace("(?<number>\\d+)", String.valueOf(number));
+		return TCPClient.send(command);
+	}
+
 	public static Result getOpponentMove(int number) {
 		String command = GameMenusCommands.GET_OPPONENT_MOVE.getPattern();
 		command = command.replace("(?<number>\\d+)", String.valueOf(number));
@@ -301,5 +314,4 @@ public class ClientMatchMenuController {
 		command = command.replace("(?<power>\\d+)", String.valueOf(power));
         return TCPClient.send(command);
 	}
-
 }

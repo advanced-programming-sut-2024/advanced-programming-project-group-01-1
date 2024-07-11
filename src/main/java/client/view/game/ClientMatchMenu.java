@@ -3,7 +3,6 @@ package client.view.game;
 import client.controller.game.ClientMatchMenuController;
 import client.view.ClientAppview;
 import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -31,7 +30,6 @@ import client.view.model.SmallCard;
 import client.view.model.SmallUnit;
 import message.SelectionHandler;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -106,7 +104,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public ArrayList<Pane> selectedPanes = new ArrayList<>();
 	private boolean isCheating = false;
 	public Pane unclickablePane = new Pane();
-	private String opponentLastMove;
+	protected String lastMove;
 	Thread updater, onlineStatus, myReaction, opponentReaction;
 
 	ArrayList<CardMoving> animations = new ArrayList<>();
@@ -132,6 +130,33 @@ public class ClientMatchMenu extends Application implements Menuable {
 
 	@FXML
 	public void initialize() {
+		initializePanes();
+		initializeOnlineStatus();
+		lastMove = (ClientMatchMenuController.getNumberOfMoves() - 1) + "\n";
+		updater =  new Thread(() -> {
+				try {
+					while (true) {
+						int number = Integer.parseInt(lastMove.substring(0, lastMove.indexOf('\n'))) + 1;
+						Result result = ClientMatchMenuController.getOpponentMove(number);
+						if (result.getMessage() != null) {
+							lastMove = result.getMessage();
+							String description = lastMove.substring(lastMove.indexOf('\n') + 1);
+							if (description.startsWith("reaction"))
+								Platform.runLater(() -> reactionForOpponent(description.substring(9)));
+							else Platform.runLater(() -> opponentPut(description));
+						}
+						Thread.sleep(234);
+					}
+				} catch (Exception e) {
+					return;
+				}
+		});
+		updater.setDaemon(true);
+		updater.start();
+		updateScreen();
+	}
+
+	protected void initializePanes() {
 		rowPanes = new Pane[]{rowPane0, rowPane1, rowPane2, rowPane3, rowPane4, rowPane5};
 		rowBufferPanes = new Pane[]{rowBuffer0, rowBuffer1, rowBuffer2, rowBuffer3, rowBuffer4, rowBuffer5};
 		rowPowerLabels = new Label[]{rowPowerLabel0, rowPowerLabel1, rowPowerLabel2, rowPowerLabel3, rowPowerLabel4, rowPowerLabel5};
@@ -148,27 +173,13 @@ public class ClientMatchMenu extends Application implements Menuable {
 		myLeaderPane.setOnMouseClicked(this::showLeader);
 		opponentLeaderPane.setOnMouseClicked(this::showSpace);
 		ClientAppview.setMenuOnMatchMenu(this);
-		opponentLastMove = "-1\n";
-		updater =  new Thread(() -> {
-				try {
-					while (true) {
-						int number = Integer.parseInt(opponentLastMove.substring(0, opponentLastMove.indexOf('\n'))) + 1;
-						Result result = ClientMatchMenuController.getOpponentMove(number);
-						if (result.getMessage() != null) {
-							opponentLastMove = result.getMessage();
-							String description = opponentLastMove.substring(opponentLastMove.indexOf('\n') + 1);
-							if (description.startsWith("reaction"))
-								Platform.runLater(() -> reactionForOpponent(description.substring(9)));
-							else Platform.runLater(() -> opponentPut(description));
-						}
-						Thread.sleep(234);
-					}
-				} catch (Exception e) {
-					return;
-				}
-		});
-		updater.setDaemon(true);
-		updater.start();
+		for (Node node : reactionPane.getChildren()) {
+			node.setOnMouseClicked(this::reaction);
+		}
+		reactionPane.setVisible(false);
+	}
+
+	protected void initializeOnlineStatus() {
 		onlineStatus = new Thread(() -> {
 			try {
 				while (true) {
@@ -192,11 +203,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 		});
 		onlineStatus.setDaemon(true);
 		onlineStatus.start();
-		for (Node node : reactionPane.getChildren()) {
-			node.setOnMouseClicked(this::reaction);
-		}
-		reactionPane.setVisible(false);
-		updateScreen();
 	}
 
 	public void updateScreen() {

@@ -23,32 +23,32 @@ import java.util.Objects;
 public class MatchMenuController {
 
 	private static boolean isCurrent(Client client) {
-		return client.getIdentity() == client.getIdentity().getCurrentGame().getCurrent();
+		return client.getGame().getCurrent() == (client.isInGame() ? client.getIdentity() : client.getGame().getBasePlayer());
 	}
 
 	private static Leader getLeader(Client client) {
-		if (isCurrent(client)) return client.getIdentity().getCurrentGame().getCurrentLeader();
-		return client.getIdentity().getCurrentGame().getOpponentLeader();
+		if (isCurrent(client)) return client.getGame().getCurrentLeader();
+		return client.getGame().getOpponentLeader();
 	}
 
 	private static Space getHand(Client client) {
-		if (isCurrent(client)) return client.getIdentity().getCurrentGame().getCurrentHand();
-		return client.getIdentity().getCurrentGame().getOpponentHand();
+		if (isCurrent(client)) return client.getGame().getCurrentHand();
+		return client.getGame().getOpponentHand();
 	}
 
 	private static Space getDeck(Client client) {
-		if (isCurrent(client)) return client.getIdentity().getCurrentGame().getCurrentDeck();
-		return client.getIdentity().getCurrentGame().getOpponentDeck();
+		if (isCurrent(client)) return client.getGame().getCurrentDeck();
+		return client.getGame().getOpponentDeck();
 	}
 
 	private static Space getWeatherSystem(Client client) {
-		if (isCurrent(client)) return client.getIdentity().getCurrentGame().getCurrentWeatherSystem();
-		return client.getIdentity().getCurrentGame().getOpponentWeatherSystem();
+		if (isCurrent(client)) return client.getGame().getCurrentWeatherSystem();
+		return client.getGame().getOpponentWeatherSystem();
 	}
 
 	private static Space getDiscardPile(Client client) {
-		if (isCurrent(client)) return client.getIdentity().getCurrentGame().getCurrentDiscardPile();
-		return client.getIdentity().getCurrentGame().getOpponentDiscardPile();
+		if (isCurrent(client)) return client.getGame().getCurrentDiscardPile();
+		return client.getGame().getOpponentDiscardPile();
 	}
 
 	public static Result isOpponentOnline(Client client) {
@@ -62,8 +62,7 @@ public class MatchMenuController {
 
 	public static Result isRowDebuffed(Client client, int rowNumber) {
 		if (!isCurrent(client)) rowNumber = 5 - rowNumber;
-		if(client.getIdentity().getCurrentGame().getRow(rowNumber).isDebuffed())
-			return new Result("debuffed", true);
+		if(client.getGame().getRow(rowNumber).isDebuffed()) return new Result("debuffed", true);
 		return new Result("not debuffed", false);
 	}
 
@@ -102,13 +101,18 @@ public class MatchMenuController {
 	}
 
 	public static Result getUsernames(Client client) {
-		User me = client.getIdentity();
-		User opponent = client.getIdentity().getCurrentGame().getOpponent();
-		if (opponent == me) opponent = client.getIdentity().getCurrentGame().getCurrent();
-		return new Result(me.getUsername() + "\n" + opponent.getUsername() + "\n", true);
+		User current = client.getGame().getCurrent();
+		User opponent = client.getGame().getOpponent();
+		if (!isCurrent(client)) {
+			User tmp = current;
+			current = opponent;
+			opponent = tmp;
+		}
+		return new Result(current.getUsername() + "\n" + opponent.getUsername() + "\n", true);
 	}
 
 	public static Result showHand(Client client, int number) {
+		if (!client.isInGame()) return new Result("you don't have access to hands", false);
 		StringBuilder hand = new StringBuilder();
 		if (number >= 0) hand.append(getHand(client).getCards().get(number).toString());
 		else hand.append(getHand(client).toString());
@@ -116,6 +120,7 @@ public class MatchMenuController {
 	}
 
 	public static Result showHandForGraphic(Client client) {
+		if (!client.isInGame()) return new Result("you don't have access to hands", false);
 		StringBuilder hand = new StringBuilder();
 		for (Card card : getHand(client).getCards()) {
 			hand.append(card.toString()).append("\n");
@@ -126,19 +131,19 @@ public class MatchMenuController {
 	}
 
 	public static Result remainingInDecksForGraphic(Client client) {
-		Space myDeck = getDeck(client);
-		Space opponentDeck = client.getIdentity().getCurrentGame().getOpponentDeck();
-		if (opponentDeck == myDeck) opponentDeck = client.getIdentity().getCurrentGame().getCurrentDeck();
-		return new Result(myDeck.getCards().size() + "\n" + opponentDeck.getCards().size(), true);
+		Space currentDeck = getDeck(client);
+		Space opponentDeck = client.getGame().getOpponentDeck();
+		if (opponentDeck == currentDeck) opponentDeck = client.getGame().getCurrentDeck();
+		return new Result(currentDeck.getCards().size() + "\n" + opponentDeck.getCards().size(), true);
 	}
 
 	public static Result showDiscardPilesForGraphic(Client client) {
 		StringBuilder discardPiles = new StringBuilder();
-		Space myPile = getDiscardPile(client);
-		Space opponentPile = client.getIdentity().getCurrentGame().getOpponentDiscardPile();
-		if (opponentPile == myPile) opponentPile = client.getIdentity().getCurrentGame().getCurrentDiscardPile();
+		Space currentPile = getDiscardPile(client);
+		Space opponentPile = client.getGame().getOpponentDiscardPile();
+		if (opponentPile == currentPile) opponentPile = client.getGame().getCurrentDiscardPile();
 		discardPiles.append("Current Discard Pile:\n");
-		for (Card card : myPile.getCards()) {
+		for (Card card : currentPile.getCards()) {
 			discardPiles.append(card.toString()).append("\n");
 			discardPiles.append("unique code: ").append(card.toSuperString());
 			discardPiles.append("\n------------------\n");
@@ -157,13 +162,13 @@ public class MatchMenuController {
 	public static Result showRowForGraphic(Client client, int rowNumber) {
 		StringBuilder row = new StringBuilder();
 		if (!isCurrent(client)) rowNumber = 5 - rowNumber;
-		Buffer buffer = client.getIdentity().getCurrentGame().getRow(rowNumber).getBuffer();
+		Buffer buffer = client.getGame().getRow(rowNumber).getBuffer();
 		if (buffer != null) {
 			row.append("Buffer: ").append(buffer.toString()).append("\n");
 			row.append("unique code: ").append(buffer.toSuperString());
 			row.append("\n------------------\n");
 		}
-		for (Card card : client.getIdentity().getCurrentGame().getRow(rowNumber).getCards()) {
+		for (Card card : client.getGame().getRow(rowNumber).getCards()) {
 			row.append(card.toString()).append("\n");
 			row.append("unique code: ").append(card.toSuperString());
 			row.append("\n------------------\n");
@@ -174,11 +179,11 @@ public class MatchMenuController {
 
 	public static Result showWeatherSystemForGraphic(Client client) {
 		StringBuilder weather = new StringBuilder();
-		Space myWeather = getWeatherSystem(client);
-		Space opponentWeather = client.getIdentity().getCurrentGame().getOpponentWeatherSystem();
-		if (myWeather == opponentWeather)
-			opponentWeather = client.getIdentity().getCurrentGame().getOpponentWeatherSystem();
-		for (Card card : myWeather.getCards()) {
+		Space currentWeather = getWeatherSystem(client);
+		Space opponentWeather = client.getGame().getOpponentWeatherSystem();
+		if (currentWeather == opponentWeather)
+			opponentWeather = client.getGame().getOpponentWeatherSystem();
+		for (Card card : currentWeather.getCards()) {
 			weather.append(card.toString()).append("\n");
 			weather.append("unique code: ").append(card.toSuperString());
 			weather.append("\n------------------\n");
@@ -192,6 +197,7 @@ public class MatchMenuController {
 	}
 
 	public static Result placeCard(Client client, int cardNumber, int rowNumber) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		try {
 			Game clientGame = client.getIdentity().getCurrentGame();
@@ -206,22 +212,23 @@ public class MatchMenuController {
 	}
 
 	public static Result showLeadersForGraphic(Client client) {
-		Leader myLeader = getLeader(client);
-		Leader opponentLeader = client.getIdentity().getCurrentGame().getOpponentLeader();
-		if (myLeader == opponentLeader) opponentLeader = client.getIdentity().getCurrentGame().getCurrentLeader();
-		return new Result(myLeader + "\n" + "unique code: " + myLeader.toSuperString() + "\n------------------\n" +
+		Leader currentLeader = getLeader(client);
+		Leader opponentLeader = client.getGame().getOpponentLeader();
+		if (currentLeader == opponentLeader) opponentLeader = client.getGame().getCurrentLeader();
+		return new Result(currentLeader + "\n" + "unique code: " + currentLeader.toSuperString() + "\n------------------\n" +
 				opponentLeader.toString() + "\n" + "unique code: " + opponentLeader.toSuperString(), true);
 	}
 
 
 	public static Result isLeadersDisable(Client client) {
-		Leader myLeader = getLeader(client);
-		Leader opponentLeader = client.getIdentity().getCurrentGame().getOpponentLeader();
-		if (opponentLeader == myLeader) opponentLeader = client.getIdentity().getCurrentGame().getCurrentLeader();
-		return new Result(myLeader.isDisable() + "\n" + opponentLeader.isDisable(), true);
+		Leader currentLeader = getLeader(client);
+		Leader opponentLeader = client.getGame().getOpponentLeader();
+		if (opponentLeader == currentLeader) opponentLeader = client.getGame().getCurrentLeader();
+		return new Result(currentLeader.isDisable() + "\n" + opponentLeader.isDisable(), true);
 	}
 
 	public static Result useLeaderAbility(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		try {
 			Game clientGame = client.getIdentity().getCurrentGame();
@@ -236,8 +243,8 @@ public class MatchMenuController {
 	}
 
 	public static Result passedState(Client client) {
-		boolean hasPassed = client.getIdentity().getCurrentGame().hasPassed();
-		boolean hasOpponentPassed = client.getIdentity().getCurrentGame().hasOpponentPassed();
+		boolean hasPassed = client.getGame().hasPassed();
+		boolean hasOpponentPassed = client.getGame().hasOpponentPassed();
 		if (!isCurrent(client)) {
 			boolean tmp = hasPassed;
 			hasPassed = hasOpponentPassed;
@@ -247,40 +254,45 @@ public class MatchMenuController {
 	}
 
 	public static Result showFactionsForGraphic(Client client) {
-		Faction myFaction = client.getIdentity().getCurrentGame().getCurrentFaction();
-		Faction opponentFaction = client.getIdentity().getCurrentGame().getOpponentFaction();
+		Faction currentFaction = client.getGame().getCurrentFaction();
+		Faction opponentFaction = client.getGame().getOpponentFaction();
 		if (!isCurrent(client)) {
-			Faction tmp = myFaction;
-			myFaction = opponentFaction;
+			Faction tmp = currentFaction;
+			currentFaction = opponentFaction;
 			opponentFaction = tmp;
 		}
-		return new Result(myFaction + "\n" + opponentFaction, true);
+		return new Result(currentFaction + "\n" + opponentFaction, true);
 	}
 
 
 	public static Result showPlayersLives(Client client) {
-		int myLife = client.getIdentity().getCurrentGame().getCurrentLife();
-		int opponentLife = client.getIdentity().getCurrentGame().getOpponentLife();
+		int currentLife = client.getGame().getCurrentLife();
+		int opponentLife = client.getGame().getOpponentLife();
 		if (!isCurrent(client)) {
-			int tmp = myLife;
-			myLife = opponentLife;
+			int tmp = currentLife;
+			currentLife = opponentLife;
 			opponentLife = tmp;
 		}
-		return new Result("Current: " + myLife + "\n" + "Opponent: " + opponentLife, true);
+		return new Result("Current: " + currentLife + "\n" + "Opponent: " + opponentLife, true);
 	}
 
 	public static Result showHandSize(Client client) {
-		Space myHand = getHand(client);
-		Space opponentHand = client.getIdentity().getCurrentGame().getOpponentHand();
-		if (myHand == opponentHand) opponentHand = client.getIdentity().getCurrentGame().getCurrentHand();
-		return new Result(myHand.getCards().size() + " - " + opponentHand.getCards().size(), true);
+		Space currentHand = getHand(client);
+		Space opponentHand = client.getGame().getOpponentHand();
+		if (currentHand == opponentHand) opponentHand = client.getGame().getCurrentHand();
+		return new Result(currentHand.getCards().size() + " - " + opponentHand.getCards().size(), true);
 	}
 
 	public static Result passTurn(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (!isCurrent(client)) return new Result("not your turn", false);
 		client.getIdentity().getCurrentGame().passTurn();
 		client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), "pass"));
 		return new Result("Turn passed successfully", true);
+	}
+
+	public static Result getNumberOfMoves(Client client) {
+		return new Result(String.valueOf(client.getGame().getMoves().size()), true);
 	}
 
 	public static Result getOpponentMove(Client client, int number) {
@@ -297,12 +309,25 @@ public class MatchMenuController {
 		return new Result(moveDescription, true);
 	}
 
+	public static Result getMove(Client client, int number) {
+		String moveDescription = null;
+		ArrayList<Move> moves = client.getGame().getMoves();
+		if (moves.size() > number) {
+			if (isCurrent(client) && moves.get(number).getMover() == client.getGame().getCurrent()) moveDescription = "current";
+			else moveDescription = "opponent";
+			moveDescription += "\n" + moves.get(number).getDescription();
+		}
+		return new Result(moveDescription, true);
+	}
+
 	public static Result isAsking(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (Asker.isAsking(client.getIdentity())) return new Result("asking", true);
 		return new Result("not asking", false);
 	}
 
 	public static Result getAskerCards(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (!Asker.isAsking(client.getIdentity())) return new Result("not asking", false);
 		StringBuilder cards = new StringBuilder();
 		for (Card card : Asker.getRunning(client.getIdentity()).getCards()) {
@@ -312,83 +337,90 @@ public class MatchMenuController {
 	}
 
 	public static Result getAskerPtr(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (!Asker.isAsking(client.getIdentity())) return new Result("not asking", false);
 		return new Result(String.valueOf(Asker.getRunning(client.getIdentity()).getPtr()), true);
 	}
 
 	public static Result isAskerOptional(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (!Asker.isAsking(client.getIdentity())) return new Result("not asking", false);
 		if (Asker.getRunning(client.getIdentity()).isOptional()) return new Result("optional", true);
 		return new Result("not optional", false);
 	}
 
 	public static Result selectCard(Client client, int index) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (Asker.select(client.getIdentity(), index)) return new Result("success", true);
 		return new Result("failure", false);
 	}
 
 	public static Result endGame(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		client.setMenu(new MatchFinderMenu());
 		client.getIdentity().setCurrentGame(null);
 		return new Result("game finished", true);
 	}
 
 	public static Result isGameOver(Client client) {
-		if (client.getIdentity().getCurrentGame().isGameOver())
+		if (client.getGame().isGameOver())
 			return new Result("game is over", true);
 		return new Result("game isn't over", false);
 	}
 
 	public static Result isGameWin(Client client) {
-		if(client.getIdentity().getCurrentGame().isGameWin() == isCurrent(client))
+		if(client.getGame().isGameWin() == isCurrent(client))
 			return new Result("win", true);
 		return new Result("lose", false);
 	}
 
 	public static Result isGameDraw(Client client) {
-		if (client.getIdentity().getCurrentGame().isGameDraw())
+		if (client.getGame().isGameDraw())
 			return new Result("draw", true);
 		return new Result("not draw", false);
 	}
 
 	public static Result getPowers(Client client) {
-		int myPower = client.getIdentity().getCurrentGame().getCurrentPower();
-		int opponentPower = client.getIdentity().getCurrentGame().getOpponentPower();
+		int currentPower = client.getGame().getCurrentPower();
+		int opponentPower = client.getGame().getOpponentPower();
 		if (!isCurrent(client)) {
-			int tmp = myPower;
-			myPower = opponentPower;
+			int tmp = currentPower;
+			currentPower = opponentPower;
 			opponentPower = tmp;
 		}
-		return new Result(myPower + "\n" + opponentPower + "\n", true);
+		return new Result(currentPower + "\n" + opponentPower + "\n", true);
 	}
 
 	public static Result getScores(Client client) {
-		ArrayList<Integer> scores = client.getIdentity().getCurrentGame().getCurrentScores();
-		ArrayList<Integer> opponentScores = client.getIdentity().getCurrentGame().getOpponentScores();
+		ArrayList<Integer> currentScores = client.getGame().getCurrentScores();
+		ArrayList<Integer> opponentScores = client.getGame().getOpponentScores();
 		if (!isCurrent(client)) {
-			ArrayList<Integer> tmp = scores;
-			scores = opponentScores;
+			ArrayList<Integer> tmp = currentScores;
+			currentScores = opponentScores;
 			opponentScores = tmp;
 		}
 		StringBuilder result = new StringBuilder();
-		for (int i = 0; i < scores.size(); i++)
-			result.append(scores.get(i)).append("\n").append(opponentScores.get(i)).append("\n");
+		for (int i = 0; i < currentScores.size(); i++)
+			result.append(currentScores.get(i)).append("\n").append(opponentScores.get(i)).append("\n");
 		return new Result(result.toString(), true);
 	}
 
 	public static Result cheatClearWeather(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		client.getIdentity().getCurrentGame().getCurrentWeatherSystem().clear(client.getIdentity().getCurrentGame().getCurrentDiscardPile(), null);
 		client.getIdentity().getCurrentGame().getOpponentWeatherSystem().clear(client.getIdentity().getCurrentGame().getOpponentDiscardPile(), null);
 		return new Result("Weather cleared", true);
 	}
 
 	public static Result cheatClearRow(Client client, int rowNumber) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (!isCurrent(client)) rowNumber = 5 - rowNumber;
 		client.getIdentity().getCurrentGame().getRow(rowNumber).clear(rowNumber < 3 ? client.getIdentity().getCurrentGame().getCurrentDiscardPile() : client.getIdentity().getCurrentGame().getOpponentDiscardPile(), null);
 		return new Result("Row cleared", true);
 	}
 
 	public static Result cheatDebuffRow(Client client, int rowNumber) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		Card card = CardCreator.getCard(rowNumber == 2 ? "Biting Frost" : rowNumber == 1 ? "Impenetrable Fog" : "Torrential Rain");
 		card.setSpace(client.getIdentity().getCurrentGame().getCurrentDeck());
 		try {
@@ -400,12 +432,14 @@ public class MatchMenuController {
 	}
 
 	public static Result cheatHeal(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		if (isCurrent(client)) client.getIdentity().getCurrentGame().setCurrentLife(2);
 		else client.getIdentity().getCurrentGame().setOpponentLife(2);
 		return new Result("Recovered Crystal", true);
 	}
 
 	public static Result cheatAddCard(Client client, String cardName) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		Card card = CardCreator.getCard(cardName);
 		if (card == null) return new Result("Card not found", false);
 		card.setSpace(getDeck(client));
@@ -414,11 +448,13 @@ public class MatchMenuController {
 	}
 
 	public static Result cheatMoveFromDeckToHand(Client client) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		new CardMover(Game.CURRENT_DECK, Game.CURRENT_HAND, false, 1, false, false).move(client.getIdentity());
 		return new Result("Card moved from deck to hand", true);
 	}
 
 	public static Result cheatAddPower(Client client, int power) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		client.getIdentity().getCurrentGame().addCheatPower(power, isCurrent(client));
 		return new Result("Power added", true);
 	}
@@ -433,21 +469,29 @@ public class MatchMenuController {
 	}
 
 	public static Result sendMessage(Client client, String message) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		client.getIdentity().getCurrentGame().addMessage(message);
 		return new Result("message send successfully", true);
 	}
 
 	public static Result sendReaction(Client client, String reaction) {
+		if (!client.isInGame()) return new Result("you are not playing", false);
 		client.getIdentity().getCurrentGame().getMoves().add(new Move(client.getIdentity(), "reaction\n" + reaction));
 		return new Result("sent", true);
 	}
 
 	public static Result getChats(Client client) {
-		ArrayList<String> chats = client.getIdentity().getCurrentGame().getChatMessages();
+		ArrayList<String> chats = client.getGame().getChatMessages();
 		StringBuilder result = new StringBuilder();
 		for (String chat : chats) {
 			result.append(chat).append("\n####################\n");
 		}
 		return new Result(result.toString(), true);
+	}
+
+	public static Result back(Client client) {
+		if (client.isInGame()) return new Result("you are playing", false);
+		// TODO: client.setMenu(new TVMenu());
+		return new Result("back successfully", true);
 	}
 }

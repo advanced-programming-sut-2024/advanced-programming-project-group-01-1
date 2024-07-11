@@ -17,7 +17,9 @@ public class MatchMenu implements Menuable {
 	public Result run(Client client, String input) {
 		Result result;
 		Matcher matcher;
-		if (GameMenusCommands.IS_MY_TURN.getMatcher(input) != null) {
+		if (GameMenusCommands.BACK.getMatcher(input) != null) {
+			result = MatchMenuController.back(client);
+		} else if (GameMenusCommands.IS_MY_TURN.getMatcher(input) != null) {
 			result = MatchMenuController.isMyTurn(client);
 		} else if(GameMenusCommands.IS_OPPONENT_ONLINE.getMatcher(input) != null) {
 			result = MatchMenuController.isOpponentOnline(client);
@@ -49,7 +51,11 @@ public class MatchMenu implements Menuable {
 				result = new Result("Invalid command", false);
 			}
 		} else {
-			if ((matcher = GameMenusCommands.GET_OPPONENT_MOVE.getMatcher(input)) != null) {
+			if (GameMenusCommands.MOVE_COUNT.getMatcher(input) != null) {
+				result = MatchMenuController.getNumberOfMoves(client);
+			} else if ((matcher = GameMenusCommands.GET_MOVE.getMatcher(input)) != null){
+				result = getMove(client, matcher);
+			} else if ((matcher = GameMenusCommands.GET_OPPONENT_MOVE.getMatcher(input)) != null) {
 				result = getOpponentMove(client, matcher);
 			} else if ((matcher = GameMenusCommands.GET_DESCRIPTION.getMatcher(input)) != null) {
 				result = getDescription(matcher);
@@ -128,6 +134,11 @@ public class MatchMenu implements Menuable {
 			}
 		}
 		return result;
+	}
+
+	private Result getMove(Client client, Matcher matcher) {
+		int number = Integer.parseInt(matcher.group("number"));
+		return MatchMenuController.getMove(client, number);
 	}
 
 	private Result getOpponentMove(Client client, Matcher matcher) {

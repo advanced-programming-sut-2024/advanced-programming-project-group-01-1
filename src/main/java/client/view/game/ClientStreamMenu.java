@@ -2,8 +2,8 @@ package client.view.game;
 
 import client.controller.game.ClientMatchMenuController;
 import client.view.ClientAppview;
-import client.view.Menuable;
 import client.view.model.SmallCard;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +14,7 @@ import message.Result;
 
 import java.net.URL;
 
-public class ClientStreamMenu extends ClientMatchMenu implements Menuable {
+public class ClientStreamMenu extends ClientMatchMenu {
 
 
     @Override
@@ -43,8 +43,49 @@ public class ClientStreamMenu extends ClientMatchMenu implements Menuable {
 
     @FXML
     public void initialize() {
-        super.initialize();
-        //TODO: my move updater
+        initializePanes();
+        initializeOnlineStatus();
+        lastMove = "null\n-1\n";
+        updater =  new Thread(() -> {
+            try {
+                while (true) {
+                    int number = getLastMoverNumber() + 1;
+                    Result result = ClientMatchMenuController.getMove(number);
+                    if (result.getMessage() != null) {
+                        lastMove = result.getMessage();
+                        String description = getLastMoveDescription();
+                        boolean isOpponent = getLastMover().equals("opponent");
+                        if (description.startsWith("reaction")) {
+                            if(isOpponent)
+                               Platform.runLater(() -> reactionForOpponent(description.substring(9)));
+                        }
+                        else if (isOpponent) Platform.runLater(() -> opponentPut(description));
+                        else Platform.runLater(() -> myPut(description));
+                    }
+                    Thread.sleep(345);
+                }
+            } catch (Exception e) {
+                return;
+            }
+        });
+        updater.setDaemon(true);
+        updater.start();
+        updateScreen();
+    }
+
+    private String getLastMover() {
+        return lastMove.substring(0, lastMove.indexOf('\n'));
+    }
+
+    private int getLastMoverNumber() {
+        String description = lastMove.substring(getLastMover().length() + 1);
+        return Integer.parseInt(description.substring(0, description.indexOf('\n')));
+    }
+
+    private String getLastMoveDescription() {
+        String description = lastMove.substring(lastMove.indexOf('\n') + 1);
+        description = description.substring(description.indexOf('\n') + 1);
+        return description;
     }
 
     @Override
