@@ -76,8 +76,11 @@ public class ClientMatchMenuController {
 	public static Result placeCard(int cardNumber, int rowNumber) {
 		String command = GameMenusCommands.PLACE_CARD.getPattern();
 		command = command.replace("(?<cardNumber>\\d+)", String.valueOf(cardNumber));
-		command = command.replace("(?:(?<inRow> in row )(?<rowNumber>\\d+))", " in row " + rowNumber);
-		return TCPClient.send(command);
+		command = command.replace("(?:(?<inRow> in row )(?<rowNumber>(-)?\\d+))", " in row " + rowNumber);
+		System.out.println(cardNumber + " " + rowNumber);
+		Result result =  TCPClient.send(command);
+		System.out.println(result);
+		return result;
 	}
 
 	public static Result showLeader() {

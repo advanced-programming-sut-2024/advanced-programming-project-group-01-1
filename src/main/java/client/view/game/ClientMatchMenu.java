@@ -826,7 +826,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 					break;
 			}
 			if (abilityIcon == null) {
-				System.out.println("khob digeeee");
 				animations.remove(cardMoving);
 				if (animations.isEmpty()){
 					root.getChildren().remove(unclickablePane);
@@ -834,7 +833,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 				if (callPlace) {
 					Result result = ClientMatchMenuController.placeCard(idx, row);
 				}
-				System.out.println("jijiji");
 				updateScreen();
 			}
 			else {

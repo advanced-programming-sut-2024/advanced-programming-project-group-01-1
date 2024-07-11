@@ -44,7 +44,7 @@ public enum GameMenusCommands {
     OUT_OF_PLAY_CARDS("out of play cards"),
     CARDS_IN_ROW("cards in row (?<rowNumber>\\d+)"),
     SPELLS_IN_PLAY("spells in play"),
-    PLACE_CARD("place card (?<cardNumber>\\d+)(?:(?<inRow> in row )(?<rowNumber>\\d+))"),
+    PLACE_CARD("place card (?<cardNumber>\\d+)(?:(?<inRow> in row )(?<rowNumber>(-)?\\d+))"),
     SHOW_COMMANDER("show commander"),
     COMMANDER_POWER_PLAY("commander power play"),
     SHOW_PLAYERS_INFO("show players info"),
