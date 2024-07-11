@@ -94,6 +94,7 @@ public class PreMatchMenusController {
 	public static Result checkRequest(Client client) {
 		if (!client.isWaiting()) return new Result("You were not waiting", false);
 		if (client.getIdentity() == client.getIdentity().getChallengedUser().getChallengedUser()) {
+			client.setInGame(true);
 			client.setWaiting(false);
 			client.setMenu(new LobbyMenu());
 			return new Result("You are accepted", true);

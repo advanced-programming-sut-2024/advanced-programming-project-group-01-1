@@ -2,6 +2,7 @@ package client.view.game;
 
 import client.controller.game.ClientMatchMenuController;
 import client.view.ClientAppview;
+import com.sun.mail.smtp.SMTPOutputStream;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -131,7 +132,6 @@ public class ClientMatchMenu extends Application implements Menuable {
 	@FXML
 	public void initialize() {
 		initializePanes();
-		initializeOnlineStatus();
 		lastMove = (ClientMatchMenuController.getNumberOfMoves() - 1) + "\n";
 		updater =  new Thread(() -> {
 				try {
@@ -153,6 +153,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		});
 		updater.setDaemon(true);
 		updater.start();
+		initializeOnlineStatus();
 		updateScreen();
 	}
 
@@ -206,6 +207,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	}
 
 	public void updateScreen() {
+		System.out.println("khob kir");
 		removeCards();
 		updateHand();
 		updateRows();
@@ -214,6 +216,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 		updateDecks();
 		updateLeader();
 		updateInfo();
+		System.out.println("nemishe ke");
 		if (ClientMatchMenuController.isAsking().isSuccessful()) {
 			String[] cards = ClientMatchMenuController.getAskerCards().getMessage().split("\n");
 			int ptr = Integer.parseInt(ClientMatchMenuController.getAskerPtr().getMessage());

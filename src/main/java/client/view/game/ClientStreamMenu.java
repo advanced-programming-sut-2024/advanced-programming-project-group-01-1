@@ -45,7 +45,7 @@ public class ClientStreamMenu extends ClientMatchMenu {
     public void initialize() {
         initializePanes();
         initializeOnlineStatus();
-        lastMove = "null\n-1\n";
+        lastMove = "null\n" + (ClientMatchMenuController.getNumberOfMoves() - 1) + "\n";
         updater =  new Thread(() -> {
             try {
                 while (true) {

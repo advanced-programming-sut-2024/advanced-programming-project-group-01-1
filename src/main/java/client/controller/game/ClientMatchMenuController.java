@@ -157,6 +157,7 @@ public class ClientMatchMenuController {
 	public static int getNumberOfMoves() {
 		String command = GameMenusCommands.MOVE_COUNT.getPattern();
 		Result result = TCPClient.send(command);
+		System.out.println("ahaaaa :: " + result);
 		if (result != null) return Integer.parseInt(result.getMessage());
 		return 0;
 	}

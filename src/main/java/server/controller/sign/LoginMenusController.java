@@ -63,6 +63,7 @@ public class LoginMenusController {
 		if (loggingInClients.containsKey(client) && loggingInClients.get(client).equals(code)) {
 			loggingInClients.remove(client);
 			if (client.getIdentity().getCurrentGame() != null) {
+				client.setInGame(true);
 				client.getIdentity().getCurrentGame().defuseBomb(client.getIdentity());
 				client.setMenu(new MatchMenu());
 				return new Result("Back to game", true);
