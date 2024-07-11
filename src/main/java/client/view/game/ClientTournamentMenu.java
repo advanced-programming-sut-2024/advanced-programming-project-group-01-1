@@ -1,6 +1,7 @@
 package client.view.game;
 
 import client.controller.game.ClientMatchMenuController;
+import client.controller.game.ClientTVMenuController;
 import client.controller.game.ClientTournamentMenuController;
 import client.view.ClientAppview;
 import client.view.Menuable;
@@ -27,8 +28,8 @@ public class ClientTournamentMenu extends Application implements Menuable {
 	@FXML
 	private Pane basePane;
 
-	private Pane[] matches = new Pane[14];
-	private Label[] seedLabels = new Label[28], seedScores = new Label[30];
+	private final Pane[] matches = new Pane[14];
+	private final Label[] seedLabels = new Label[28], seedScores = new Label[30];
 
 	private int counter = 0;
 
@@ -113,9 +114,10 @@ public class ClientTournamentMenu extends Application implements Menuable {
 				seedScores[i + 1].setStyle("-fx-background-color: lightgreen;");
 			} else if (!seedScores[i].getText().equals("") && !seedScores[i + 1].getText().equals("")) {
 				matches[i / 2].setStyle("-fx-background-color: lightgreen");
+				final int idx = i;
 				matches[i / 2].setOnMouseClicked(event -> {
 					System.out.println(ClientTournamentMenuController.getUsername());
-					// TODO: add stream
+					ClientTVMenuController.spectate(seedLabels[idx].getText(), seedLabels[idx + 1].getText());
 				});
 			}
 		}

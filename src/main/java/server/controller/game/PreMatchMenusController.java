@@ -109,8 +109,10 @@ public class PreMatchMenusController {
 		synchronized (tournamentQueue) {
 			tournamentQueue.remove(client.getIdentity());
 		}
-		client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
-		client.getIdentity().setChallengedUser(null);
+		if (client.getIdentity().getChallengedUser() != null) {
+			client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
+			client.getIdentity().setChallengedUser(null);
+		}
 		client.setWaiting(false);
 		return new Result("stopped successfully", true);
 	}

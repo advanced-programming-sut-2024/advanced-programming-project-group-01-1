@@ -11,6 +11,7 @@ import client.view.sign.login.ClientSetPasswordMenu;
 import client.view.sign.register.ClientRegisterMenu;
 import message.LoginMenusCommands;
 import message.Result;
+import server.model.Client;
 
 import java.util.Objects;
 
@@ -71,6 +72,7 @@ public class ClientLoginMenusController {
 		String command = LoginMenusCommands.EXIT.getPattern();
 		Result result = TCPClient.send(command);
 		if (ClientAppview.getMenu() instanceof ClientAuthenticationMenu) ClientAppview.setMenu(new ClientLoginMenu());
+		if (ClientAppview.getMenu() instanceof ClientForgotPasswordMenu) ClientAppview.setMenu(new ClientLoginMenu());
 		else System.exit(0);
 		return result;
 	}

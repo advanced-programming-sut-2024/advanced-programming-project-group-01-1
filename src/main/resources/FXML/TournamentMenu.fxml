@@ -14,8 +14,8 @@
 		</ImageView>
 		<Label id="title-text" alignment="CENTER" layoutX="4.0" prefHeight="83.0" prefWidth="214.0" style="-fx-font-size: 24" stylesheets="@../CSS/textstyle.css" text="upper bracket" textAlignment="CENTER" />
 		<Label id="title-text" alignment="CENTER" layoutX="4.0" layoutY="458.0" prefHeight="83.0" prefWidth="214.0" style="-fx-font-size: 24" stylesheets="@../CSS/textstyle.css" text="lower bracket" textAlignment="CENTER" />
-		<Button id="ipad-dark-grey" fx:id="exit" onAction="#exit" layoutX="1202.0" layoutY="14.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="exit" />
-		<Button id="ipad-dark-grey" fx:id="ready" onAction="#setPlayerReady" layoutX="1202.0" layoutY="703.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="ready" />
+		<Button id="ipad-dark-grey" onAction="#exit" layoutX="1202.0" layoutY="14.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" />
+		<Button id="ipad-dark-grey" fx:id="ready" onAction="#setPlayerReady" layoutX="1202.0" layoutY="703.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="ready" />
 
 		<Pane layoutX="0100.0" layoutY="083.0" prefHeight="64.0" prefWidth="170.0" style=" -fx-background-color: black">
 			<Label layoutX="2" layoutY="2" prefHeight="29" prefWidth="135" alignment="CENTER" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18; -fx-font-size: 18; -fx-background-color: #a47934" />

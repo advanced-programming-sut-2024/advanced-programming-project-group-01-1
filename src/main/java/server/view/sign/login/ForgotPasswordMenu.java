@@ -35,7 +35,8 @@ public class ForgotPasswordMenu implements Menuable {
 	}
 
 	private Result exit(Client client, Matcher matcher) {
-		return LoginMenusController.exit(client);
+		client.setMenu(new LoginMenu());
+		return new Result("Login Menu", true);
 	}
 
 }
