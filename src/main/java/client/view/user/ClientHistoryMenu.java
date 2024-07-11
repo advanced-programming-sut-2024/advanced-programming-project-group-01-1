@@ -71,7 +71,6 @@ public class ClientHistoryMenu extends Application implements Menuable {
 	}
 
 	private Result gameHistory(int number) {
-		if (number == 0) number = 10000000;
 		Result result = ClientUserMenusController.showGameHistory(number);
 		String histories = result.getMessage();
 		String[] history = histories.split("\n\n");
@@ -90,6 +89,7 @@ public class ClientHistoryMenu extends Application implements Menuable {
 	}
 
 	private HBox rowCreator(String gameDetails) {
+		System.out.println(gameDetails);
 		String[] gameDetail = gameDetails.split("\n");
 		String opponent = gameDetail[0].split(": ")[1];
 		String date = gameDetail[1].split(": ")[1];

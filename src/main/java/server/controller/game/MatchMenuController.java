@@ -87,9 +87,9 @@ public class MatchMenuController {
 	}
 
 	public static void handleVeto(Game game) {
-		if (!game.getCurrentLeader().isManual()) game.getCurrentLeader().act();
+		if (!game.getCurrentLeader().isManual() && !game.getCurrentLeader().isDisable()) game.getCurrentLeader().act();
 		game.changeTurn();
-		if (!game.getCurrentLeader().isManual()) game.getCurrentLeader().act();
+		if (!game.getCurrentLeader().isManual() && !game.getCurrentLeader().isDisable()) game.getCurrentLeader().act();
 		game.changeTurn();
 		final User  player1 = game.getCurrent();
 		final Space hand1 = game.getCurrentHand();

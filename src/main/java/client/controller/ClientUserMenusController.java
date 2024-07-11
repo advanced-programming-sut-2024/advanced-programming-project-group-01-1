@@ -57,7 +57,7 @@ public class ClientUserMenusController {
 
 	public static Result showGameHistory(int number) {
 		String command = UserMenusCommands.GAME_HISTORY.getPattern();
-		command = command.replace("( -n (?<numberOfGames>\\d+))?", number == 0 ? "" : String.valueOf(number));
+		command = command.replace("( -n (?<numberOfGames>\\d+))?", number == 0 ? "" : " -n "+ String.valueOf(number));
 		return TCPClient.send(command);
 	}
 
@@ -69,7 +69,7 @@ public class ClientUserMenusController {
 		else if (ClientAppview.getMenu() instanceof ClientSocialMenu) {
 			ClientAppview.setMenu(new ClientMainMenu());
 			stopUpdatingFriendList();
-		} else if (ClientAppview.getMenu() instanceof ClientHistoryMenu) ClientAppview.setMenu(new ClientProfileMenu());
+		} else if (ClientAppview.getMenu() instanceof ClientHistoryMenu) ClientAppview.setMenu(new ClientInfoMenu());
 		else if (ClientAppview.getMenu() instanceof ClientRankingMenu) {
 			ClientAppview.setMenu(new ClientMainMenu());
 			stopUpdatingLeaderboard();

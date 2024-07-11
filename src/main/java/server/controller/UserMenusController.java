@@ -7,10 +7,7 @@ import server.model.Client;
 import server.model.GameInfo;
 import server.model.user.User;
 import server.view.MainMenu;
-import server.view.user.InfoMenu;
-import server.view.user.ProfileMenu;
-import server.view.user.RankingMenu;
-import server.view.user.SocialMenu;
+import server.view.user.*;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -59,7 +56,7 @@ public class UserMenusController {
 
 
 	public static Result goToHistoryMenu(Client client, Matcher matcher) {
-		client.setMenu(new InfoMenu());
+		client.setMenu(new HistoryMenu());
 		return new Result("History Menu", true);
 	}
 
@@ -84,8 +81,9 @@ public class UserMenusController {
 		synchronized (client.getIdentity()) {
 			ArrayList<GameInfo> history = client.getIdentity().getHistory();
 			StringBuilder gameHistory = new StringBuilder();
-			for (int i = 0; i < number; i++) {
-				gameHistory.append(history.get(i).toString()).append("\n");
+			int start = Math.max(0, history.size() - (number == 0 ? 1000000 : number)), end = history.size();
+			for (int i = end - 1; i >= start; i--) {
+				gameHistory.append(history.get(i).toString()).append("\n\n");
 			}
 			return new Result(gameHistory.toString(), true);
 		}
@@ -96,6 +94,7 @@ public class UserMenusController {
 		else if (client.getMenu() instanceof ProfileMenu) client.setMenu(new MainMenu());
 		else if (client.getMenu() instanceof SocialMenu) client.setMenu(new MainMenu());
 		else if (client.getMenu() instanceof RankingMenu) client.setMenu(new MainMenu());
+		else if (client.getMenu() instanceof HistoryMenu) client.setMenu(new InfoMenu());
 		return new Result("Exited successfully", true);
 	}
 
