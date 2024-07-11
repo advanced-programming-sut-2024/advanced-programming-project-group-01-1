@@ -8,6 +8,7 @@ import client.view.game.ClientMatchMenu;
 import client.view.game.ClientTournamentMenu;
 import client.view.game.prematch.ClientLobbyMenu;
 import client.view.game.prematch.ClientMatchFinderMenu;
+import client.view.game.prematch.ClientQuickMatchMenu;
 import javafx.application.Platform;
 import message.GameMenusCommands;
 import message.Result;
@@ -306,5 +307,72 @@ public class ClientPreMatchMenusController {
 	public static Result getPreference() {
 		String command = GameMenusCommands.GET_PREFERRED_TURN.getPattern();
 		return TCPClient.send(command);
+	}
+
+
+	public static Result goToQuickMatchMenu() {
+		String command = GameMenusCommands.GO_QUICK_MATCH.getPattern();
+		Result result = TCPClient.send(command);
+		if (result.isSuccessful()) ClientAppview.setMenu(new ClientQuickMatchMenu());
+		return result;
+	}
+
+	public static ArrayList<String> getQuickMatchList() {
+		String command = GameMenusCommands.QUICK_MATCH_LIST.getPattern();
+		Result result = TCPClient.send(command);
+		String[] usernames = result.getMessage().split("\n");
+		ArrayList<String> list = new ArrayList<>();
+		Collections.addAll(list, usernames);
+		return list;
+	}
+
+	public static Result startQuickMatch(String opponent) {
+		String command = GameMenusCommands.START_QUICK_MATCH.getPattern();
+		command = command.replace("(?<opponent>\\S+)", opponent);
+		Result result = TCPClient.send(command);
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientLobbyMenu());
+		return result;
+	}
+
+	public static Result createNewQuickMatch() {
+		String command = GameMenusCommands.NEW_QUICK_MATCH.getPattern();
+		Result result =  TCPClient.send(command);
+		if (result != null && result.isSuccessful()) {
+			new Thread(() -> {
+				while (true) {
+					try {
+						if (!isWaiting().isSuccessful()) break;
+						Result check = checkMatchReady();
+						if (check.isSuccessful()) {
+							Platform.runLater(() -> ClientAppview.setMenu(new ClientLobbyMenu()));
+							break;
+						}
+						Thread.sleep(345);
+					} catch (Exception e) {
+						break;
+					}
+				}
+			}).start();
+		}
+		return result;
+	}
+
+	public static Result checkMatchReady() {
+		String command = GameMenusCommands.CHECK_MATCH_READY.getPattern();
+		Result result = TCPClient.send(command);
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientLobbyMenu());
+		return result;
+	}
+
+	public static Result cancelQuickMatch() {
+		String command = GameMenusCommands.CANCEL_QUICK_MATCH.getPattern();
+		return TCPClient.send(command);
+	}
+
+	public static Result backToMatchFinder() {
+		String command = GameMenusCommands.BACK.getPattern();
+		Result result = TCPClient.send(command);
+		if (result != null && result.isSuccessful()) ClientAppview.setMenu(new ClientMatchFinderMenu());
+		return result;
 	}
 }

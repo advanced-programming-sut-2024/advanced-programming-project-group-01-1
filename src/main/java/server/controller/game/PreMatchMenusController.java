@@ -14,15 +14,14 @@ import server.view.MainMenu;
 import server.view.game.MatchMenu;
 import server.view.game.TournamentMenu;
 import server.view.game.prematch.LobbyMenu;
+import server.view.game.prematch.MatchFinderMenu;
+import server.view.game.prematch.QuickMatchMenu;
 
 import java.util.ArrayList;
 
 public class PreMatchMenusController {
-
-	private static int cnt = 0;
-	private static User opponent = null;
-	private static ArrayList<User> tournamentQueue = new ArrayList<>();
-
+	private static final ArrayList<User> tournamentQueue = new ArrayList<>();
+	private static final ArrayList<User> quickMatches = new ArrayList<>();
 	public static Result requestMatch(Client client, String opponentUsername) {
 		User opponent = User.getUserByUsername(opponentUsername);
 		if (opponent == null) return new Result("User not found", false);
@@ -248,11 +247,6 @@ public class PreMatchMenusController {
 		return new Result(count > 1 ? "Cards" : "Card" + " Removed Successfully", true);
 	}
 
-	public static Result startGame(Client client) {
-		Game.createGame(client.getIdentity(), opponent);
-		return new Result("Game Started Successfully", true);
-	}
-
 	public static Result exit(Client client) {
 		client.setMenu(new MainMenu());
 		return new Result("Exiting PreMatch Menu", true);
@@ -319,4 +313,73 @@ public class PreMatchMenusController {
 		return new Result(client.getIdentity().getDeck().doesPreferFirst() ? "First" : "Second", true);
 	}
 
+	public static Result goToQuickMatchMenu(Client client) {
+		client.setMenu(new QuickMatchMenu());
+		return new Result("go to quick match menu", true);
+	}
+
+	public static Result getQuickMatchList() {
+		synchronized (quickMatches) {
+			StringBuilder matches = new StringBuilder();
+			for (User user : quickMatches) {
+				matches.append(user.getUsername()).append("\n");
+			}
+			return new Result(matches.toString(), true);
+		}
+	}
+
+	public static Result startQuickMatch(Client client, String opponentUsername) {
+		synchronized (quickMatches) {
+			User user = User.getUserByUsername(opponentUsername);
+			if (user == null) return new Result("no such user exists", false);
+			synchronized (user) {
+				if (!quickMatches.contains(user)) return new Result("Match either started or canceled", false);
+				quickMatches.remove(user);
+				client.getIdentity().setChallengedUser(user);
+				user.setChallengedUser(client.getIdentity());
+				client.setInGame(true);
+				client.setMenu(new LobbyMenu());
+				return new Result("Go to Lobby Menu", true);
+			}
+		}
+	}
+
+	public static Result createNewQuickMatch(Client client) {
+		synchronized (quickMatches) {
+			if (quickMatches.contains(client.getIdentity())) return new Result("already created", false);
+			quickMatches.add(client.getIdentity());
+			client.setWaiting(true);
+			return new Result("match created", true);
+		}
+	}
+
+	public static Result checkMatchReady(Client client) {
+		synchronized (client.getIdentity()) {
+			if (client.getIdentity().getChallengedUser() != null) {
+				client.setInGame(true);
+				client.setWaiting(false);
+				client.setMenu(new LobbyMenu());
+				return new Result("Go to Lobby Menu", true);
+			}
+			return new Result("not ready", false);
+		}
+	}
+
+	public static Result cancelQuickMatch(Client client) {
+		synchronized (quickMatches) {
+			synchronized (client.getIdentity()) {
+				System.out.println("wtf :: " + client.getIdentity().getChallengedUser());
+				if (client.getIdentity().getChallengedUser() != null)
+					return new Result("match already started", false);
+				quickMatches.remove(client.getIdentity());
+				client.setWaiting(false);
+				return new Result("match canceled", true);
+			}
+		}
+	}
+
+	public static Result backToMatchFinder(Client client) {
+		client.setMenu(new MatchFinderMenu());
+		return new Result("back to match finder", true);
+	}
 }

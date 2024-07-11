@@ -68,12 +68,8 @@ public class ServerWorker extends Thread {
 				result = new Result(new Client().getToken(), true);
 			else {
 				Client client = Client.getClient(command.getToken());
-				 if (command.getCommand().startsWith("send message")){
-					 System.out.println("----------------");
 					 System.out.println((client.getIdentity() != null ? client.getIdentity().getUsername() : null) + " " +
 							 client.getMenu().getClass().getSimpleName() + " " + command.getCommand());
-					 System.out.println("----------------");
-				 }
 				if (client != null) {
 					if (command.getCommand().equals("remove token")) Client.remove(client);
 					else result = client.getMenu().run(client, command.getCommand());

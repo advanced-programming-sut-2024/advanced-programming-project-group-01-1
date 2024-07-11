@@ -1,5 +1,6 @@
 package server.model;
 
+import server.controller.game.PreMatchMenusController;
 import server.model.game.Game;
 import server.model.user.User;
 import server.view.Menuable;
@@ -50,6 +51,7 @@ public class Client {
 				client.getIdentity().getChallengedUser().getMatchRequests().remove(client.getIdentity());
 				client.getIdentity().setChallengedUser(null);
 			}
+			PreMatchMenusController.cancelQuickMatch(client);
 		}
 		clients.remove(client.getToken());
 	}

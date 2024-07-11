@@ -142,7 +142,7 @@ public class ClientMatchFinderMenu extends Application implements Menuable {
 	}
 
 	public void quickMatch(MouseEvent mouseEvent) {
-		AlertMaker.makeAlert("Quick Match", new Result("coming soon!!!", true));
+		ClientPreMatchMenusController.goToQuickMatchMenu();
 	}
 
 	public void tournamentMatch(MouseEvent mouseEvent) {

@@ -93,7 +93,14 @@ public enum GameMenusCommands {
     CHEAT_ADD_POWER("add power (?<power>\\d+)"),
     CHEAT_MOVE_FROM_DECK("move from deck to hand"),
     CHEAT_HEAL("heal"),
-    CHEAT_CLEAR_WEATHER("clear weather");
+    CHEAT_CLEAR_WEATHER("clear weather"),
+    GO_QUICK_MATCH("go to quick match menu"),
+    QUICK_MATCH_LIST("get quick matches list"),
+    START_QUICK_MATCH("start quick match with (?<opponent>\\S+)"),
+    NEW_QUICK_MATCH("create new quick match"),
+    CHECK_MATCH_READY("check whether quick match is ready to play"),
+    CANCEL_QUICK_MATCH("cancel quick match"),
+    BACK("back");
 
     private final Pattern pattern;
 

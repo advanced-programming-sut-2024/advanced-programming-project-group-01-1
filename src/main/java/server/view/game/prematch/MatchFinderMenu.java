@@ -36,6 +36,8 @@ public class MatchFinderMenu implements Menuable {
 			result = handleMatchRequest(client, matcher);
 		else if (GameMenusCommands.SHOW_PLAYERS_INFO.getMatcher(input) != null)
 			result = PreMatchMenusController.getOtherUsernames(client);
+		else if (GameMenusCommands.GO_QUICK_MATCH.getMatcher(input) != null)
+			result = PreMatchMenusController.goToQuickMatchMenu(client);
 		else if (GameMenusCommands.EXIT_MATCH_FINDER.getMatcher(input) != null)
 			result = PreMatchMenusController.exit(client);
 		else if (GameMenusCommands.IS_WAITING.getMatcher(input) != null) result = new Result("not waiting", false);
