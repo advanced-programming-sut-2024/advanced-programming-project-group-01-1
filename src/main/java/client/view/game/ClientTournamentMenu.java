@@ -143,28 +143,25 @@ public class ClientTournamentMenu extends Application implements Menuable {
 		for (int i = 0; i < 4; i++) {
 			HBox hBox = (HBox) ((VBox) pane.getChildren().get(0)).getChildren().get(i);
 			Label label = new Label(lines[i + 1]);
-			label.setStyle("-fx-font-size: 20; " + (i == 0 ? "-fx-text-fill: gold" : i == 1 ? "-fx-text-fill: silver" : i == 2 ? "-fx-text-fill: #8B4513" : "-fx-text-fill: white"));
-			((VBox) hBox.getChildren().get(1)).getChildren().add(label);
-			if (username.equals(lines[i + 1]) || username.equals(lines[i + 2])) {
-				label.setStyle(label.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
-				Label rank = (Label) hBox.getChildren().get(0);
-				rank.setStyle(rank.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
+			label.setStyle("-fx-font-size: 20; " + "-fx-font-family: 'Mason Serif Regular';"
+					+ (i == 0 ? "-fx-text-fill: gold" : i == 1 ? "-fx-text-fill: silver" :
+					i == 2 ? "-fx-text-fill: #8B4513" : "-fx-text-fill: white"));
+			if (username.equals(lines[i + 1])) {
+				hBox.setStyle("-fx-background-color: rgba(57, 227, 61, 0.5)");
 			}
+			((VBox) hBox.getChildren().get(1)).getChildren().add(label);
 		}
 		for (int i = 4; i < 8; i += 2) {
 			HBox hBox = (HBox) ((VBox) pane.getChildren().get(0)).getChildren().get(4 + (i - 4) / 2);
 			Label label1 = new Label(lines[i + 1]);
-			label1.setStyle("-fx-font-size: 20; -fx-text-fill: white");
-			((VBox) hBox.getChildren().get(1)).getChildren().add(label1);
+			label1.setStyle("-fx-font-size: 20; -fx-text-fill: white; -fx-font-family: 'Mason Serif Regular'");
 			Label label2 = new Label(lines[i + 2]);
-			label2.setStyle("-fx-font-size: 20; -fx-text-fill: white");
-			((VBox) hBox.getChildren().get(1)).getChildren().add(label2);
+			label2.setStyle("-fx-font-size: 20; -fx-text-fill: white; -fx-font-family: 'Mason Serif Regular'");
 			if (username.equals(lines[i + 1]) || username.equals(lines[i + 2])) {
-				label1.setStyle(label1.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
-				label2.setStyle(label2.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
-				Label rank = (Label) hBox.getChildren().get(0);
-				rank.setStyle(rank.getStyle() + "-fx-background-color: rgba(57,227,61,0.5)");
+				hBox.setStyle("-fx-background-color: rgba(57, 227, 61, 0.5)");
 			}
+			((VBox) hBox.getChildren().get(1)).getChildren().add(label1);
+			((VBox) hBox.getChildren().get(1)).getChildren().add(label2);
 		}
 		ClientTournamentMenuController.stopBracketThread();
 	}
