@@ -23,7 +23,7 @@ public class Game {
 	public static final int CURRENT_HAND = 7, OPPONENT_HAND = 10;
 	public static final int CURRENT_DISCARD_PILE = 8, OPPONENT_DISCARD_PILE = 11;
 
-
+	private static final ArrayList<Game> games = new ArrayList<>();
 	ArrayList<Integer> currentScores = new ArrayList<>(), opponentScores = new ArrayList<>();
 	User basePlayer;
 	User current, opponent;
@@ -61,8 +61,23 @@ public class Game {
 		for (Card card : this.opponentDeck.getCards()) card.setSpace(opponentDeck);
 	}
 
+	public static ArrayList<Game> getGames() {
+		return games;
+	}
+
+	public static Game getGame(User player1, User player2) {
+		for (Game game : games) {
+			synchronized (game) {
+				if ((game.current == player1 && game.opponent == player2) || (game.opponent == player1 && game.current == player2))
+					return game;
+			}
+		}
+		return null;
+	}
+
 	public static Game createGame(User player1, User player2) {
 		Game currentGame = new Game(player1, player2);
+		games.add(currentGame);
 		player1.setCurrentGame(currentGame);
 		player2.setCurrentGame(currentGame);
 		currentGame.currentLeader.setGame(currentGame);
@@ -500,6 +515,7 @@ public class Game {
 	}
 
 	private void endGame() {
+		games.remove(this);
 		hasOpponentPassed = false;
 		hasCurrentPassed = false;
 		gameEnded = true;
@@ -566,5 +582,16 @@ public class Game {
 
 	public ArrayList<String> getChatMessages(){
 		return chatMessages;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder gameLog = new StringBuilder();
+		gameLog.append(current.getUsername()).append("\n");
+		gameLog.append(opponent.getUsername()).append("\n");
+		gameLog.append(2 - opponentLife).append("-").append(2 - currentLife).append("\n");
+		for (int i = 0; i < currentScores.size(); i++)
+			gameLog.append(currentScores.get(i)).append("\n").append(opponentScores.get(i)).append("\n");
+		return gameLog.toString();
 	}
 }

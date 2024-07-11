@@ -6,7 +6,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.game.prematch.ClientTVMenu">
    <children>
       <ListView layoutX="473.0" layoutY="92.0" prefHeight="296.0" prefWidth="420.0" stylesheets="@../CSS/listviewstyle.css" fx:id="gamesField"/>
-      <Button id="ipad-dark-grey" fx:id="refresh" layoutX="608.0" layoutY="437.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="refresh" onMouseClicked="#refresh"/>
+      <Button id="ipad-dark-grey" layoutX="608.0" layoutY="437.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="refresh" onMouseClicked="#refresh"/>
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="517.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="spectate" onMouseClicked="#spectate"/>
       <Button id="ipad-dark-grey" layoutX="608.0" layoutY="591.0" mnemonicParsing="false" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="back" onMouseClicked="#back"/>
    </children>

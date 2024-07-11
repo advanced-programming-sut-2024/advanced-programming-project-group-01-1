@@ -16,17 +16,19 @@ public class ClientTVMenuController {
 
     public static Result spectate(String username1, String username2) {
         String command = GameMenusCommands.SPECTATE.getPattern();
-        command = command.replace("<(?<username1>.+)", username1);
+        command = command.replace("(?<username1>.+)", username1);
         command = command.replace("(?<username2>.+)", username2);
         Result result = TCPClient.send(command);
         if (result.isSuccessful()) {
             ClientAppview.setMenu(new ClientStreamMenu());
         }
+        return result;
     }
 
     public static Result back() {
         String command = GameMenusCommands.BACK.getPattern();
         Result result = TCPClient.send(command);
         ClientAppview.setMenu(new ClientMainMenu());
+        return result;
     }
 }

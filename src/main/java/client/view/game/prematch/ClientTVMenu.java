@@ -57,7 +57,7 @@ public class ClientTVMenu extends Application implements Menuable {
 
     public void spectate(MouseEvent mouseEvent) {
         HBox row = (HBox) gamesField.getSelectionModel().getSelectedItem();
-        String[] usernames = ((Label)row.getChildren().getFirst()).getText().split("-");
+        String[] usernames = ((Label)row.getChildren().get(0)).getText().split("-");
         Result result = ClientTVMenuController.spectate(usernames[0], usernames[1]);
     }
 

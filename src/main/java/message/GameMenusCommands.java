@@ -105,7 +105,9 @@ public enum GameMenusCommands {
     NEW_QUICK_MATCH("create new quick match"),
     CHECK_MATCH_READY("check whether quick match is ready to play"),
     CANCEL_QUICK_MATCH("cancel quick match"),
-    BACK("back");
+    BACK("back"),
+    GET_GAMES("get all running games"),
+    SPECTATE("spectate game (?<username1>.+) (?<username2>.+)");
 
     private final Pattern pattern;
 
