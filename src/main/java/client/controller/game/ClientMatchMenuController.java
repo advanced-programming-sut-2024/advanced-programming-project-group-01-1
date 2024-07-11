@@ -244,6 +244,18 @@ public class ClientMatchMenuController {
 		return result;
 	}
 
+	public static Result sendReaction(String reaction) {
+		String command = GameMenusCommands.SEND_REACTION.getPattern();
+		command = command.replace("(?<reaction>.+)", reaction);
+		return TCPClient.send(command);
+	}
+
+	public static Result getOpponentReaction() {
+		String command = GameMenusCommands.GET_REACTION.getPattern();
+		return TCPClient.send(command);
+
+	}
+
 	public static Result getChats() {
 		String command = GameMenusCommands.GET_CHATS.getPattern();
 		return TCPClient.send(command);

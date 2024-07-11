@@ -113,6 +113,7 @@
                <font>
                   <Font size="11.0" />
                </font></Label>
+            <ImageView fx:id="myReactionField" fitHeight="50.0" fitWidth="50.0" layoutX="13.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
          </children></Pane>
       <Pane fx:id="opponentInfoPane" layoutX="14.0" layoutY="157.0" prefHeight="146.0" prefWidth="287.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
          <children>
@@ -158,6 +159,7 @@
                   <Image url="@../images/icons/online_icon.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="opponentReactionField" fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
          </children></Pane>
       <Button id="ipad-dark-grey" layoutX="158.0" layoutY="680.0" mnemonicParsing="false" onMouseClicked="#passTurn" prefHeight="57.0" prefWidth="43.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18;" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="pass" />
       <Label fx:id="rowPowerLabel0" alignment="CENTER" layoutX="360.0" layoutY="520.0" prefHeight="40.0" prefWidth="40.0" text="Label" textAlignment="CENTER" />
@@ -193,6 +195,71 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button id="ipad-dark-grey" layoutX="1127.0" layoutY="461.0" mnemonicParsing="false" prefHeight="50.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="chat" onMouseClicked="#openChat"/>
+      <Button id="ipad-dark-grey" layoutX="1127.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#openChat" prefHeight="50.0" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="chat" />
+      <Button id="ipad-dark-grey" layoutX="1127.0" layoutY="398.0" mnemonicParsing="false" onMouseClicked="#reactionPanel" style="-fx-font-family: 'Mason Serif Regular'; -fx-font-size: 18" stylesheets="@../CSS/buttonstyle.css, @../CSS/textstyle.css" text="reaction" />
+      <Pane fx:id="reactionPane" layoutX="1102.0" layoutY="184.0" prefHeight="212.0" prefWidth="200.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_0.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_3.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="75.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_4.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="150.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_5.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_6.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_7.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="75.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_8.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="150.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_9.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="150.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_10.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="75.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/emoji_11.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>

@@ -32,7 +32,10 @@ import client.view.model.SmallUnit;
 import message.SelectionHandler;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
@@ -93,6 +96,8 @@ public class ClientMatchMenu extends Application implements Menuable {
 	public Label myDeckNumber, opponentDeckNumber;
 	public Pane myInfoPane, opponentInfoPane;
 	public ImageView opponentOnlineField;
+	public Pane reactionPane;
+	public ImageView myReactionField, opponentReactionField;
 	public Pane[] rowPanes;
 	public Pane[] rowBufferPanes;
 	public Label[] rowPowerLabels;
@@ -104,7 +109,7 @@ public class ClientMatchMenu extends Application implements Menuable {
 	private boolean isLocked;
 	private final Object lock = new Object();
 	private String opponentLastMove;
-	Thread updater, onlineStatus;
+	Thread updater, onlineStatus, myReaction, opponentReaction, reactionUpdater;
 
 	ArrayList<CardMoving> animations = new ArrayList<>();
 
@@ -190,6 +195,26 @@ public class ClientMatchMenu extends Application implements Menuable {
 		});
 		onlineStatus.setDaemon(true);
 		onlineStatus.start();
+		reactionUpdater = new Thread(() -> {
+			try {
+				while (true) {
+					Result result = ClientMatchMenuController.getOpponentReaction();
+					if (result.isSuccessful()) {
+						String reaction = result.getMessage();
+						Platform.runLater(() -> {
+							reactionForOpponent(reaction);
+						});
+					}
+					Thread.sleep(234);
+				}
+			} catch (Exception e) {
+				return;
+			}
+		});
+		for (Node node : reactionPane.getChildren()) {
+			node.setOnMouseClicked(this::reaction);
+		}
+		reactionPane.setVisible(false);
 		updateScreen();
 	}
 
@@ -863,9 +888,57 @@ public class ClientMatchMenu extends Application implements Menuable {
 		cardMoving.play();
 	}
 
+
 	public void openChat() {
 		new ChatPanel(root, myUsernameField.getText());
 	}
+
+	public void reactionPanel(MouseEvent mouseEvent) {
+		reactionPane.setVisible(!reactionPane.isVisible());
+	}
+
+	public void reaction(MouseEvent mouseEvent) {
+		ImageView imageView = (ImageView) mouseEvent.getSource();
+		Image image = imageView.getImage();
+		String imageUrl = image.getUrl();
+		System.out.println(imageUrl);
+		String reaction;
+        try {
+			reaction = Paths.get(new URI(imageUrl)).getFileName().toString();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+		Result result = ClientMatchMenuController.sendReaction(reaction);
+		if (myReaction != null) myReaction.interrupt();
+		myReaction = new Thread(() -> {
+			try {
+				myReactionField.setImage(new Image(this.getClass().getResource("/images/icons/" + reaction).toString()));
+				Thread.sleep(7000);
+				myReactionField.setImage(null);
+			} catch (InterruptedException e) {
+				return;
+			}
+		});
+		myReaction.setDaemon(true);
+		myReaction.start();
+		reactionPane.setVisible(false);
+    }
+
+	public void reactionForOpponent(String reaction) {
+		if (opponentReaction != null) opponentReaction.interrupt();
+		opponentReaction = new Thread(() -> {
+			try {
+				opponentReactionField.setImage(new Image(this.getClass().getResource("/images/icons/" + reaction).toString()));
+				Thread.sleep(7000);
+				opponentReactionField.setImage(null);
+			} catch (InterruptedException e) {
+				return;
+			}
+		});
+		opponentReaction.setDaemon(true);
+		opponentReaction.start();
+	}
+
         /*
 	 * Terminal version of the LobbyMenu
 	 */
